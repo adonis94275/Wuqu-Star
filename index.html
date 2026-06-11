@@ -862,33 +862,47 @@
             tdEl.className = `text-sm font-bold mt-0.5 ${dirColor}`;
             document.getElementById('tradeAction').innerText = actionText;
 
-            let isShorting = totalScore < 50 || !vetoEl.classList.contains('hidden');
-            let stopPrc, tpPrc;
+            // --- ATR 智能風控 (三階段狀態機修復) ---
             let slLabel = document.getElementById('slLabel');
             let tpLabel = document.getElementById('tpLabel');
             let slEl = document.getElementById('stopLoss');
             let tpEl = document.getElementById('takeProfit');
+            let stopPrc, tpPrc;
+            let isVeto = !vetoEl.classList.contains('hidden');
 
-            if (!isShorting) {
-                // 做多防護邏輯 (防守在下方)
+            if (totalScore >= 50 && !isVeto) {
+                // 1. 正常做多狀態 (50~100分)
                 stopPrc = lData.close - 2 * lATR;
                 tpPrc = high20 - 3 * lATR;
                 slLabel.innerText = "做多停損 (Close - 2ATR)";
                 tpLabel.innerText = "做多移動停利 (High20 - 3ATR)";
                 slEl.className = "text-lg font-bold text-green-400"; 
                 tpEl.className = "text-lg font-bold text-red-400";   
-            } else {
-                // 做空防護邏輯 (防守在上方)
+                slEl.innerText = stopPrc.toFixed(2);
+                tpEl.innerText = tpPrc < lData.close ? "持倉續抱" : tpPrc.toFixed(2);
+            } 
+            else if (totalScore >= 40 && !isVeto) {
+                // 2. 觀望撤退狀態 (40~49分)：不宜做空，給予多單最後防守線
+                stopPrc = lData.close - 2 * lATR;
+                tpPrc = high20 - 3 * lATR;
+                slLabel.innerText = "多單最後防線 (Close - 2ATR)";
+                tpLabel.innerText = "反彈逃命壓力 (High20 - 3ATR)";
+                slEl.className = "text-lg font-bold text-orange-400"; 
+                tpEl.className = "text-lg font-bold text-orange-400"; 
+                slEl.innerText = stopPrc.toFixed(2);
+                tpEl.innerText = tpPrc.toFixed(2); // 撤退區不顯示續抱，直接顯示壓力價
+            } 
+            else {
+                // 3. 強勢做空狀態 (<40分 或 觸發一票否決)
                 stopPrc = lData.close + 2 * lATR;
                 tpPrc = low20 + 3 * lATR;
                 slLabel.innerText = "做空停損 (Close + 2ATR)";
                 tpLabel.innerText = "做空移動停利 (Low20 + 3ATR)";
                 slEl.className = "text-lg font-bold text-red-400";   
                 tpEl.className = "text-lg font-bold text-green-400"; 
+                slEl.innerText = stopPrc.toFixed(2);
+                tpEl.innerText = tpPrc > lData.close ? "持倉續抱" : tpPrc.toFixed(2);
             }
-
-            slEl.innerText = stopPrc.toFixed(2);
-            tpEl.innerText = (!isShorting && tpPrc < lData.close) || (isShorting && tpPrc > lData.close) ? "持倉續抱" : tpPrc.toFixed(2);
         }
 
         async function runAnalysis(tickerInput) {
