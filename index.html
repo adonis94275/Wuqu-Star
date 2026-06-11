@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ASQE v4.0 | 四核心量化決策引擎</title>
+    <title>ASQE v4.0 | 終極多因子量化引擎</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lightweight-charts@4.1.1/dist/lightweight-charts.standalone.production.js"></script>
     <style>
@@ -52,26 +52,15 @@
         </div>
     </div>
 
-    <!-- ⚙️ 系統設定 Modal (API Key 雙保險箱) -->
+    <!-- ⚙️ 系統設定 Modal (API Key 保險箱) -->
     <div id="settingsModal" class="fixed inset-0 bg-black bg-opacity-70 z-[60] flex items-center justify-center hidden">
         <div class="bg-gray-800 p-6 rounded-xl border border-gray-600 shadow-2xl w-full max-w-md">
-            <h3 class="text-lg font-bold text-white mb-4 flex items-center gap-2">⚙️ 系統 API 雙引擎設定</h3>
-            
+            <h3 class="text-lg font-bold text-white mb-4 flex items-center gap-2">⚙️ 系統 API 設定</h3>
             <div class="mb-4">
-                <label class="block text-sm font-bold text-blue-400 mb-1">1. FMP API Key (負責財報基本面)</label>
-                <input type="text" id="fmpKeyInput" class="w-full bg-gray-900 text-white border border-gray-600 rounded px-3 py-2 focus:outline-none focus:border-indigo-500 text-sm" placeholder="貼上您的 FMP API Key">
+                <label class="block text-sm font-bold text-gray-300 mb-2">FMP API Key (美股基本面引擎)</label>
+                <input type="text" id="fmpKeyInput" class="w-full bg-gray-900 text-white border border-gray-600 rounded px-3 py-2 focus:outline-none focus:border-indigo-500" placeholder="貼上您的 FMP API Key">
+                <p class="text-[11px] text-gray-400 mt-2">※ 密鑰將安全儲存於本地，不外洩。<br>※ 若留空，美股將降級使用 Yahoo 純價量備援。</p>
             </div>
-
-            <div class="mb-4">
-                <label class="block text-sm font-bold text-green-400 mb-1">2. Finnhub API Key (負責極速價量)</label>
-                <input type="text" id="finnhubKeyInput" class="w-full bg-gray-900 text-white border border-gray-600 rounded px-3 py-2 focus:outline-none focus:border-indigo-500 text-sm" placeholder="貼上您的 Finnhub API Key">
-            </div>
-
-            <p class="text-[11px] text-gray-400 mt-2 leading-relaxed">
-                ※ 密鑰將安全加密儲存於本地瀏覽器，絕不外洩。<br>
-                ※ 若某個 API 額度耗盡或留空，系統將自動啟動智慧降級機制 (Fallback)，確保看盤不中斷。
-            </p>
-
             <div class="flex justify-end gap-3 mt-6">
                 <button id="closeSettingsBtn" class="px-4 py-2 bg-gray-600 hover:bg-gray-500 rounded text-white text-sm font-medium transition-colors">取消</button>
                 <button id="saveSettingsBtn" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 rounded text-white text-sm font-bold transition-colors">儲存並套用</button>
@@ -89,7 +78,7 @@
             </div>
             
             <div class="flex flex-col sm:flex-row items-center gap-3 w-full sm:w-auto">
-                <div id="dataSourceTag" class="text-[10px] sm:text-xs font-bold px-2 py-1 rounded bg-gray-700 text-gray-300 border border-gray-600 hidden transition-colors duration-300 whitespace-nowrap">
+                <div id="dataSourceTag" class="text-xs font-bold px-2 py-1 rounded bg-gray-700 text-gray-300 border border-gray-600 hidden transition-colors duration-300">
                     資料源連線中
                 </div>
                 <div class="flex bg-gray-700 rounded-lg p-1 w-full sm:w-auto">
@@ -111,7 +100,7 @@
         <!-- 載入中遮罩 -->
         <div id="loadingOverlay" class="fixed inset-0 bg-gray-900 bg-opacity-90 z-50 flex flex-col items-center justify-center hidden">
             <div class="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-indigo-500 mb-4"></div>
-            <p class="text-xl font-bold animate-pulse text-indigo-400" id="loadingText">ASQE 四核心引擎運算中...</p>
+            <p class="text-xl font-bold animate-pulse text-indigo-400" id="loadingText">ASQE v4.0 運算中 (含多因子解析)...</p>
         </div>
 
         <!-- 主要內容區 -->
@@ -266,7 +255,7 @@
                     </div>
                     
                     <div class="mt-6 text-center text-xs text-gray-600">
-                        Adaptive Sniper Quant Engine (ASQE v4.0 四核心版)
+                        Adaptive Sniper Quant Engine (ASQE v4.0 Full)
                     </div>
                 </div>
             </div>
@@ -274,9 +263,8 @@
     </div>
 
     <script>
-        // === 🚀 啟動與系統雙密鑰設定 ===
+        // === 🚀 啟動與系統設定邏輯 (多組密碼驗證) ===
         let fmpApiKey = localStorage.getItem('fmpApiKey') || '';
-        let finnhubApiKey = localStorage.getItem('finnhubApiKey') || '';
 
         document.addEventListener('DOMContentLoaded', () => {
             const now = new Date();
@@ -290,8 +278,12 @@
             const pwdInput = document.getElementById('passwordInput');
             const errorMsg = document.getElementById('errorMsg');
 
+            // 🔑 定義允許多組通關密碼的陣列 (第一組為主密碼，第二組為備用/訪客密碼)
+            const allowedPasswords = ['852767', '520552'];
+
             function attemptUnlock() {
-                if (pwdInput.value === '852763') {
+                // 檢查使用者輸入的密碼是否包含在允許的陣列中
+                if (allowedPasswords.includes(pwdInput.value)) {
                     errorMsg.style.opacity = '0';
                     launchScreen.classList.add('fade-out');
                     document.body.classList.remove('overflow-hidden');
@@ -312,14 +304,12 @@
             openBtn.addEventListener('click', attemptUnlock);
             pwdInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') attemptUnlock(); });
 
-            // API 雙保險箱設定邏輯
+            // API 設定面板邏輯
             const settingsModal = document.getElementById('settingsModal');
             const fmpKeyInput = document.getElementById('fmpKeyInput');
-            const finnhubKeyInput = document.getElementById('finnhubKeyInput');
             
             document.getElementById('openSettingsBtn').addEventListener('click', () => {
                 fmpKeyInput.value = fmpApiKey;
-                finnhubKeyInput.value = finnhubApiKey;
                 settingsModal.classList.remove('hidden');
             });
             document.getElementById('closeSettingsBtn').addEventListener('click', () => {
@@ -327,11 +317,8 @@
             });
             document.getElementById('saveSettingsBtn').addEventListener('click', () => {
                 fmpApiKey = fmpKeyInput.value.trim();
-                finnhubApiKey = finnhubKeyInput.value.trim();
                 localStorage.setItem('fmpApiKey', fmpApiKey);
-                localStorage.setItem('finnhubApiKey', finnhubApiKey);
                 settingsModal.classList.add('hidden');
-                // 儲存後若在美股，立即套用新 Key
                 if(currentMarket === 'US') runAnalysis(document.getElementById('tickerInput').value);
             });
         });
@@ -594,7 +581,7 @@
         }
 
         // ==========================================
-        // 四核心 API 抓取模組 (FinMind / FMP / Finnhub / Yahoo)
+        // API 抓取雙核心引擎 (含財報安全修正)
         // ==========================================
         function getProxies(targetUrl) {
             const encoded = encodeURIComponent(targetUrl);
@@ -622,18 +609,27 @@
             });
         }
 
-        // --- FinMind (台股) ---
         async function fetchFinMindStock(ticker) {
             const rawTicker = ticker.replace('.TW', '');
             const today = new Date();
             const twoYearsAgo = new Date(today.setFullYear(today.getFullYear() - 2)).toISOString().split('T')[0];
-            const url = `https://api.finmindtrade.com/api/v4/data?dataset=TaiwanStockPrice&data_id=${rawTicker}&start_date=${twoYearsAgo}`;
+            const dataset = currentMarket === 'TW' ? 'TaiwanStockPrice' : 'USStockPrice';
+            const url = `https://api.finmindtrade.com/api/v4/data?dataset=${dataset}&data_id=${rawTicker}&start_date=${twoYearsAgo}`;
             const res = await fetch(url);
             const json = await res.json();
             if (json.status !== 200 || !json.data || json.data.length === 0) throw new Error("FinMind Rate Limit or Empty Data");
+            
+            // 安全處理美股與台股不同欄位命名問題
             return json.data.map(d => {
                 const closeVal = Number(d.close ?? d.Close);
-                return { time: d.date, open: Number(d.open ?? d.Open ?? closeVal), high: Number(d.max ?? d.High ?? d.high ?? closeVal), low: Number(d.min ?? d.Low ?? d.low ?? closeVal), close: closeVal, volume: Number(d.Trading_Volume ?? d.Volume ?? 0) };
+                return { 
+                    time: d.date, 
+                    open: Number(d.open ?? d.Open ?? closeVal), 
+                    high: Number(d.max ?? d.High ?? d.high ?? closeVal), 
+                    low: Number(d.min ?? d.Low ?? d.low ?? closeVal), 
+                    close: closeVal, 
+                    volume: Number(d.Trading_Volume ?? d.Volume ?? 0) 
+                };
             }).filter(d => !isNaN(d.close));
         }
 
@@ -661,51 +657,6 @@
             return null;
         }
 
-        // --- 🚀 新增：Finnhub API (美股極速價量) ---
-        async function fetchFinnhubStock(ticker, apiKey) {
-            if (!apiKey) throw new Error("No Finnhub API Key");
-            const to = Math.floor(Date.now() / 1000);
-            const from = to - (2 * 365 * 24 * 60 * 60); // 近兩年
-            const url = `https://finnhub.io/api/v1/stock/candle?symbol=${ticker}&resolution=D&from=${from}&to=${to}&token=${apiKey}`;
-            const res = await fetch(url);
-            const json = await res.json();
-            if (json.s !== "ok" || !json.t || json.t.length === 0) throw new Error("Finnhub Fetch Error");
-            
-            let formattedData = [];
-            for (let i = 0; i < json.t.length; i++) {
-                formattedData.push({
-                    time: getLocalYYYYMMDD(new Date(json.t[i] * 1000)),
-                    open: json.o[i], high: json.h[i], low: json.l[i], close: json.c[i], volume: json.v[i]
-                });
-            }
-            return formattedData;
-        }
-
-        // --- FMP API (美股財報與價量備援) ---
-        async function fetchFMPStock(ticker, apiKey) {
-            if (!apiKey) throw new Error("No FMP API Key");
-            const url = `https://financialmodelingprep.com/api/v3/historical-price-full/${ticker}?apikey=${apiKey}`;
-            const res = await fetch(url);
-            const json = await res.json();
-            if (!json.historical || json.historical.length === 0) throw new Error("FMP Fetch Error");
-            let hist = json.historical.slice(0, 504).reverse();
-            return hist.map(d => ({
-                time: d.date, open: d.open, high: d.high, low: d.low, close: d.close, volume: d.volume
-            }));
-        }
-
-        async function fetchFMPRevenue(ticker, apiKey) {
-            if (!apiKey) return null;
-            try {
-                const url = `https://financialmodelingprep.com/api/v3/income-statement/${ticker}?period=quarter&limit=8&apikey=${apiKey}`;
-                const res = await fetch(url);
-                const json = await res.json();
-                if (!json || json.length === 0) return null;
-                return json; 
-            } catch(e) { return null; }
-        }
-
-        // --- Yahoo API (終極備援) ---
         async function fetchYahooStock(ticker) {
             let qTicker = ticker;
             if (currentMarket === 'TW' && /^\d{4}$/.test(ticker)) qTicker += ".TW";
@@ -766,7 +717,7 @@
             bbUpperSeries.setData(bbUpData); bbMiddleSeries.setData(bbMidData); bbLowerSeries.setData(bbLowData);
             adxSeries.setData(adxData); rsiSeries.setData(rsiData);
 
-            // 安全極值標示
+            // 🛠️ 嚴格防呆的安全極值標示 (修復 undefined 報錯)
             const markers = [];
             let absMax = null, absMin = null;
             data.forEach(d => { 
@@ -812,7 +763,7 @@
             const high20 = Math.max(...last20.map(d => d.high));
             const low20 = Math.min(...last20.map(d => d.low));
             
-            // --- 引擎 1：市場環境 ---
+            // --- 引擎 1：市場環境 (15分) ---
             let score1 = 0, text1 = "";
             if (currentIndexData && currentIndexData.length > 20) {
                 let idxL = currentIndexData[currentIndexData.length-1];
@@ -828,10 +779,11 @@
             document.getElementById('score-m1').innerText = `${score1}/15`;
             document.getElementById('desc-m1').innerHTML = text1;
 
-            // --- 引擎 2：品質引擎 - EPS/營收 YoY ---
+            // --- ✨ 引擎 2：品質引擎 - EPS/營收 YoY (15分) ---
             let score2 = 0, text2 = "";
             if (currentRevData && currentRevData.length > 0) {
                 if (currentMarket === 'TW') {
+                    // FinMind (月營收)
                     let revs = currentRevData.sort((a,b) => new Date(a.date) - new Date(b.date));
                     let yoySum = 0, validCount = 0;
                     revs.slice(-3).forEach(curr => {
@@ -847,6 +799,7 @@
                         else { score2 = 0; text2 = `❌ 營收衰退 (YoY ${avgYoy.toFixed(1)}%)`; }
                     } else { score2 = 5; text2 = "⚠️ 營收資料不足 (+5)"; }
                 } else if (currentMarket === 'US') {
+                    // FMP (季財報 EPS + Revenue)
                     let revs = currentRevData; 
                     let epsYoySum = 0, revYoySum = 0, validCount = 0;
                     for(let i=0; i<2; i++) { 
@@ -870,7 +823,7 @@
             document.getElementById('score-m2').innerText = `${score2}/15`;
             document.getElementById('desc-m2').innerHTML = text2;
 
-            // --- 引擎 3：資金流引擎 - 法人與成本 ---
+            // --- ✨ 引擎 3：資金流引擎 - 法人與成本 (15分) ---
             let score3 = 0, text3 = "";
             let fNet = 0, tNet = 0;
             if (currentMarket === 'TW' && currentInstData && currentInstData.length > 0) {
@@ -893,7 +846,7 @@
             document.getElementById('score-m3').innerText = `${score3}/15`;
             document.getElementById('desc-m3').innerHTML = text3;
 
-            // --- 引擎 4：動能引擎 - Alpha (α) 超額報酬 ---
+            // --- ✨ 引擎 4：動能引擎 - Alpha (α) 超額報酬 (20分) ---
             let score4 = 0, text4 = "";
             if (currentIndexData && currentIndexData.length > 20 && data.length > 20) {
                 let stockRet = (lData.close - data[data.length-21].close) / data[data.length-21].close;
@@ -908,7 +861,8 @@
             document.getElementById('score-m4').innerText = `${score4}/20`;
             document.getElementById('desc-m4').innerHTML = text4;
 
-            // --- 引擎 5：波動引擎 - VCP 與 Beta (β) 風險 ---
+            // --- ✨ 引擎 5：波動引擎 - VCP 與 Beta (β) 風險 (15分) ---
+            // 計算 20日 Beta 係數
             let betaVal = null;
             if (currentIndexData && currentIndexData.length > 20 && data.length > 20) {
                 let sRets = [], iRets = [];
@@ -953,13 +907,13 @@
                 if (betaVal >= 1 && betaVal <= 1.5) { score5 += 5; text5 += `✅ Beta最佳 (${betaVal.toFixed(2)}) (+5) `; }
                 else if (betaVal > 2) { score5 += 0; text5 += `⚠️ Beta過高 (${betaVal.toFixed(2)}) `; }
                 else { score5 += 2; text5 += `⚠️ Beta偏低 (${betaVal.toFixed(2)}) (+2) `; }
-            } else { score5 += 5; } 
+            } else { score5 += 5; } // 無法算 Beta 給予基本分
 
             if(score5 === 0) text5 = "⚠️ 波動放大且風險過高";
             document.getElementById('score-m5').innerText = `${score5}/15`;
             document.getElementById('desc-m5').innerHTML = text5;
 
-            // --- 引擎 6：交易引擎 - 觸發與突破 ---
+            // --- 引擎 6：交易引擎 - 觸發與突破 (20分) ---
             let score6 = 0, text6 = "", triggerCount = 0;
             if (lData.close >= high20 * 0.98) { score6 += 5; text6 += "🚀 創20日新高 (+5) "; }
             if (lData.volume > vol20MA * 1.5) { score6 += 5; text6 += "🔥 爆量1.5倍 (+5) "; }
@@ -1002,6 +956,7 @@
 
             let rating = "", size = "", dirText = "", actionText = "", dirColor = "";
 
+            // ✨ Kelly Fraction 部位管理升級
             if (totalScore >= 90) { 
                 rating = "🚀 SSS 超級飆股"; size = "單檔上限 20% (滿倉配置)"; circle.classList.add('text-fuchsia-500'); 
                 dirText = "📈 強勢做多"; actionText = "突破追擊 / 抱緊"; dirColor = "text-red-400";
@@ -1048,8 +1003,8 @@
                 slEl.className = "text-lg font-bold text-green-400"; tpEl.className = "text-lg font-bold text-red-400";
                 slEl.innerText = stopPrc.toFixed(2); tpEl.innerText = tpPrc < lData.close ? "持倉續抱" : tpPrc.toFixed(2);
             } else if (totalScore >= 40) {
-                stopPrc = lData.close + 2 * lATR; tpPrc = low20 + 3 * lATR;
-                slLabel.innerText = "⚠️ 空單防禦 (Close + 2ATR)"; tpLabel.innerText = "⚠️ 空單回補區 (Low20 + 3ATR)";
+                stopPrc = lData.close - 2 * lATR; tpPrc = high20 - 3 * lATR;
+                slLabel.innerText = "⚠️ 多單最後防線"; tpLabel.innerText = "⚠️ 反彈逃命壓力";
                 slEl.className = "text-lg font-bold text-orange-400"; tpEl.className = "text-lg font-bold text-orange-400";
                 slEl.innerText = stopPrc.toFixed(2); tpEl.innerText = tpPrc.toFixed(2);
             } else {
@@ -1073,7 +1028,6 @@
             let data = [];
             currentIndexData = null; currentInstData = null; currentRevData = null;
             
-            // 1. 抓取大盤
             try {
                 let idxTicker = currentMarket === 'TW' ? '^TWII' : '^GSPC';
                 const url = `https://query1.finance.yahoo.com/v8/finance/chart/${idxTicker}?range=1y&interval=1d`;
@@ -1082,56 +1036,32 @@
                 currentIndexData = chart.timestamp.map((t, i) => ({ time: getLocalYYYYMMDD(new Date(t * 1000)), close: chart.indicators.quote[0].close[i] })).filter(d => d.close !== null);
             } catch (e) { console.warn("大盤獲取失敗"); }
 
-            // 2. 智慧分支 (台股/美股)
             if (currentMarket === 'TW') {
                 try {
                     data = await fetchFinMindStock(ticker);
                     currentInstData = await fetchFinMindInstitutional(ticker);
                     currentRevData = await fetchFinMindRevenue(ticker);
                     tag.innerText = "FinMind 雙擎連線";
-                    tag.className = "text-[10px] sm:text-xs font-bold px-2 py-1 rounded bg-green-900 text-green-300 border border-green-700 transition-colors duration-300 whitespace-nowrap";
+                    tag.className = "text-xs font-bold px-2 py-1 rounded bg-green-900 text-green-300 border border-green-700 transition-colors duration-300";
                     tag.classList.remove('hidden');
                 } catch (e) {
                     console.warn(`降級回 Yahoo API: ${e.message}`);
-                    try { data = await fetchYahooStock(ticker); tag.innerText = "Yahoo 備援連線"; tag.className = "text-[10px] sm:text-xs font-bold px-2 py-1 rounded bg-orange-900 text-orange-300 border border-orange-700 transition-colors duration-300 whitespace-nowrap"; tag.classList.remove('hidden'); } catch (err) { console.error("所有資料源失效"); }
+                    try { data = await fetchYahooStock(ticker); } catch (err) { console.error("所有資料源失效"); }
                 }
             } else if (currentMarket === 'US') {
-                let priceSrc = '', revSrc = '';
-
-                // 美股品質引擎: 嘗試 FMP
                 if (fmpApiKey) {
-                    try { currentRevData = await fetchFMPRevenue(ticker, fmpApiKey); revSrc = 'FMP財報'; } 
-                    catch(e) { console.warn("FMP財報失敗"); }
-                }
-
-                // 美股技術引擎 (優先度: Finnhub -> FMP -> Yahoo)
-                if (finnhubApiKey) {
-                    try { data = await fetchFinnhubStock(ticker, finnhubApiKey); priceSrc = 'Finnhub極速價量'; }
-                    catch(e) { console.warn("Finnhub失敗"); }
-                }
-
-                if (!data || data.length === 0) {
-                    if (fmpApiKey) {
-                        try { data = await fetchFMPStock(ticker, fmpApiKey); priceSrc = 'FMP價量'; }
-                        catch(e) { console.warn("FMP價量失敗"); }
-                    }
-                }
-
-                if (!data || data.length === 0) {
-                    try { data = await fetchYahooStock(ticker); priceSrc = 'Yahoo備援'; }
-                    catch(e) { console.error("所有資料源失效"); }
-                }
-
-                // 顯示四核心狀態 Tag
-                if (data && data.length > 0) {
-                    let tags = [];
-                    if (priceSrc) tags.push(priceSrc);
-                    if (revSrc) tags.push(revSrc);
-                    if (tags.length > 0) {
-                        tag.innerText = tags.join(" + ");
-                        tag.className = "text-[10px] sm:text-xs font-bold px-2 py-1 rounded bg-blue-900 text-blue-300 border border-blue-700 transition-colors duration-300 whitespace-nowrap";
+                    try {
+                        data = await fetchFMPStock(ticker, fmpApiKey);
+                        currentRevData = await fetchFMPRevenue(ticker, fmpApiKey);
+                        tag.innerText = "FMP 財報連線";
+                        tag.className = "text-xs font-bold px-2 py-1 rounded bg-blue-900 text-blue-300 border border-blue-700 transition-colors duration-300";
                         tag.classList.remove('hidden');
+                    } catch (e) {
+                        console.warn(`FMP API 失敗，降級回 Yahoo API: ${e.message}`);
+                        try { data = await fetchYahooStock(ticker); } catch (err) { console.error("所有資料源失效"); }
                     }
+                } else {
+                    try { data = await fetchYahooStock(ticker); } catch (err) { console.error("所有資料源失效"); }
                 }
             }
 
