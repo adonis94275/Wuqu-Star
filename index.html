@@ -843,7 +843,10 @@
             tdEl.className = `text-sm font-bold mt-0.5 ${dirColor}`;
             document.getElementById('tradeAction').innerText = actionText;
 
-            let isShorting = totalScore < 50;
+            // --- 🔧 修復：ATR 智能風控 (雙向升級) 的邏輯 ---
+            // 只要分數 <= 50，或是觸發了超級防禦機制(Veto)，就強制切換為「做空防護」
+            let isShorting = (totalScore <= 50) || (!vetoEl.classList.contains('hidden'));
+            
             let stopPrc, tpPrc;
             let slLabel = document.getElementById('slLabel');
             let tpLabel = document.getElementById('tpLabel');
@@ -851,6 +854,7 @@
             let tpEl = document.getElementById('takeProfit');
 
             if (!isShorting) {
+                // 做多防護邏輯 (防守在下方)
                 stopPrc = lData.close - 2 * lATR;
                 tpPrc = high20 - 3 * lATR;
                 slLabel.innerText = "做多停損 (Close - 2ATR)";
@@ -858,6 +862,7 @@
                 slEl.className = "text-lg font-bold text-green-400"; 
                 tpEl.className = "text-lg font-bold text-red-400";   
             } else {
+                // 做空防護邏輯 (防守在上方)
                 stopPrc = lData.close + 2 * lATR;
                 tpPrc = low20 + 3 * lATR;
                 slLabel.innerText = "做空停損 (Close + 2ATR)";
