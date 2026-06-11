@@ -814,6 +814,7 @@
             let rating = "", size = "";
             let dirText = "", actionText = "", dirColor = "";
 
+            // --- 升級版：多空雙向部位控管模型 ---
             if (totalScore >= 90) { 
                 rating = "🚀 SSS 超級飆股"; size = "100% 重倉作多"; circle.classList.add('text-fuchsia-500'); 
                 dirText = "📈 強勢做多"; actionText = "突破追擊 / 抱緊"; dirColor = "text-red-400";
@@ -824,15 +825,33 @@
                 rating = "🟡 S 潛力股"; size = "50% 標準配置"; circle.classList.add('text-yellow-500'); 
                 dirText = "⚖️ 震盪偏多"; actionText = "區間低買高賣"; dirColor = "text-yellow-400";
             } else if (totalScore >= 50) { 
-                rating = "⏳ A 整理/轉弱"; size = "30% 試單或減碼"; circle.classList.add('text-orange-500'); 
-                dirText = "⚠️ 多空不明"; actionText = "空手觀望 / 減碼"; dirColor = "text-orange-400";
+                rating = "⏳ A 整理/多空不明"; size = "30% 試單或減碼"; circle.classList.add('text-orange-500'); 
+                dirText = "⚠️ 多空交戰"; actionText = "空手觀望 / 減碼"; dirColor = "text-orange-400";
+            } else if (totalScore >= 40) {
+                // 40~49：剛跌破 50，多空雙巴區
+                rating = "📉 轉弱初跌"; size = "0% 空手觀望"; circle.classList.add('text-red-400'); 
+                dirText = "⚠️ 趨勢轉弱"; actionText = "多單離場 / 不宜做空"; dirColor = "text-orange-400";
+            } else if (totalScore >= 30) {
+                // 30~39：空頭成形，試單放空
+                rating = "🔴 弱勢空頭"; size = "30% 試單放空"; circle.classList.add('text-red-500'); 
+                dirText = "📉 偏空操作"; actionText = "逢高放空 / 跌破空"; dirColor = "text-green-400";
+            } else if (totalScore >= 20) {
+                // 20~29：明確空頭
+                rating = "🔴 弱勢空頭"; size = "50% 標準放空"; circle.classList.add('text-red-500'); 
+                dirText = "📉 強勢做空"; actionText = "順勢放空 / 抱緊"; dirColor = "text-green-400";
             } else { 
-                rating = "🔴 弱勢/反轉區"; size = "0% 嚴禁做多"; circle.classList.add('text-red-500'); 
-                dirText = "📉 強勢做空"; actionText = "逢高放空 / 跌破空"; dirColor = "text-green-400";
+                // 0~19：極度弱勢 / 崩盤區 (做空極限 70%，不建議 100% 防止軋空)
+                rating = "💥 極度弱勢/崩盤"; size = "70% 積極放空"; circle.classList.add('text-red-600'); 
+                dirText = "📉 強勢做空"; actionText = "順勢追空 / 抱緊"; dirColor = "text-green-500";
             }
 
             if (!vetoEl.classList.contains('hidden')) {
-                dirText = "🚨 趨勢反轉"; actionText = "停損逃命 / 反手空"; dirColor = "text-green-400";
+                // 若觸發超級防禦 (一票否決)
+                rating = "🚨 趨勢反轉/危機"; 
+                // 觸發危機時，根據分數決定放空力道，若原本分數>50被強制降到50，則建議試空
+                size = totalScore <= 30 ? "50% 標準放空" : "30% 試單放空"; 
+                dirText = "🚨 危機降臨"; actionText = "多單逃命 / 反手空"; dirColor = "text-green-400";
+                circle.classList.add('text-red-500');
             }
 
             document.getElementById('finalRating').innerText = rating;
@@ -843,10 +862,7 @@
             tdEl.className = `text-sm font-bold mt-0.5 ${dirColor}`;
             document.getElementById('tradeAction').innerText = actionText;
 
-            // --- 🔧 修復：ATR 智能風控 (雙向升級) 的邏輯 ---
-            // 只要分數 <= 50，或是觸發了超級防禦機制(Veto)，就強制切換為「做空防護」
-            let isShorting = (totalScore <= 50) || (!vetoEl.classList.contains('hidden'));
-            
+            let isShorting = totalScore < 50 || !vetoEl.classList.contains('hidden');
             let stopPrc, tpPrc;
             let slLabel = document.getElementById('slLabel');
             let tpLabel = document.getElementById('tpLabel');
