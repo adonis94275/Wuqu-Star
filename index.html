@@ -1,29 +1,1195 @@
-<!-- ... existing code ... -->
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ASQE v4.0 | 四核心量化決策引擎</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lightweight-charts@4.1.1/dist/lightweight-charts.standalone.production.js"></script>
+    <style>
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: #1f2937; }
+        ::-webkit-scrollbar-thumb { background: #4b5563; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #6b7280; }
+        .tv-lightweight-charts { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+        .score-circle { transition: stroke-dashoffset 1s ease-out; }
+        
+        #launchScreen { transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.6s cubic-bezier(0.4, 0, 0.2, 1); }
+        .fade-out { opacity: 0 !important; visibility: hidden !important; }
+        #mainApp { opacity: 0; visibility: hidden; transition: opacity 0.8s ease-in 0.3s, visibility 0s linear 0.3s; }
+        .fade-in { opacity: 1 !important; visibility: visible !important; }
+        
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+        .shake-animation { animation: shake 0.3s ease-in-out; }
+    </style>
+</head>
+<body class="bg-gray-900 text-gray-100 flex flex-col min-h-screen relative font-sans overflow-hidden">
+
+    <!-- 密碼解鎖歡迎畫面 -->
+    <div id="launchScreen" class="fixed inset-0 z-[100] bg-gray-100 flex items-center justify-center p-4">
+        <div class="bg-yellow-50 rounded-3xl p-6 md:p-8 w-full max-w-2xl flex flex-col md:flex-row items-center justify-between shadow-xl border border-yellow-200">
+            <div class="flex items-center gap-4 md:gap-6 mb-4 md:mb-0">
+                <div class="flex flex-col justify-center text-center md:text-left">
+                    <h1 class="text-xl md:text-2xl font-bold text-gray-900 tracking-wide">ASQE v4.0 量化系統</h1>
+                    <p class="text-sm md:text-base text-gray-500 mt-1" id="launchDate">載入中...</p>
+                </div>
+            </div>
+            
+            <div class="flex flex-col items-end shrink-0 w-full md:w-auto">
+                <div class="flex items-center w-full md:w-auto">
+                    <input type="password" id="passwordInput" placeholder="請輸入解鎖密碼" 
+                           class="bg-white text-gray-800 border border-yellow-300 rounded-l-full px-4 py-2 md:py-2.5 focus:outline-none focus:ring-2 focus:ring-yellow-400 w-full md:w-40 text-center shadow-inner transition-shadow">
+                    <button id="openAppBtn" class="bg-yellow-400 hover:bg-yellow-500 text-gray-900 font-bold py-2 md:py-2.5 px-6 md:px-8 rounded-r-full transition-colors shadow-md border border-yellow-400 shrink-0">
+                        解鎖
+                    </button>
+                </div>
+                <p id="errorMsg" class="text-red-500 text-xs font-bold mt-2 mr-2 opacity-0 transition-opacity">密碼錯誤，請重新輸入</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ⚙️ 系統設定 Modal -->
+    <div id="settingsModal" class="fixed inset-0 bg-black bg-opacity-70 z-[60] flex items-center justify-center hidden">
+        <div class="bg-gray-800 p-6 rounded-xl border border-gray-600 shadow-2xl w-full max-w-md">
+            <h3 class="text-lg font-bold text-white mb-4 flex items-center gap-2">⚙️ 系統 API 雙引擎設定</h3>
+            
+            <div class="mb-4">
+                <label class="block text-sm font-bold text-blue-400 mb-1">1. FMP API Key (負責財報基本面)</label>
+                <input type="text" id="fmpKeyInput" class="w-full bg-gray-900 text-white border border-gray-600 rounded px-3 py-2 focus:outline-none focus:border-indigo-500 text-sm" placeholder="貼上您的 FMP API Key">
+            </div>
+
+            <div class="mb-4">
+                <label class="block text-sm font-bold text-green-400 mb-1">2. Finnhub API Key (負責極速價量)</label>
+                <input type="text" id="finnhubKeyInput" class="w-full bg-gray-900 text-white border border-gray-600 rounded px-3 py-2 focus:outline-none focus:border-indigo-500 text-sm" placeholder="貼上您的 Finnhub API Key">
+            </div>
+
+            <p class="text-[11px] text-gray-400 mt-2 leading-relaxed">
+                ※ 密鑰將安全加密儲存於本地瀏覽器，絕不外洩。<br>
+                ※ 若某個 API 額度耗盡或留空，系統將自動啟動智慧降級機制 (Fallback)，確保看盤不中斷。
+            </p>
+
+            <div class="flex justify-end gap-3 mt-6">
+                <button id="closeSettingsBtn" class="px-4 py-2 bg-gray-600 hover:bg-gray-500 rounded text-white text-sm font-medium transition-colors">取消</button>
+                <button id="saveSettingsBtn" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 rounded text-white text-sm font-bold transition-colors">儲存並套用</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 主應用程式 -->
+    <div id="mainApp" class="flex flex-col min-h-screen w-full h-full absolute inset-0">
+        <!-- 頂部導覽列 -->
+        <header class="sticky top-0 bg-gray-800 border-b border-gray-700 p-3 lg:p-4 flex flex-col sm:flex-row items-center justify-between z-40 shrink-0 gap-4 shadow-md">
+            <div class="flex items-center gap-3">
+                <div class="w-8 h-8 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-lg flex items-center justify-center font-bold text-xl shadow-lg">🎯</div>
+                <h1 class="text-xl font-bold tracking-wider hidden sm:block text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400">ASQE v4.0 量化引擎</h1>
+            </div>
+            
+            <div class="flex flex-col sm:flex-row items-center gap-3 w-full sm:w-auto">
+                <div id="dataSourceTag" class="text-[10px] sm:text-xs font-bold px-2 py-1 rounded bg-gray-700 text-gray-300 border border-gray-600 hidden transition-colors duration-300 whitespace-nowrap shadow-inner">
+                    資料源連線中
+                </div>
+                <div class="flex bg-gray-700 rounded-lg p-1 w-full sm:w-auto">
+                    <button id="tabTW" class="flex-1 sm:flex-none px-4 py-1.5 rounded-md text-sm font-medium transition-colors bg-indigo-600 text-white shadow">台股 (TW)</button>
+                    <button id="tabUS" class="flex-1 sm:flex-none px-4 py-1.5 rounded-md text-sm font-medium transition-colors text-gray-300 hover:text-white hover:bg-gray-600">美股 (US)</button>
+                </div>
+                <div class="flex items-center gap-2 w-full sm:w-auto">
+                    <input type="text" id="tickerInput" value="2330.TW" placeholder="例: 2330.TW" 
+                           class="bg-gray-700 text-white border border-gray-600 rounded px-4 py-2 focus:outline-none focus:border-indigo-500 w-full sm:w-40 lg:w-48 transition-colors">
+                    <button id="analyzeBtn" class="bg-indigo-600 hover:bg-indigo-500 text-white font-semibold py-2 px-6 rounded transition-colors shadow-lg whitespace-nowrap">量化狙擊</button>
+                    <!-- ⚙️ 設定按鈕 -->
+                    <button id="openSettingsBtn" class="bg-gray-700 hover:bg-gray-600 border border-gray-600 text-white p-2 rounded transition-colors shadow-lg" title="API 設定">
+                        ⚙️
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- 載入中遮罩 -->
+        <div id="loadingOverlay" class="fixed inset-0 bg-gray-900 bg-opacity-90 z-50 flex flex-col items-center justify-center hidden backdrop-blur-sm transition-all duration-300">
+            <div class="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-indigo-500 mb-4 shadow-lg"></div>
+            <p class="text-xl font-bold animate-pulse text-indigo-400" id="loadingText">ASQE 自適應雙軌引擎運算中...</p>
+        </div>
+
+        <!-- 主要內容區 -->
+        <div class="flex-1 flex flex-col lg:flex-row relative">
+            
+            <div class="flex-1 flex flex-col bg-gray-900 p-2 lg:p-4 gap-3 w-full">
+                <div class="relative w-full rounded-xl border border-gray-800 bg-gray-800 shadow-inner flex flex-col h-[350px] lg:h-[450px] shrink-0">
+                    <div class="absolute top-2 left-4 z-10 text-sm font-semibold flex flex-col gap-2 pointer-events-none w-full pr-4">
+                        <div class="flex items-center gap-4">
+                            <span id="chartTitle" class="text-xl text-indigo-400 font-bold drop-shadow-md">2330.TW</span>
+                            <!-- 💡 ETF 模式徽章 -->
+                            <span id="etfBadge" class="hidden text-[10px] font-bold bg-fuchsia-600/80 text-white px-2 py-0.5 rounded shadow shadow-fuchsia-500/50 animate-pulse">ETF 智能存股模式</span>
+                            <!-- 圖表開關控制 -->
+                            <div class="flex items-center gap-3 bg-gray-800/90 px-2 py-1.5 rounded-lg border border-gray-700 pointer-events-auto shadow-sm backdrop-blur-md">
+                                <label class="flex items-center gap-1.5 text-xs text-gray-300 cursor-pointer hover:text-white transition-colors">
+                                    <input type="checkbox" id="toggleEMA" checked class="h-3.5 w-3.5 text-indigo-500 rounded-sm bg-gray-700 border-gray-600 focus:ring-0"><span>均線</span>
+                                </label>
+                                <label class="flex items-center gap-1.5 text-xs text-gray-300 cursor-pointer hover:text-white transition-colors">
+                                    <input type="checkbox" id="toggleBB" checked class="h-3.5 w-3.5 text-indigo-500 rounded-sm bg-gray-700 border-gray-600 focus:ring-0"><span>布林通道</span>
+                                </label>
+                                <label class="flex items-center gap-1.5 text-xs text-gray-300 cursor-pointer hover:text-white transition-colors border-l border-gray-600 pl-2 ml-1">
+                                    <input type="checkbox" id="toggleVWAP" checked class="h-3.5 w-3.5 text-cyan-500 rounded-sm bg-gray-700 border-gray-600 focus:ring-0"><span>VWAP</span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="flex flex-col gap-1.5">
+                            <div id="legend-ema-group" class="flex flex-wrap gap-2 text-xs opacity-95 transition-opacity">
+                                <span class="text-gray-300 bg-gray-700/80 px-1.5 py-0.5 rounded shadow-sm">EMA</span>
+                                <span class="text-yellow-400 flex items-center" id="legend-ema10">10: --</span>
+                                <span class="text-fuchsia-500 flex items-center" id="legend-ema20">20: --</span>
+                                <span class="text-cyan-400 flex items-center" id="legend-ema60">60: --</span>
+                                <span class="text-orange-400 font-bold flex items-center ml-2 border-l border-gray-600 pl-2" id="legend-poc">POC: --</span>
+                                <span class="text-[color:#38bdf8] font-bold flex items-center" id="legend-vwap">VWAP(60): --</span>
+                            </div>
+                            <div id="legend-bb-group" class="flex flex-wrap gap-x-3 gap-y-1 text-xs opacity-95 transition-opacity">
+                                <span class="text-gray-300 bg-gray-700/80 px-1.5 py-0.5 rounded shadow-sm">BB</span>
+                                <span class="text-red-400 flex items-center" id="legend-up">上軌 --</span>
+                                <span class="text-yellow-400 flex items-center" id="legend-mid">中軌 --</span>
+                                <span class="text-green-400 flex items-center" id="legend-low">下軌 --</span>
+                                <span class="text-indigo-400 font-bold flex items-center ml-2 border-l border-gray-600 pl-2" id="legend-bandwidth">帶寬: --</span>
+                                <span class="text-pink-400 font-bold flex items-center" id="legend-pb">%b: --</span>
+                            </div>
+                            <div id="legend-vol" class="text-xs font-mono opacity-80 text-gray-400 mt-0.5">Vol: --</div>
+                        </div>
+                    </div>
+                    <div id="priceChartContainer" class="w-full flex-1 mt-[5.5rem] mb-1 pointer-events-auto"></div>
+                </div>
+
+                <div class="flex flex-col gap-3 shrink-0">
+                    <div class="relative w-full rounded-xl border border-gray-800 bg-gray-800 shadow-inner flex flex-col h-[180px]">
+                        <div class="absolute top-2 left-4 z-10 text-xs font-semibold flex items-center gap-3">
+                            <span class="text-gray-300 bg-gray-700/80 px-1.5 py-0.5 rounded shadow-sm">DMI+RSI</span>
+                            <span class="text-purple-400" id="legend-adx">ADX: --</span>
+                            <span class="text-cyan-400" id="legend-rsi">RSI: --</span>
+                            <span class="text-gray-400 ml-4 border-l border-gray-600 pl-4" id="legend-atr">ATR(14): --</span>
+                        </div>
+                        <div id="dmiChartContainer" class="w-full flex-1 mt-8 mb-1"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 右側：量化多因子分析面板 -->
+            <div class="w-full lg:w-[450px] bg-gray-800 lg:border-l border-t lg:border-t-0 border-gray-700 flex flex-col shrink-0 custom-scrollbar overflow-y-auto h-screen pb-20">
+                <div class="p-5">
+                    
+                    <div class="flex items-center justify-between mb-6 bg-gray-900 p-4 rounded-xl border border-gray-700 shadow-lg relative overflow-hidden">
+                        <div class="absolute -right-4 -top-4 w-24 h-24 bg-indigo-500/10 rounded-full blur-2xl"></div>
+                        <div class="flex flex-col w-3/5 relative z-10">
+                            <h2 class="text-sm text-gray-400 font-bold tracking-wider">ASQE 綜合評級</h2>
+                            <div id="finalRating" class="text-2xl lg:text-3xl font-black mt-1 text-gray-200">計算中...</div>
+                            <div id="positionSize" class="text-[11px] text-indigo-400 font-bold mt-2 leading-tight">部位建議：--</div>
+                            
+                            <div class="mt-3 flex gap-2 w-full">
+                                <div class="flex-1 bg-gray-800/80 p-2 rounded border border-gray-700 text-center shadow-inner">
+                                    <div class="text-[10px] text-gray-400">目前主戰方向</div>
+                                    <div id="tradeDirection" class="text-sm font-bold text-gray-200 mt-0.5">--</div>
+                                </div>
+                                <div class="flex-1 bg-gray-800/80 p-2 rounded border border-gray-700 text-center shadow-inner">
+                                    <div class="text-[10px] text-gray-400">操作建議</div>
+                                    <div id="tradeAction" class="text-sm font-bold text-gray-200 mt-0.5">--</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="relative w-24 h-24 shrink-0 z-10">
+                            <svg class="w-full h-full transform -rotate-90 drop-shadow-md" viewBox="0 0 36 36">
+                                <path class="text-gray-700" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-width="3" stroke-dasharray="100, 100" />
+                                <path id="scoreCircle" class="text-indigo-500 score-circle" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-width="3" stroke-dasharray="0, 100" />
+                            </svg>
+                            <div class="absolute inset-0 flex items-center justify-center">
+                                <span id="totalScore" class="text-2xl font-bold text-white drop-shadow-sm">0</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mb-6 p-4 rounded-xl bg-gray-900/40 border border-gray-700 shadow-sm relative overflow-hidden">
+                        <div class="text-indigo-400 text-sm font-bold mb-3 flex items-center gap-2 relative z-10">
+                            <span class="bg-indigo-500/20 p-1 rounded">🛡️</span> ATR 雙軌動態風控
+                        </div>
+                        <div class="grid grid-cols-2 gap-4 relative z-10">
+                            <div class="bg-gray-900/80 p-2 rounded border border-gray-700 flex flex-col justify-center shadow-inner">
+                                <div class="text-[11px] text-gray-400 mb-1" id="slLabel">防守線計算中</div>
+                                <div id="stopLoss" class="text-lg font-bold">--</div>
+                            </div>
+                            <div class="bg-gray-900/80 p-2 rounded border border-gray-700 flex flex-col justify-center shadow-inner">
+                                <div class="text-[11px] text-gray-400 mb-1" id="tpLabel">目標線計算中</div>
+                                <div id="takeProfit" class="text-lg font-bold">--</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h3 class="text-sm font-bold text-gray-400 mb-3 uppercase tracking-widest border-b border-gray-700 pb-2">v4.0 權值自適應量化引擎</h3>
+                    
+                    <div class="space-y-3">
+                        <div class="bg-gray-900 rounded-lg p-3 border border-gray-700 shadow-sm transition-colors hover:bg-gray-800/80">
+                            <div class="flex justify-between items-center mb-1">
+                                <h4 class="text-sm font-bold text-gray-300">1. 市場環境引擎</h4>
+                                <span id="score-m1" class="text-sm font-bold text-indigo-400">0/15</span>
+                            </div>
+                            <div id="desc-m1" class="text-xs text-gray-400">判斷大盤趨勢與環境...</div>
+                        </div>
+                        <div class="bg-gray-900 rounded-lg p-3 border border-gray-700 shadow-sm transition-colors hover:bg-gray-800/80">
+                            <div class="flex justify-between items-center mb-1">
+                                <h4 class="text-sm font-bold text-gray-300">2. 品質引擎 (EPS/營收)</h4>
+                                <span id="score-m2" class="text-sm font-bold text-indigo-400">0/15</span>
+                            </div>
+                            <div id="desc-m2" class="text-xs text-gray-400">過濾無基本面支撐標的...</div>
+                        </div>
+                        <div class="bg-gray-900 rounded-lg p-3 border border-gray-700 shadow-sm transition-colors hover:bg-gray-800/80">
+                            <div class="flex justify-between items-center mb-1">
+                                <h4 class="text-sm font-bold text-gray-300">3. 資金流引擎 (VWAP/籌碼)</h4>
+                                <span id="score-m3" class="text-sm font-bold text-indigo-400">0/15</span>
+                            </div>
+                            <div id="desc-m3" class="text-xs text-gray-400">解析主力與 VWAP/POC 防線...</div>
+                        </div>
+                        <div class="bg-gray-900 rounded-lg p-3 border border-gray-700 shadow-sm transition-colors hover:bg-gray-800/80">
+                            <div class="flex justify-between items-center mb-1">
+                                <h4 class="text-sm font-bold text-gray-300">4. 動能引擎 (Alpha 超額)</h4>
+                                <span id="score-m4" class="text-sm font-bold text-indigo-400">0/20</span>
+                            </div>
+                            <div id="desc-m4" class="text-xs text-gray-400">計算 Alpha 打敗大盤強度...</div>
+                        </div>
+                        <div class="bg-gray-900 rounded-lg p-3 border border-gray-700 shadow-sm transition-colors hover:bg-gray-800/80">
+                            <div class="flex justify-between items-center mb-1">
+                                <h4 class="text-sm font-bold text-gray-300">5. 波動引擎 (VCP & Beta)</h4>
+                                <span id="score-m5" class="text-sm font-bold text-indigo-400">0/15</span>
+                            </div>
+                            <div id="desc-m5" class="text-xs text-gray-400">評估波動收縮與 Beta 風險...</div>
+                        </div>
+                        <div class="bg-gray-900 rounded-lg p-3 border border-gray-700 shadow-sm transition-colors hover:bg-gray-800/80">
+                            <div class="flex justify-between items-center mb-1">
+                                <h4 class="text-sm font-bold text-gray-300">6. 交易引擎 (觸發與突破)</h4>
+                                <span id="score-m6" class="text-sm font-bold text-indigo-400">0/20</span>
+                            </div>
+                            <div id="desc-m6" class="text-xs text-gray-400">確認進出場突破與指標...</div>
+                        </div>
+                    </div>
+
+                    <div id="vetoWarning" class="mt-4 p-3 rounded-lg bg-orange-900/20 border border-orange-500/50 hidden shadow-inner">
+                        <div class="text-orange-400 text-xs font-bold mb-1 flex items-center gap-1">🚨 <span class="underline decoration-orange-500/30 underline-offset-2">超級防禦機制啟動 (一票否決)</span></div>
+                        <div id="vetoText" class="text-orange-200 text-xs mt-1 leading-relaxed"></div>
+                    </div>
+                    
+                    <div class="mt-6 text-center text-xs text-gray-600 flex items-center justify-center gap-2">
+                        <div class="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse"></div>
+                        Adaptive Sniper Quant Engine (ASQE v4.0.1 旗艦版)
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // === 🚀 啟動與系統雙密鑰設定 ===
+        let fmpApiKey = localStorage.getItem('fmpApiKey') || '';
+        let finnhubApiKey = localStorage.getItem('finnhubApiKey') || '';
+        const allowedPasswords = ['852767', '520552'];
+        
+        // ⚡ 全域記憶體快取系統
+        const apiDataCache = new Map(); 
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const now = new Date();
+            const timeStr = now.toLocaleTimeString('zh-TW', { hour: '2-digit', minute: '2-digit', hour12: true });
+            const dateStr = `${now.getMonth() + 1}月${now.getDate()}日`;
+            document.getElementById('launchDate').innerText = `${dateStr} ${timeStr}`;
+
+            const launchScreen = document.getElementById('launchScreen');
+            const mainApp = document.getElementById('mainApp');
+            const openBtn = document.getElementById('openAppBtn');
+            const pwdInput = document.getElementById('passwordInput');
+            const errorMsg = document.getElementById('errorMsg');
+
+            function attemptUnlock() {
+                if (allowedPasswords.includes(pwdInput.value)) {
+                    errorMsg.style.opacity = '0';
+                    launchScreen.classList.add('fade-out');
+                    document.body.classList.remove('overflow-hidden');
+                    mainApp.classList.add('fade-in');
+
+                    setTimeout(() => {
+                        initCharts();
+                        runAnalysis('2330.TW');
+                    }, 400);
+                } else {
+                    errorMsg.style.opacity = '1';
+                    pwdInput.value = ''; 
+                    pwdInput.parentElement.classList.add('shake-animation');
+                    setTimeout(() => { pwdInput.parentElement.classList.remove('shake-animation'); }, 300);
+                }
+            }
+
+            openBtn.addEventListener('click', attemptUnlock);
+            pwdInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') attemptUnlock(); });
+
+            const settingsModal = document.getElementById('settingsModal');
+            const fmpKeyInput = document.getElementById('fmpKeyInput');
+            const finnhubKeyInput = document.getElementById('finnhubKeyInput');
+            
+            document.getElementById('openSettingsBtn').addEventListener('click', () => {
+                fmpKeyInput.value = fmpApiKey;
+                finnhubKeyInput.value = finnhubApiKey;
+                settingsModal.classList.remove('hidden');
+            });
+            document.getElementById('closeSettingsBtn').addEventListener('click', () => {
+                settingsModal.classList.add('hidden');
+            });
+            document.getElementById('saveSettingsBtn').addEventListener('click', () => {
+                fmpApiKey = fmpKeyInput.value.trim();
+                finnhubApiKey = finnhubKeyInput.value.trim();
+                localStorage.setItem('fmpApiKey', fmpApiKey);
+                localStorage.setItem('finnhubApiKey', finnhubApiKey);
+                settingsModal.classList.add('hidden');
+                apiDataCache.clear(); 
+                if(currentMarket === 'US') runAnalysis(document.getElementById('tickerInput').value);
+            });
+        });
+
+        function getLocalYYYYMMDD(date) {
+            return date.getFullYear() + '-' + String(date.getMonth() + 1).padStart(2, '0') + '-' + String(date.getDate()).padStart(2, '0');
+        }
+
+        let currentChartData = null;
+        let currentIndexData = null;
+        let currentInstData = null; 
+        let currentRevData = null;  
+        let priceChart, dmiChart;
+        let candleSeries, volumeSeries, bbUpperSeries, bbMiddleSeries, bbLowerSeries;
+        let ema10Series, ema20Series, ema60Series, pocLineSeries, vwapSeries;
+        let adxSeries, rsiSeries;
+        let isSyncing = false;
+        let currentMarket = 'TW';
+        let globalDataMap = new Map();
+        let pocValue = 0;
+
+        function initCharts() {
+            const opt = { 
+                layout: { background: { type: 'solid', color: 'transparent' }, textColor: '#d1d5db' }, 
+                grid: { vertLines: { color: '#374151', style: 1 }, horzLines: { color: '#374151', style: 1 } }, 
+                crosshair: { mode: LightweightCharts.CrosshairMode.Normal }, 
+                timeScale: { borderColor: '#4b5563', timeVisible: true }, 
+                rightPriceScale: { borderColor: '#4b5563', minimumWidth: 75 } 
+            };
+            if (document.getElementById('priceChartContainer').innerHTML !== "") return;
+
+            priceChart = LightweightCharts.createChart(document.getElementById('priceChartContainer'), opt);
+            priceChart.priceScale('right').applyOptions({ scaleMargins: { top: 0.1, bottom: 0.25 } });
+            candleSeries = priceChart.addCandlestickSeries({ upColor: '#ef4444', downColor: '#22c55e', borderUpColor: '#ef4444', borderDownColor: '#22c55e', wickUpColor: '#ef4444', wickDownColor: '#22c55e' });
+            ema10Series = priceChart.addLineSeries({ color: '#facc15', lineWidth: 1, crosshairMarkerVisible: false });
+            ema20Series = priceChart.addLineSeries({ color: '#d946ef', lineWidth: 2, crosshairMarkerVisible: false });
+            ema60Series = priceChart.addLineSeries({ color: '#22d3ee', lineWidth: 2, crosshairMarkerVisible: false });
+            pocLineSeries = priceChart.addLineSeries({ color: '#f97316', lineWidth: 2, lineStyle: 2, crosshairMarkerVisible: false, title: 'POC' });
+            vwapSeries = priceChart.addLineSeries({ color: '#38bdf8', lineWidth: 2, lineStyle: LightweightCharts.LineStyle.Dashed, crosshairMarkerVisible: false, title: 'VWAP' });
+            bbUpperSeries = priceChart.addLineSeries({ color: 'rgba(248, 113, 113, 0.5)', lineWidth: 1, lineStyle: 2, crosshairMarkerVisible: false });
+            bbMiddleSeries = priceChart.addLineSeries({ color: 'rgba(250, 204, 21, 0.5)', lineWidth: 1, crosshairMarkerVisible: false });
+            bbLowerSeries = priceChart.addLineSeries({ color: 'rgba(74, 222, 128, 0.5)', lineWidth: 1, lineStyle: 2, crosshairMarkerVisible: false });
+            volumeSeries = priceChart.addHistogramSeries({ priceFormat: { type: 'volume' }, priceScaleId: '' });
+            volumeSeries.priceScale().applyOptions({ scaleMargins: { top: 0.8, bottom: 0 } });
+
+            dmiChart = LightweightCharts.createChart(document.getElementById('dmiChartContainer'), opt);
+            adxSeries = dmiChart.addLineSeries({ color: '#c084fc', lineWidth: 2, title: 'ADX' });
+            rsiSeries = dmiChart.addLineSeries({ color: '#22d3ee', lineWidth: 2, title: 'RSI' });
+
+            syncCharts();
+            setupResizeObserver();
+        }
+
+        function setupResizeObserver() {
+            const ro = new ResizeObserver(entries => {
+                for (let entry of entries) {
+                    const { width, height } = entry.contentRect;
+                    if (height === 0 || width === 0) continue;
+                    if (entry.target.id === 'priceChartContainer') priceChart.resize(width, height);
+                    if (entry.target.id === 'dmiChartContainer') dmiChart.resize(width, height);
+                }
+            });
+            ['priceChartContainer', 'dmiChartContainer'].forEach(id => {
+                const el = document.getElementById(id);
+                if(el) ro.observe(el);
+            });
+        }
+
+        function syncCharts() {
+            const configs = [
+                { chart: priceChart, series: candleSeries, type: 'price' },
+                { chart: dmiChart, series: adxSeries, type: 'dmi' }
+            ];
+            configs.forEach(item => {
+                item.chart.subscribeCrosshairMove(param => {
+                    if (isSyncing) return;
+                    isSyncing = true;
+                    const time = param.time;
+                    const point = param.point;
+                    configs.forEach(c => {
+                        if (c.chart !== item.chart) {
+                            if (!point || !time) c.chart.clearCrosshairPosition();
+                            else {
+                                const dataMap = globalDataMap.get(time);
+                                let val = null;
+                                if (dataMap) {
+                                    if (c.type === 'price') val = dataMap.price.close;
+                                    else if (c.type === 'dmi' && dataMap.dmi) val = dataMap.dmi.adx;
+                                }
+                                if (val !== null && val !== undefined) c.chart.setCrosshairPosition(val, time, c.series);
+                                else c.chart.clearCrosshairPosition();
+                            }
+                        }
+                    });
+                    if (time) updateLegends(time);
+                    else {
+                        const lastData = candleSeries.data();
+                        if (lastData && lastData.length > 0) updateLegends(lastData[lastData.length - 1].time);
+                    }
+                    isSyncing = false;
+                });
+            });
+            let isSyncingRange = false;
+            configs.forEach(source => {
+                source.chart.timeScale().subscribeVisibleLogicalRangeChange(logicalRange => {
+                    if (isSyncingRange || !logicalRange) return;
+                    isSyncingRange = true;
+                    configs.forEach(target => { if (target.chart !== source.chart) target.chart.timeScale().setVisibleLogicalRange(logicalRange); });
+                    isSyncingRange = false;
+                });
+            });
+        }
+
+        function updateLegends(timeStr) {
+            const data = globalDataMap.get(timeStr);
+            if (!data) return;
+            const safeSetText = (id, text) => { const el = document.getElementById(id); if (el) el.innerText = text; };
+            if (data.ema) {
+                safeSetText('legend-ema10', `10: ${data.ema.ema10 !== null ? data.ema.ema10.toFixed(2) : '--'}`);
+                safeSetText('legend-ema20', `20: ${data.ema.ema20 !== null ? data.ema.ema20.toFixed(2) : '--'}`);
+                safeSetText('legend-ema60', `60: ${data.ema.ema60 !== null ? data.ema.ema60.toFixed(2) : '--'}`);
+            }
+            if (data.bb) {
+                safeSetText('legend-up', `上軌 ${data.bb.upper.toFixed(2)}`);
+                safeSetText('legend-mid', `中軌 ${data.bb.middle.toFixed(2)}`);
+                safeSetText('legend-low', `下軌 ${data.bb.lower.toFixed(2)}`);
+                safeSetText('legend-bandwidth', `帶寬: ${(data.bb.width * 100).toFixed(1)}%`);
+                safeSetText('legend-pb', `%b: ${data.bb.percentB.toFixed(2)}`);
+            }
+            if (data.vwap !== undefined) safeSetText('legend-vwap', `VWAP(60): ${data.vwap.toFixed(2)}`);
+            if (data.price) safeSetText('legend-vol', `Vol: ${data.price.volume.toLocaleString()}`);
+            if (data.dmi) safeSetText('legend-adx', `ADX: ${data.dmi.adx.toFixed(2)}`);
+            if (data.rsi) safeSetText('legend-rsi', `RSI: ${data.rsi.rsi.toFixed(2)}`);
+            if (data.atr) safeSetText('legend-atr', `ATR(14): ${data.atr.atr.toFixed(2)}`);
+            safeSetText('legend-poc', `POC: ${pocValue.toFixed(2)}`);
+        }
+
+        // ==========================================
+        // 核心數學與指標運算庫
+        // ==========================================
+        function calculateEMA(data, period) {
+            let res = [];
+            if (data.length === 0) return res;
+            let multiplier = 2 / (period + 1);
+            let ema = data[0].close; 
+            for (let i = 0; i < data.length; i++) {
+                if (i === 0) { res.push({ time: data[i].time, value: ema }); continue; }
+                ema = (data[i].close - ema) * multiplier + ema;
+                res.push({ time: data[i].time, value: ema });
+            }
+            return res;
+        }
+
+        function calculateBB(data, period = 20, multiplier = 2) {
+            let res = [];
+            for (let i = period - 1; i < data.length; i++) {
+                let slice = data.slice(i - period + 1, i + 1);
+                let sma = slice.reduce((a, b) => a + b.close, 0) / period;
+                let std = Math.sqrt(slice.reduce((a, b) => a + Math.pow(b.close - sma, 2), 0) / period);
+                let upper = sma + multiplier * std;
+                let lower = sma - multiplier * std;
+                let width = upper === lower ? 0 : (upper - lower) / sma;
+                let percentB = (upper === lower) ? 0.5 : (data[i].close - lower) / (upper - lower);
+                res.push({ time: data[i].time, upper, middle: sma, lower, width, percentB });
+            }
+            return res;
+        }
+
+        function calculateKD(data, period = 9) {
+            let res = [], k = 50, d = 50;
+            for (let i = period - 1; i < data.length; i++) {
+                let slice = data.slice(i - period + 1, i + 1);
+                let h = Math.max(...slice.map(d => d.high)), l = Math.min(...slice.map(d => d.low));
+                let rsv = (h === l) ? 50 : 100 * ((data[i].close - l) / (h - l));
+                k = (2/3) * k + (1/3) * rsv;
+                d = (2/3) * d + (1/3) * k;
+                res.push({ time: data[i].time, k, d });
+            }
+            return res;
+        }
+
+        function calculateDMI(data, period = 14) {
+            let res = [], sTR = 0, sPlus = 0, sMinus = 0, dxList = [];
+            for (let i = 1; i < data.length; i++) {
+                let c = data[i], p = data[i - 1];
+                let tr = Math.max(c.high - c.low, Math.abs(c.high - p.close), Math.abs(c.low - p.close));
+                let pDM = Math.max(0, c.high - p.high), mDM = Math.max(0, p.low - c.low);
+                if (pDM > mDM) mDM = 0; else if (mDM > pDM) pDM = 0; else { pDM = 0; mDM = 0; }
+                if (i <= period) { sTR += tr; sPlus += pDM; sMinus += mDM; }
+                else { sTR = sTR - (sTR / period) + tr; sPlus = sPlus - (sPlus / period) + pDM; sMinus = sMinus - (sMinus / period) + mDM; }
+                if (i >= period) {
+                    let pdi = sTR === 0 ? 0 : 100 * (sPlus / sTR), mdi = sTR === 0 ? 0 : 100 * (sMinus / sTR);
+                    let dx = (pdi + mdi === 0) ? 0 : 100 * Math.abs(pdi - mdi) / (pdi + mdi);
+                    dxList.push(dx);
+                    let adx = dxList.slice(-period).reduce((a,b)=>a+b,0)/period;
+                    res.push({ time: c.time, pdi, mdi, adx });
+                }
+            }
+            return res;
+        }
+
+        function calculateRSI(data, period = 14) {
+            let res = [];
+            let avgGain = 0, avgLoss = 0;
+            for (let i = 1; i < data.length; i++) {
+                let change = data[i].close - data[i-1].close;
+                let gain = change > 0 ? change : 0;
+                let loss = change < 0 ? -change : 0;
+                if (i === period) {
+                    for (let j = 1; j <= period; j++) {
+                        let c = data[j].close - data[j-1].close;
+                        if (c > 0) avgGain += c; else avgLoss -= c;
+                    }
+                    avgGain /= period; avgLoss /= period;
+                    let rs = avgLoss === 0 ? 100 : avgGain / avgLoss;
+                    res.push({time: data[i].time, rsi: 100 - (100 / (1 + rs)), avgGain, avgLoss});
+                } else if (i > period) {
+                    let prev = res[res.length-1];
+                    avgGain = (prev.avgGain * (period - 1) + gain) / period;
+                    avgLoss = (prev.avgLoss * (period - 1) + loss) / period;
+                    let rs = avgLoss === 0 ? 100 : avgGain / avgLoss;
+                    res.push({time: data[i].time, rsi: 100 - (100 / (1 + rs)), avgGain, avgLoss});
+                } else {
+                    res.push({time: data[i].time, rsi: 50, avgGain:0, avgLoss:0});
+                }
+            }
+            return res;
+        }
+
+        function calculateATR(data, period = 14) {
+            let res = [];
+            let trSum = 0;
+            for(let i=1; i<data.length; i++) {
+                let h = data[i].high, l = data[i].low, pc = data[i-1].close;
+                let tr = Math.max(h - l, Math.abs(h - pc), Math.abs(l - pc));
+                if(i <= period) {
+                    trSum += tr;
+                    if(i === period) res.push({time: data[i].time, atr: trSum/period});
+                    else res.push({time: data[i].time, atr: 0});
+                } else {
+                    let atr = (res[res.length-1].atr * (period-1) + tr) / period;
+                    res.push({time: data[i].time, atr: atr});
+                }
+            }
+            return res;
+        }
+
+        function calculatePOC(data, period = 60) {
+            if(data.length < period) period = data.length;
+            let recent = data.slice(-period);
+            let minP = Math.min(...recent.map(d=>d.low));
+            let maxP = Math.max(...recent.map(d=>d.high));
+            let bins = 20;
+            let binSize = (maxP - minP) / bins;
+            if(binSize === 0) return recent[0].close;
+            let profile = new Array(bins).fill(0);
+            recent.forEach(d => {
+                let typPrice = (d.high + d.low + d.close) / 3;
+                let idx = Math.floor((typPrice - minP) / binSize);
+                if(idx >= bins) idx = bins - 1;
+                profile[idx] += d.volume;
+            });
+            let maxVolIdx = profile.indexOf(Math.max(...profile));
+            return minP + (maxVolIdx + 0.5) * binSize;
+        }
+
+        function calculateRollingVWAP(data, period = 60) {
+            let res = [];
+            for (let i = 0; i < data.length; i++) {
+                let startIdx = Math.max(0, i - period + 1);
+                let slice = data.slice(startIdx, i + 1);
+                let sumVol = 0;
+                let sumPV = 0;
+                slice.forEach(d => {
+                    let typPrice = (d.high + d.low + d.close) / 3;
+                    sumPV += typPrice * d.volume;
+                    sumVol += d.volume;
+                });
+                res.push({ time: data[i].time, value: sumVol === 0 ? data[i].close : sumPV / sumVol });
+            }
+            return res;
+        }
+
+        function calculateVWAP(data, period = 60) { 
+            const arr = calculateRollingVWAP(data, period);
+            return arr.length > 0 ? arr[arr.length - 1].value : data[data.length-1].close;
+        }
+
+        // 🚀 新增：更強大的跨域備援請求機制
+        function getProxies(targetUrl) {
+            const encoded = encodeURIComponent(targetUrl);
+            return [
+                `https://api.allorigins.win/raw?url=${encoded}`, 
+                `https://api.codetabs.com/v1/proxy?quest=${encoded}`,
+                `https://cors-anywhere.herokuapp.com/${targetUrl}`, // 新增備援節點
+                `https://thingproxy.freeboard.io/fetch/${targetUrl}` // 新增備援節點
+            ];
+        }
+
+        function fastestFetch(urls, validator, timeoutMs = 8000) { // 稍微延長 TimeOut
+            return new Promise((resolve, reject) => {
+                const controller = new AbortController();
+                let settledCount = 0;
+                let resolved = false;
+                const timer = setTimeout(() => { if (!resolved) { controller.abort(); reject(new Error("Timeout")); } }, timeoutMs);
+                urls.forEach(url => {
+                    fetch(url, { signal: controller.signal, cache: 'no-store' })
+                        .then(res => { if (!res.ok) throw new Error('HTTP Status Error'); return res.json(); })
+                        .then(data => {
+                            if (validator(data)) {
+                                if (!resolved) { resolved = true; clearTimeout(timer); controller.abort(); resolve(data); }
+                            } else { throw new Error('Invalid Data Format'); }
+                        }).catch(err => {
+                            settledCount++;
+                            if (settledCount === urls.length && !resolved) { clearTimeout(timer); reject(new Error("All proxies failed")); }
+                        });
+                });
+            });
+        }
+
+        // 🚀 新增：台股 Yahoo Finance 專用備援爬蟲 (當 FinMind 陣亡時使用)
+        async function fetchYahooStockTW(ticker) {
+            let qTicker = ticker;
+            if (/^\d{4}$/.test(ticker)) qTicker += ".TW";
+            const url = `https://query1.finance.yahoo.com/v8/finance/chart/${qTicker}?range=2y&interval=1d`;
+            const urlsToTry = [url, ...getProxies(url)];
+            const json = await fastestFetch(urlsToTry, d => d?.chart?.result?.[0]?.timestamp);
+            const chart = json.chart.result[0];
+            return chart.timestamp.map((t, i) => {
+                const closeVal = chart.indicators.quote[0].close[i];
+                return {
+                    time: getLocalYYYYMMDD(new Date(t * 1000)),
+                    open: chart.indicators.quote[0].open[i] ?? closeVal, 
+                    high: chart.indicators.quote[0].high[i] ?? closeVal, 
+                    low: chart.indicators.quote[0].low[i] ?? closeVal,
+                    close: closeVal, 
+                    volume: chart.indicators.quote[0].volume[i] ?? 0
+                };
+            }).filter(d => d.close !== null && d.close !== undefined);
+        }
+
+        async function fetchFinMindStock(ticker) {
+            const rawTicker = ticker.replace('.TW', '');
+            const today = new Date();
+            const twoYearsAgo = new Date(today.setFullYear(today.getFullYear() - 2)).toISOString().split('T')[0];
+            const url = `https://api.finmindtrade.com/api/v4/data?dataset=TaiwanStockPrice&data_id=${rawTicker}&start_date=${twoYearsAgo}`;
+            const res = await fetch(url);
+            const json = await res.json();
+            if (json.status !== 200 || !json.data || json.data.length === 0) throw new Error("FinMind Rate Limit or Empty Data");
+            return json.data.map(d => {
+                const closeVal = Number(d.close ?? d.Close);
+                return { time: d.date, open: Number(d.open ?? d.Open ?? closeVal), high: Number(d.max ?? d.High ?? d.high ?? closeVal), low: Number(d.min ?? d.Low ?? d.low ?? closeVal), close: closeVal, volume: Number(d.Trading_Volume ?? d.Volume ?? 0) };
+            }).filter(d => !isNaN(d.close));
+        }
+
+        async function fetchFinMindInstitutional(ticker) {
+            if (currentMarket !== 'TW') return null;
+            const rawTicker = ticker.replace('.TW', '');
+            let d = new Date(); d.setDate(d.getDate() - 14);
+            try {
+                const url = `https://api.finmindtrade.com/api/v4/data?dataset=TaiwanStockInstitutionalInvestorsBuySell&data_id=${rawTicker}&start_date=${d.toISOString().split('T')[0]}`;
+                const res = await fetch(url); const json = await res.json();
+                if (json.status === 200 && json.data) return json.data;
+            } catch (e) { return null; }
+            return null;
+        }
+
+        async function fetchFinMindRevenue(ticker) {
+            if (currentMarket !== 'TW') return null;
+            const rawTicker = ticker.replace('.TW', '');
+            let d = new Date(); d.setFullYear(d.getFullYear() - 2); 
+            try {
+                const url = `https://api.finmindtrade.com/api/v4/data?dataset=TaiwanStockMonthRevenue&data_id=${rawTicker}&start_date=${d.toISOString().split('T')[0]}`;
+                const res = await fetch(url); const json = await res.json();
+                if (json.status === 200 && json.data) return json.data;
+            } catch(e) { return null; }
+            return null;
+        }
+
+        async function fetchFinnhubStock(ticker, apiKey) {
+            if (!apiKey) throw new Error("No Finnhub API Key");
+            const to = Math.floor(Date.now() / 1000);
+            const from = to - (2 * 365 * 24 * 60 * 60); 
+            const url = `https://finnhub.io/api/v1/stock/candle?symbol=${ticker}&resolution=D&from=${from}&to=${to}&token=${apiKey}`;
+            const res = await fetch(url);
+            const json = await res.json();
+            if (json.s !== "ok" || !json.t || json.t.length === 0) throw new Error("Finnhub Fetch Error");
+            let formattedData = [];
+            for (let i = 0; i < json.t.length; i++) {
+                formattedData.push({ time: getLocalYYYYMMDD(new Date(json.t[i] * 1000)), open: json.o[i], high: json.h[i], low: json.l[i], close: json.c[i], volume: json.v[i] });
+            }
+            return formattedData;
+        }
+
+        async function fetchFMPStock(ticker, apiKey) {
+            if (!apiKey) throw new Error("No FMP API Key");
+            const url = `https://financialmodelingprep.com/api/v3/historical-price-full/${ticker}?apikey=${apiKey}`;
+            const res = await fetch(url);
+            const json = await res.json();
+            if (!json.historical || json.historical.length === 0) throw new Error("FMP Fetch Error");
+            let hist = json.historical.slice(0, 504).reverse();
+            return hist.map(d => ({ time: d.date, open: d.open, high: d.high, low: d.low, close: d.close, volume: d.volume }));
+        }
+
+        async function fetchFMPRevenue(ticker, apiKey) {
+            if (!apiKey) return null;
+            try {
+                const url = `https://financialmodelingprep.com/api/v3/income-statement/${ticker}?period=quarter&limit=8&apikey=${apiKey}`;
+                const res = await fetch(url);
+                const json = await res.json();
+                if (!json || json.length === 0) return null;
+                return json; 
+            } catch(e) { return null; }
+        }
+
+        async function fetchYahooStock(ticker) {
+            let qTicker = ticker;
+            if (currentMarket === 'TW' && /^\d{4}$/.test(ticker)) qTicker += ".TW";
+            if (currentMarket === 'US') qTicker = qTicker.replace(/\./g, '-');
+            const url = `https://query1.finance.yahoo.com/v8/finance/chart/${qTicker}?range=2y&interval=1d`;
+            const urlsToTry = [url, ...getProxies(url)];
+            const json = await fastestFetch(urlsToTry, d => d?.chart?.result?.[0]?.timestamp);
+            const chart = json.chart.result[0];
+            return chart.timestamp.map((t, i) => {
+                const closeVal = chart.indicators.quote[0].close[i];
+                return {
+                    time: getLocalYYYYMMDD(new Date(t * 1000)),
+                    open: chart.indicators.quote[0].open[i] ?? closeVal, 
+                    high: chart.indicators.quote[0].high[i] ?? closeVal, 
+                    low: chart.indicators.quote[0].low[i] ?? closeVal,
+                    close: closeVal, 
+                    volume: chart.indicators.quote[0].volume[i] ?? 0
+                };
+            }).filter(d => d.close !== null && d.close !== undefined);
+        }
+
+        function drawAllChartsAndReport(data) {
+            currentChartData = data;
+            const bb = calculateBB(data), kd = calculateKD(data), dmi = calculateDMI(data);
+            const ema10 = calculateEMA(data, 10), ema20 = calculateEMA(data, 20), ema60 = calculateEMA(data, 60);
+            const rsi = calculateRSI(data), atr = calculateATR(data);
+            pocValue = calculatePOC(data, 60);
+            const vwapDataArr = calculateRollingVWAP(data, 60); 
+
+            globalDataMap.clear();
+            data.forEach(d => globalDataMap.set(d.time, { price: d, ema: { ema10: null, ema20: null, ema60: null } }));
+            bb.forEach(d => { if(globalDataMap.has(d.time)) globalDataMap.get(d.time).bb = d; });
+            kd.forEach(d => { if(globalDataMap.has(d.time)) globalDataMap.get(d.time).kd = d; });
+            dmi.forEach(d => { if(globalDataMap.has(d.time)) globalDataMap.get(d.time).dmi = d; });
+            rsi.forEach(d => { if(globalDataMap.has(d.time)) globalDataMap.get(d.time).rsi = d; });
+            atr.forEach(d => { if(globalDataMap.has(d.time)) globalDataMap.get(d.time).atr = d; });
+            ema10.forEach(d => { if(globalDataMap.has(d.time)) globalDataMap.get(d.time).ema.ema10 = d.value; });
+            ema20.forEach(d => { if(globalDataMap.has(d.time)) globalDataMap.get(d.time).ema.ema20 = d.value; });
+            ema60.forEach(d => { if(globalDataMap.has(d.time)) globalDataMap.get(d.time).ema.ema60 = d.value; });
+            vwapDataArr.forEach(d => { if(globalDataMap.has(d.time)) globalDataMap.get(d.time).vwap = d.value; });
+
+            const adxData = [], rsiData = [], bbUpData = [], bbMidData = [], bbLowData = [];
+            const ema10Data = [], ema20Data = [], ema60Data = [], pocData = [], vwapLineData = [];
+
+            data.forEach(d => {
+                const mapData = globalDataMap.get(d.time);
+                if (mapData.ema.ema10 !== null) ema10Data.push({ time: d.time, value: mapData.ema.ema10 });
+                if (mapData.ema.ema20 !== null) ema20Data.push({ time: d.time, value: mapData.ema.ema20 });
+                if (mapData.ema.ema60 !== null) ema60Data.push({ time: d.time, value: mapData.ema.ema60 });
+                if (mapData.vwap !== undefined) vwapLineData.push({ time: d.time, value: mapData.vwap });
+                pocData.push({ time: d.time, value: pocValue });
+                if (mapData.bb) { bbUpData.push({ time: d.time, value: mapData.bb.upper }); bbMidData.push({ time: d.time, value: mapData.bb.middle }); bbLowData.push({ time: d.time, value: mapData.bb.lower }); }
+                if (mapData.dmi) adxData.push({ time: d.time, value: mapData.dmi.adx });
+                if (mapData.rsi) rsiData.push({ time: d.time, value: mapData.rsi.rsi });
+            });
+
+            candleSeries.setData(data);
+            volumeSeries.setData(data.map(d => ({ time: d.time, value: d.volume, color: d.close >= d.open ? 'rgba(34, 197, 94, 0.5)' : 'rgba(239, 68, 68, 0.5)' })));
+            ema10Series.setData(ema10Data); ema20Series.setData(ema20Data); ema60Series.setData(ema60Data);
+            pocLineSeries.setData(pocData);
+            vwapSeries.setData(vwapLineData); 
+            bbUpperSeries.setData(bbUpData); bbMiddleSeries.setData(bbMidData); bbLowerSeries.setData(bbLowData);
+            adxSeries.setData(adxData); rsiSeries.setData(rsiData);
+
+            const markers = [];
+            let absMax = null, absMin = null;
+            data.forEach(d => { 
+                if (d.high !== undefined && d.high !== null && !isNaN(d.high)) {
+                    if (!absMax || d.high > absMax.high) absMax = d;
+                }
+                if (d.low !== undefined && d.low !== null && !isNaN(d.low)) {
+                    if (!absMin || d.low < absMin.low) absMin = d;
+                }
+            });
+            
+            if (absMax && typeof absMax.high === 'number' && !isNaN(absMax.high)) {
+                markers.push({ time: absMax.time, position: 'aboveBar', color: '#ef4444', shape: 'arrowDown', text: `高 ${Number(absMax.high).toFixed(2)}` });
+            }
+            if (absMin && typeof absMin.low === 'number' && !isNaN(absMin.low)) {
+                markers.push({ time: absMin.time, position: 'belowBar', color: '#22c55e', shape: 'arrowUp', text: `低 ${Number(absMin.low).toFixed(2)}` });
+            }
+            
+            candleSeries.setMarkers(markers.sort((a,b)=>new Date(a.time)-new Date(b.time)));
+
+            [priceChart, dmiChart].forEach(c => c.timeScale().fitContent());
+            runDiagnostics(); 
+            updateLegends(data[data.length-1].time);
+        }
+
+        // ==========================================
+        // ASQE v4.0 權值自適應評分引擎 (滿分 100)
+        // ==========================================
+        function runDiagnostics() {
+            if (!currentChartData || currentChartData.length < 20) return;
+            const data = currentChartData;
+            const lData = data[data.length-1], pData = data[data.length-2];
+            const mapL = globalDataMap.get(lData.time), mapP = globalDataMap.get(pData.time);
+            
+            const lEMA10 = mapL.ema.ema10, pEMA10 = mapP.ema.ema10;
+            const lEMA20 = mapL.ema.ema20, pEMA20 = mapP.ema.ema20;
+            const lEMA60 = mapL.ema.ema60;
+            const lDMI = mapL.dmi, lKD = mapL.kd, pKD = mapP.kd, lBB = mapL.bb, lRSI = mapL.rsi.rsi;
+            const lATR = mapL.atr.atr;
+
+            const last20 = data.slice(-20);
+            const vol20MA = last20.reduce((s, d) => s + d.volume, 0) / 20;
+            const high20 = Math.max(...last20.map(d => d.high));
+            const low20 = Math.min(...last20.map(d => d.low));
+            
+            let turnover = vol20MA * lData.close;
+            let isLargeCap = (currentMarket === 'TW' && turnover > 1000000000) || (currentMarket === 'US' && turnover > 50000000);
+
+            // ✨ ETF 與 Sector ETF 自動偵測邏輯
+            const currentTickerStr = document.getElementById('chartTitle').innerText.toUpperCase();
+            
+            // 🚨 新增：定義「主動型」與「槓桿型」ETF 白名單，這些必須用「飆股模式」考核！
+            const activeOrLeveragedETFs = ['00981A', '00631L', '00670L', 'TQQQ', 'SOXL']; 
+            const rawTickerName = currentTickerStr.split('.')[0];
+            
+            const isBaseETF = (currentMarket === 'TW' && currentTickerStr.startsWith('00')) || ['SPY','QQQ','VOO','DIA','SMH'].includes(rawTickerName);
+            
+            // 如果是 ETF，但「不是」主動/槓桿型，才進入被動存股模式
+            const isETF = isBaseETF && !activeOrLeveragedETFs.includes(rawTickerName);
+            
+            // 如果是主動/槓桿型 ETF，給予專屬的徽章提示
+            const isActiveETF = isBaseETF && activeOrLeveragedETFs.includes(rawTickerName);
+            
+            const etfBadge = document.getElementById('etfBadge');
+            if(isETF) {
+                etfBadge.innerText = "ETF 智能存股模式";
+                etfBadge.className = "text-[10px] font-bold bg-fuchsia-600/80 text-white px-2 py-0.5 rounded shadow shadow-fuchsia-500/50 animate-pulse";
+                etfBadge.classList.remove('hidden');
+            } else if (isActiveETF) {
+                etfBadge.innerText = "🔥 激進動能 ETF 模式";
+                etfBadge.className = "text-[10px] font-bold bg-red-600/80 text-white px-2 py-0.5 rounded shadow shadow-red-500/50 animate-pulse";
+                etfBadge.classList.remove('hidden');
+            } else {
+                etfBadge.classList.add('hidden');
+            }
+
+            const isSectorETF = ['SMH', 'SOXX', 'QQQ', 'TQQQ', 'SOXL'].includes(rawTickerName);
+
+            // 引擎 1：市場環境
+            let score1 = 0, text1 = "";
+            if (currentIndexData && currentIndexData.length > 20) {
+                let idxL = currentIndexData[currentIndexData.length-1];
+                let idxEMA20 = calculateEMA(currentIndexData, 20).pop().value;
+                let idxEMA60 = calculateEMA(currentIndexData, 60).pop().value;
+                let idxDMI = calculateDMI(currentIndexData).pop();
+                
+                if (idxEMA20 > idxEMA60) { score1 += 5; text1 += "✅ 大盤長線偏多 (+5) "; }
+                if (idxL.close > idxEMA20) { score1 += 5; text1 += "✅ 大盤站上月線 (+5) "; }
+                if (idxDMI.adx > 20) { score1 += 5; text1 += "✅ 大盤有趨勢 (+5) "; }
+                if(score1 === 0) text1 = "❌ 大盤空頭或盤整，環境嚴峻。";
+            } else { score1 = 8; text1 = "⚠️ 無法取得大盤，給予基礎分 (+8)"; }
+            document.getElementById('score-m1').innerText = `${score1}/15`;
+            document.getElementById('desc-m1').innerHTML = text1;
+
+            // 引擎 2：品質引擎
+            let score2 = 0, text2 = "";
+            if(isETF) {
+                // 🚀 補丁 1：ETF 模式提示 DRIP
+                score2 = 10; text2 = "🔄 ETF 存股模式：一籃子股票，強烈建議開啟 DRIP 股息再投資 (+10)";
+            } else if (currentRevData && currentRevData.length > 0) {
+                if (currentMarket === 'TW') {
+                    let revs = currentRevData.sort((a,b) => new Date(a.date) - new Date(b.date));
+                    let yoySum = 0, validCount = 0;
+                    revs.slice(-3).forEach(curr => {
+                        let currDate = new Date(curr.date);
+                        let lastYearDateStr = `${currDate.getFullYear()-1}-${String(currDate.getMonth()+1).padStart(2,'0')}`;
+                        let prev = revs.find(r => r.date.startsWith(lastYearDateStr));
+                        if (prev && prev.revenue > 0) { yoySum += ((curr.revenue - prev.revenue) / prev.revenue) * 100; validCount++; }
+                    });
+                    if (validCount > 0) {
+                        let avgYoy = yoySum / validCount;
+                        if (avgYoy > 20) { score2 = 15; text2 = `🔥 近期營收 YoY 飆升 ${avgYoy.toFixed(1)}% (+15)`; }
+                        else if (avgYoy > 0) { score2 = 10; text2 = `✅ 近期營收 YoY 成長 ${avgYoy.toFixed(1)}% (+10)`; }
+                        else { score2 = 0; text2 = `❌ 營收衰退 (YoY ${avgYoy.toFixed(1)}%)`; }
+                    } else { score2 = 5; text2 = "⚠️ 營收資料不足 (+5)"; }
+                } else if (currentMarket === 'US') {
+                    let revs = currentRevData; 
+                    let epsYoySum = 0, revYoySum = 0, validCount = 0;
+                    for(let i=0; i<2; i++) { 
+                        if (revs[i] && revs[i+4] && revs[i+4].revenue > 0) {
+                            revYoySum += ((revs[i].revenue - revs[i+4].revenue) / revs[i+4].revenue) * 100; 
+                            if(revs[i+4].eps && revs[i+4].eps > 0) { epsYoySum += ((revs[i].eps - revs[i+4].eps) / revs[i+4].eps) * 100; }
+                            validCount++;
+                        }
+                    }
+                    if (validCount > 0) {
+                        let avgRevYoy = revYoySum / validCount;
+                        let avgEpsYoy = epsYoySum / validCount;
+                        if (avgEpsYoy > 20 || avgRevYoy > 20) { score2 = 15; text2 = `🔥 EPS/營收 雙位數成長 (+15)`; }
+                        else if (avgEpsYoy > 0 || avgRevYoy > 0) { score2 = 10; text2 = `✅ 財報維持正成長 (+10)`; }
+                        else { score2 = 0; text2 = `❌ 財報動能衰退`; }
+                    } else { score2 = 5; text2 = "⚠️ 財報資料對比不足 (+5)"; }
+                }
+            } else { score2 = 8; text2 = "⚠️ 暫無財報資料，給予基礎分 (+8)"; }
+            document.getElementById('score-m2').innerText = `${score2}/15`;
+            document.getElementById('desc-m2').innerHTML = text2;
+
+            // 引擎 3：資金流引擎 
+            let score3 = 0, text3 = "";
+            let fNet = 0, tNet = 0;
+            let vwap60 = calculateVWAP(data, 60);
+
+            if (currentMarket === 'TW' && currentInstData && currentInstData.length > 0) {
+                const uniqueDates = [...new Set(currentInstData.map(d=>d.date))].sort();
+                currentInstData.forEach(d => {
+                    if(uniqueDates.slice(-5).includes(d.date)) {
+                        if(d.name.includes("外資")) fNet += (d.buy - d.sell);
+                        if(d.name.includes("投信")) tNet += (d.buy - d.sell);
+                    }
+                });
+                if (fNet > 0) { score3 += 5; text3 += "✅ 外資偏多 (+5) "; }
+                if (tNet > 0) { score3 += 5; text3 += "✅ 投信偏多 (+5) "; }
+            } else if (currentMarket === 'US') {
+                if (lData.close > lEMA20) { score3 += 5; text3 += "✅ 站穩月線主力防守區 (+5) "; }
+            }
+
+            if (lData.close > pocValue && lData.close > vwap60) {
+                score3 += 5; text3 += "✅ 站穩 POC 與季 VWAP (+5) ";
+            } else if (lData.close > pocValue || lData.close > vwap60) {
+                score3 += 3; text3 += "⚠️ 僅站上單一成本線 (+3) ";
+            } else {
+                if(score3 === 0) text3 = "❌ 未見主力防守且跌破雙成本線";
+            }
+            document.getElementById('score-m3').innerText = `${score3}/15`;
+            document.getElementById('desc-m3').innerHTML = text3;
+
+            // 引擎 4：動能引擎 Alpha
+            let score4 = 0, text4 = "";
+            let currentAlpha = 0; 
+            if (isETF) {
+                score4 = 15; text4 = "🔄 ETF 存股模式：追蹤大盤，豁免 Alpha 超額要求 (+15)";
+            } else if (currentIndexData && currentIndexData.length > 20 && data.length > 20) {
+                let stockRet = (lData.close - data[data.length-21].close) / data[data.length-21].close;
+                let idxRet = (currentIndexData[currentIndexData.length-1].close - currentIndexData[currentIndexData.length-21].close) / currentIndexData[currentIndexData.length-21].close;
+                let alpha = (stockRet - idxRet) * 100;
+                currentAlpha = alpha;
+                
+                if (isLargeCap) {
+                    if (alpha > 8) { score4 = 20; text4 = `🔥 權值股 Alpha > 8% (+20)`; }
+                    else if (alpha > 4) { score4 = 15; text4 = `✅ 權值股 Alpha > 4% (+15)`; }
+                    else if (alpha > 0) { score4 = 10; text4 = `✅ 權值股 Alpha > 0% (+10)`; }
+                    else { score4 = 0; text4 = `❌ 弱於大盤 (Alpha < 0)`; }
+                } else {
+                    if (alpha > 15) { score4 = 20; text4 = `🔥 中小型 Alpha > 15% (+20)`; }
+                    else if (alpha > 10) { score4 = 15; text4 = `✅ 中小型 Alpha > 10% (+15)`; }
+                    else if (alpha > 5) { score4 = 10; text4 = `✅ 中小型 Alpha > 5% (+10)`; }
+                    else if (alpha > 0) { score4 = 5; text4 = `⚠️ Alpha > 0% (+5)`; }
+                    else { score4 = 0; text4 = `❌ 弱於大盤 (Alpha < 0)`; }
+                }
+            } else { score4 = 10; text4 = "⚠️ 數據不足，給予基礎分 (+10)"; }
+            document.getElementById('score-m4').innerText = `${score4}/20`;
+            document.getElementById('desc-m4').innerHTML = text4;
+
+            // 引擎 5：波動引擎 Beta
+            let betaVal = null;
+            if (currentIndexData && currentIndexData.length > 20 && data.length > 20) {
+                let sRets = [], iRets = [];
+                for (let i = 0; i < 20; i++) {
+                    let sCurr = data[data.length - 1 - i];
+                    let sPrev = data[data.length - 2 - i];
+                    if (!sPrev) continue;
+                    let iCurr = currentIndexData.find(d => d.time === sCurr.time);
+                    let iPrev = currentIndexData.find(d => d.time === sPrev.time);
+                    if (iCurr && iPrev) {
+                        sRets.push((sCurr.close - sPrev.close) / sPrev.close);
+                        iRets.push((iCurr.close - iPrev.close) / iPrev.close);
+                    }
+                }
+                if (sRets.length > 10) {
+                    let iMean = iRets.reduce((a,b)=>a+b,0)/iRets.length;
+                    let sMean = sRets.reduce((a,b)=>a+b,0)/sRets.length;
+                    let cov = 0, varI = 0;
+                    for(let i=0; i<sRets.length; i++){ cov += (sRets[i]-sMean)*(iRets[i]-iMean); varI += Math.pow(iRets[i]-iMean, 2); }
+                    betaVal = varI > 0 ? cov / varI : null;
+                }
+            }
+
+            let score5 = 0, text5 = "";
+            let minW = Infinity, maxW = -Infinity;
+            data.slice(-60).forEach(d => { const b = globalDataMap.get(d.time)?.bb; if (b) { minW = Math.min(minW, b.width); maxW = Math.max(maxW, b.width); } });
+            
+            let isSqueeze = lBB.width <= minW + (maxW - minW) * 0.2;
+            let p5Data = data[data.length-6];
+            let p5ATR = p5Data ? globalDataMap.get(p5Data.time)?.atr?.atr : lATR;
+            let isAtrDrop = lATR < p5ATR;
+            let isVolDrop = last20.slice(-5).reduce((a,b)=>a+b.volume,0)/5 < vol20MA;
+
+            if (isSqueeze) { score5 += 4; text5 += "🗜️ 帶寬壓縮 (+4) "; }
+            if (isAtrDrop) { score5 += 3; text5 += "📉 ATR降 (+3) "; }
+            if (isVolDrop) { score5 += 3; text5 += "🔇 量縮 (+3) "; }
+            
+            if (betaVal !== null) {
+                if (currentMarket === 'US' && !isETF && isLargeCap && currentAlpha > 8 && betaVal > 1.5) {
+                    score5 += 5; text5 += `🔥 巨頭高波動豁免 (${betaVal.toFixed(2)}) (+5) `;
+                }
+                else if (betaVal >= 1 && betaVal <= 1.5) { score5 += 5; text5 += `✅ Beta最佳 (${betaVal.toFixed(2)}) (+5) `; }
+                else if (betaVal > 2) { score5 += 0; text5 += `⚠️ Beta過高 (${betaVal.toFixed(2)}) `; }
+                else { score5 += 2; text5 += `⚠️ Beta偏低 (${betaVal.toFixed(2)}) (+2) `; }
+            } else { score5 += 5; } 
+
+            if(score5 === 0) text5 = "⚠️ 波動放大且風險過高";
+            document.getElementById('score-m5').innerText = `${score5}/15`;
+            document.getElementById('desc-m5').innerHTML = text5;
+
+            // 引擎 6：交易引擎
+            let score6 = 0, text6 = "", triggerCount = 0;
+            if (isETF) {
+                score6 = 15; text6 = "🔄 ETF 存股模式：無須右側突破，準備左側低接 (+15)";
+            } else {
+                if (lData.close >= high20 * 0.98) { score6 += 5; text6 += "🚀 創20日新高 (+5) "; }
+                if (lData.volume > vol20MA * 1.5) { score6 += 5; text6 += "🔥 爆量1.5倍 (+5) "; }
+
+                let isGC = pKD.k < pKD.d && lKD.k > lKD.d;
+                let isBullK = (lData.close > lData.open && lData.close > pData.close); 
+                if (isGC || (lKD.k >= 80 && lKD.k > lKD.d)) { triggerCount++; text6 += "🎯 KD金叉 "; }
+                if (lRSI > 50) { triggerCount++; text6 += "📈 RSI>50 "; }
+                if (isBullK) { triggerCount++; text6 += "💪 強勢紅K "; }
+                
+                if (triggerCount >= 2) score6 += 10;
+                else if (triggerCount === 1) score6 += 5;
+
+                if(score6 === 0) text6 = "⏳ 無買點與突破訊號";
+            }
+            document.getElementById('score-m6').innerText = `${score6}/20`;
+            document.getElementById('desc-m6').innerHTML = text6;
+
+            // --- 總分結算與一票否決 ---
+            let totalScore = score1 + score2 + score3 + score4 + score5 + score6;
+            
+            let isBearishEngulfing = (pData.close > pData.open) && (lData.close < lData.open) && (lData.close < pData.open) && (lData.open > pData.close);
+            let isDumping = lData.volume > vol20MA * 1.5 && lData.close < lData.open;
+            let isBroken = lData.close < lEMA60 || (lData.close < pocValue && lData.volume > vol20MA);
+            
+            let isOversoldETF = isETF && (lRSI <= 35 && lData.close <= lBB.lower); 
+
+            let vetoEl = document.getElementById('vetoWarning');
+            let vetoTextEl = document.getElementById('vetoText');
+            
+            if (!isOversoldETF && (isBearishEngulfing || isDumping || isBroken)) {
+                totalScore = Math.min(totalScore, 50);
+                vetoEl.classList.remove('hidden');
+                let reason = isBearishEngulfing ? "空頭吞噬" : (isDumping ? "爆量長黑 (主力出貨)" : "跌破季線或帶量破 POC");
+                
+                if (currentMarket === 'US' && !isETF) {
+                    reason += " (華爾街前瞻指引看空，無視過去財報)";
+                }
+                
+                vetoTextEl.innerText = `偵測到「${reason}」，總分強制鎖死在 50 分以下！`;
+            } else {
+                vetoEl.classList.add('hidden');
+            }
+
+            // 動畫渲染環形圖
+            let circle = document.getElementById('scoreCircle');
+            document.getElementById('totalScore').innerText = totalScore;
+            circle.style.strokeDasharray = `${totalScore}, 100`;
+            circle.classList.remove('text-indigo-500', 'text-green-500', 'text-yellow-500', 'text-red-500', 'text-fuchsia-500', 'text-orange-500');
+
+            let rating = "", size = "", dirText = "", actionText = "", dirColor = "";
+            let slLabel = document.getElementById('slLabel'), tpLabel = document.getElementById('tpLabel');
+            let slEl = document.getElementById('stopLoss'), tpEl = document.getElementById('takeProfit');
+
+            // ✨✨✨ ETF 左側交易終極邏輯 ✨✨✨
+            if (isETF) {
+                let isOverboughtETF = lRSI >= 75 && lData.close >= lBB.upper;
+                
+                if (isOversoldETF) {
+                    // 🚀 補丁 2：啟動金字塔加碼與 DRIP 提示
+                    rating = "💎 鑽石級買點"; size = "啟動金字塔加碼 (首批20% ➔ 破季線30% ➔ 破年線50%)"; circle.classList.add('text-fuchsia-500');
+                    dirText = "📉 恐慌超賣"; actionText = "左側紀律分批買進 (建議開啟 DRIP)"; dirColor = "text-fuchsia-400";
+                } else if (isOverboughtETF) {
+                    rating = "⚠️ 過熱警戒"; size = "暫停新扣款 / 原持股沿 EMA10 停利"; circle.classList.add('text-orange-500');
+                    dirText = "📈 高檔鈍化"; actionText = "切勿追多 / 讓利潤奔跑"; dirColor = "text-orange-400";
+                } else if (totalScore >= 70) {
+                    rating = "📈 穩定多頭"; size = "定期定額續扣"; circle.classList.add('text-green-500');
+                    dirText = "📈 順勢上漲"; actionText = "持有領息 (請確認 DRIP 已開啟)"; dirColor = "text-green-400";
+                } else {
+                    rating = "⚖️ 價值區間"; size = "維持原定存股計畫"; circle.classList.add('text-yellow-500');
+                    dirText = "⚖️ 貼近淨值"; actionText = "耐心觀望或定額 (保持 DRIP)"; dirColor = "text-yellow-400";
+                }
+
+                // ETF 專用風控面板
+                slLabel.innerText = "存股紀律底線"; 
+                tpLabel.innerText = isOverboughtETF ? "右側尾巴防線 (跌破停利)" : "短期過熱滿足點 (參考)";
+                slEl.className = "text-sm font-bold text-fuchsia-400"; 
+                tpEl.className = "text-lg font-bold text-orange-400";
+                slEl.innerText = isOversoldETF ? "金字塔低接 (守年線)" : "越跌越買"; 
+                tpEl.innerText = isOverboughtETF ? `EMA10: ${lEMA10.toFixed(2)}` : (high20).toFixed(2);
+                
+            } else {
+                // 原本的個股右側交易邏輯
+                if (totalScore >= 90) { 
+                    rating = "🚀 SSS 超級飆股"; size = isLargeCap ? "大型股配置上限 20%" : "單檔上限 20% (滿倉配置)"; circle.classList.add('text-fuchsia-500'); 
+                    dirText = "📈 強勢做多"; actionText = "突破追擊 / 抱緊"; dirColor = "text-red-400";
+                } else if (totalScore >= 80) { 
+                    rating = "🟢 SS 主升段"; size = isLargeCap ? "大型股配置上限 15%" : "單檔上限 15% (積極配置)"; circle.classList.add('text-green-500'); 
+                    dirText = "📈 偏多操作"; actionText = "拉回買進 / 順勢"; dirColor = "text-red-400";
+                } else if (totalScore >= 70) { 
+                    rating = "🟡 S 潛力股"; size = "單檔上限 10% (標準配置)"; circle.classList.add('text-yellow-500'); 
+                    dirText = "⚖️ 震盪偏多"; actionText = "區間低買高賣"; dirColor = "text-yellow-400";
                 } else if (totalScore >= 50) { 
                     rating = "⏳ A 整理/轉弱"; size = "單檔上限 5% (試單/減碼)"; circle.classList.add('text-orange-500'); 
                     dirText = "⚠️ 多空不明"; actionText = "空手觀望 / 減碼"; dirColor = "text-orange-400";
                 } else if (totalScore >= 40) {
-                    rating = "📉 轉弱初跌"; size = "多單減碼 / 嚴禁追高"; circle.classList.add('text-orange-500'); 
-                    dirText = "⚠️ 趨勢轉弱"; actionText = "破線停損 / 逢高逃命"; dirColor = "text-orange-400";
+                    rating = "📉 轉弱初跌"; size = "空手觀望 / 嚴禁建立多單"; circle.classList.add('text-orange-500'); 
+                    dirText = "⚠️ 趨勢轉弱"; actionText = "多單離場 / 不宜做空"; dirColor = "text-orange-400";
                 } else if (totalScore >= 30) {
-<!-- ... existing code ... -->
-                tpLabel.innerText = "長線價值投資";
-                tpEl.className = "text-sm font-bold text-teal-200";
-                tpEl.innerText = "領息 / 無視短震";
-            } else {
-                if (isMacdBearDivergence && totalScore >= 40) {
-                    stopPrc = lData.close - 2 * lATR;
-                    slLabel.innerText = "做多停損 (Close - 2ATR)";
-                    slEl.className = "text-lg font-bold text-green-400";
-                    slEl.innerText = stopPrc.toFixed(2);
+                    rating = "🔴 弱勢空頭"; size = "單檔上限 5% (試單放空)"; circle.classList.add('text-red-500'); 
+                    dirText = "📉 偏空操作"; actionText = "反彈空 / 破底空"; dirColor = "text-green-400";
+                } else if (totalScore >= 20) {
+                    rating = "💥 極度弱勢"; size = "單檔上限 10% (標準放空)"; circle.classList.add('text-red-500'); 
+                    dirText = "📉 強勢做空"; actionText = "逢反彈建空單"; dirColor = "text-green-400";
+                } else {
+                    rating = "💀 崩盤區間"; size = "單檔上限 15% (積極放空)"; circle.classList.add('text-red-500'); 
+                    dirText = "📉 崩跌做空"; actionText = "順勢空 / 嚴設停損"; dirColor = "text-green-400";
+                }
 
-                    tpLabel.innerText = "🚨 頂背離緊縮防守 (EMA10)";
-                    tpEl.className = "text-lg font-bold text-orange-400";
-                    tpEl.innerText = lEMA10 ? lEMA10.toFixed(2) : "--";
-                } else if (totalScore >= 50) {
+                if (!vetoEl.classList.contains('hidden') && totalScore >= 40) {
+                    dirText = "🚨 趨勢反轉"; actionText = "多單逃命 / 反手空"; dirColor = "text-green-400";
+                }
+
+                let stopPrc, tpPrc;
+                if (totalScore >= 50) {
                     stopPrc = lData.close - 2 * lATR; tpPrc = high20 - 3 * lATR;
                     slLabel.innerText = "做多停損 (Close - 2ATR)"; 
-                    tpLabel.innerText = "移動停利 (High20 - 3ATR)";
+                    tpLabel.innerText = "雙軌停利 (3ATR + 月線)";
                     slEl.className = "text-lg font-bold text-green-400"; 
                     slEl.innerText = stopPrc.toFixed(2); 
 
@@ -35,31 +1201,166 @@
                         tpEl.className = "text-lg font-bold text-red-400"; tpEl.innerText = tpPrc.toFixed(2);
                     }
                 } else if (totalScore >= 40) {
-                    stopPrc = lData.close - 2 * lATR; 
-                    tpPrc = Math.max(lEMA10, lEMA20); 
-                    if (tpPrc < lData.close) tpPrc = lData.close + 1.5 * lATR;
-                    slLabel.innerText = "⚠️ 多單最後防線"; 
-                    tpLabel.innerText = "⚠️ 反彈逃命壓力";
-                    slEl.className = "text-lg font-bold text-orange-400"; 
-                    tpEl.className = "text-lg font-bold text-orange-400";
-                    slEl.innerText = stopPrc.toFixed(2); 
-                    tpEl.innerText = tpPrc.toFixed(2);
+                    stopPrc = lData.close - 2 * lATR; tpPrc = high20 - 3 * lATR;
+                    slLabel.innerText = "⚠️ 多單最後防線"; tpLabel.innerText = "⚠️ 反彈逃命壓力";
+                    slEl.className = "text-lg font-bold text-orange-400"; tpEl.className = "text-lg font-bold text-orange-400";
+                    slEl.innerText = stopPrc.toFixed(2); tpEl.innerText = tpPrc.toFixed(2);
                 } else {
                     stopPrc = lData.close + 2 * lATR; tpPrc = low20 + 3 * lATR;
-                    slLabel.innerText = "做空停損 (Close + 2ATR)"; 
-                    tpLabel.innerText = "做空移動停利 (Low20 + 3ATR)";
-                    slEl.className = "text-lg font-bold text-red-400"; 
-                    tpEl.className = "text-lg font-bold text-green-400";
-                    slEl.innerText = stopPrc.toFixed(2); 
-                    tpEl.innerText = tpPrc > lData.close ? "持倉續抱" : tpPrc.toFixed(2);
+                    slLabel.innerText = "做空停損 (Close + 2ATR)"; tpLabel.innerText = "做空移動停利 (Low20 + 3ATR)";
+                    slEl.className = "text-lg font-bold text-red-400"; tpEl.className = "text-lg font-bold text-green-400";
+                    slEl.innerText = stopPrc.toFixed(2); tpEl.innerText = tpPrc > lData.close ? "持倉續抱" : tpPrc.toFixed(2);
+                }
+            } 
+
+            document.getElementById('finalRating').innerText = rating;
+            
+            let finalSizeText = `部位建議：${size}`;
+            if (currentMarket === 'US' && !isETF) {
+                finalSizeText += ` (⚠️ 財報日前夕請強制減碼 50%)`;
+            } else if (currentMarket === 'US' && isSectorETF) {
+                finalSizeText += ` (⚠️ 注意巨頭「影子財報日」波動，可手動減碼)`;
+            }
+            document.getElementById('positionSize').innerText = finalSizeText;
+            
+            let tdEl = document.getElementById('tradeDirection');
+            tdEl.innerText = dirText; tdEl.className = `text-sm font-bold mt-0.5 ${dirColor}`;
+            document.getElementById('tradeAction').innerText = actionText;
+        }
+
+        async function runAnalysis(tickerInput) {
+            const overlay = document.getElementById('loadingOverlay');
+            const tag = document.getElementById('dataSourceTag');
+            overlay.classList.remove('hidden');
+            tag.classList.add('hidden');
+            
+            let ticker = tickerInput.trim().toUpperCase();
+            if (currentMarket === 'TW' && /^\d{4}$/.test(ticker)) ticker += ".TW";
+            document.getElementById('chartTitle').innerText = ticker;
+            
+            const cacheKey = `${currentMarket}_${ticker}`;
+            const nowTime = Date.now();
+            if (apiDataCache.has(cacheKey)) {
+                const cached = apiDataCache.get(cacheKey);
+                if (nowTime - cached.timestamp < 300000) { 
+                    console.log(`[Cache Hit] 載入 ${ticker} 極速快取資料`);
+                    currentIndexData = cached.idx;
+                    currentInstData = cached.inst;
+                    currentRevData = cached.rev;
+                    tag.innerText = "⚡ 本地極速快取";
+                    tag.className = "text-[10px] sm:text-xs font-bold px-2 py-1 rounded bg-purple-900 text-purple-300 border border-purple-700 transition-colors duration-300 whitespace-nowrap shadow-inner";
+                    tag.classList.remove('hidden');
+                    drawAllChartsAndReport(cached.data);
+                    overlay.classList.add('hidden');
+                    return;
                 }
             }
+            
+            let data = [];
+            currentIndexData = null; currentInstData = null; currentRevData = null;
+            let finalTags = [];
+            
+            try {
+                let idxTicker = currentMarket === 'TW' ? '^TWII' : '^GSPC';
+                const url = `https://query1.finance.yahoo.com/v8/finance/chart/${idxTicker}?range=1y&interval=1d`;
+                const json = await fastestFetch([url, ...getProxies(url)], d => d?.chart?.result?.[0]?.timestamp);
+                const chart = json.chart.result[0];
+                currentIndexData = chart.timestamp.map((t, i) => ({ time: getLocalYYYYMMDD(new Date(t * 1000)), close: chart.indicators.quote[0].close[i] })).filter(d => d.close !== null);
+            } catch (e) { console.warn("大盤獲取失敗"); }
+
+            if (currentMarket === 'TW') {
+                try {
+                    data = await fetchFinMindStock(ticker);
+                    currentInstData = await fetchFinMindInstitutional(ticker);
+                    currentRevData = await fetchFinMindRevenue(ticker);
+                    finalTags.push("FinMind雙擎");
+                    tag.className = "text-[10px] sm:text-xs font-bold px-2 py-1 rounded bg-green-900 text-green-300 border border-green-700 transition-colors duration-300 whitespace-nowrap";
+                } catch (e) {
+                    console.warn(`降級回 Yahoo API: ${e.message}`);
+                    try { 
+                        // 🚀 優先使用新增的專用台股 Yahoo 爬蟲
+                        data = await fetchYahooStockTW(ticker); 
+                        finalTags.push("Yahoo備援"); 
+                        tag.className = "text-[10px] sm:text-xs font-bold px-2 py-1 rounded bg-orange-900 text-orange-300 border border-orange-700 transition-colors duration-300 whitespace-nowrap"; 
+                    } catch (err) { 
+                        console.error("所有資料源失效"); 
+                    }
+                }
+            } else if (currentMarket === 'US') {
+                let priceSrc = '', revSrc = '';
+                if (fmpApiKey) {
+                    try { currentRevData = await fetchFMPRevenue(ticker, fmpApiKey); revSrc = 'FMP財報'; } catch(e) { console.warn("FMP財報失敗"); }
+                }
+                if (finnhubApiKey) {
+                    try { data = await fetchFinnhubStock(ticker, finnhubApiKey); priceSrc = 'Finnhub極速價量'; } catch(e) { console.warn("Finnhub失敗"); }
+                }
+                if (!data || data.length === 0) {
+                    if (fmpApiKey) { try { data = await fetchFMPStock(ticker, fmpApiKey); priceSrc = 'FMP價量'; } catch(e) { console.warn("FMP價量失敗"); } }
+                }
+                if (!data || data.length === 0) {
+                    try { data = await fetchYahooStock(ticker); priceSrc = 'Yahoo備援'; } catch(e) { console.error("所有資料源失效"); }
+                }
+                if (priceSrc) finalTags.push(priceSrc);
+                if (revSrc) finalTags.push(revSrc);
+                tag.className = "text-[10px] sm:text-xs font-bold px-2 py-1 rounded bg-blue-900 text-blue-300 border border-blue-700 transition-colors duration-300 whitespace-nowrap";
+            }
+
+            if(!data || data.length <= 20) {
+                overlay.classList.add('hidden');
+                document.getElementById('finalRating').innerHTML = `<span class="text-red-400 text-lg">網路或代碼錯誤</span>`;
+                return;
+            }
+
+            if (finalTags.length > 0) {
+                tag.innerText = finalTags.join(" + ");
+                tag.classList.remove('hidden');
+            }
+
+            apiDataCache.set(cacheKey, { timestamp: nowTime, data: data, idx: currentIndexData, inst: currentInstData, rev: currentRevData });
+
+            drawAllChartsAndReport(data);
+            overlay.classList.add('hidden');
         }
-<!-- ... existing code ... -->
-```
 
-### ✨ 更新後的實戰意義：
-1. **語意清晰**：現在遇到 45 分的股票，系統會明確指示 **「多單減碼 / 嚴禁追高」** 以及 **「破線停損 / 逢高逃命」**，不再讓您產生觀望與離場的錯亂感。
-2. **防線合理化**：對於 50 分以上的強勢股，右側防線會清楚標示為 **「移動停利 (High20 - 3ATR)」**。而對於 40 分的轉弱股，右側會變成真正的 **「⚠️ 反彈逃命壓力」**，並精準抓取上方均線作為賣出目標。
+        document.getElementById('analyzeBtn').onclick = () => runAnalysis(document.getElementById('tickerInput').value);
+        document.getElementById('tickerInput').onkeypress = (e) => { if(e.key==='Enter') runAnalysis(e.target.value); };
+        
+        document.getElementById('toggleEMA').addEventListener('change', (e) => {
+            const v = e.target.checked;
+            ema10Series.applyOptions({ visible: v }); ema20Series.applyOptions({ visible: v }); ema60Series.applyOptions({ visible: v }); pocLineSeries.applyOptions({ visible: v });
+            document.getElementById('legend-ema-group').style.display = v ? 'flex' : 'none';
+        });
 
-感謝您揪出這個隱藏的邏輯小臭蟲，這讓 ASQE v4.0 的戰術指導變得更加滴水不漏了！您可以重新載入 6282 試試看！
+        document.getElementById('toggleBB').addEventListener('change', (e) => {
+            const v = e.target.checked;
+            bbUpperSeries.applyOptions({ visible: v }); bbMiddleSeries.applyOptions({ visible: v }); bbLowerSeries.applyOptions({ visible: v });
+            document.getElementById('legend-bb-group').style.display = v ? 'flex' : 'none';
+        });
+
+        document.getElementById('toggleVWAP').addEventListener('change', (e) => {
+            const v = e.target.checked;
+            vwapSeries.applyOptions({ visible: v });
+            const legendEl = document.getElementById('legend-vwap');
+            if(legendEl) legendEl.style.display = v ? 'flex' : 'none';
+        });
+
+        document.getElementById('tabTW').onclick = () => {
+            currentMarket = 'TW';
+            document.getElementById('tabTW').className = "flex-1 sm:flex-none px-4 py-1.5 rounded-md text-sm font-medium bg-indigo-600 text-white shadow";
+            document.getElementById('tabUS').className = "flex-1 sm:flex-none px-4 py-1.5 rounded-md text-sm font-medium text-gray-300 hover:text-white hover:bg-gray-600";
+            document.getElementById('tickerInput').placeholder = "例: 2330.TW";
+            document.getElementById('tickerInput').value = "2330.TW";
+            runAnalysis('2330.TW');
+        };
+
+        document.getElementById('tabUS').onclick = () => {
+            currentMarket = 'US';
+            document.getElementById('tabUS').className = "flex-1 sm:flex-none px-4 py-1.5 rounded-md text-sm font-medium bg-indigo-600 text-white shadow";
+            document.getElementById('tabTW').className = "flex-1 sm:flex-none px-4 py-1.5 rounded-md text-sm font-medium text-gray-300 hover:text-white hover:bg-gray-600";
+            document.getElementById('tickerInput').placeholder = "例: AAPL, SPY, SMH";
+            document.getElementById('tickerInput').value = "VOO";
+            runAnalysis('VOO');
+        };
+    </script>
+</body>
+</html>
