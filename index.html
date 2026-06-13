@@ -579,9 +579,9 @@
             const url = `https://query2.finance.yahoo.com/v8/finance/chart/${q}?range=3y&interval=1d`;
             
             const proxies = [
-                `https://corsproxy.io/?${encodeURIComponent(url)}`,
-                `https://api.allorigins.win/get?url=${encodeURIComponent(url)}`,
-                `https://api.codetabs.com/v1/proxy/?quest=${encodeURIComponent(url)}`
+                `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`,
+                `https://api.codetabs.com/v1/proxy/?quest=${encodeURIComponent(url)}`,
+                `https://thingproxy.freeboard.io/fetch/${url}`
             ];
 
             let json = null;
@@ -589,10 +589,9 @@
                 try {
                     const res = await fetch(proxy);
                     if (!res.ok) continue;
-                    if (proxy.includes('allorigins.win/get')) {
-                        const wrapper = await res.json();
-                        if (wrapper && wrapper.contents) json = JSON.parse(wrapper.contents);
-                    } else { json = await res.json(); }
+                    
+                    json = await res.json();
+                    
                     if (json && json.chart && json.chart.result) break; 
                 } catch (e) { console.warn("Proxy failed:", proxy); }
             }
@@ -837,7 +836,9 @@
 
             } catch(e) {
                 console.error(e);
-                alert("數據載入失敗，請確認代碼。");
+                document.getElementById('chartTitle').innerText = t + " (API 連線異常)";
+                document.getElementById('finalRatingText').innerHTML = "<span class='text-red-400 text-lg'>數據源阻擋，請稍後重試</span>";
+                // 移除 alert("數據載入失敗，請確認代碼。"); 避免阻斷 UI 體驗
             } finally {
                 overlay.classList.add('hidden');
             }
