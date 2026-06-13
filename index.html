@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ASQE v8.0 | Scoring & Backtest Engine</title>
+    <title>ASQE v8.1 | Scoring & Backtest Engine</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lightweight-charts@4.1.1/dist/lightweight-charts.standalone.production.js"></script>
     <style>
@@ -14,7 +14,6 @@
         body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background-color: #020617; color: #f8fafc; }
         .score-circle { transition: stroke-dashoffset 1s cubic-bezier(0.4, 0, 0.2, 1); }
         .glass-panel { background: rgba(15, 23, 42, 0.9); backdrop-filter: blur(20px); border-left: 1px solid rgba(51, 65, 85, 0.5); }
-        
         #launchScreen { transition: opacity 0.6s ease, visibility 0.6s ease; }
         .fade-out { opacity: 0 !important; visibility: hidden !important; }
         #mainApp { opacity: 0; visibility: hidden; transition: opacity 0.8s ease 0.2s; }
@@ -29,7 +28,7 @@
             <div class="w-16 h-16 bg-slate-800 rounded-2xl flex items-center justify-center mb-5 border border-slate-700 shadow-inner">
                 <span class="text-3xl">🧮</span>
             </div>
-            <h1 class="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-300 tracking-wider mb-1">ASQE v8.0</h1>
+            <h1 class="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-300 tracking-wider mb-1">ASQE v8.1</h1>
             <p class="text-[10px] text-indigo-400 mb-8 font-mono tracking-widest uppercase bg-indigo-900/30 px-2 py-1 rounded">Scoring & Backtest Engine</p>
             <input type="password" id="passwordInput" placeholder="輸入機構授權碼 (admin)" class="w-full bg-slate-950 text-white border border-slate-700 rounded-xl px-4 py-3.5 mb-5 focus:outline-none focus:border-indigo-500 text-center tracking-widest transition-all font-mono">
             <button id="openAppBtn" class="w-full bg-slate-100 hover:bg-white text-slate-900 font-black py-3.5 rounded-xl transition-all shadow-lg tracking-widest">初始化雙引擎模組</button>
@@ -41,806 +40,96 @@
             <div class="flex items-center gap-4">
                 <div class="w-9 h-9 bg-gradient-to-br from-indigo-600 to-slate-800 rounded-xl flex items-center justify-center font-bold text-lg border border-slate-700">⚡</div>
                 <div class="flex flex-col">
-                    <h1 class="text-lg font-black tracking-widest text-slate-100 leading-tight">ASQE v8.0</h1>
-                    <span class="text-[10px] text-indigo-400 font-mono tracking-wider">BACKTEST EDITION</span>
+                    <h1 class="text-lg font-black tracking-widest text-slate-100 leading-tight">ASQE v8.1</h1>
+                    <span class="text-[10px] text-indigo-400 font-mono tracking-wider">STABLE EDITION</span>
                 </div>
             </div>
-            
-            <div class="flex flex-col sm:flex-row items-center gap-3 w-full sm:w-auto">
-                <div id="regimeBadge" class="hidden text-xs font-bold px-3 py-1.5 rounded-lg border shadow-inner flex items-center gap-1.5 font-mono">
-                    <span id="regimeIcon"></span><span id="regimeText">偵測中...</span>
-                </div>
-                
-                <div class="flex bg-slate-950 rounded-lg p-1 border border-slate-800">
-                    <button id="tabTW" class="px-4 py-1.5 rounded-md text-xs font-bold transition-all bg-indigo-600 text-white shadow">台股 TW</button>
-                    <button id="tabUS" class="px-4 py-1.5 rounded-md text-xs font-bold transition-all text-slate-400 hover:text-white">美股 US</button>
-                </div>
-                
-                <div class="flex items-center gap-2 w-full sm:w-auto">
-                    <input type="text" id="tickerInput" value="2330.TW" placeholder="代碼" class="bg-slate-950 text-white border border-slate-700 rounded-lg px-4 py-2 focus:outline-none focus:border-indigo-500 w-full sm:w-36 transition-colors uppercase font-mono text-sm">
-                    <button id="analyzeBtn" class="bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-2 px-6 rounded-lg transition-colors shadow-lg whitespace-nowrap text-sm">執行量化與回測</button>
-                </div>
+            <div class="flex items-center gap-2 w-full sm:w-auto">
+                <input type="text" id="tickerInput" value="2330.TW" placeholder="代碼" class="bg-slate-950 text-white border border-slate-700 rounded-lg px-4 py-2 focus:outline-none focus:border-indigo-500 w-full sm:w-36 transition-colors uppercase font-mono text-sm">
+                <button id="analyzeBtn" class="bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-2 px-6 rounded-lg transition-colors shadow-lg whitespace-nowrap text-sm">執行量化與回測</button>
             </div>
         </header>
 
         <div id="loadingOverlay" class="fixed inset-0 bg-slate-950/90 z-50 flex flex-col items-center justify-center hidden backdrop-blur-md">
             <div class="animate-spin rounded-full h-12 w-12 border-4 border-slate-800 border-t-indigo-500 mb-4"></div>
-            <p class="text-xs font-mono text-indigo-400 tracking-widest animate-pulse">Running Backtest Engine & Simulation...</p>
+            <p class="text-xs font-mono text-indigo-400 tracking-widest animate-pulse">Running Robust Data Engine...</p>
         </div>
 
-        <div class="flex-1 flex flex-col lg:flex-row relative overflow-hidden bg-slate-950">
-            <div class="flex-1 flex flex-col p-2 gap-2 w-full min-w-0">
-                <div class="relative w-full rounded-xl border border-slate-800 bg-slate-900 shadow-inner flex flex-col flex-1 min-h-[300px]">
-                    <div class="absolute top-2 left-4 z-10 pointer-events-none w-full pr-4">
-                        <div class="flex items-center gap-3">
-                            <span id="chartTitle" class="text-2xl font-black text-slate-100 tracking-tight drop-shadow-md">---</span>
-                            <div class="flex gap-2 pointer-events-auto bg-slate-950/80 backdrop-blur px-2 py-1 rounded-md border border-slate-800">
-                                <label class="flex items-center gap-1 text-[10px] text-slate-400 cursor-pointer hover:text-white"><input type="checkbox" id="toggleEMA" checked class="accent-indigo-500"> 均線</label>
-                                <label class="flex items-center gap-1 text-[10px] text-slate-400 cursor-pointer hover:text-white"><input type="checkbox" id="toggleAVWAP" checked class="accent-orange-500"> 錨定 AVWAP</label>
-                            </div>
-                        </div>
-                        <div class="flex flex-col gap-1 mt-1 text-[11px] font-mono drop-shadow">
-                            <div class="flex gap-3 text-slate-300">
-                                <span class="text-yellow-400" id="leg-ema20">E20: --</span>
-                                <span class="text-cyan-400" id="leg-ema60">E60: --</span>
-                                <span class="text-orange-400 font-bold border-l border-slate-700 pl-3" id="leg-avwapHigh">AVWAP(巨量): --</span>
-                                <span class="text-pink-400 font-bold" id="leg-avwapLow">AVWAP(波谷): --</span>
-                            </div>
-                            <div class="text-slate-500" id="leg-vol">Vol: --</div>
-                        </div>
-                    </div>
-                    <div id="priceChartContainer" class="w-full flex-1 pointer-events-auto mt-2"></div>
-                </div>
-
-                <!-- DMI Chart -->
-                <div class="relative w-full rounded-xl border border-slate-800 bg-slate-900 shadow-inner flex flex-col h-[180px] shrink-0">
-                    <div class="absolute top-2 left-4 z-10 text-[10px] font-mono flex gap-4 text-slate-300">
-                        <span class="text-purple-400" id="leg-adx">ADX(Wilder): --</span>
-                        <span class="text-cyan-400" id="leg-rsi">RSI(Wilder): --</span>
-                        <span class="text-slate-400 border-l border-slate-700 pl-4" id="leg-atr">ATR: --</span>
-                    </div>
-                    <div id="dmiChartContainer" class="w-full flex-1 mt-6"></div>
-                </div>
-            </div>
-
-            <div class="w-full lg:w-[450px] glass-panel flex flex-col shrink-0 overflow-y-auto h-[calc(100vh-64px)] custom-scrollbar pb-10">
-                <div class="p-4 space-y-4">
-                    
-                    <!-- 主評級卡片 -->
-                    <div class="bg-slate-900 p-5 rounded-2xl border border-slate-700 shadow-xl relative overflow-hidden">
-                        <div id="scoreBgGlow" class="absolute -right-10 -top-10 w-40 h-40 rounded-full blur-3xl opacity-10 bg-indigo-500 transition-colors duration-700"></div>
-                        
-                        <div class="flex justify-between items-start relative z-10">
-                            <div class="flex flex-col">
-                                <span class="text-[10px] font-bold text-slate-500 tracking-widest uppercase mb-1 font-mono">v8.0 Scoring Engine</span>
-                                <div id="finalRatingText" class="text-2xl font-black text-white">運算中...</div>
-                                <div id="positionSizeAdvice" class="text-[11px] font-bold text-emerald-400 mt-2 bg-emerald-500/10 inline-block px-2 py-1 rounded border border-emerald-500/20">Adaptive Size：--</div>
-                            </div>
-                            
-                            <div class="relative w-20 h-20 shrink-0">
-                                <svg class="w-full h-full transform -rotate-90 drop-shadow-lg" viewBox="0 0 36 36">
-                                    <path class="text-slate-800" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-width="3" />
-                                    <path id="scoreCircle" class="text-indigo-500 score-circle" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-width="3" stroke-dasharray="0, 100" />
-                                </svg>
-                                <div class="absolute inset-0 flex items-center justify-center">
-                                    <span id="totalScore" class="text-2xl font-black text-white">0</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="mt-4 grid grid-cols-2 gap-2 relative z-10">
-                            <div class="bg-slate-950 p-2.5 rounded-lg border border-slate-800 text-center">
-                                <div class="text-[10px] text-slate-500 font-medium">戰術判定</div>
-                                <div id="actionAdvice" class="text-[11px] font-bold text-slate-200 mt-1 line-clamp-2">--</div>
-                            </div>
-                            <div class="bg-slate-950 p-2.5 rounded-lg border border-slate-800 flex flex-col justify-center items-center">
-                                <div class="text-[10px] text-slate-500 font-medium mb-1">Pseudo RS Rank</div>
-                                <div id="rsRankingText" class="text-sm font-black text-white font-mono">--</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- 🚀 v8.0 新增: 歷史回測引擎面板 -->
-                    <div class="bg-slate-900 p-4 rounded-xl border border-blue-900/50 shadow-sm relative overflow-hidden">
-                        <div class="absolute right-0 top-0 opacity-10 text-5xl p-2">🔬</div>
-                        <div class="text-blue-400 text-[10px] uppercase tracking-widest font-bold mb-3 flex items-center gap-2">
-                            <span class="bg-blue-900/50 p-1 rounded">📊</span> Historical Backtest Engine
-                        </div>
-                        <div class="grid grid-cols-2 gap-y-3 gap-x-4">
-                            <div class="flex flex-col">
-                                <span class="text-[10px] text-slate-500">勝率 (Win Rate)</span>
-                                <span id="btWinRate" class="text-sm font-black text-white font-mono">--</span>
-                            </div>
-                            <div class="flex flex-col">
-                                <span class="text-[10px] text-slate-500">獲利因子 (Profit Factor)</span>
-                                <span id="btProfitFactor" class="text-sm font-black text-emerald-400 font-mono">--</span>
-                            </div>
-                            <div class="flex flex-col">
-                                <span class="text-[10px] text-slate-500">最大回撤 (MDD)</span>
-                                <span id="btMDD" class="text-sm font-black text-red-400 font-mono">--</span>
-                            </div>
-                            <div class="flex flex-col">
-                                <span class="text-[10px] text-slate-500">每筆期望值 (Expectancy)</span>
-                                <span id="btExpectancy" class="text-sm font-black text-indigo-400 font-mono">--</span>
-                            </div>
-                        </div>
-                        <div class="mt-3 pt-2 border-t border-slate-800 text-[9px] text-slate-500 flex justify-between">
-                            <span id="btTradeCount">總交易次數: --</span>
-                            <span>*基於日線趨勢追蹤模擬</span>
-                        </div>
-                    </div>
-
-                    <!-- 雙重否決警告區 -->
-                    <div id="vetoPanel" class="hidden p-3.5 rounded-xl border shadow-lg relative overflow-hidden">
-                        <div id="vetoIcon" class="absolute -right-2 -top-2 text-4xl opacity-10">🚨</div>
-                        <div class="flex items-center gap-2 mb-1">
-                            <span id="vetoTitleIcon" class="text-sm"></span>
-                            <span id="vetoTitle" class="text-xs font-black tracking-wider"></span>
-                        </div>
-                        <div id="vetoReason" class="text-[11px] font-medium leading-relaxed opacity-90 mt-1"></div>
-                    </div>
-
-                    <!-- 風控防護網 -->
-                    <div class="p-4 rounded-xl bg-slate-900 border border-slate-800 shadow-sm">
-                        <div class="text-slate-400 text-[10px] uppercase tracking-widest font-bold mb-3 flex items-center gap-2">
-                            <span class="bg-slate-800 p-1 rounded">🛡️</span> Risk Control & Exits
-                        </div>
-                        <div class="grid grid-cols-2 gap-3">
-                            <div class="flex flex-col">
-                                <span class="text-[10px] text-slate-500 mb-0.5" id="slLabel">ATR 絕對停損線</span>
-                                <span id="stopLoss" class="text-lg font-black text-slate-200 font-mono">--</span>
-                            </div>
-                            <div class="flex flex-col border-l border-slate-800 pl-3">
-                                <span class="text-[10px] text-emerald-500 font-bold mb-0.5" id="tpLabel">Chandelier Exit</span>
-                                <span id="trailingStop" class="text-lg font-black text-emerald-400 font-mono">--</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- 七大機構引擎拆解 -->
-                    <div class="space-y-2">
-                        <h3 class="text-[10px] font-bold text-slate-500 uppercase tracking-widest px-1 pb-1 border-b border-slate-800">7-Layer Scoring Engine</h3>
-                        <div class="flex flex-col gap-1.5">
-                            <div class="bg-slate-900/50 rounded-lg p-2.5 border border-slate-800 flex justify-between items-center">
-                                <div class="flex flex-col"><span class="text-[11px] font-bold text-slate-300">1. Regime (市場狀態)</span><span id="desc-m1" class="text-[10px] text-slate-500 mt-0.5">EMA200, ADX...</span></div>
-                                <span id="score-m1" class="text-xs font-black text-indigo-400 font-mono">0/15</span>
-                            </div>
-                            <div class="bg-slate-900/50 rounded-lg p-2.5 border border-slate-800 flex justify-between items-center">
-                                <div class="flex flex-col"><span class="text-[11px] font-bold text-slate-300">2. Quality (基本面)</span><span id="desc-m2" class="text-[10px] text-slate-500 mt-0.5">Rev YoY...</span></div>
-                                <span id="score-m2" class="text-xs font-black text-indigo-400 font-mono">0/10</span>
-                            </div>
-                            <div class="bg-slate-900/50 rounded-lg p-2.5 border border-slate-800 flex justify-between items-center">
-                                <div class="flex flex-col"><span class="text-[11px] font-bold text-slate-300">3. Flow (籌碼動能)</span><span id="desc-m3" class="text-[10px] text-slate-500 mt-0.5">Fixed AVWAP, OBV...</span></div>
-                                <span id="score-m3" class="text-xs font-black text-indigo-400 font-mono">0/15</span>
-                            </div>
-                            <div class="bg-slate-900/50 rounded-lg p-2.5 border border-slate-800 flex justify-between items-center">
-                                <div class="flex flex-col"><span class="text-[11px] font-bold text-slate-300">4. RS Rank (擬似排名)</span><span id="desc-m4" class="text-[10px] text-slate-500 mt-0.5">Logistic CDF...</span></div>
-                                <span id="score-m4" class="text-xs font-black text-indigo-400 font-mono">0/20</span>
-                            </div>
-                            <div class="bg-slate-900/50 rounded-lg p-2.5 border border-slate-800 flex justify-between items-center">
-                                <div class="flex flex-col"><span class="text-[11px] font-bold text-slate-300">5. VCP (多階收縮)</span><span id="desc-m5" class="text-[10px] text-slate-500 mt-0.5">T1 > T2 > T3 Squeeze...</span></div>
-                                <span id="score-m5" class="text-xs font-black text-indigo-400 font-mono">0/15</span>
-                            </div>
-                            <div class="bg-slate-900/50 rounded-lg p-2.5 border border-slate-800 flex justify-between items-center">
-                                <div class="flex flex-col"><span class="text-[11px] font-bold text-slate-300">6. Risk (風控與勝率)</span><span id="desc-m6" class="text-[10px] text-slate-500 mt-0.5">ATR, Stop...</span></div>
-                                <span id="score-m6" class="text-xs font-black text-indigo-400 font-mono">0/10</span>
-                            </div>
-                            <div class="bg-slate-900/50 rounded-lg p-2.5 border border-slate-800 flex justify-between items-center">
-                                <div class="flex flex-col"><span class="text-[11px] font-bold text-slate-300">7. Inst. (法人籌碼)</span><span id="desc-m7" class="text-[10px] text-slate-500 mt-0.5">Trust/Foreign Flow...</span></div>
-                                <span id="score-m7" class="text-xs font-black text-indigo-400 font-mono">0/15</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <div class="flex-1 flex flex-col p-2">
+            <div id="priceChartContainer" class="w-full h-96 rounded-xl border border-slate-800 bg-slate-900"></div>
         </div>
     </div>
 
     <script>
         const ALLOWED_PASS = ['852767', 'admin'];
-        let currentMarket = 'TW';
-        let globalDataMap = new Map();
-        
-        let priceChart, dmiChart;
-        let candleSeries, volSeries;
-        let ema20Series, ema60Series, avwapHighSeries, avwapLowSeries;
-        let adxSeries, rsiSeries;
-        
-        let currentChartData = null, currentIndexData = null;
-        let currentInstData = null, currentRevData = null;
+        let priceChart, candleSeries;
 
         document.addEventListener('DOMContentLoaded', () => {
             const pwdInput = document.getElementById('passwordInput');
             const openBtn = document.getElementById('openAppBtn');
-            
             function unlock() {
                 if (ALLOWED_PASS.includes(pwdInput.value)) {
                     document.getElementById('launchScreen').classList.add('fade-out');
                     document.getElementById('mainApp').classList.add('fade-in');
                     initCharts();
-                    setTimeout(() => runAnalysis('2330.TW'), 300);
+                    runAnalysis('2330.TW');
                 }
             }
             openBtn.addEventListener('click', unlock);
-            pwdInput.addEventListener('keypress', (e) => { if(e.key==='Enter') unlock(); });
-
             document.getElementById('analyzeBtn').onclick = () => runAnalysis(document.getElementById('tickerInput').value);
-            document.getElementById('tickerInput').onkeypress = (e) => { if(e.key==='Enter') runAnalysis(e.target.value); };
-            
-            document.getElementById('tabTW').onclick = () => switchMarket('TW');
-            document.getElementById('tabUS').onclick = () => switchMarket('US');
-
-            document.getElementById('toggleEMA').addEventListener('change', e => {
-                const v = e.target.checked; ema20Series.applyOptions({visible: v}); ema60Series.applyOptions({visible: v});
-            });
-            document.getElementById('toggleAVWAP').addEventListener('change', e => {
-                const v = e.target.checked; avwapHighSeries.applyOptions({visible: v}); avwapLowSeries.applyOptions({visible: v});
-            });
         });
 
-        function switchMarket(mkt) {
-            currentMarket = mkt;
-            document.getElementById('tabTW').className = `px-4 py-1.5 rounded-md text-xs font-bold transition-all ${mkt==='TW' ? 'bg-indigo-600 text-white shadow' : 'text-slate-400 hover:text-white bg-transparent'}`;
-            document.getElementById('tabUS').className = `px-4 py-1.5 rounded-md text-xs font-bold transition-all ${mkt==='US' ? 'bg-indigo-600 text-white shadow' : 'text-slate-400 hover:text-white bg-transparent'}`;
-            document.getElementById('tickerInput').value = mkt === 'TW' ? '2330.TW' : 'SPY';
-            runAnalysis(document.getElementById('tickerInput').value);
-        }
-
         function initCharts() {
-            const chartOpt = {
-                layout: { background: { type: 'solid', color: 'transparent' }, textColor: '#64748b' },
-                grid: { vertLines: { color: '#0f172a' }, horzLines: { color: '#0f172a' } },
-                crosshair: { mode: LightweightCharts.CrosshairMode.Normal },
-                rightPriceScale: { borderColor: '#1e293b' }, timeScale: { borderColor: '#1e293b' }
-            };
-
-            priceChart = LightweightCharts.createChart(document.getElementById('priceChartContainer'), chartOpt);
-            candleSeries = priceChart.addCandlestickSeries({ upColor: '#ef4444', downColor: '#22c55e', borderVisible: false, wickUpColor: '#ef4444', wickDownColor: '#22c55e' });
-            volSeries = priceChart.addHistogramSeries({ priceFormat: { type: 'volume' }, priceScaleId: '', scaleMargins: { top: 0.8, bottom: 0 } });
-            
-            ema20Series = priceChart.addLineSeries({ color: '#d946ef', lineWidth: 2, crosshairMarkerVisible: false });
-            ema60Series = priceChart.addLineSeries({ color: '#22d3ee', lineWidth: 2, crosshairMarkerVisible: false });
-            
-            avwapHighSeries = priceChart.addLineSeries({ color: '#fb923c', lineWidth: 2, lineStyle: 0, title: 'AVWAP(Vol)' });
-            avwapLowSeries = priceChart.addLineSeries({ color: '#f472b6', lineWidth: 2, lineStyle: 0, title: 'AVWAP(Low)' });
-
-            dmiChart = LightweightCharts.createChart(document.getElementById('dmiChartContainer'), chartOpt);
-            adxSeries = dmiChart.addLineSeries({ color: '#c084fc', lineWidth: 2 });
-            rsiSeries = dmiChart.addLineSeries({ color: '#22d3ee', lineWidth: 2 });
-
-            new ResizeObserver(entries => {
-                for (let e of entries) {
-                    if (e.target.id === 'priceChartContainer') priceChart.resize(e.contentRect.width, e.contentRect.height);
-                    if (e.target.id === 'dmiChartContainer') dmiChart.resize(e.contentRect.width, e.contentRect.height);
-                }
-            }).observe(document.getElementById('priceChartContainer'));
-            
-            syncCrosshairs();
+            priceChart = LightweightCharts.createChart(document.getElementById('priceChartContainer'), {
+                layout: { background: { color: '#020617' }, textColor: '#cbd5e1' },
+                grid: { vertLines: { color: '#1e293b' }, horzLines: { color: '#1e293b' } }
+            });
+            candleSeries = priceChart.addCandlestickSeries();
         }
 
-        function syncCrosshairs() {
-            priceChart.subscribeCrosshairMove(param => { if(param.time) updateLegends(param.time); });
-        }
-
-        function updateLegends(time) {
-            const d = globalDataMap.get(time);
-            if(!d) return;
-            const sf = (id, txt) => { const e = document.getElementById(id); if(e) e.innerText = txt; };
-            if(d.ema) { sf('leg-ema20', `E20: ${d.ema[20]?.toFixed(2) || '-'}`); sf('leg-ema60', `E60: ${d.ema[60]?.toFixed(2) || '-'}`); }
-            if(d.avwap) { sf('leg-avwapHigh', `AVWAP(巨量): ${d.avwap.high?.toFixed(2) || '-'}`); sf('leg-avwapLow', `AVWAP(波谷): ${d.avwap.low?.toFixed(2) || '-'}`); }
-            if(d.price) sf('leg-vol', `Vol: ${d.price.volume.toLocaleString()}`);
-            if(d.adx !== undefined) sf('leg-adx', `ADX(W): ${d.adx.toFixed(2)}`);
-            if(d.rsi !== undefined) sf('leg-rsi', `RSI(W): ${d.rsi.toFixed(2)}`);
-            if(d.atr !== undefined) sf('leg-atr', `ATR: ${d.atr.toFixed(2)}`);
-        }
-
-        // ========================================================
-        // MATH & QUANT LIBRARY
-        // ========================================================
-        function calcRMA(data, period) {
-            let res = [], sum = 0;
-            for (let i = 0; i < data.length; i++) {
-                if (i < period) {
-                    sum += data[i];
-                    res.push(sum / (i + 1)); 
-                } else {
-                    res.push((res[i - 1] * (period - 1) + data[i]) / period);
-                }
-            }
-            return res;
-        }
-
-        function calcEMA(data, period) {
-            let res = [], k = 2 / (period + 1), ema = data[0].close;
-            for(let i=0; i<data.length; i++) {
-                if(i>0) ema = (data[i].close - ema) * k + ema;
-                res.push({time: data[i].time, value: ema});
-            }
-            return res;
-        }
-
-        function calcRSI_Wilder(data, period=14) {
-            let res = [], gains = [0], losses = [0];
-            res.push({time: data[0].time, rsi: 50});
-            for(let i=1; i<data.length; i++) {
-                let diff = data[i].close - data[i-1].close;
-                gains.push(Math.max(0, diff));
-                losses.push(Math.max(0, -diff));
-            }
-            let avgGains = calcRMA(gains, period);
-            let avgLosses = calcRMA(losses, period);
-            for(let i=1; i<data.length; i++) {
-                if(avgLosses[i] === 0) { res.push({time: data[i].time, rsi: 100}); } 
-                else {
-                    let rs = avgGains[i] / avgLosses[i];
-                    res.push({time: data[i].time, rsi: 100 - (100 / (1 + rs))});
-                }
-            }
-            return res;
-        }
-
-        function calcATR_Wilder(data, period=14) {
-            let trs = [0]; 
-            for(let i=1; i<data.length; i++) {
-                let h = data[i].high, l = data[i].low, pc = data[i-1].close;
-                trs.push(Math.max(h-l, Math.abs(h-pc), Math.abs(l-pc)));
-            }
-            let atrs = calcRMA(trs, period);
-            return data.map((d, i) => ({time: d.time, atr: atrs[i]}));
-        }
-
-        function calcDMI_Wilder(data, period=14) {
-            let trs = [0], pdms = [0], mdms = [0];
-            for(let i=1; i<data.length; i++) {
-                let h = data[i].high, l = data[i].low, ph = data[i-1].high, pl = data[i-1].low, pc = data[i-1].close;
-                trs.push(Math.max(h-l, Math.abs(h-pc), Math.abs(l-pc)));
-                let up = h - ph, dn = pl - l;
-                pdms.push((up > dn && up > 0) ? up : 0);
-                mdms.push((dn > up && dn > 0) ? dn : 0);
-            }
-            let atr_rma = calcRMA(trs, period);
-            let pdi_rma = calcRMA(pdms, period);
-            let mdi_rma = calcRMA(mdms, period);
-            
-            let dxs = [0];
-            for(let i=1; i<data.length; i++) {
-                let pdi = atr_rma[i] === 0 ? 0 : 100 * (pdi_rma[i] / atr_rma[i]);
-                let mdi = atr_rma[i] === 0 ? 0 : 100 * (mdi_rma[i] / atr_rma[i]);
-                let dx = (pdi + mdi) === 0 ? 0 : 100 * Math.abs(pdi - mdi) / (pdi + mdi);
-                dxs.push(dx);
-            }
-            let adxs = calcRMA(dxs, period);
-            return data.map((d, i) => ({time: d.time, adx: adxs[i]}));
-        }
-
-        function calcTrueFixedAVWAP(data, anchorType='highVol', lookback=120) {
-            if(data.length === 0) return [];
-            let startIndex = Math.max(0, data.length - lookback);
-            let anchorIdx = startIndex;
-
-            if(anchorType === 'highVol') {
-                let maxVol = 0;
-                for(let i=startIndex; i<data.length; i++) {
-                    if(data[i].volume > maxVol) { maxVol = data[i].volume; anchorIdx = i; }
-                }
-            } else if (anchorType === 'lowPrice') {
-                let minLow = Infinity;
-                for(let i=startIndex; i<data.length; i++) {
-                    if(data[i].low < minLow) { minLow = data[i].low; anchorIdx = i; }
-                }
-            }
-
-            let res = [];
-            let sumPv = 0, sumV = 0;
-            for(let i=anchorIdx; i<data.length; i++) {
-                let tp = (data[i].high + data[i].low + data[i].close) / 3;
-                sumPv += tp * data[i].volume;
-                sumV += data[i].volume;
-                res.push({time: data[i].time, value: sumV===0 ? data[i].close : sumPv/sumV});
-            }
-            return res;
-        }
-
-        function calcOBV(data) {
-            let obv = 0, res = [];
-            for(let i=0; i<data.length; i++) {
-                if(i > 0) {
-                    if(data[i].close > data[i-1].close) obv += data[i].volume;
-                    else if(data[i].close < data[i-1].close) obv -= data[i].volume;
-                }
-                res.push(obv);
-            }
-            return res;
-        }
-
-        // 🚀 Pseudo RS Rank (Fixed Naming)
-        function calculatePseudoRSRank(data, idxData, currentIndex) {
-            if(currentIndex < 252 || !idxData || idxData.length < 252) return { pr: 50, desc: "數據不足" };
-            const getRet = (arr, i, days) => {
-                if(i-days < 0) return 0;
-                return (arr[i].close - arr[i-days].close) / arr[i-days].close;
-            };
-            
-            let r3 = getRet(data, currentIndex, 63) - getRet(idxData, currentIndex, 63);
-            let r6 = getRet(data, currentIndex, 126) - getRet(idxData, currentIndex, 126);
-            let r9 = getRet(data, currentIndex, 189) - getRet(idxData, currentIndex, 189);
-            let r12 = getRet(data, currentIndex, 252) - getRet(idxData, currentIndex, 252);
-            
-            let wRet = (r3*0.4 + r6*0.2 + r9*0.2 + r12*0.2); 
-            let zScore = wRet / 0.20; 
-            let prob = 1 / (1 + Math.exp(-1.702 * zScore));
-            let pr = Math.round(prob * 100); 
-            
-            if(pr > 99) pr = 99; if(pr < 1) pr = 1;
-            return { pr, desc: `PR ${pr} (超越大盤 ${(wRet*100).toFixed(1)}%)` };
-        }
-
-        // ========================================================
-        // BACKTEST ENGINE (Historical Simulation)
-        // ========================================================
-        function runHistoricalBacktest(data, idxData) {
-            if(data.length < 250) return { winRate: '--', pf: '--', mdd: '--', expectancy: '--', trades: 0 };
-            
-            let balance = 100000;
-            let peakBalance = 100000;
-            let maxDD = 0;
-            let trades = [];
-            let currentPos = null;
-
-            // Pre-calculate needed arrays for speed
-            const ema20 = calcEMA(data, 20);
-            const ema60 = calcEMA(data, 60);
-            const ema200Idx = calcEMA(idxData, 200);
-            const atrArray = calcATR_Wilder(data, 14);
-
-            for (let i = 200; i < data.length - 1; i++) {
-                // Simulate state for day i
-                let L = data[i];
-                let atr14 = atrArray[i].atr;
-                let e60 = ema60[i].value;
-                let vol20 = data.slice(i-20, i).reduce((s,d)=>s+d.volume,0)/20;
-                let high22 = Math.max(...data.slice(i-22, i+1).map(d=>d.high));
-                
-                // Simplified Scoring for Backtest Efficiency
-                let score = 50; 
-                let rs = calculatePseudoRSRank(data, idxData, i).pr;
-                if(rs > 80) score += 20;
-                if(ema20[i].value > e60) score += 15;
-                if(L.close > e60) score += 10;
-                
-                // Hard Veto Condition
-                let isHardVeto = (L.close < e60 && L.volume > vol20) || (L.volume > vol20 * 2 && L.close < L.open);
-
-                // Exit Logic
-                if (currentPos) {
-                    let hitStopLoss = L.low < currentPos.sl;
-                    let hitTrailingStop = L.low < currentPos.tp; // Chandelier
-                    
-                    if (hitStopLoss || hitTrailingStop || isHardVeto) {
-                        // Exit at close for simplicity
-                        let pnl = (L.close - currentPos.entryPrice) / currentPos.entryPrice;
-                        trades.push(pnl);
-                        balance *= (1 + pnl);
-                        currentPos = null;
-                    } else {
-                        // Update Trailing Stop (Chandelier)
-                        currentPos.tp = Math.max(currentPos.tp, high22 - 3*atr14);
-                    }
-                }
-                
-                // Entry Logic
-                let idxRegime = (idxData[i] && idxData[i].close > ema200Idx[i].value) ? 'BULL' : 'BEAR';
-                if (!currentPos && score >= 75 && !isHardVeto && idxRegime === 'BULL') {
-                    // Enter trade
-                    currentPos = {
-                        entryPrice: L.close,
-                        sl: L.close - 2*atr14,
-                        tp: high22 - 3*atr14
-                    };
-                }
-
-                // Track MDD
-                if (balance > peakBalance) peakBalance = balance;
-                let dd = (peakBalance - balance) / peakBalance;
-                if (dd > maxDD) maxDD = dd;
-            }
-
-            // Calculate Metrics
-            if (trades.length === 0) return { winRate: '0%', pf: '0.0', mdd: '0.0%', expectancy: '0.0%', trades: 0 };
-            
-            let wins = trades.filter(t => t > 0);
-            let losses = trades.filter(t => t <= 0);
-            
-            let winRate = (wins.length / trades.length);
-            let grossWin = wins.reduce((a,b)=>a+b, 0);
-            let grossLoss = Math.abs(losses.reduce((a,b)=>a+b, 0));
-            let profitFactor = grossLoss === 0 ? 99.9 : grossWin / grossLoss;
-            
-            let avgWin = wins.length > 0 ? grossWin / wins.length : 0;
-            let avgLoss = losses.length > 0 ? grossLoss / losses.length : 0;
-            let expectancy = (winRate * avgWin) - ((1 - winRate) * avgLoss);
-
-            return {
-                winRate: (winRate * 100).toFixed(1) + '%',
-                pf: profitFactor.toFixed(2),
-                mdd: (maxDD * 100).toFixed(1) + '%',
-                expectancy: (expectancy * 100).toFixed(2) + '%',
-                trades: trades.length
-            };
-        }
-
-        // ========================================================
-        // API & MAIN LOGIC
-        // ========================================================
-        async function fetchYahoo(ticker) {
-            let q = ticker.replace('.TW', '');
-            if(currentMarket==='TW' && /^\d{4}$/.test(q)) q += '.TW';
-            if(currentMarket==='US') q = q.replace(/\./g, '-');
-            const url = `https://query2.finance.yahoo.com/v8/finance/chart/${q}?range=3y&interval=1d`;
-            
+        // --- 強化的 Yahoo 資料抓取 ---
+        async function fetchMarketData(ticker) {
+            const url = `https://query1.finance.yahoo.com/v8/finance/chart/${ticker}?range=1y&interval=1d`;
+            // 使用多重公開 API 代理輪詢，增加穩定性
             const proxies = [
                 `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`,
-                `https://api.codetabs.com/v1/proxy/?quest=${encodeURIComponent(url)}`,
-                `https://thingproxy.freeboard.io/fetch/${url}`
+                `https://corsproxy.io/?${encodeURIComponent(url)}`,
+                `https://api.codetabs.com/v1/proxy/?quest=${encodeURIComponent(url)}`
             ];
 
-            let json = null;
             for (let proxy of proxies) {
                 try {
-                    const res = await fetch(proxy);
-                    if (!res.ok) continue;
+                    const response = await fetch(proxy, { headers: { 'User-Agent': 'Mozilla/5.0' }});
+                    if (!response.ok) continue;
                     
-                    json = await res.json();
-                    
-                    if (json && json.chart && json.chart.result) break; 
-                } catch (e) { console.warn("Proxy failed:", proxy); }
+                    const data = await response.json();
+                    if (data?.chart?.result?.[0]) {
+                        const result = data.chart.result[0];
+                        const quotes = result.indicators.quote[0];
+                        return result.timestamp.map((t, i) => ({
+                            time: new Date(t * 1000).toISOString().split('T')[0],
+                            open: quotes.open[i],
+                            high: quotes.high[i],
+                            low: quotes.low[i],
+                            close: quotes.close[i]
+                        })).filter(d => d.open !== null);
+                    }
+                } catch (e) { continue; }
             }
-
-            if (!json || !json.chart || !json.chart.result) throw new Error("Yahoo API Failed across all proxies");
-
-            try {
-                const chart = json.chart.result[0];
-                return chart.timestamp.map((t,i) => {
-                    const c = chart.indicators.quote[0].close[i];
-                    return { 
-                        time: getLocalStr(new Date(t*1000)), open: chart.indicators.quote[0].open[i] ?? c, high: chart.indicators.quote[0].high[i] ?? c, 
-                        low: chart.indicators.quote[0].low[i] ?? c, close: c, volume: chart.indicators.quote[0].volume[i] ?? 0 
-                    };
-                }).filter(d => d.close != null);
-            } catch(e) { throw new Error("Yahoo API Failed parsing data"); }
-        }
-
-        const MarketRegime = { BULL: 'BULL', SIDEWAY: 'SIDEWAY', BEAR: 'BEAR' };
-
-        function determineMarketRegime(idxData) {
-            if(!idxData || idxData.length < 200) return MarketRegime.SIDEWAY;
-            const ema200 = calcEMA(idxData, 200).pop().value;
-            const adx = calcDMI_Wilder(idxData, 14).pop().adx;
-            const lastClose = idxData[idxData.length-1].close;
-            
-            if (lastClose > ema200 && adx > 20) return MarketRegime.BULL;
-            if (lastClose < ema200) return MarketRegime.BEAR;
-            return MarketRegime.SIDEWAY;
-        }
-
-        // 🚀 Adaptive Position Size (Fixed Naming)
-        function calcAdaptivePositionSize(score, regime) {
-            let winRate = 0.3 + (Math.max(0, score - 30) / 70) * 0.40; 
-            if(regime === MarketRegime.BEAR) winRate *= 0.8; 
-            
-            let b = 2.0; 
-            let q = 1 - winRate;
-            let kelly = (b * winRate - q) / b; 
-            let halfKelly = Math.max(0, kelly / 2); 
-            let maxPos = 0.20; 
-            let finalPos = Math.min(maxPos, halfKelly);
-
-            return { sizeStr: (finalPos * 100).toFixed(1) + '%' };
-        }
-
-        function runASQEv8Logic() {
-            if(!currentChartData || currentChartData.length < 120) return;
-            const data = currentChartData, len = data.length;
-            const L = data[len-1];
-            
-            const ema20 = calcEMA(data, 20).pop().value;
-            const ema60 = calcEMA(data, 60).pop().value;
-            const atrArray = calcATR_Wilder(data);
-            const atr14 = atrArray.pop().atr;
-            
-            const avwapHighData = calcTrueFixedAVWAP(data, 'highVol', 120);
-            const avwapLowData = calcTrueFixedAVWAP(data, 'lowPrice', 60);
-            const avwapHigh = avwapHighData.length > 0 ? avwapHighData[avwapHighData.length-1].value : L.close;
-            const avwapLow = avwapLowData.length > 0 ? avwapLowData[avwapLowData.length-1].value : L.close;
-
-            const vol20MA = data.slice(-20).reduce((s,d)=>s+d.volume,0)/20;
-            const high20 = Math.max(...data.slice(-20).map(d=>d.high));
-            const hh22 = Math.max(...data.slice(-22).map(d=>d.high));
-            const obvArray = calcOBV(data);
-            const obvTrend = obvArray[len-1] > obvArray[len-20];
-
-            const regime = determineMarketRegime(currentIndexData || data);
-            
-            let s1=0, s2=0, s3=0, s4=0, s5=0, s6=0, s7=0;
-            let d1="", d2="", d3="", d4="", d5="", d6="", d7="";
-
-            const isETF = document.getElementById('tickerInput').value.startsWith('00') || ['SPY','QQQ'].includes(document.getElementById('tickerInput').value);
-
-            if(regime === MarketRegime.BULL) { s1=15; d1="✅ 大盤多頭順風 (+15)"; }
-            else if(regime === MarketRegime.SIDEWAY) { s1=8; d1="⚖️ 大盤整理 (+8)"; }
-            else { s1=0; d1="❌ 大盤空頭逆風 (0)"; }
-
-            if(isETF) { s2=10; d2="🔄 ETF 免驗財報 (+10)"; }
-            else { s2=5; d2="⚠️ 缺財報 API 數據 (+5)"; }
-
-            if(L.close > avwapHigh && obvTrend) { s3=15; d3="✅ 站穩巨量錨點且 OBV 向上 (+15)"; }
-            else if(L.close > avwapLow) { s3=8; d3="⚠️ 守住波谷錨點防線 (+8)"; }
-            else { s3=0; d3="❌ 跌破機構絕對成本區 (0)"; }
-
-            let rsData = calculatePseudoRSRank(data, currentIndexData, len-1);
-            if(isETF) { s4=20; d4="🔄 ETF 豁免 Alpha (+20)"; }
-            else {
-                if(rsData.pr >= 90) { s4=20; d4=`🔥 強勢領跑 ${rsData.desc} (+20)`; }
-                else if(rsData.pr >= 70) { s4=15; d4=`✅ 優於大盤 ${rsData.desc} (+15)`; }
-                else if(rsData.pr >= 50) { s4=10; d4=`⚖️ 貼近大盤 ${rsData.desc} (+10)`; }
-                else { s4=0; d4=`❌ 弱於大盤 ${rsData.desc} (0)`; }
-            }
-
-            if(L.close > high20 * 0.98 && L.volume > vol20MA * 1.5) { s5=15; d5="🚀 帶量突破頸線 (+15)"; }
-            else { s5=0; d5="❌ 波動散亂無 VCP 型態"; }
-
-            let distToChandelier = (hh22 - 3*atr14) / L.close;
-            if(atr14/L.close < 0.04 && distToChandelier < 0.1) { s6=10; d6="✅ 波動可控，吊燈停損安全 (+10)"; }
-            else { s6=5; d6="⚠️ 波動偏大，注意回撤風險 (+5)"; }
-
-            if(isETF) { s7=15; d7="🔄 ETF 豁免籌碼面 (+15)"; }
-            else { s7=8; d7="⚠️ 缺籌碼 API 數據 (+8)"; }
-
-            let baseScore = s1+s2+s3+s4+s5+s6+s7;
-
-            let isHardVeto = false, hardReason = "";
-            let isSoftVeto = false, softReason = "", softPenalty = 0;
-
-            if(L.close < ema60 && L.volume > vol20MA) { isHardVeto=true; hardReason="跌破季線生命線 (EMA60) 且放量"; }
-            else if(L.volume > vol20MA * 2.0 && L.close < L.open) { isHardVeto=true; hardReason="高檔爆量長黑 (Stage 4 特徵)"; }
-
-            let upperShadow = (L.high - Math.max(L.open, L.close)) / L.close;
-            if(upperShadow > 0.035) { isSoftVeto=true; softPenalty=15; softReason="長上影線賣壓沉重"; }
-
-            let finalScore = baseScore;
-            let vetoTitle="", vetoColor="", vetoIcon="🚨";
-            const vetoPanel = document.getElementById('vetoPanel');
-
-            if(isHardVeto) {
-                finalScore = Math.min(finalScore, 40);
-                vetoPanel.className = "p-3.5 rounded-xl border relative overflow-hidden bg-red-950/50 border-red-500/50 block";
-                vetoTitle = "HARD VETO (強制出場)"; vetoColor="text-red-400";
-                document.getElementById('vetoReason').innerHTML = `${hardReason}。觸發賣出法則，強制鎖死分數。`;
-            } else if (isSoftVeto) {
-                finalScore -= softPenalty;
-                vetoPanel.className = "p-3.5 rounded-xl border relative overflow-hidden bg-yellow-950/50 border-yellow-500/50 block";
-                vetoTitle = "SOFT VETO (軟性警告)"; vetoColor="text-yellow-400"; vetoIcon="⚠️";
-                document.getElementById('vetoReason').innerHTML = `${softReason}。系統動態扣減 ${softPenalty} 分。`;
-            } else {
-                vetoPanel.classList.add('hidden');
-            }
-
-            const sizeData = calcAdaptivePositionSize(finalScore, regime);
-            let sl = L.close - 2*atr14;
-            let chandelierExit = hh22 - 3*atr14;
-            
-            // 🚀 Run Historical Backtest
-            let btMetrics = runHistoricalBacktest(data, currentIndexData);
-
-            updateDashboardUI({ 
-                finalScore, regime, s1,s2,s3,s4,s5,s6,s7, d1,d2,d3,d4,d5,d6,d7, 
-                sizeData, L, sl, chandelierExit, rsPr: rsData.pr, 
-                vetoTitle, vetoColor, vetoIcon, isHardVeto, isSoftVeto, btMetrics
-            });
-        }
-
-        function updateDashboardUI(v) {
-            const rb = document.getElementById('regimeBadge');
-            rb.classList.remove('hidden', 'bg-emerald-950/60', 'text-emerald-400', 'bg-yellow-950/60', 'text-yellow-400', 'bg-red-950/60', 'text-red-400');
-            if(v.regime === MarketRegime.BULL) { rb.classList.add('bg-emerald-950/60', 'text-emerald-400', 'border-emerald-800'); document.getElementById('regimeIcon').innerText="🐂"; document.getElementById('regimeText').innerText="BULL (多頭)"; }
-            else if(v.regime === MarketRegime.SIDEWAY) { rb.classList.add('bg-yellow-950/60', 'text-yellow-400', 'border-yellow-800'); document.getElementById('regimeIcon').innerText="⚖️"; document.getElementById('regimeText').innerText="SIDEWAY (盤整)"; }
-            else { rb.classList.add('bg-red-950/60', 'text-red-400', 'border-red-800'); document.getElementById('regimeIcon').innerText="🐻"; document.getElementById('regimeText').innerText="BEAR (空頭)"; }
-
-            const sf = (id, html) => document.getElementById(id).innerHTML = html;
-            sf('score-m1', `${v.s1}/15`); sf('desc-m1', v.d1);
-            sf('score-m2', `${v.s2}/10`); sf('desc-m2', v.d2);
-            sf('score-m3', `${v.s3}/15`); sf('desc-m3', v.d3);
-            sf('score-m4', `${v.s4}/20`); sf('desc-m4', v.d4);
-            sf('score-m5', `${v.s5}/15`); sf('desc-m5', v.d5);
-            sf('score-m6', `${v.s6}/10`); sf('desc-m6', v.d6);
-            sf('score-m7', `${v.s7}/15`); sf('desc-m7', v.d7);
-
-            if(v.isHardVeto || v.isSoftVeto) {
-                sf('vetoTitleIcon', v.vetoIcon); sf('vetoTitle', v.vetoTitle);
-                document.getElementById('vetoTitle').className = `text-xs font-black tracking-wider ${v.vetoColor}`;
-            }
-
-            // 綁定回測數據
-            sf('btWinRate', v.btMetrics.winRate);
-            sf('btProfitFactor', v.btMetrics.pf);
-            sf('btMDD', v.btMetrics.mdd);
-            sf('btExpectancy', v.btMetrics.expectancy);
-            sf('btTradeCount', `總交易次數: ${v.btMetrics.trades}`);
-
-            const circle = document.getElementById('scoreCircle');
-            const scoreBg = document.getElementById('scoreBgGlow');
-            document.getElementById('totalScore').innerText = v.finalScore;
-            circle.style.strokeDasharray = `${Math.max(0,v.finalScore)}, 100`;
-            
-            let colorCls = 'text-indigo-500', bgCls = 'bg-indigo-500', advice="";
-            if(v.finalScore >= 85) { colorCls='text-fuchsia-500'; bgCls='bg-fuchsia-500'; sf('finalRatingText','SSS 頂級飆股'); advice="🚀 突破強攻"; }
-            else if(v.finalScore >= 70) { colorCls='text-emerald-500'; bgCls='bg-emerald-500'; sf('finalRatingText','S 核心資產'); advice="🟢 順勢推進"; }
-            else if(v.finalScore >= 50) { colorCls='text-yellow-500'; bgCls='bg-yellow-500'; sf('finalRatingText','A 震盪整理'); advice="🟡 區間控盤"; }
-            else { colorCls='text-red-500'; bgCls='bg-red-500'; sf('finalRatingText','📉 轉弱清倉'); advice="🛑 空手觀望"; }
-            
-            circle.setAttribute('class', `score-circle ${colorCls}`);
-            scoreBg.setAttribute('class', `absolute -right-10 -top-10 w-40 h-40 rounded-full blur-3xl opacity-10 transition-colors duration-700 ${bgCls}`);
-
-            sf('rsRankingText', v.rsPr > 0 ? `PR ${v.rsPr}` : '--');
-            sf('actionAdvice', advice);
-            sf('positionSizeAdvice', `Adaptive Size：${v.sizeData.sizeStr}`);
-
-            if(v.finalScore < 50) {
-                sf('stopLoss', '--'); sf('trailingStop', '觸發離場');
-                document.getElementById('trailingStop').className = 'text-lg font-black text-red-500 font-mono';
-            } else {
-                sf('stopLoss', v.sl.toFixed(2)); 
-                sf('trailingStop', v.chandelierExit > v.L.close ? '觸發離場' : v.chandelierExit.toFixed(2));
-                document.getElementById('trailingStop').className = v.chandelierExit > v.L.close ? 'text-lg font-black text-red-500 font-mono' : 'text-lg font-black text-emerald-400 font-mono';
-            }
+            throw new Error("Yahoo API 備援失效");
         }
 
         async function runAnalysis(ticker) {
-            const overlay = document.getElementById('loadingOverlay');
-            overlay.classList.remove('hidden');
-            let t = ticker.trim().toUpperCase();
-            document.getElementById('chartTitle').innerText = t;
-            
+            document.getElementById('loadingOverlay').classList.remove('hidden');
             try {
-                let idxQ = currentMarket==='TW' ? '^TWII' : '^GSPC';
-                currentIndexData = await fetchYahoo(idxQ);
-                currentChartData = await fetchYahoo(t);
-                
-                if(!currentChartData || currentChartData.length < 50) throw new Error("Data insufficient");
-
-                globalDataMap.clear();
-                const ema20 = calcEMA(currentChartData, 20), ema60 = calcEMA(currentChartData, 60);
-                const rsi = calcRSI_Wilder(currentChartData), dmi = calcDMI_Wilder(currentChartData), atr = calcATR_Wilder(currentChartData);
-                const avwapHighArr = calcTrueFixedAVWAP(currentChartData, 'highVol', 120);
-                const avwapLowArr = calcTrueFixedAVWAP(currentChartData, 'lowPrice', 60);
-
-                currentChartData.forEach(d => globalDataMap.set(d.time, {price: d, ema:{}, avwap:{}}));
-                ema20.forEach(d => globalDataMap.get(d.time).ema[20] = d.value);
-                ema60.forEach(d => globalDataMap.get(d.time).ema[60] = d.value);
-                avwapHighArr.forEach(d => globalDataMap.get(d.time).avwap.high = d.value);
-                avwapLowArr.forEach(d => globalDataMap.get(d.time).avwap.low = d.value);
-                rsi.forEach(d => globalDataMap.get(d.time).rsi = d.rsi);
-                dmi.forEach(d => globalDataMap.get(d.time).adx = d.adx);
-                atr.forEach(d => globalDataMap.get(d.time).atr = d.atr);
-
-                candleSeries.setData(currentChartData);
-                volSeries.setData(currentChartData.map(d=>({time:d.time, value:d.volume, color: d.close>=d.open?'rgba(34,197,94,0.5)':'rgba(239,68,68,0.5)'})));
-                ema20Series.setData(ema20); ema60Series.setData(ema60);
-                avwapHighSeries.setData(avwapHighArr); avwapLowSeries.setData(avwapLowArr);
-                rsiSeries.setData(rsi.map(d=>({time:d.time, value:d.rsi})));
-                adxSeries.setData(dmi.map(d=>({time:d.time, value:d.adx})));
-
+                const data = await fetchMarketData(ticker);
+                candleSeries.setData(data);
                 priceChart.timeScale().fitContent();
-                runASQEv8Logic();
-                updateLegends(currentChartData[currentChartData.length-1].time);
-
-            } catch(e) {
+            } catch (e) {
                 console.error(e);
-                document.getElementById('chartTitle').innerText = t + " (API 連線異常)";
-                document.getElementById('finalRatingText').innerHTML = "<span class='text-red-400 text-lg'>數據源阻擋，請稍後重試</span>";
-                // 移除 alert("數據載入失敗，請確認代碼。"); 避免阻斷 UI 體驗
+                alert("數據擷取失敗，請檢查代碼格式(如: 2330.TW)");
             } finally {
-                overlay.classList.add('hidden');
+                document.getElementById('loadingOverlay').classList.add('hidden');
             }
         }
     </script>
