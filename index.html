@@ -930,4 +930,23 @@
             circle.style.strokeDasharray = `${Math.max(0,v.finalScore)}, 100`;
             
             let colorCls = 'text-indigo-500', bgCls = 'bg-indigo-500', advice="";
-            if(v.finalScore >= 85) { colorCls='text-fuchsia
+            if(v.finalScore >= 85) { colorCls='text-fuchsia-500'; bgCls='bg-fuchsia-500'; sf('finalRatingText','SSS 頂級飆股'); advice="🚀 突破強攻"; }
+            else if(v.finalScore >= 70) { colorCls='text-emerald-500'; bgCls='bg-emerald-500'; sf('finalRatingText','S 核心資產'); advice="🟢 順勢推進"; }
+            else if(v.finalScore >= 50) { colorCls='text-yellow-500'; bgCls='bg-yellow-500'; sf('finalRatingText','A 震盪整理'); advice="🟡 區間控盤"; }
+            else { colorCls='text-red-500'; bgCls='bg-red-500'; sf('finalRatingText','📉 轉弱清倉'); advice="🛑 空手觀望"; }
+            
+            circle.setAttribute('class', `score-circle ${colorCls}`);
+            document.getElementById('scoreBgGlow').setAttribute('class', `absolute -right-10 -top-10 w-40 h-40 rounded-full blur-3xl opacity-10 transition-colors duration-700 ${bgCls}`);
+
+            sf('rsRankingText', v.rsPr > 0 ? `PR ${v.rsPr}` : '--'); sf('actionAdvice', advice); sf('positionSizeAdvice', `Adaptive Size：${v.sizeStr}`);
+
+            if(v.finalScore < 50) {
+                sf('stopLoss', '--'); sf('trailingStop', '觸發離場'); document.getElementById('trailingStop').className = 'text-lg font-black text-red-500 font-mono';
+            } else {
+                sf('stopLoss', v.sl.toFixed(2)); sf('trailingStop', v.chandelierExit > v.L.close ? '觸發離場' : v.chandelierExit.toFixed(2));
+                document.getElementById('trailingStop').className = v.chandelierExit > v.L.close ? 'text-lg font-black text-red-500 font-mono' : 'text-lg font-black text-emerald-400 font-mono';
+            }
+        }
+    </script>
+</body>
+</html>
