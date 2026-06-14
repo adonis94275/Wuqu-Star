@@ -642,16 +642,43 @@
 
         function calculatePseudoRSRank(data, idxData, currentIndex) {
             if(currentIndex < 252 || !idxData || idxData.length < 252) return { pr: 50, desc: "數據不足" };
-            const getRet = (arr, i, days) => { 
-                if(i < 0 || i >= arr.length || i-days < 0 || !arr[i] || !arr[i-days]) return 0; 
-                return (arr[i].close - arr[i-days].close) / arr[i-days].close; 
+            
+            // 💡 核心對齊邏輯：用時間戳去查大盤資料，而非直接用 currentIndex
+            const getAlignedRet = (arr, i, days) => {
+                if(i < 0 || i >= arr.length || i-days < 0 || !arr[i] || !arr[i-days]) return 0;
+                return (arr[i].close - arr[i-days].close) / arr[i-days].close;
+            };
+
+            const getIdxRetByTime = (stockArr, stockIdx, days) => {
+                if(stockIdx < 0 || stockIdx-days < 0 || !stockArr[stockIdx] || !stockArr[stockIdx-days]) return 0;
+                let tEnd = stockArr[stockIdx].time;
+                let tStart = stockArr[stockIdx-days].time;
+                
+                let idxEndData = idxData.find(d => d.time === tEnd);
+                let idxStartData = idxData.find(d => d.time === tStart);
+                
+                // 如果大盤某天沒開盤(例如台灣放假但美股有開)，往前找最近的一天
+                if (!idxEndData) {
+                    for(let j=stockIdx-1; j>=0; j--) {
+                        let fallback = idxData.find(d => d.time === stockArr[j].time);
+                        if(fallback) { idxEndData = fallback; break; }
+                    }
+                }
+                if (!idxStartData) {
+                    for(let j=stockIdx-days-1; j>=0; j--) {
+                        let fallback = idxData.find(d => d.time === stockArr[j].time);
+                        if(fallback) { idxStartData = fallback; break; }
+                    }
+                }
+
+                if(!idxEndData || !idxStartData) return 0;
+                return (idxEndData.close - idxStartData.close) / idxStartData.close;
             };
             
-            let idxI = Math.min(currentIndex, idxData.length - 1);
-            let r3 = getRet(data, currentIndex, 63) - getRet(idxData, idxI, 63);
-            let r6 = getRet(data, currentIndex, 126) - getRet(idxData, idxI, 126);
-            let r9 = getRet(data, currentIndex, 189) - getRet(idxData, idxI, 189);
-            let r12 = getRet(data, currentIndex, 252) - getRet(idxData, idxI, 252);
+            let r3 = getAlignedRet(data, currentIndex, 63) - getIdxRetByTime(data, currentIndex, 63);
+            let r6 = getAlignedRet(data, currentIndex, 126) - getIdxRetByTime(data, currentIndex, 126);
+            let r9 = getAlignedRet(data, currentIndex, 189) - getIdxRetByTime(data, currentIndex, 189);
+            let r12 = getAlignedRet(data, currentIndex, 252) - getIdxRetByTime(data, currentIndex, 252);
             
             let wRet = (r3*0.4 + r6*0.2 + r9*0.2 + r12*0.2); 
             let pr = Math.round((1 / (1 + Math.exp(-1.702 * (wRet / 0.20)))) * 100); 
@@ -703,7 +730,21 @@
                     } else { currentPos.tp = Math.max(currentPos.tp, high22 - 3*atr14); }
                 }
                 
-                let idxI = idxData ? Math.min(i, idxData.length - 1) : 0;
+                // 💡 回測也需要對齊時間戳，防止找不到大盤資料報錯
+                let idxI = 0;
+                if (idxData) {
+                    let matchingIdx = idxData.findIndex(d => d.time === L.time);
+                    if (matchingIdx !== -1) {
+                        idxI = matchingIdx;
+                    } else {
+                        // 如果這天大盤沒開盤，用前一天的資料
+                        for(let j=i-1; j>=0; j--) {
+                            let fallback = idxData.findIndex(d => d.time === data[j].time);
+                            if(fallback !== -1) { idxI = fallback; break; }
+                        }
+                    }
+                }
+
                 let idxRegime = 'SIDEWAY';
                 if (idxData && idxData.length > 200 && ema200Idx[idxI]) {
                     idxRegime = (idxData[idxI] && idxData[idxI].close > ema200Idx[idxI].value) ? 'BULL' : 'BEAR';
