@@ -856,7 +856,10 @@
 
 
                 // --- UI Update ---
-                const sf = (id, html) => document.getElementById(id).innerHTML = html;
+                const sf = (id, html) => {
+                    const el = document.getElementById(id);
+                    if (el) el.innerHTML = html; // 💡 加上防呆機制：只有當元素存在時才更新，防止崩潰
+                };
                 const circle = document.getElementById('scoreCircle');
                 
                 sf('totalScore', finalScore);
