@@ -42,33 +42,27 @@
         <div class="bg-slate-900 rounded-3xl p-6 w-full max-w-lg border border-slate-700 shadow-2xl relative">
             <button id="closeSettingsBtn" class="absolute top-5 right-5 text-slate-400 hover:text-white transition-colors hidden">✕</button>
             <h2 class="text-xl font-black text-white mb-2 flex items-center gap-2 tracking-widest"><span class="text-indigo-400">⚙️</span> 四核心數據源配置</h2>
-            <p class="text-xs text-slate-400 mb-4">請填入機構級 API 金鑰，建立雙層備援防護網。</p>
+            <p class="text-xs text-slate-400 mb-2">請填入機構級 API 金鑰，建立雙層備援防護網。</p>
+            <p class="text-xs font-bold text-red-400 mb-4 bg-red-950/30 p-2 rounded border border-red-900/50">⚠️ Yahoo 免費節點近期遭全面封鎖，強烈建議配置 FinMind 或 FMP 金鑰以確保連線。</p>
             
-            <div class="space-y-3 max-h-[65vh] overflow-y-auto custom-scrollbar pr-2">
+            <div class="space-y-3 max-h-[60vh] overflow-y-auto custom-scrollbar pr-2">
                 <div class="bg-slate-950/50 p-3 rounded-xl border border-slate-800">
                     <label class="flex justify-between items-center text-[11px] text-slate-400 font-bold mb-1.5 uppercase tracking-wider">
-                        <span>FinMind API Key <span class="text-green-500 ml-1 font-normal">台股主力 / 籌碼</span></span>
+                        <span>FinMind API Key <span class="text-green-500 ml-1 font-normal">台股主力</span></span>
                     </label>
                     <input type="password" id="finmindKeyInput" class="w-full bg-slate-900 text-white border border-slate-700 rounded-lg px-3 py-2 focus:outline-none focus:border-green-500 font-mono text-xs" placeholder="貼上 FinMind Token">
                 </div>
 
                 <div class="bg-slate-950/50 p-3 rounded-xl border border-slate-800">
                     <label class="flex justify-between items-center text-[11px] text-slate-400 font-bold mb-1.5 uppercase tracking-wider">
-                        <span>Fugle API Key <span class="text-teal-500 ml-1 font-normal">台股備援極速通道</span></span>
-                    </label>
-                    <input type="password" id="fugleKeyInput" class="w-full bg-slate-900 text-white border border-slate-700 rounded-lg px-3 py-2 focus:outline-none focus:border-teal-500 font-mono text-xs" placeholder="貼上 Fugle (富果) X-API-KEY">
-                </div>
-
-                <div class="bg-slate-950/50 p-3 rounded-xl border border-slate-800">
-                    <label class="flex justify-between items-center text-[11px] text-slate-400 font-bold mb-1.5 uppercase tracking-wider">
-                        <span>FMP API Key <span class="text-blue-500 ml-1 font-normal">美股主力 / 財報</span></span>
+                        <span>FMP API Key <span class="text-blue-500 ml-1 font-normal">美股主力</span></span>
                     </label>
                     <input type="password" id="fmpKeyInput" class="w-full bg-slate-900 text-white border border-slate-700 rounded-lg px-3 py-2 focus:outline-none focus:border-blue-500 font-mono text-xs" placeholder="貼上 FMP API Key">
                 </div>
 
                 <div class="bg-slate-950/50 p-3 rounded-xl border border-slate-800">
                     <label class="flex justify-between items-center text-[11px] text-slate-400 font-bold mb-1.5 uppercase tracking-wider">
-                        <span>Finnhub API Key <span class="text-purple-500 ml-1 font-normal">即時報價 / 新聞</span></span>
+                        <span>Finnhub API Key <span class="text-purple-500 ml-1 font-normal">即時報價</span></span>
                     </label>
                     <input type="password" id="finnhubKeyInput" class="w-full bg-slate-900 text-white border border-slate-700 rounded-lg px-3 py-2 focus:outline-none focus:border-purple-500 font-mono text-xs" placeholder="貼上 Finnhub Token">
                 </div>
@@ -255,8 +249,8 @@
         let priceChart, dmiChart;
         let candleSeries, volSeries, ema20Series, ema60Series, avwapHighSeries, avwapLowSeries;
         let adxSeries, rsiSeries;
-        let currentChartData = null, currentIndexData = null, currentInstData = null, currentRevData = null;
-        let isAnalyzing = false; // 💡 核心修正：新增執行鎖，防止競態條件
+        let currentChartData = null, currentIndexData = null;
+        let isAnalyzing = false; // 💡 核心防護鎖
 
         // API Keys
         let KEY_FINMIND = localStorage.getItem('ASQE_FINMIND_KEY') || '';
@@ -269,7 +263,6 @@
         document.addEventListener('DOMContentLoaded', () => {
             const pwdInput = document.getElementById('passwordInput');
             
-            // 登入按鈕
             document.getElementById('unlockBtn').addEventListener('click', attemptUnlock);
             pwdInput.addEventListener('keypress', (e) => { if(e.key==='Enter') attemptUnlock(); });
 
@@ -279,7 +272,6 @@
                     setTimeout(() => {
                         document.getElementById('setupModal').classList.remove('fade-out');
                         document.getElementById('finmindKeyInput').value = KEY_FINMIND;
-                        document.getElementById('fugleKeyInput').value = KEY_FUGLE;
                         document.getElementById('fmpKeyInput').value = KEY_FMP;
                         document.getElementById('finnhubKeyInput').value = KEY_FINNHUB;
                     }, 500);
@@ -290,12 +282,10 @@
 
             document.getElementById('saveAndStartBtn').addEventListener('click', () => {
                 KEY_FINMIND = document.getElementById('finmindKeyInput').value.trim();
-                KEY_FUGLE = document.getElementById('fugleKeyInput').value.trim();
                 KEY_FMP = document.getElementById('fmpKeyInput').value.trim();
                 KEY_FINNHUB = document.getElementById('finnhubKeyInput').value.trim();
                 
                 localStorage.setItem('ASQE_FINMIND_KEY', KEY_FINMIND);
-                localStorage.setItem('ASQE_FUGLE_KEY', KEY_FUGLE);
                 localStorage.setItem('ASQE_FMP_KEY', KEY_FMP);
                 localStorage.setItem('ASQE_FINNHUB_KEY', KEY_FINNHUB);
 
@@ -313,7 +303,7 @@
             document.getElementById('tickerInput').onkeypress = (e) => { if(e.key==='Enter') runAnalysis(e.target.value); };
             
             document.getElementById('tabTW').onclick = () => {
-                if (isAnalyzing) return; // 💡 防呆：運行中禁止切換
+                if (isAnalyzing) return; 
                 currentMarket = 'TW';
                 document.getElementById('tabTW').className = "px-4 py-1.5 rounded-md text-xs font-bold transition-all bg-indigo-600 text-white shadow";
                 document.getElementById('tabUS').className = "px-4 py-1.5 rounded-md text-xs font-bold transition-all text-slate-400 hover:text-white bg-transparent";
@@ -322,7 +312,7 @@
             };
             
             document.getElementById('tabUS').onclick = () => {
-                if (isAnalyzing) return; // 💡 防呆：運行中禁止切換
+                if (isAnalyzing) return; 
                 currentMarket = 'US';
                 document.getElementById('tabUS').className = "px-4 py-1.5 rounded-md text-xs font-bold transition-all bg-indigo-600 text-white shadow";
                 document.getElementById('tabTW').className = "px-4 py-1.5 rounded-md text-xs font-bold transition-all text-slate-400 hover:text-white bg-transparent";
@@ -330,12 +320,8 @@
                 runAnalysis('SPY');
             };
 
-            document.getElementById('settingsBtn').onclick = () => {
-                document.getElementById('setupModal').classList.remove('fade-out');
-            };
-            document.getElementById('closeSettingsBtn').onclick = () => {
-                document.getElementById('setupModal').classList.add('fade-out');
-            };
+            document.getElementById('settingsBtn').onclick = () => { document.getElementById('setupModal').classList.remove('fade-out'); };
+            document.getElementById('closeSettingsBtn').onclick = () => { document.getElementById('setupModal').classList.add('fade-out'); };
 
             document.getElementById('toggleEMA').addEventListener('change', e => {
                 const v = e.target.checked; ema20Series.applyOptions({visible: v}); ema60Series.applyOptions({visible: v});
@@ -388,7 +374,7 @@
         }
 
         // ========================================================
-        // 🚀 QUAD-CORE ROUTING ENGINE (FinMind / Fugle / FMP / Yahoo)
+        // 🚀 ROUTING ENGINE (FinMind / FMP / Yahoo)
         // ========================================================
         const getLocalStr = (d) => `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
 
@@ -404,7 +390,6 @@
             ];
 
             let json = null;
-            
             try {
                 let directRes = await fetch(url1);
                 if (directRes.ok) json = await directRes.json();
@@ -456,26 +441,8 @@
                             time: d.date, open: Number(d.open||d.Open), high: Number(d.max||d.High), low: Number(d.min||d.Low), close: Number(d.close||d.Close), volume: Number(d.Trading_Volume||d.Volume)
                         })).filter(d => !isNaN(d.close));
                     }
-                } catch(e) { console.warn("FinMind 失效，轉向 Fugle 備援", e); }
+                } catch(e) { console.warn("FinMind 失效，轉向 Yahoo 備援", e); }
             }
-
-            if (KEY_FUGLE) {
-                try {
-                    let fugleTicker = rawTicker === '^TWII' ? 'IX0001' : rawTicker;
-                    const url = `https://api.fugle.tw/marketdata/v1.0/stock/historical/candles/${fugleTicker}?timeframe=D`;
-                    const res = await fetch(url, { headers: { 'X-API-KEY': KEY_FUGLE } });
-                    if (!res.ok) throw new Error("Fugle HTTP Error");
-                    const json = await res.json();
-                    if (json && json.data && json.data.length > 0) {
-                        let rawData = json.data;
-                        if (new Date(rawData[0].date) > new Date(rawData[rawData.length-1].date)) rawData.reverse();
-                        return rawData.map(d => ({
-                            time: d.date, open: d.open, high: d.high, low: d.low, close: d.close, volume: d.volume
-                        })).filter(d => !isNaN(d.close));
-                    }
-                } catch(e) { console.warn("Fugle 失效，轉向 Yahoo 終極備援", e); }
-            }
-
             return await fetchYahooFallback(q);
         }
 
@@ -509,36 +476,7 @@
                     const qRes = await fetch(qUrl); const qJson = await qRes.json();
                     if (qJson && qJson.c) document.getElementById('rtPrice').innerText = `$${qJson.c.toFixed(2)}`;
                 } catch(e) {}
-                
-                try {
-                    const toDate = new Date().toISOString().split('T')[0];
-                    const fromDate = new Date(Date.now() - 7*24*60*60*1000).toISOString().split('T')[0];
-                    const nUrl = `https://finnhub.io/api/v1/company-news?symbol=${q}&from=${fromDate}&to=${toDate}&token=${KEY_FINNHUB}`;
-                    const nRes = await fetch(nUrl); const nJson = await nRes.json();
-                    if (nJson && nJson.length > 0) {
-                        nJson.slice(0, 3).forEach(n => {
-                            newsHtml += `<a href="${n.url}" target="_blank" class="block bg-slate-800 hover:bg-slate-700 p-2 rounded truncate transition-colors">▪ ${n.headline}</a>`;
-                        });
-                        document.getElementById('newsList').innerHTML = newsHtml;
-                        return;
-                    }
-                } catch(e) {}
             }
-
-            try {
-                let fullQ = currentMarket === 'TW' ? q + ".TW" : q;
-                const url = `https://query2.finance.yahoo.com/v1/finance/search?q=${fullQ}&newsCount=3`;
-                const proxy = `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`;
-                const res = await fetch(proxy); const json = await res.json();
-                if (json && json.news && json.news.length > 0) {
-                    json.news.forEach(n => {
-                        newsHtml += `<a href="${n.link}" target="_blank" class="block bg-slate-800 hover:bg-slate-700 p-2 rounded truncate transition-colors">▪ ${n.title}</a>`;
-                    });
-                    document.getElementById('newsList').innerHTML = newsHtml;
-                    return;
-                }
-            } catch(e) {}
-            
             document.getElementById('newsList').innerHTML = `<span class="text-slate-500 italic">暫無相關新聞數據</span>`;
         }
 
@@ -643,7 +581,6 @@
         function calculatePseudoRSRank(data, idxData, currentIndex) {
             if(currentIndex < 252 || !idxData || idxData.length < 252) return { pr: 50, desc: "數據不足" };
             
-            // 💡 核心對齊邏輯：用時間戳去查大盤資料，而非直接用 currentIndex
             const getAlignedRet = (arr, i, days) => {
                 if(i < 0 || i >= arr.length || i-days < 0 || !arr[i] || !arr[i-days]) return 0;
                 return (arr[i].close - arr[i-days].close) / arr[i-days].close;
@@ -657,7 +594,6 @@
                 let idxEndData = idxData.find(d => d.time === tEnd);
                 let idxStartData = idxData.find(d => d.time === tStart);
                 
-                // 如果大盤某天沒開盤(例如台灣放假但美股有開)，往前找最近的一天
                 if (!idxEndData) {
                     for(let j=stockIdx-1; j>=0; j--) {
                         let fallback = idxData.find(d => d.time === stockArr[j].time);
@@ -730,14 +666,12 @@
                     } else { currentPos.tp = Math.max(currentPos.tp, high22 - 3*atr14); }
                 }
                 
-                // 💡 回測也需要對齊時間戳，防止找不到大盤資料報錯
                 let idxI = 0;
                 if (idxData) {
                     let matchingIdx = idxData.findIndex(d => d.time === L.time);
                     if (matchingIdx !== -1) {
                         idxI = matchingIdx;
                     } else {
-                        // 如果這天大盤沒開盤，用前一天的資料
                         for(let j=i-1; j>=0; j--) {
                             let fallback = idxData.findIndex(d => d.time === data[j].time);
                             if(fallback !== -1) { idxI = fallback; break; }
@@ -771,7 +705,7 @@
         }
 
         async function runAnalysis(ticker) {
-            if (isAnalyzing) return; // 💡 核心防護：拒絕併發呼叫
+            if (isAnalyzing) return; 
             isAnalyzing = true;
             
             const btn = document.getElementById('analyzeBtn');
@@ -783,24 +717,29 @@
             let t = ticker.trim().toUpperCase();
             document.getElementById('chartTitle').innerText = t;
             
-            // 💡 核心防護：每次請求前強制清空舊圖表，徹底消滅幽靈圖表！
+            // 💡 清空舊圖表防殘留
             if (candleSeries) {
                 candleSeries.setData([]);
                 ema20Series.setData([]); ema60Series.setData([]);
                 avwapHighSeries.setData([]); avwapLowSeries.setData([]);
                 volSeries.setData([]); rsiSeries.setData([]); adxSeries.setData([]);
             }
+            
+            // 初始化 UI
             document.getElementById('finalRatingText').innerText = "運算中...";
             document.getElementById('totalScore').innerText = "0";
             document.getElementById('vetoPanel').classList.add('hidden');
             document.getElementById('scoreBgGlow').className = "absolute -right-10 -top-10 w-40 h-40 rounded-full blur-3xl opacity-10 bg-indigo-500 transition-colors duration-700";
             document.getElementById('scoreCircle').setAttribute('class', 'score-circle text-indigo-500');
+            document.getElementById('btWinRate').innerText = "--";
+            document.getElementById('btProfitFactor').innerText = "--";
+            document.getElementById('btMDD').innerText = "--";
+            document.getElementById('btExpectancy').innerText = "--";
+            document.getElementById('rsRankingText').innerText = "--";
 
             try {
-                // 1. 同步抓取新聞與即時報價
                 fetchNewsAndRealtime(t);
 
-                // 2. 路由判斷抓取歷史資料 
                 let idxQ = currentMarket === 'TW' ? '^TWII' : '^GSPC';
                 
                 try {
@@ -808,17 +747,16 @@
                     else currentIndexData = await fetchUSData(idxQ);
                 } catch (idxErr) {
                     console.warn("大盤指數抓取失敗，降級為無大盤模式", idxErr);
-                    currentIndexData = []; // 降級容錯
+                    currentIndexData = []; 
                 }
 
-                await delay(500); // 💡 核心防護：加入 0.5 秒緩衝帶，降低被免費 Proxy 連續封鎖的機率
+                await delay(500); 
 
                 if (currentMarket === 'TW') currentChartData = await fetchTWData(t);
                 else currentChartData = await fetchUSData(t);
                 
                 if(!currentChartData || currentChartData.length < 50) throw new Error("Data insufficient");
 
-                // 💡 核心防護：剔除重複時間戳並強制遞增排序，防止 LightweightCharts 崩潰
                 const uniqueDataMap = new Map();
                 currentChartData.forEach(d => uniqueDataMap.set(d.time, d));
                 currentChartData = Array.from(uniqueDataMap.values()).sort((a, b) => new Date(a.time) - new Date(b.time));
@@ -829,7 +767,6 @@
                     currentIndexData = Array.from(uniqueIdxMap.values()).sort((a, b) => new Date(a.time) - new Date(b.time));
                 }
 
-                // 3. 繪製圖表與指標
                 globalDataMap.clear();
                 const ema20 = calcEMA(currentChartData, 20), ema60 = calcEMA(currentChartData, 60);
                 const rsi = calcRSI_Wilder(currentChartData), dmi = calcDMI_Wilder(currentChartData), atr = calcATR_Wilder(currentChartData);
@@ -854,7 +791,6 @@
 
                 priceChart.timeScale().fitContent();
 
-                // 4. 量化邏輯與回測運算
                 runASQEv8Logic();
                 updateLegends(currentChartData[currentChartData.length-1].time);
 
@@ -863,14 +799,13 @@
                 document.getElementById('chartTitle').innerText = t + " (資料源失效)";
                 document.getElementById('finalRatingText').innerHTML = "<span class='text-red-400 text-sm'>請確認 ⚙️ 金鑰設定</span>";
                 
-                // 明確的 UI 報錯引導
                 document.getElementById('actionAdvice').innerText = "連線遭拒";
                 document.getElementById('positionSizeAdvice').innerText = "請配置合法 API Key";
                 document.getElementById('scoreBgGlow').className = "absolute -right-10 -top-10 w-40 h-40 rounded-full blur-3xl opacity-10 bg-red-500 transition-colors duration-700";
                 document.getElementById('scoreCircle').setAttribute('class', 'score-circle text-slate-700');
             } finally {
                 overlay.classList.add('hidden');
-                isAnalyzing = false; // 解除鎖定
+                isAnalyzing = false; 
                 btn.disabled = false;
                 btn.classList.remove('opacity-50', 'cursor-not-allowed');
             }
