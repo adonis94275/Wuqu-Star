@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ASQE v10.1 | Web-Native Professional</title>
+    <title>ASQE v10.2 | Web-Native Professional</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lightweight-charts@4.1.1/dist/lightweight-charts.standalone.production.js"></script>
     <style>
@@ -28,7 +28,7 @@
             <div class="w-16 h-16 bg-slate-800 rounded-2xl flex items-center justify-center mb-5 border border-slate-700 shadow-inner">
                 <span class="text-3xl">🏛️</span>
             </div>
-            <h1 class="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-300 tracking-wider mb-1">ASQE v10.1</h1>
+            <h1 class="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-300 tracking-wider mb-1">ASQE v10.2</h1>
             <p class="text-[10px] text-indigo-400 mb-8 font-mono tracking-widest uppercase bg-indigo-900/30 px-2 py-1 rounded">Web-Native Professional</p>
             <input type="password" id="passwordInput" placeholder="輸入機構授權碼 (admin)" class="w-full bg-slate-950 text-white border border-slate-700 rounded-xl px-4 py-3.5 mb-5 focus:outline-none focus:border-indigo-500 text-center tracking-widest transition-all font-mono">
             <button id="unlockBtn" class="w-full bg-slate-100 hover:bg-white text-slate-900 font-black py-3.5 rounded-xl transition-all shadow-lg tracking-widest">初始化量化模組</button>
@@ -37,11 +37,11 @@
     </div>
 
     <!-- API 金鑰配置面板 -->
-    <div id="setupModal" class="fixed inset-0 z-[200] bg-slate-950 flex items-center justify-center fade-transition fade-out backdrop-blur-md p-4">
+    <div id="setupModal" class="fixed inset-0 z-[200] bg-slate-950/90 flex items-center justify-center fade-transition fade-out backdrop-blur-md p-4">
         <div class="bg-slate-900 rounded-3xl p-6 w-full max-w-lg border border-slate-700 shadow-2xl relative">
             <button id="closeSettingsBtn" class="absolute top-5 right-5 text-slate-400 hover:text-white transition-colors hidden">✕</button>
             <h2 class="text-xl font-black text-white mb-2 flex items-center gap-2 tracking-widest"><span class="text-indigo-400">⚙️</span> 官方 API 金鑰配置</h2>
-            <p class="text-[11px] text-red-400 mb-4 font-bold border border-red-500/50 bg-red-900/20 p-2 rounded">v10.1 嚴格防護模式：已全面棄用 Yahoo 備援。未配置有效金鑰將拒絕運算。</p>
+            <p class="text-[11px] text-red-400 mb-4 font-bold border border-red-500/50 bg-red-900/20 p-2 rounded">v10.2 嚴格防護模式：已全面棄用 Yahoo 備援。未配置有效金鑰將拒絕運算。</p>
             
             <div class="space-y-3 max-h-[65vh] overflow-y-auto custom-scrollbar pr-2">
                 <div class="bg-slate-950/50 p-3 rounded-xl border border-slate-800">
@@ -81,7 +81,7 @@
             <div class="flex items-center gap-4">
                 <div class="w-9 h-9 bg-gradient-to-br from-indigo-600 to-purple-800 rounded-xl flex items-center justify-center font-bold text-lg border border-slate-700">⚡</div>
                 <div class="flex flex-col">
-                    <h1 class="text-lg font-black tracking-widest text-slate-100 leading-tight">ASQE v10.1</h1>
+                    <h1 class="text-lg font-black tracking-widest text-slate-100 leading-tight">ASQE v10.2</h1>
                     <span class="text-[10px] text-indigo-400 font-mono tracking-wider">WEB-NATIVE EDITION</span>
                 </div>
             </div>
@@ -130,10 +130,11 @@
                         </div>
                     </div>
                     
-                    <!-- 錯誤狀態顯示區 -->
-                    <div id="errorDisplay" class="hidden absolute inset-0 flex flex-col items-center justify-center z-20 bg-slate-900">
-                        <span class="text-5xl mb-4 opacity-50">🚨</span>
-                        <div id="errorText" class="text-red-400 font-mono font-bold bg-red-950/50 border border-red-900 p-3 rounded-lg shadow-lg"></div>
+                    <!-- 🚨 錯誤狀態顯示區 -->
+                    <div id="errorDisplay" class="hidden absolute inset-0 flex flex-col items-center justify-center z-20 bg-slate-900/95 backdrop-blur-sm">
+                        <span class="text-5xl mb-4">🚨</span>
+                        <div id="errorText" class="text-red-400 text-sm font-mono font-bold bg-red-950/80 border border-red-900 p-4 rounded-xl shadow-2xl max-w-sm text-center leading-relaxed"></div>
+                        <button onclick="document.getElementById('errorDisplay').classList.add('hidden')" class="mt-6 text-slate-400 hover:text-white text-xs underline cursor-pointer pointer-events-auto">關閉警告面板</button>
                     </div>
 
                     <div id="priceChartContainer" class="w-full flex-1 pointer-events-auto mt-2"></div>
@@ -157,7 +158,7 @@
                         <div id="scoreBgGlow" class="absolute -right-10 -top-10 w-40 h-40 rounded-full blur-3xl opacity-10 bg-indigo-500 transition-colors duration-700"></div>
                         <div class="flex justify-between items-start relative z-10">
                             <div class="flex flex-col">
-                                <span class="text-[10px] font-bold text-slate-500 tracking-widest uppercase mb-1 font-mono">v10.1 Engine Rating</span>
+                                <span class="text-[10px] font-bold text-slate-500 tracking-widest uppercase mb-1 font-mono">v10.2 Engine Rating</span>
                                 <div id="finalRatingText" class="text-2xl font-black text-white">等待運算...</div>
                                 <div id="positionSizeAdvice" class="text-[11px] font-bold text-indigo-400 mt-2 bg-indigo-500/10 inline-block px-2 py-1 rounded border border-indigo-500/20">Kelly Size：--</div>
                             </div>
@@ -196,7 +197,7 @@
                             <div class="flex flex-col"><span class="text-[9px] text-slate-500">歷史 MDD</span><span id="btMDD" class="text-xs font-black text-red-400 font-mono">--</span></div>
                             <div class="flex flex-col"><span class="text-[9px] text-slate-500">Sharpe Ratio</span><span id="btSharpe" class="text-xs font-black text-blue-300 font-mono">--</span></div>
                             <div class="flex flex-col"><span class="text-[9px] text-slate-500">Sortino Ratio</span><span id="btSortino" class="text-xs font-black text-blue-300 font-mono">--</span></div>
-                            <div class="flex flex-col"><span className="text-[9px] text-slate-500">Profit Factor</span><span id="btProfitFactor" class="text-xs font-black text-indigo-300 font-mono">--</span></div>
+                            <div class="flex flex-col"><span class="text-[9px] text-slate-500">Profit Factor</span><span id="btProfitFactor" class="text-xs font-black text-indigo-300 font-mono">--</span></div>
                         </div>
                         <div class="mt-3 pt-3 border-t border-slate-800">
                             <div class="text-[9px] text-slate-400 mb-1">🎲 蒙地卡羅模擬 (1000 次重採樣)</div>
@@ -241,7 +242,7 @@
         // ============================================================================
         const ALLOWED_PASS = ['852767', 'admin'];
         let currentMarket = 'TW';
-        let isAnalyzing = false; // 防連點與競態條件鎖定
+        let isAnalyzing = false; 
         
         let KEY_FINMIND = localStorage.getItem('ASQE_FINMIND_KEY') || '';
         let KEY_FUGLE = localStorage.getItem('ASQE_FUGLE_KEY') || '';
@@ -256,6 +257,18 @@
 
         const getLocalStr = (d) => `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
         const delay = ms => new Promise(res => setTimeout(res, ms));
+
+        // 💡 [v10.2 核心] 加入帶有 Timeout 限制的 fetch 封裝器，徹底解決卡死問題
+        async function fetchWithTimeout(url, options = {}, timeoutMs = 8000) {
+            const controller = new AbortController();
+            const id = setTimeout(() => controller.abort(), timeoutMs);
+            try {
+                const response = await fetch(url, { ...options, signal: controller.signal });
+                return response;
+            } finally {
+                clearTimeout(id);
+            }
+        }
 
         function calcRMA(data, period) {
             let res = [], sum = 0;
@@ -542,7 +555,7 @@
         }
 
         // ============================================================================
-        // 🌐 DATA FETCHERS (Strict API Routing)
+        // 🌐 DATA FETCHERS (Strict API Routing with Timeout)
         // ============================================================================
         async function fetchTWData(symbol) {
             let q = symbol.replace('.TW', '').trim().toUpperCase();
@@ -554,18 +567,18 @@
                     let fmTicker = rawTicker === '^TWII' ? 'TAIEX' : rawTicker;
                     const fromDate = new Date(); fromDate.setFullYear(fromDate.getFullYear() - 3);
                     const url = `https://api.finmindtrade.com/api/v4/data?dataset=TaiwanStockPrice&data_id=${fmTicker}&start_date=${fromDate.toISOString().split('T')[0]}&token=${KEY_FINMIND}`;
-                    const res = await fetch(url);
+                    const res = await fetchWithTimeout(url); // 💡 改用自訂 timeout 函數
                     if (res.ok) {
                         const json = await res.json();
                         if (json.status === 200 && json.data?.length > 0) return json.data.map(d => ({ time: d.date, open: Number(d.open||d.Open), high: Number(d.max||d.High), low: Number(d.min||d.Low), close: Number(d.close||d.Close), volume: Number(d.Trading_Volume||d.Volume) })).filter(d => !isNaN(d.close));
                     }
-                } catch(e) { console.warn("FinMind Error"); }
+                } catch(e) { console.warn("FinMind Error", e); }
             }
             if (KEY_FUGLE) {
                 try {
                     let fugleTicker = rawTicker === '^TWII' ? 'IX0001' : rawTicker;
                     const url = `https://api.fugle.tw/marketdata/v1.0/stock/historical/candles/${fugleTicker}?timeframe=D`;
-                    const res = await fetch(url, { headers: { 'X-API-KEY': KEY_FUGLE } });
+                    const res = await fetchWithTimeout(url, { headers: { 'X-API-KEY': KEY_FUGLE } });
                     if (res.ok) {
                         const json = await res.json();
                         if (json?.data?.length > 0) {
@@ -574,9 +587,9 @@
                             return rawData.map(d => ({ time: d.date, open: d.open, high: d.high, low: d.low, close: d.close, volume: d.volume })).filter(d => !isNaN(d.close));
                         }
                     }
-                } catch(e) { console.warn("Fugle Error"); }
+                } catch(e) { console.warn("Fugle Error", e); }
             }
-            throw new Error("無可用之官方台股 API 節點，請配置金鑰");
+            throw new Error("無法連接至官方 API 節點 (可能金鑰無效或遭網路封鎖)");
         }
 
         async function fetchUSData(symbol) {
@@ -585,14 +598,14 @@
                 try {
                     let fmpTicker = q === '^GSPC' ? '^GSPC' : q;
                     const url = `https://financialmodelingprep.com/api/v3/historical-price-full/${fmpTicker}?timeseries=750&apikey=${KEY_FMP}`;
-                    const res = await fetch(url);
+                    const res = await fetchWithTimeout(url);
                     if (res.ok) {
                         const json = await res.json();
                         if (json.historical && json.historical.length > 0) return json.historical.reverse().map(d => ({ time: d.date, open: d.open, high: d.high, low: d.low, close: d.close, volume: d.volume }));
                     }
-                } catch(e) { console.warn("FMP Error"); }
+                } catch(e) { console.warn("FMP Error", e); }
             }
-            throw new Error("無可用之官方美股 API 節點，請配置金鑰");
+            throw new Error("無法連接至官方 API 節點 (可能金鑰無效或遭網路封鎖)");
         }
 
         async function fetchNewsAndRT(symbol) {
@@ -604,13 +617,13 @@
             if (currentMarket === 'US' && KEY_FINNHUB) {
                 try {
                     const qUrl = `https://finnhub.io/api/v1/quote?symbol=${q}&token=${KEY_FINNHUB}`;
-                    const qRes = await fetch(qUrl); const qJson = await qRes.json();
+                    const qRes = await fetchWithTimeout(qUrl); const qJson = await qRes.json();
                     if (qJson?.c) document.getElementById('rtPrice').innerText = `$${qJson.c.toFixed(2)}`;
                     
                     const toDate = new Date().toISOString().split('T')[0];
                     const fromDate = new Date(Date.now() - 7*24*60*60*1000).toISOString().split('T')[0];
                     const nUrl = `https://finnhub.io/api/v1/company-news?symbol=${q}&from=${fromDate}&to=${toDate}&token=${KEY_FINNHUB}`;
-                    const nRes = await fetch(nUrl); const nJson = await nRes.json();
+                    const nRes = await fetchWithTimeout(nUrl); const nJson = await nRes.json();
                     if (nJson?.length > 0) {
                         let html = '';
                         nJson.slice(0, 3).forEach(n => {
@@ -619,7 +632,7 @@
                         document.getElementById('newsList').innerHTML = html;
                         document.getElementById('newsPanel').classList.remove('hidden');
                     }
-                } catch(e) { console.warn("Finnhub Error"); }
+                } catch(e) { console.warn("Finnhub Error", e); }
             }
         }
 
@@ -663,7 +676,8 @@
                 setTimeout(() => {
                     document.getElementById('mainApp').classList.remove('fade-out');
                     document.getElementById('closeSettingsBtn').classList.remove('hidden');
-                    runAnalysis('2330.TW');
+                    // 💡 加入輕微延遲確保動畫完成再開始運算，防止卡頓
+                    setTimeout(() => runAnalysis(document.getElementById('tickerInput').value), 300);
                 }, 500);
             });
 
@@ -704,10 +718,14 @@
         });
 
         function destroyCharts() {
-            if (priceChart) { priceChart.remove(); priceChart = null; }
-            if (dmiChart) { dmiChart.remove(); dmiChart = null; }
-            document.getElementById('priceChartContainer').innerHTML = '';
-            document.getElementById('dmiChartContainer').innerHTML = '';
+            try {
+                if (priceChart) { priceChart.remove(); priceChart = null; }
+                if (dmiChart) { dmiChart.remove(); dmiChart = null; }
+                document.getElementById('priceChartContainer').innerHTML = '';
+                document.getElementById('dmiChartContainer').innerHTML = '';
+            } catch (e) {
+                console.warn("Chart destroy safety catch:", e);
+            }
         }
 
         function initCharts() {
@@ -766,6 +784,17 @@
             let t = ticker.trim().toUpperCase();
             document.getElementById('chartTitle').innerText = t;
             
+            // 💡 安全計時器：15秒後強制解除 Loading，保證不會卡死
+            const safetyTimer = setTimeout(() => {
+                if (isAnalyzing) {
+                    overlay.classList.add('hidden');
+                    isAnalyzing = false;
+                    btn.disabled = false;
+                    document.getElementById('errorDisplay').classList.remove('hidden');
+                    document.getElementById('errorText').innerText = "連線逾時 (Timeout)。\nAPI 伺服器無回應，請檢查網路連線，或確認金鑰是否有效。";
+                }
+            }, 15000);
+
             // 💡 絕對清空：銷毀舊圖表，保證沒有幽靈殘留
             destroyCharts();
             
@@ -777,6 +806,7 @@
             document.getElementById('patternBadge').classList.add('hidden');
 
             try {
+                // 背景執行即時報價，不 await 阻塞主流程
                 fetchNewsAndRT(t);
                 
                 let idxQ = currentMarket === 'TW' ? '^TWII' : '^GSPC';
@@ -788,7 +818,7 @@
                 let stockData = [];
                 stockData = currentMarket === 'TW' ? await fetchTWData(t) : await fetchUSData(t);
                 
-                if(!stockData || stockData.length < 50) throw new Error("數據不足或格式錯誤");
+                if(!stockData || stockData.length < 50) throw new Error("此代碼查無資料或數據量不足");
 
                 // 重新建立乾淨的圖表
                 initCharts();
@@ -924,16 +954,17 @@
                 updateLegends(stockData[stockData.length-1].time);
 
             } catch (e) {
-                console.error(e);
+                console.error("Analysis Error:", e);
                 document.getElementById('chartTitle').innerText = t + " (資料源失效)";
                 document.getElementById('errorDisplay').classList.remove('hidden');
-                document.getElementById('errorText').innerText = e.message || "官方 API 連線異常，請檢查金鑰。";
+                document.getElementById('errorText').innerText = e.message || "官方 API 連線異常，請檢查金鑰狀態與權限。";
                 
                 document.getElementById('finalRatingText').innerText = "連線遭拒";
                 document.getElementById('positionSizeAdvice').innerText = "請配置合法 API Key";
                 document.getElementById('scoreBgGlow').className = "absolute -right-10 -top-10 w-40 h-40 rounded-full blur-3xl opacity-10 bg-red-500 transition-colors duration-700";
                 document.getElementById('scoreCircle').setAttribute('class', 'score-circle text-slate-700');
             } finally {
+                clearTimeout(safetyTimer); // 清除防掛死計時器
                 overlay.classList.add('hidden');
                 isAnalyzing = false; 
                 btn.disabled = false;
