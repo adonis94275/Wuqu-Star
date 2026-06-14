@@ -838,8 +838,13 @@
 
                 const vol20MA = stockData.slice(-20).reduce((s,d)=>s+d.volume,0)/20;
                 let isHardVeto = false, vetoMult = regime === MarketRegime.BULL ? 2.5 : (regime === MarketRegime.BEAR ? 1.5 : 2.0);
+                let isSoftVeto = false;
+
                 if (L.close < ema60[len-1].value && L.volume > vol20MA * (vetoMult - 0.5)) isHardVeto = true;
                 else if (L.volume > vol20MA * vetoMult && L.close < L.open) isHardVeto = true;
+
+                let upperShadow = (L.high - Math.max(L.open, L.close)) / L.close;
+                if(upperShadow > 0.035) { isSoftVeto = true; baseScore -= 15; }
 
                 let finalScore = Math.round(baseScore);
                 if (isHardVeto) finalScore = Math.min(finalScore, 40);
@@ -918,7 +923,7 @@
                         sf('vetoTitle', isHardVeto ? "Regime-Aware VETO (強制出場)" : "SOFT VETO (軟性警告)");
                         const vt = document.getElementById('vetoTitle');
                         if (vt) vt.className = `text-xs font-black tracking-wider ${isHardVeto ? 'text-red-400' : 'text-yellow-400'}`;
-                        sf('vetoReason', isHardVeto ? "觸發大盤動態否決閾值，模型強制切斷多單機率。" : "動態扣分。");
+                        sf('vetoReason', isHardVeto ? "觸發大盤動態否決閾值，模型強制切斷多單機率。" : "長上影線賣壓沉重，動態扣分。");
                     }
                 } else { if(vetoEl) vetoEl.classList.add('hidden'); }
 
