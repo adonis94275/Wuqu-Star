@@ -667,6 +667,25 @@
             } catch (e) { }
         }
 
+        // 新增 updateLegends 函數
+        function updateLegends(time) {
+            const d = globalDataMap.get(time);
+            if(!d) return;
+            const sf = (id, txt) => { const el = document.getElementById(id); if(el) el.innerText = txt; };
+            if(d.ema) {
+                sf('leg-ema20', `E20: ${d.ema['20']?.toFixed(2) || '-'}`);
+                sf('leg-ema60', `E60: ${d.ema['60']?.toFixed(2) || '-'}`);
+            }
+            if(d.avwap) {
+                sf('leg-avwapHigh', `AVWAP(H): ${d.avwap.high?.toFixed(2) || '-'}`);
+                sf('leg-avwapLow', `AVWAP(L): ${d.avwap.low?.toFixed(2) || '-'}`);
+            }
+            if(d.price) sf('leg-vol', `Vol: ${d.price.volume.toLocaleString()}`);
+            if(d.adx !== undefined) sf('leg-adx', `ADX(W): ${d.adx.toFixed(2)}`);
+            if(d.rsi !== undefined) sf('leg-rsi', `RSI(W): ${d.rsi.toFixed(2)}`);
+            if(d.atr !== undefined) sf('leg-atr', `ATR: ${d.atr.toFixed(2)}`);
+        }
+
         function initCharts() {
             const chartOpt = { layout: { background: { type: 'solid', color: 'transparent' }, textColor: '#64748b' }, grid: { vertLines: { color: '#0f172a' }, horzLines: { color: '#0f172a' } }, crosshair: { mode: LightweightCharts.CrosshairMode.Normal }, rightPriceScale: { borderColor: '#1e293b' }, timeScale: { borderColor: '#1e293b' } };
 
@@ -689,15 +708,9 @@
                 }
             }).observe(document.getElementById('priceChartContainer'));
             
+            // 重新綁定十字線事件
             priceChart.subscribeCrosshairMove(param => {
-                if(!param.time) return;
-                const d = globalDataMap.get(param.time);
-                if(!d) return;
-                const sf = (id, txt) => { const el = document.getElementById(id); if(el) el.innerText = txt; };
-                sf('leg-ema20', `E20: ${d.ema[20]?.toFixed(2) || '-'}`); sf('leg-ema60', `E60: ${d.ema[60]?.toFixed(2) || '-'}`);
-                sf('leg-avwapHigh', `AVWAP(H): ${d.avwap.high?.toFixed(2) || '-'}`); sf('leg-avwapLow', `AVWAP(L): ${d.avwap.low?.toFixed(2) || '-'}`);
-                sf('leg-vol', `Vol: ${d.price.volume.toLocaleString()}`);
-                sf('leg-adx', `ADX(W): ${d.adx?.toFixed(2)}`); sf('leg-rsi', `RSI(W): ${d.rsi?.toFixed(2)}`); sf('leg-atr', `ATR: ${d.atr?.toFixed(2)}`);
+                if(param.time) updateLegends(param.time);
             });
         }
 
@@ -921,17 +934,18 @@
                         vetoEl.className = `p-3.5 rounded-xl border relative overflow-hidden ${isHardVeto ? 'bg-red-950/50 border-red-500/50' : 'bg-yellow-950/50 border-yellow-500/50'} block mt-4`;
                         sf('vetoTitleIcon', isHardVeto ? "❌" : "⚠️");
                         sf('vetoTitle', isHardVeto ? "Regime-Aware VETO (強制出場)" : "SOFT VETO (軟性警告)");
-                        const vt = document.getElementById('vetoTitle');
-                        if (vt) vt.className = `text-xs font-black tracking-wider ${isHardVeto ? 'text-red-400' : 'text-yellow-400'}`;
-                        sf('vetoReason', isHardVeto ? "觸發大盤動態否決閾值，模型強制切斷多單機率。" : "長上影線賣壓沉重，動態扣分。");
-                    }
-                } else { if(vetoEl) vetoEl.classList.add('hidden'); }
+                const vt = document.getElementById('vetoTitle');
+                if (vt) vt.className = `text-xs font-black tracking-wider ${isHardVeto ? 'text-red-400' : 'text-yellow-400'}`;
+                sf('vetoReason', isHardVeto ? "觸發大盤動態否決閾值，模型強制切斷多單機率。" : "長上影線賣壓沉重，動態扣分。");
+            }
+        } else { if(vetoEl) vetoEl.classList.add('hidden'); }
 
-                updateLegends(stockData[stockData.length-1].time);
+        // 確保呼叫 updateLegends
+        updateLegends(stockData[stockData.length-1].time);
 
-            } catch (e) {
-                console.error("Analysis Error:", e);
-                const sf = (id, html) => { const el = document.getElementById(id); if (el) el.innerHTML = html; };
+    } catch (e) {
+        console.error("Analysis Error:", e);
+        const sf = (id, html) => { const el = document.getElementById(id); if (el) el.innerHTML = html; };
                 sf('chartTitle', t + " (資料源失效)");
                 const errDisp = document.getElementById('errorDisplay');
                 if (errDisp) errDisp.classList.remove('hidden');
