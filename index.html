@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ASQE v8.3 | Quad-Core Routing Engine</title>
+    <title>ASQE v9.0 | Institutional Quant Engine</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lightweight-charts@4.1.1/dist/lightweight-charts.standalone.production.js"></script>
     <style>
@@ -14,7 +14,6 @@
         body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background-color: #020617; color: #f8fafc; }
         .score-circle { transition: stroke-dashoffset 1s cubic-bezier(0.4, 0, 0.2, 1); }
         .glass-panel { background: rgba(15, 23, 42, 0.9); backdrop-filter: blur(20px); border-left: 1px solid rgba(51, 65, 85, 0.5); }
-        
         .fade-transition { transition: opacity 0.5s ease, visibility 0.5s ease; }
         .fade-out { opacity: 0 !important; visibility: hidden !important; }
         .fade-in { opacity: 1 !important; visibility: visible !important; }
@@ -22,25 +21,27 @@
 </head>
 <body class="flex flex-col min-h-screen relative overflow-hidden">
 
+    <!-- 步驟一：啟動解鎖畫面 -->
     <div id="launchScreen" class="fixed inset-0 z-[100] bg-slate-950 flex items-center justify-center p-4 fade-transition">
-        <div class="bg-slate-900 rounded-3xl p-8 w-full max-w-md flex flex-col items-center shadow-[0_0_50px_rgba(59,130,246,0.15)] border border-slate-800 relative overflow-hidden">
-            <div class="absolute top-0 w-full h-1 bg-gradient-to-r from-blue-600 via-indigo-500 to-emerald-500"></div>
+        <div class="bg-slate-900 rounded-3xl p-8 w-full max-w-md flex flex-col items-center shadow-[0_0_50px_rgba(99,102,241,0.15)] border border-slate-800 relative overflow-hidden">
+            <div class="absolute top-0 w-full h-1 bg-gradient-to-r from-indigo-600 via-purple-500 to-pink-500"></div>
             <div class="w-16 h-16 bg-slate-800 rounded-2xl flex items-center justify-center mb-5 border border-slate-700 shadow-inner">
-                <span class="text-3xl">🧮</span>
+                <span class="text-3xl">🏛️</span>
             </div>
-            <h1 class="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-300 tracking-wider mb-1">ASQE v8.3</h1>
-            <p class="text-[10px] text-teal-400 mb-8 font-mono tracking-widest uppercase bg-teal-900/30 px-2 py-1 rounded">Quad-Core Routing Engine</p>
+            <h1 class="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-300 tracking-wider mb-1">ASQE v9.0</h1>
+            <p class="text-[10px] text-indigo-400 mb-8 font-mono tracking-widest uppercase bg-indigo-900/30 px-2 py-1 rounded">Institutional Edition</p>
             <input type="password" id="passwordInput" placeholder="輸入機構授權碼 (admin)" class="w-full bg-slate-950 text-white border border-slate-700 rounded-xl px-4 py-3.5 mb-5 focus:outline-none focus:border-indigo-500 text-center tracking-widest transition-all font-mono">
-            <button id="unlockBtn" class="w-full bg-slate-100 hover:bg-white text-slate-900 font-black py-3.5 rounded-xl transition-all shadow-lg tracking-widest">系統解鎖</button>
+            <button id="unlockBtn" class="w-full bg-slate-100 hover:bg-white text-slate-900 font-black py-3.5 rounded-xl transition-all shadow-lg tracking-widest">初始化量化模組</button>
             <p id="errorMsg" class="text-red-400 text-xs mt-4 opacity-0 transition-opacity">授權碼錯誤</p>
         </div>
     </div>
 
+    <!-- 步驟二：API 金鑰配置面板 -->
     <div id="setupModal" class="fixed inset-0 z-[200] bg-slate-950 flex items-center justify-center fade-transition fade-out backdrop-blur-md p-4">
         <div class="bg-slate-900 rounded-3xl p-6 w-full max-w-lg border border-slate-700 shadow-2xl relative">
             <button id="closeSettingsBtn" class="absolute top-5 right-5 text-slate-400 hover:text-white transition-colors hidden">✕</button>
             <h2 class="text-xl font-black text-white mb-2 flex items-center gap-2 tracking-widest"><span class="text-indigo-400">⚙️</span> 四核心數據源配置</h2>
-            <p class="text-xs text-slate-400 mb-4">請填入機構級 API 金鑰，建立雙層備援防護網。</p>
+            <p class="text-xs text-slate-400 mb-4">建構 ASQE v9.0 雙層備援防護網。</p>
             
             <div class="space-y-3 max-h-[65vh] overflow-y-auto custom-scrollbar pr-2">
                 <div class="bg-slate-950/50 p-3 rounded-xl border border-slate-800">
@@ -49,42 +50,39 @@
                     </label>
                     <input type="password" id="finmindKeyInput" class="w-full bg-slate-900 text-white border border-slate-700 rounded-lg px-3 py-2 focus:outline-none focus:border-green-500 font-mono text-xs" placeholder="貼上 FinMind Token">
                 </div>
-
                 <div class="bg-slate-950/50 p-3 rounded-xl border border-slate-800">
                     <label class="flex justify-between items-center text-[11px] text-slate-400 font-bold mb-1.5 uppercase tracking-wider">
                         <span>Fugle API Key <span class="text-teal-500 ml-1 font-normal">台股備援</span></span>
                     </label>
                     <input type="password" id="fugleKeyInput" class="w-full bg-slate-900 text-white border border-slate-700 rounded-lg px-3 py-2 focus:outline-none focus:border-teal-500 font-mono text-xs" placeholder="貼上 Fugle X-API-KEY">
                 </div>
-
                 <div class="bg-slate-950/50 p-3 rounded-xl border border-slate-800">
                     <label class="flex justify-between items-center text-[11px] text-slate-400 font-bold mb-1.5 uppercase tracking-wider">
                         <span>FMP API Key <span class="text-blue-500 ml-1 font-normal">美股主力</span></span>
                     </label>
                     <input type="password" id="fmpKeyInput" class="w-full bg-slate-900 text-white border border-slate-700 rounded-lg px-3 py-2 focus:outline-none focus:border-blue-500 font-mono text-xs" placeholder="貼上 FMP API Key">
                 </div>
-
                 <div class="bg-slate-950/50 p-3 rounded-xl border border-slate-800">
                     <label class="flex justify-between items-center text-[11px] text-slate-400 font-bold mb-1.5 uppercase tracking-wider">
-                        <span>Finnhub API Key <span class="text-purple-500 ml-1 font-normal">即時報價</span></span>
+                        <span>Finnhub API Key <span class="text-purple-500 ml-1 font-normal">即時/新聞</span></span>
                     </label>
                     <input type="password" id="finnhubKeyInput" class="w-full bg-slate-900 text-white border border-slate-700 rounded-lg px-3 py-2 focus:outline-none focus:border-purple-500 font-mono text-xs" placeholder="貼上 Finnhub Token">
                 </div>
-                
-                <button id="saveAndStartBtn" class="w-full bg-gradient-to-r from-indigo-600 to-teal-600 hover:from-indigo-500 hover:to-teal-500 text-white font-black py-3 rounded-xl transition-all mt-2 text-sm shadow-lg tracking-widest">
-                    儲存金鑰並啟動系統
+                <button id="saveAndStartBtn" class="w-full bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white font-black py-3 rounded-xl transition-all mt-2 text-sm shadow-lg tracking-widest">
+                    寫入金鑰並啟動
                 </button>
             </div>
         </div>
     </div>
 
+    <!-- 步驟三：主程式 -->
     <div id="mainApp" class="flex flex-col min-h-screen w-full h-full absolute inset-0 fade-transition fade-out">
         <header class="bg-slate-900 border-b border-slate-800 p-3 lg:p-4 flex flex-col sm:flex-row items-center justify-between z-40 shrink-0 gap-3 shadow-md">
             <div class="flex items-center gap-4">
-                <div class="w-9 h-9 bg-gradient-to-br from-indigo-600 to-slate-800 rounded-xl flex items-center justify-center font-bold text-lg border border-slate-700">⚡</div>
+                <div class="w-9 h-9 bg-gradient-to-br from-indigo-600 to-purple-800 rounded-xl flex items-center justify-center font-bold text-lg border border-slate-700">⚡</div>
                 <div class="flex flex-col">
-                    <h1 class="text-lg font-black tracking-widest text-slate-100 leading-tight">ASQE v8.3</h1>
-                    <span class="text-[10px] text-teal-400 font-mono tracking-wider">QUAD-CORE EDITION</span>
+                    <h1 class="text-lg font-black tracking-widest text-slate-100 leading-tight">ASQE v9.0</h1>
+                    <span class="text-[10px] text-indigo-400 font-mono tracking-wider">INSTITUTIONAL EDITION</span>
                 </div>
             </div>
             
@@ -107,28 +105,30 @@
         </header>
 
         <div id="loadingOverlay" class="fixed inset-0 bg-slate-950/90 z-50 flex flex-col items-center justify-center hidden backdrop-blur-md">
-            <div class="animate-spin rounded-full h-12 w-12 border-4 border-slate-800 border-t-teal-500 mb-4"></div>
-            <p class="text-xs font-mono text-teal-400 tracking-widest animate-pulse">Routing 4-Core Data Fetchers...</p>
+            <div class="animate-spin rounded-full h-12 w-12 border-4 border-slate-800 border-t-indigo-500 mb-4"></div>
+            <p class="text-xs font-mono text-indigo-400 tracking-widest animate-pulse">Running Monte Carlo & Algorithms...</p>
         </div>
 
         <div class="flex-1 flex flex-col lg:flex-row relative overflow-hidden bg-slate-950">
+            <!-- 左側：圖表區 -->
             <div class="flex-1 flex flex-col p-2 gap-2 w-full min-w-0">
                 <div class="relative w-full rounded-xl border border-slate-800 bg-slate-900 shadow-inner flex flex-col flex-1 min-h-[300px]">
                     <div class="absolute top-2 left-4 z-10 pointer-events-none w-full pr-4">
                         <div class="flex items-center gap-3">
                             <span id="chartTitle" class="text-2xl font-black text-slate-100 tracking-tight drop-shadow-md">---</span>
                             <span id="rtPrice" class="text-emerald-400 font-mono text-lg font-bold"></span>
+                            <span id="patternBadge" class="hidden text-[10px] font-bold bg-fuchsia-900/80 text-fuchsia-300 border border-fuchsia-700 px-2 py-0.5 rounded shadow">掃描中</span>
                             <div class="flex gap-2 pointer-events-auto bg-slate-950/80 backdrop-blur px-2 py-1 rounded-md border border-slate-800">
                                 <label class="flex items-center gap-1 text-[10px] text-slate-400 cursor-pointer hover:text-white"><input type="checkbox" id="toggleEMA" checked class="accent-indigo-500"> 均線</label>
-                                <label class="flex items-center gap-1 text-[10px] text-slate-400 cursor-pointer hover:text-white"><input type="checkbox" id="toggleAVWAP" checked class="accent-orange-500"> 錨定 AVWAP</label>
+                                <label class="flex items-center gap-1 text-[10px] text-slate-400 cursor-pointer hover:text-white"><input type="checkbox" id="toggleAVWAP" checked class="accent-orange-500"> AVWAP</label>
                             </div>
                         </div>
                         <div class="flex flex-col gap-1 mt-1 text-[11px] font-mono drop-shadow">
                             <div class="flex gap-3 text-slate-300">
                                 <span class="text-yellow-400" id="leg-ema20">E20: --</span>
                                 <span class="text-cyan-400" id="leg-ema60">E60: --</span>
-                                <span class="text-orange-400 font-bold border-l border-slate-700 pl-3" id="leg-avwapHigh">AVWAP(巨量): --</span>
-                                <span class="text-pink-400 font-bold" id="leg-avwapLow">AVWAP(波谷): --</span>
+                                <span class="text-orange-400 font-bold border-l border-slate-700 pl-3" id="leg-avwapHigh">AVWAP(High): --</span>
+                                <span class="text-pink-400 font-bold" id="leg-avwapLow">AVWAP(Low): --</span>
                             </div>
                             <div class="text-slate-500" id="leg-vol">Vol: --</div>
                         </div>
@@ -138,24 +138,26 @@
 
                 <div class="relative w-full rounded-xl border border-slate-800 bg-slate-900 shadow-inner flex flex-col h-[180px] shrink-0">
                     <div class="absolute top-2 left-4 z-10 text-[10px] font-mono flex gap-4 text-slate-300">
-                        <span class="text-purple-400" id="leg-adx">ADX(Wilder): --</span>
-                        <span class="text-cyan-400" id="leg-rsi">RSI(Wilder): --</span>
+                        <span class="text-purple-400" id="leg-adx">ADX(W): --</span>
+                        <span class="text-cyan-400" id="leg-rsi">RSI(W): --</span>
                         <span class="text-slate-400 border-l border-slate-700 pl-4" id="leg-atr">ATR: --</span>
                     </div>
                     <div id="dmiChartContainer" class="w-full flex-1 mt-6"></div>
                 </div>
             </div>
 
+            <!-- 右側：量化面板 -->
             <div class="w-full lg:w-[450px] glass-panel flex flex-col shrink-0 overflow-y-auto h-[calc(100vh-64px)] custom-scrollbar pb-10">
                 <div class="p-4 space-y-4">
                     
+                    <!-- 評分引擎 -->
                     <div class="bg-slate-900 p-5 rounded-2xl border border-slate-700 shadow-xl relative overflow-hidden">
                         <div id="scoreBgGlow" class="absolute -right-10 -top-10 w-40 h-40 rounded-full blur-3xl opacity-10 bg-indigo-500 transition-colors duration-700"></div>
                         <div class="flex justify-between items-start relative z-10">
                             <div class="flex flex-col">
-                                <span class="text-[10px] font-bold text-slate-500 tracking-widest uppercase mb-1 font-mono">v8.3 Scoring Engine</span>
+                                <span class="text-[10px] font-bold text-slate-500 tracking-widest uppercase mb-1 font-mono">v9.0 Modular Scoring Engine</span>
                                 <div id="finalRatingText" class="text-2xl font-black text-white">運算中...</div>
-                                <div id="positionSizeAdvice" class="text-[11px] font-bold text-emerald-400 mt-2 bg-emerald-500/10 inline-block px-2 py-1 rounded border border-emerald-500/20">Adaptive Size：--</div>
+                                <div id="positionSizeAdvice" class="text-[11px] font-bold text-indigo-400 mt-2 bg-indigo-500/10 inline-block px-2 py-1 rounded border border-indigo-500/20">Kelly Size：--</div>
                             </div>
                             <div class="relative w-20 h-20 shrink-0">
                                 <svg class="w-full h-full transform -rotate-90 drop-shadow-lg" viewBox="0 0 36 36">
@@ -173,36 +175,53 @@
                                 <div id="actionAdvice" class="text-[11px] font-bold text-slate-200 mt-1 line-clamp-2">--</div>
                             </div>
                             <div class="bg-slate-950 p-2.5 rounded-lg border border-slate-800 flex flex-col justify-center items-center">
-                                <div class="text-[10px] text-slate-500 font-medium mb-1">Pseudo RS Rank</div>
-                                <div id="rsRankingText" class="text-sm font-black text-white font-mono">--</div>
+                                <div class="text-[10px] text-slate-500 font-medium mb-1">MTF 多期趨勢</div>
+                                <div id="mtfText" class="text-xs font-black text-white font-mono">--</div>
                             </div>
                         </div>
                     </div>
 
-                    <div class="bg-slate-900 p-4 rounded-xl border border-teal-900/50 shadow-sm relative overflow-hidden">
-                        <div class="text-teal-400 text-[10px] uppercase tracking-widest font-bold mb-3 flex items-center gap-2">
-                            <span class="bg-teal-900/50 p-1 rounded">📊</span> Backtest Engine
+                    <!-- 🚀 V9.0 新增: 進階回測與蒙地卡羅面板 -->
+                    <div class="bg-slate-900 p-4 rounded-xl border border-indigo-900/50 shadow-sm relative overflow-hidden">
+                        <div class="text-indigo-400 text-[10px] uppercase tracking-widest font-bold mb-3 flex items-center gap-2">
+                            <span class="bg-indigo-900/50 p-1 rounded">🔬</span> Walk-Forward & Monte Carlo
                         </div>
-                        <div class="grid grid-cols-2 gap-y-3 gap-x-4">
+                        <div class="grid grid-cols-3 gap-y-3 gap-x-2">
                             <div class="flex flex-col">
-                                <span class="text-[10px] text-slate-500">勝率 (Win Rate)</span>
-                                <span id="btWinRate" class="text-sm font-black text-white font-mono">--</span>
+                                <span class="text-[9px] text-slate-500">勝率</span>
+                                <span id="btWinRate" class="text-xs font-black text-white font-mono">--</span>
                             </div>
                             <div class="flex flex-col">
-                                <span class="text-[10px] text-slate-500">獲利因子 (Profit Factor)</span>
-                                <span id="btProfitFactor" class="text-sm font-black text-emerald-400 font-mono">--</span>
+                                <span class="text-[9px] text-slate-500">CAGR (年化)</span>
+                                <span id="btCAGR" class="text-xs font-black text-emerald-400 font-mono">--</span>
                             </div>
                             <div class="flex flex-col">
-                                <span class="text-[10px] text-slate-500">最大回撤 (MDD)</span>
-                                <span id="btMDD" class="text-sm font-black text-red-400 font-mono">--</span>
+                                <span class="text-[9px] text-slate-500">歷史 MDD</span>
+                                <span id="btMDD" class="text-xs font-black text-red-400 font-mono">--</span>
                             </div>
                             <div class="flex flex-col">
-                                <span class="text-[10px] text-slate-500">每筆期望值</span>
-                                <span id="btExpectancy" class="text-sm font-black text-indigo-400 font-mono">--</span>
+                                <span class="text-[9px] text-slate-500">Sharpe Ratio</span>
+                                <span id="btSharpe" class="text-xs font-black text-blue-300 font-mono">--</span>
+                            </div>
+                            <div class="flex flex-col">
+                                <span class="text-[9px] text-slate-500">Sortino Ratio</span>
+                                <span id="btSortino" class="text-xs font-black text-blue-300 font-mono">--</span>
+                            </div>
+                            <div class="flex flex-col">
+                                <span class="text-[9px] text-slate-500">Profit Factor</span>
+                                <span id="btProfitFactor" class="text-xs font-black text-indigo-300 font-mono">--</span>
+                            </div>
+                        </div>
+                        <div class="mt-3 pt-3 border-t border-slate-800">
+                            <div class="text-[9px] text-slate-400 mb-1">🎲 蒙地卡羅模擬 (1000 次重採樣)</div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-[10px] text-slate-300">MC 95% 信心最差回撤: <span id="mcMDD" class="font-mono font-bold text-red-400">--</span></span>
+                                <span class="text-[10px] text-slate-300">預期報酬: <span id="mcReturn" class="font-mono font-bold text-emerald-400">--</span></span>
                             </div>
                         </div>
                     </div>
 
+                    <!-- 雙重否決警告區 -->
                     <div id="vetoPanel" class="hidden p-3.5 rounded-xl border shadow-lg relative overflow-hidden">
                         <div id="vetoIcon" class="absolute -right-2 -top-2 text-4xl opacity-10">🚨</div>
                         <div class="flex items-center gap-2 mb-1">
@@ -233,6 +252,7 @@
     </div>
 
     <script>
+        // ================== MODULE: CONSTANTS & SETUP ==================
         const ALLOWED_PASS = ['852767', 'admin'];
         let currentMarket = 'TW';
         let globalDataMap = new Map();
@@ -243,17 +263,17 @@
         let currentChartData = null, currentIndexData = null;
         let isAnalyzing = false;
 
-        // API Keys
         let KEY_FINMIND = localStorage.getItem('ASQE_FINMIND_KEY') || '';
         let KEY_FUGLE = localStorage.getItem('ASQE_FUGLE_KEY') || '';
         let KEY_FMP = localStorage.getItem('ASQE_FMP_KEY') || '';
         let KEY_FINNHUB = localStorage.getItem('ASQE_FINNHUB_KEY') || '';
 
         const delay = ms => new Promise(res => setTimeout(res, ms));
+        const getLocalStr = (d) => `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
 
+        // ================== MODULE: UI LOGIC ==================
         document.addEventListener('DOMContentLoaded', () => {
             const pwdInput = document.getElementById('passwordInput');
-            
             document.getElementById('unlockBtn').addEventListener('click', attemptUnlock);
             pwdInput.addEventListener('keypress', (e) => { if(e.key==='Enter') attemptUnlock(); });
 
@@ -360,58 +380,95 @@
             if(!d) return;
             const sf = (id, txt) => { const e = document.getElementById(id); if(e) e.innerText = txt; };
             if(d.ema) { sf('leg-ema20', `E20: ${d.ema[20]?.toFixed(2) || '-'}`); sf('leg-ema60', `E60: ${d.ema[60]?.toFixed(2) || '-'}`); }
-            if(d.avwap) { sf('leg-avwapHigh', `AVWAP(巨量): ${d.avwap.high?.toFixed(2) || '-'}`); sf('leg-avwapLow', `AVWAP(波谷): ${d.avwap.low?.toFixed(2) || '-'}`); }
+            if(d.avwap) { sf('leg-avwapHigh', `AVWAP(High): ${d.avwap.high?.toFixed(2) || '-'}`); sf('leg-avwapLow', `AVWAP(Low): ${d.avwap.low?.toFixed(2) || '-'}`); }
             if(d.price) sf('leg-vol', `Vol: ${d.price.volume.toLocaleString()}`);
             if(d.adx !== undefined) sf('leg-adx', `ADX(W): ${d.adx.toFixed(2)}`);
             if(d.rsi !== undefined) sf('leg-rsi', `RSI(W): ${d.rsi.toFixed(2)}`);
             if(d.atr !== undefined) sf('leg-atr', `ATR: ${d.atr.toFixed(2)}`);
         }
 
-        const getLocalStr = (d) => `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+        function updateDashboardUI(v) {
+            const rb = document.getElementById('regimeBadge');
+            rb.classList.remove('hidden', 'bg-emerald-950/60', 'text-emerald-400', 'bg-yellow-950/60', 'text-yellow-400', 'bg-red-950/60', 'text-red-400');
+            if(v.regime === 'BULL') { rb.classList.add('bg-emerald-950/60', 'text-emerald-400', 'border-emerald-800'); document.getElementById('regimeIcon').innerText="🐂"; document.getElementById('regimeText').innerText="BULL (多頭)"; }
+            else if(v.regime === 'SIDEWAY') { rb.classList.add('bg-yellow-950/60', 'text-yellow-400', 'border-yellow-800'); document.getElementById('regimeIcon').innerText="⚖️"; document.getElementById('regimeText').innerText="SIDEWAY (盤整)"; }
+            else { rb.classList.add('bg-red-950/60', 'text-red-400', 'border-red-800'); document.getElementById('regimeIcon').innerText="🐻"; document.getElementById('regimeText').innerText="BEAR (空頭)"; }
 
+            const sf = (id, html) => document.getElementById(id).innerHTML = html;
+
+            if(v.isHardVeto || v.isSoftVeto) { sf('vetoTitleIcon', v.vetoIcon); sf('vetoTitle', v.vetoTitle); document.getElementById('vetoTitle').className = `text-xs font-black tracking-wider ${v.vetoColor}`; }
+
+            // 更新高階回測指標
+            sf('btWinRate', v.btMetrics.winRate); 
+            sf('btCAGR', v.btMetrics.cagr);
+            sf('btMDD', v.btMetrics.mdd); 
+            sf('btSharpe', v.btMetrics.sharpe);
+            sf('btSortino', v.btMetrics.sortino);
+            sf('btProfitFactor', v.btMetrics.pf);
+            
+            // 更新蒙地卡羅
+            sf('mcMDD', v.mcMetrics.mcMDD);
+            sf('mcReturn', v.mcMetrics.mcReturn);
+
+            // 更新型態
+            const pb = document.getElementById('patternBadge');
+            if(v.pattern && v.pattern !== "無") {
+                pb.innerText = v.pattern;
+                pb.classList.remove('hidden');
+            } else {
+                pb.classList.add('hidden');
+            }
+            sf('mtfText', v.mtfTrend);
+
+            const circle = document.getElementById('scoreCircle');
+            document.getElementById('totalScore').innerText = v.finalScore;
+            circle.style.strokeDasharray = `${Math.max(0,v.finalScore)}, 100`;
+            
+            let colorCls = 'text-indigo-500', bgCls = 'bg-indigo-500', advice="";
+            if(v.finalScore >= 85) { colorCls='text-fuchsia-500'; bgCls='bg-fuchsia-500'; sf('finalRatingText','SSS 頂級飆股'); advice="🚀 突破強攻"; }
+            else if(v.finalScore >= 70) { colorCls='text-emerald-500'; bgCls='bg-emerald-500'; sf('finalRatingText','S 核心資產'); advice="🟢 順勢推進"; }
+            else if(v.finalScore >= 50) { colorCls='text-yellow-500'; bgCls='bg-yellow-500'; sf('finalRatingText','A 震盪整理'); advice="🟡 區間控盤"; }
+            else { colorCls='text-red-500'; bgCls='bg-red-500'; sf('finalRatingText','📉 轉弱清倉'); advice="🛑 空手觀望"; }
+            
+            circle.setAttribute('class', `score-circle ${colorCls}`);
+            document.getElementById('scoreBgGlow').setAttribute('class', `absolute -right-10 -top-10 w-40 h-40 rounded-full blur-3xl opacity-10 transition-colors duration-700 ${bgCls}`);
+
+            sf('actionAdvice', advice); sf('positionSizeAdvice', `Kelly Size：${v.sizeStr}`);
+
+            if(v.finalScore < 50) {
+                sf('stopLoss', '--'); sf('trailingStop', '觸發離場'); document.getElementById('trailingStop').className = 'text-lg font-black text-red-500 font-mono';
+            } else {
+                sf('stopLoss', v.sl.toFixed(2)); sf('trailingStop', v.chandelierExit > v.L.close ? '觸發離場' : v.chandelierExit.toFixed(2));
+                document.getElementById('trailingStop').className = v.chandelierExit > v.L.close ? 'text-lg font-black text-red-500 font-mono' : 'text-lg font-black text-emerald-400 font-mono';
+            }
+        }
+
+        // ================== MODULE: DATA ROUTING ==================
         async function fetchYahooFallback(ticker) {
             const url1 = `https://query1.finance.yahoo.com/v8/finance/chart/${ticker}?range=3y&interval=1d`;
             const url2 = `https://query2.finance.yahoo.com/v8/finance/chart/${ticker}?range=3y&interval=1d`;
-            
             const proxies = [
                 `https://api.allorigins.win/raw?url=${encodeURIComponent(url1)}`,
                 `https://api.codetabs.com/v1/proxy/?quest=${encodeURIComponent(url2)}`,
-                `https://corsproxy.io/?${encodeURIComponent(url1)}`,
-                `https://api.allorigins.win/get?url=${encodeURIComponent(url2)}`
+                `https://corsproxy.io/?${encodeURIComponent(url1)}`
             ];
-
             let json = null;
-            
-            try {
-                let directRes = await fetch(url1);
-                if (directRes.ok) json = await directRes.json();
-            } catch (e) {}
-
+            try { let directRes = await fetch(url1); if (directRes.ok) json = await directRes.json(); } catch (e) {}
             if (!json || !json.chart) {
                 for (let proxy of proxies) {
                     try {
-                        const res = await fetch(proxy);
-                        if (!res.ok) continue;
+                        const res = await fetch(proxy); if (!res.ok) continue;
                         const text = await res.text();
-                        try {
-                            json = JSON.parse(text);
-                            if (json.contents) json = JSON.parse(json.contents);
-                        } catch (parseErr) { continue; }
-                        if (json && json.chart && json.chart.result) break; 
-                        json = null;
+                        try { json = JSON.parse(text); if (json.contents) json = JSON.parse(json.contents); } catch (parseErr) { continue; }
+                        if (json && json.chart && json.chart.result) break; json = null;
                     } catch (e) {}
                 }
             }
-
-            if (!json || !json.chart || !json.chart.result) throw new Error("所有備援節點失效");
-
+            if (!json || !json.chart || !json.chart.result) throw new Error("備援失效");
             const chart = json.chart.result[0];
             return chart.timestamp.map((t,i) => {
                 const c = chart.indicators.quote[0].close[i];
-                return { 
-                    time: getLocalStr(new Date(t*1000)), open: chart.indicators.quote[0].open[i] ?? c, high: chart.indicators.quote[0].high[i] ?? c, 
-                    low: chart.indicators.quote[0].low[i] ?? c, close: c, volume: chart.indicators.quote[0].volume[i] ?? 0 
-                };
+                return { time: getLocalStr(new Date(t*1000)), open: chart.indicators.quote[0].open[i] ?? c, high: chart.indicators.quote[0].high[i] ?? c, low: chart.indicators.quote[0].low[i] ?? c, close: c, volume: chart.indicators.quote[0].volume[i] ?? 0 };
             }).filter(d => d.close != null);
         }
 
@@ -419,40 +476,33 @@
             let q = ticker.replace('.TW', '').trim().toUpperCase();
             if (/^\d{4}$/.test(q)) q += '.TW';
             const rawTicker = q.replace('.TW', '');
-
             if (KEY_FINMIND) {
                 try {
                     let fmTicker = rawTicker === '^TWII' ? 'TAIEX' : rawTicker;
                     const fromDate = new Date(); fromDate.setFullYear(fromDate.getFullYear() - 3);
                     const url = `https://api.finmindtrade.com/api/v4/data?dataset=TaiwanStockPrice&data_id=${fmTicker}&start_date=${fromDate.toISOString().split('T')[0]}&token=${KEY_FINMIND}`;
                     const res = await fetch(url);
-                    if (!res.ok) throw new Error("FinMind HTTP Error");
-                    const json = await res.json();
-                    if (json.status === 200 && json.data && json.data.length > 0) {
-                        return json.data.map(d => ({
-                            time: d.date, open: Number(d.open||d.Open), high: Number(d.max||d.High), low: Number(d.min||d.Low), close: Number(d.close||d.Close), volume: Number(d.Trading_Volume||d.Volume)
-                        })).filter(d => !isNaN(d.close));
+                    if (res.ok) {
+                        const json = await res.json();
+                        if (json.status === 200 && json.data && json.data.length > 0) return json.data.map(d => ({ time: d.date, open: Number(d.open||d.Open), high: Number(d.max||d.High), low: Number(d.min||d.Low), close: Number(d.close||d.Close), volume: Number(d.Trading_Volume||d.Volume) })).filter(d => !isNaN(d.close));
                     }
-                } catch(e) { console.warn("FinMind 失效，轉向 Fugle 備援", e); }
+                } catch(e) {}
             }
-
             if (KEY_FUGLE) {
                 try {
                     let fugleTicker = rawTicker === '^TWII' ? 'IX0001' : rawTicker;
                     const url = `https://api.fugle.tw/marketdata/v1.0/stock/historical/candles/${fugleTicker}?timeframe=D`;
                     const res = await fetch(url, { headers: { 'X-API-KEY': KEY_FUGLE } });
-                    if (!res.ok) throw new Error("Fugle HTTP Error");
-                    const json = await res.json();
-                    if (json && json.data && json.data.length > 0) {
-                        let rawData = json.data;
-                        if (new Date(rawData[0].date) > new Date(rawData[rawData.length-1].date)) rawData.reverse();
-                        return rawData.map(d => ({
-                            time: d.date, open: d.open, high: d.high, low: d.low, close: d.close, volume: d.volume
-                        })).filter(d => !isNaN(d.close));
+                    if (res.ok) {
+                        const json = await res.json();
+                        if (json && json.data && json.data.length > 0) {
+                            let rawData = json.data;
+                            if (new Date(rawData[0].date) > new Date(rawData[rawData.length-1].date)) rawData.reverse();
+                            return rawData.map(d => ({ time: d.date, open: d.open, high: d.high, low: d.low, close: d.close, volume: d.volume })).filter(d => !isNaN(d.close));
+                        }
                     }
-                } catch(e) { console.warn("Fugle 失效，轉向 Yahoo 終極備援", e); }
+                } catch(e) {}
             }
-
             return await fetchYahooFallback(q);
         }
 
@@ -463,18 +513,28 @@
                     let fmpTicker = q === '^GSPC' ? '^GSPC' : q;
                     const url = `https://financialmodelingprep.com/api/v3/historical-price-full/${fmpTicker}?timeseries=750&apikey=${KEY_FMP}`;
                     const res = await fetch(url);
-                    if (!res.ok) throw new Error("FMP HTTP Error");
-                    const json = await res.json();
-                    if (json.historical && json.historical.length > 0) {
-                        return json.historical.reverse().map(d => ({
-                            time: d.date, open: d.open, high: d.high, low: d.low, close: d.close, volume: d.volume
-                        }));
+                    if (res.ok) {
+                        const json = await res.json();
+                        if (json.historical && json.historical.length > 0) return json.historical.reverse().map(d => ({ time: d.date, open: d.open, high: d.high, low: d.low, close: d.close, volume: d.volume }));
                     }
-                } catch(e) { console.warn("FMP 失效，轉向 Yahoo 備援", e); }
+                } catch(e) {}
             }
             return await fetchYahooFallback(q);
         }
 
+        async function fetchRealtimeQuote(ticker) {
+            let q = ticker.replace('.TW', '').trim().toUpperCase();
+            document.getElementById('rtPrice').innerText = "";
+            if (currentMarket === 'US' && KEY_FINNHUB) {
+                try {
+                    const qUrl = `https://finnhub.io/api/v1/quote?symbol=${q}&token=${KEY_FINNHUB}`;
+                    const qRes = await fetch(qUrl); const qJson = await qRes.json();
+                    if (qJson && qJson.c) document.getElementById('rtPrice').innerText = `$${qJson.c.toFixed(2)}`;
+                } catch(e) {}
+            }
+        }
+
+        // ================== MODULE: INDICATORS ==================
         function calcRMA(data, period) {
             let res = [], sum = 0;
             for (let i = 0; i < data.length; i++) {
@@ -558,83 +618,88 @@
             return res;
         }
 
-        function calcOBV(data) {
-            let obv = 0, res = [];
-            for(let i=0; i<data.length; i++) {
-                if(i > 0) {
-                    if(data[i].close > data[i-1].close) obv += data[i].volume;
-                    else if(data[i].close < data[i-1].close) obv -= data[i].volume;
-                }
-                res.push(obv);
-            }
-            return res;
-        }
-
-        function calculatePseudoRSRank(data, idxData, currentIndex) {
+        // ================== MODULE: ENGINES (SCORING) ==================
+        function scorePseudoRSRank(data, idxData, currentIndex) {
             if(currentIndex < 252 || !idxData || idxData.length < 252) return { pr: 50, desc: "數據不足" };
-            
-            // 安全取得歷史報酬，防止 Array Out of Bounds 導致崩潰
             const getAlignedRet = (arr, i, days) => {
                 if(i < 0 || i >= arr.length || i-days < 0 || !arr[i] || !arr[i-days]) return 0;
                 return (arr[i].close - arr[i-days].close) / arr[i-days].close;
             };
-
             const getIdxRetByTime = (stockArr, stockIdx, days) => {
                 if(stockIdx < 0 || stockIdx-days < 0 || !stockArr[stockIdx] || !stockArr[stockIdx-days]) return 0;
-                let tEnd = stockArr[stockIdx].time;
-                let tStart = stockArr[stockIdx-days].time;
-                
+                let tEnd = stockArr[stockIdx].time, tStart = stockArr[stockIdx-days].time;
                 let idxEndData = idxData.find(d => d.time === tEnd);
                 let idxStartData = idxData.find(d => d.time === tStart);
-                
-                if (!idxEndData) {
-                    for(let j=stockIdx-1; j>=0; j--) {
-                        let fallback = idxData.find(d => d.time === stockArr[j].time);
-                        if(fallback) { idxEndData = fallback; break; }
-                    }
-                }
-                if (!idxStartData) {
-                    for(let j=stockIdx-days-1; j>=0; j--) {
-                        let fallback = idxData.find(d => d.time === stockArr[j].time);
-                        if(fallback) { idxStartData = fallback; break; }
-                    }
-                }
-
+                if (!idxEndData) { for(let j=stockIdx-1; j>=0; j--) { let fb = idxData.find(d => d.time === stockArr[j].time); if(fb) { idxEndData = fb; break; } } }
+                if (!idxStartData) { for(let j=stockIdx-days-1; j>=0; j--) { let fb = idxData.find(d => d.time === stockArr[j].time); if(fb) { idxStartData = fb; break; } } }
                 if(!idxEndData || !idxStartData) return 0;
                 return (idxEndData.close - idxStartData.close) / idxStartData.close;
             };
-            
             let r3 = getAlignedRet(data, currentIndex, 63) - getIdxRetByTime(data, currentIndex, 63);
             let r6 = getAlignedRet(data, currentIndex, 126) - getIdxRetByTime(data, currentIndex, 126);
             let r9 = getAlignedRet(data, currentIndex, 189) - getIdxRetByTime(data, currentIndex, 189);
             let r12 = getAlignedRet(data, currentIndex, 252) - getIdxRetByTime(data, currentIndex, 252);
-            
             let wRet = (r3*0.4 + r6*0.2 + r9*0.2 + r12*0.2); 
             let pr = Math.round((1 / (1 + Math.exp(-1.702 * (wRet / 0.20)))) * 100); 
             if(pr > 99) pr = 99; if(pr < 1) pr = 1;
-            return { pr, desc: `PR ${pr} (超越大盤 ${(wRet*100).toFixed(1)}%)` };
+            return { pr, score: pr >= 90 ? 20 : pr >= 70 ? 15 : pr >= 50 ? 10 : 0 };
         }
 
-        const MarketRegime = { BULL: 'BULL', SIDEWAY: 'SIDEWAY', BEAR: 'BEAR' };
-
-        function determineMarketRegime(idxData) {
-            if(!idxData || idxData.length < 200) return MarketRegime.SIDEWAY;
-            const ema200Arr = calcEMA(idxData, 200);
-            const ema200 = ema200Arr[ema200Arr.length-1].value;
-            const dmiArr = calcDMI_Wilder(idxData, 14);
-            const adx = dmiArr[dmiArr.length-1].adx;
-            const lastClose = idxData[idxData.length-1].close;
-            
-            if (lastClose > ema200 && adx > 20) return MarketRegime.BULL;
-            if (lastClose < ema200) return MarketRegime.BEAR;
-            return MarketRegime.SIDEWAY;
+        function checkMTFTrend(data) {
+            if(data.length < 50) return "日線格局";
+            // 粗略計算週線 (5日) 與 月線 (20日) 趨勢
+            let ema10 = calcEMA(data, 10).pop().value;
+            let ema50 = calcEMA(data, 50).pop().value;
+            let ema100 = calcEMA(data, 100).pop().value;
+            let L = data[data.length-1].close;
+            if(L > ema10 && ema10 > ema50 && ema50 > ema100) return "多期共振 (MTF Bull)";
+            if(L < ema10 && ema10 < ema50 && ema50 < ema100) return "多期空頭 (MTF Bear)";
+            return "週期分歧 (Mixed)";
         }
 
+        function detectPattern(data) {
+            if(data.length < 60) return "無";
+            let slice = data.slice(-40);
+            let max40 = Math.max(...slice.map(d=>d.high));
+            let min40 = Math.min(...slice.map(d=>d.low));
+            let L = data[data.length-1].close;
+
+            // Flat Base: 近 20 日波動極小
+            let slice20 = data.slice(-20);
+            let max20 = Math.max(...slice20.map(d=>d.high));
+            let min20 = Math.min(...slice20.map(d=>d.low));
+            if ((max20 - min20) / min20 < 0.10 && L > min20) return "Flat Base (平坦底)";
+
+            // Double Bottom: W shape approximation
+            if (L > min40 * 1.1 && slice[0].high > min40) {
+                // look for two distinct lows
+                let lows = [];
+                for(let i=1; i<slice.length-1; i++) {
+                    if(slice[i].low < slice[i-1].low && slice[i].low < slice[i+1].low) lows.push(slice[i].low);
+                }
+                if(lows.length >= 2) {
+                    let diff = Math.abs(lows[lows.length-1] - lows[lows.length-2]) / lows[lows.length-1];
+                    if (diff < 0.05) return "Double Bottom (W底)";
+                }
+            }
+
+            // Cup with Handle approximation
+            if (L > max40 * 0.85 && L < max40 && (max40 - min40)/min40 > 0.15) {
+                let recent5Vol = data.slice(-5).reduce((s,d)=>s+d.volume,0)/5;
+                let avg20Vol = data.slice(-20).reduce((s,d)=>s+d.volume,0)/20;
+                if(recent5Vol < avg20Vol * 0.8) return "Cup with Handle (帶柄咖啡杯)";
+            }
+
+            return "無";
+        }
+
+        // ================== MODULE: BACKTEST & MONTE CARLO ==================
         function runHistoricalBacktest(data, idxData) {
-            if(data.length < 250) return { winRate: '--', pf: '--', mdd: '--', expectancy: '--', trades: 0 };
+            if(data.length < 250) return { winRate: '--', pf: '--', mdd: '--', expectancy: '--', trades: 0, cagr: '--', sharpe: '--', sortino: '--', tradeList: [] };
             let balance = 100000, peakBalance = 100000, maxDD = 0, trades = [], currentPos = null;
             const ema20 = calcEMA(data, 20), ema60 = calcEMA(data, 60), atrArray = calcATR_Wilder(data, 14);
             const ema200Idx = (idxData && idxData.length >= 200) ? calcEMA(idxData, 200) : [];
+            let dailyReturns = [];
 
             for (let i = 200; i < data.length - 1; i++) {
                 let L = data[i], atr14 = atrArray[i].atr, e60 = ema60[i].value;
@@ -642,34 +707,31 @@
                 let high22 = Math.max(...data.slice(i-22, i+1).map(d=>d.high));
                 
                 let score = 50; 
-                let rs = calculatePseudoRSRank(data, idxData, i).pr;
+                let rs = scorePseudoRSRank(data, idxData, i).pr;
                 if(rs > 80) score += 20;
                 if(ema20[i].value > e60) score += 15;
                 if(L.close > e60) score += 10;
                 
                 let isHardVeto = (L.close < e60 && L.volume > vol20) || (L.volume > vol20 * 2 && L.close < L.open);
 
+                let prevBalance = balance;
                 if (currentPos) {
+                    // MTM Return
+                    dailyReturns.push((L.close - data[i-1].close)/data[i-1].close);
+
                     if (L.low < currentPos.sl || L.low < currentPos.tp || isHardVeto) {
                         let pnl = (L.close - currentPos.entryPrice) / currentPos.entryPrice;
                         trades.push(pnl); balance *= (1 + pnl); currentPos = null;
                     } else { currentPos.tp = Math.max(currentPos.tp, high22 - 3*atr14); }
+                } else {
+                    dailyReturns.push(0);
                 }
                 
-                // 確保大盤資料的安全對齊，防止長度不一造成的 Crash
                 let idxI = 0;
                 if (idxData && idxData.length > 0) {
                     let matchingIdx = idxData.findIndex(d => d.time === L.time);
-                    if (matchingIdx !== -1) {
-                        idxI = matchingIdx;
-                    } else {
-                        // 找不到當天大盤，往前找最近一天
-                        for(let j=i-1; j>=0; j--) {
-                            if (!data[j]) continue;
-                            let fallback = idxData.findIndex(d => d.time === data[j].time);
-                            if(fallback !== -1) { idxI = fallback; break; }
-                        }
-                    }
+                    if (matchingIdx !== -1) idxI = matchingIdx;
+                    else { for(let j=i-1; j>=0; j--) { if(!data[j]) continue; let fb = idxData.findIndex(d => d.time === data[j].time); if(fb !== -1) { idxI = fb; break; } } }
                 }
 
                 let idxRegime = 'SIDEWAY';
@@ -686,7 +748,8 @@
                 if (dd > maxDD) maxDD = dd;
             }
 
-            if (trades.length === 0) return { winRate: '0%', pf: '0.0', mdd: '0.0%', expectancy: '0.0%', trades: 0 };
+            if (trades.length === 0) return { winRate: '0%', pf: '0.0', mdd: '0.0%', expectancy: '0.0%', trades: 0, cagr: '0.0%', sharpe: '0.0', sortino: '0.0', tradeList: [] };
+            
             let wins = trades.filter(t => t > 0), losses = trades.filter(t => t <= 0);
             let winRate = (wins.length / trades.length);
             let grossWin = wins.reduce((a,b)=>a+b, 0), grossLoss = Math.abs(losses.reduce((a,b)=>a+b, 0));
@@ -694,9 +757,66 @@
             let avgWin = wins.length > 0 ? grossWin / wins.length : 0, avgLoss = losses.length > 0 ? grossLoss / losses.length : 0;
             let expectancy = (winRate * avgWin) - ((1 - winRate) * avgLoss);
 
-            return { winRate: (winRate * 100).toFixed(1) + '%', pf: profitFactor.toFixed(2), mdd: (maxDD * 100).toFixed(1) + '%', expectancy: (expectancy * 100).toFixed(2) + '%', trades: trades.length };
+            // CAGR
+            let days = data.length - 200;
+            let years = days / 252;
+            let cagr = Math.pow(balance / 100000, 1 / years) - 1;
+
+            // Sharpe & Sortino (Based on trade returns for simplicity in this constrained env)
+            let meanRet = trades.reduce((a,b)=>a+b,0)/trades.length;
+            let stdDev = Math.sqrt(trades.reduce((a,b)=>a+Math.pow(b-meanRet,2),0)/trades.length);
+            let downside = trades.filter(t=>t<0);
+            let downDev = Math.sqrt(downside.reduce((a,b)=>a+Math.pow(b,2),0)/(downside.length||1));
+            
+            let sharpe = stdDev === 0 ? 0 : (meanRet / stdDev) * Math.sqrt(trades.length/years);
+            let sortino = downDev === 0 ? 0 : (meanRet / downDev) * Math.sqrt(trades.length/years);
+
+            return { 
+                winRate: (winRate * 100).toFixed(1) + '%', 
+                pf: profitFactor.toFixed(2), 
+                mdd: (maxDD * 100).toFixed(1) + '%', 
+                expectancy: (expectancy * 100).toFixed(2) + '%', 
+                trades: trades.length,
+                cagr: (cagr * 100).toFixed(1) + '%',
+                sharpe: sharpe.toFixed(2),
+                sortino: sortino.toFixed(2),
+                tradeList: trades
+            };
         }
 
+        function runMonteCarlo(trades, iterations = 1000) {
+            if(!trades || trades.length < 5) return { mcMDD: '--', mcReturn: '--' };
+            let finalBalances = [];
+            let mdds = [];
+            
+            for(let i=0; i<iterations; i++) {
+                let balance = 100000;
+                let peak = 100000;
+                let maxDD = 0;
+                // Resample sequence length equal to actual trades length
+                for(let j=0; j<trades.length; j++) {
+                    let randIdx = Math.floor(Math.random() * trades.length);
+                    let t = trades[randIdx];
+                    balance *= (1 + t);
+                    if(balance > peak) peak = balance;
+                    let dd = (peak - balance) / peak;
+                    if(dd > maxDD) maxDD = dd;
+                }
+                finalBalances.push(balance);
+                mdds.push(maxDD);
+            }
+
+            mdds.sort((a,b) => b - a); // Descending
+            let worst95MDD = mdds[Math.floor(iterations * 0.05)]; 
+            let avgReturn = (finalBalances.reduce((a,b)=>a+b,0) / iterations - 100000) / 100000;
+
+            return {
+                mcMDD: (worst95MDD * 100).toFixed(1) + '%',
+                mcReturn: (avgReturn * 100).toFixed(1) + '%'
+            };
+        }
+
+        // ================== MODULE: MAIN EXECUTION ==================
         async function runAnalysis(ticker) {
             if (isAnalyzing) return; 
             isAnalyzing = true;
@@ -710,12 +830,9 @@
             let t = ticker.trim().toUpperCase();
             document.getElementById('chartTitle').innerText = t;
             
-            // 💡 核心修復：強制絕對清空所有圖表殘留，徹底解決幽靈資料
             if (candleSeries) {
-                candleSeries.setData([]);
-                ema20Series.setData([]); ema60Series.setData([]);
-                avwapHighSeries.setData([]); avwapLowSeries.setData([]);
-                volSeries.setData([]); rsiSeries.setData([]); adxSeries.setData([]);
+                candleSeries.setData([]); ema20Series.setData([]); ema60Series.setData([]);
+                avwapHighSeries.setData([]); avwapLowSeries.setData([]); volSeries.setData([]); rsiSeries.setData([]); adxSeries.setData([]);
             }
             
             document.getElementById('finalRatingText').innerText = "運算中...";
@@ -725,24 +842,21 @@
             document.getElementById('scoreCircle').setAttribute('class', 'score-circle text-indigo-500');
 
             try {
+                fetchRealtimeQuote(t);
                 let idxQ = currentMarket === 'TW' ? '^TWII' : '^GSPC';
                 
                 try {
                     if (currentMarket === 'TW') currentIndexData = await fetchTWData(idxQ);
                     else currentIndexData = await fetchUSData(idxQ);
-                } catch (idxErr) {
-                    console.warn("大盤指數抓取失敗，降級為無大盤模式", idxErr);
-                    currentIndexData = []; // 降級容錯
-                }
+                } catch (idxErr) { currentIndexData = []; }
 
-                await delay(500); // 防被 Proxy Rate Limit
+                await delay(300);
 
                 if (currentMarket === 'TW') currentChartData = await fetchTWData(t);
                 else currentChartData = await fetchUSData(t);
                 
                 if(!currentChartData || currentChartData.length < 50) throw new Error("Data insufficient");
 
-                // 💡 核心修復：剔除重複時間戳並強制遞增排序，防止 LightweightCharts 崩潰
                 const uniqueDataMap = new Map();
                 currentChartData.forEach(d => uniqueDataMap.set(d.time, d));
                 currentChartData = Array.from(uniqueDataMap.values()).sort((a, b) => new Date(a.time) - new Date(b.time));
@@ -777,14 +891,13 @@
 
                 priceChart.timeScale().fitContent();
 
-                runASQEv8Logic();
+                runASQEv9Logic();
                 updateLegends(currentChartData[currentChartData.length-1].time);
 
             } catch(e) {
                 console.error(e);
                 document.getElementById('chartTitle').innerText = t + " (資料源失效)";
                 document.getElementById('finalRatingText').innerHTML = "<span class='text-red-400 text-sm'>官方 API 連線異常</span>";
-                
                 document.getElementById('actionAdvice').innerText = "連線遭拒";
                 document.getElementById('positionSizeAdvice').innerText = "請確認已配置合法 API Key";
                 document.getElementById('scoreBgGlow').className = "absolute -right-10 -top-10 w-40 h-40 rounded-full blur-3xl opacity-10 bg-red-500 transition-colors duration-700";
@@ -797,7 +910,7 @@
             }
         }
 
-        function runASQEv8Logic() {
+        function runASQEv9Logic() {
             const data = currentChartData, len = data.length, L = data[len-1];
             const ema20 = calcEMA(data, 20).pop().value, ema60 = calcEMA(data, 60).pop().value;
             const atr14 = calcATR_Wilder(data).pop().atr;
@@ -810,31 +923,25 @@
             const regime = determineMarketRegime(currentIndexData || data);
             
             let s1=0, s2=0, s3=0, s4=0, s5=0, s6=0, s7=0;
-            let d1="", d2="", d3="", d4="", d5="", d6="", d7="";
             const isETF = document.getElementById('tickerInput').value.startsWith('00') || ['SPY','QQQ'].includes(document.getElementById('tickerInput').value);
 
-            if(regime === MarketRegime.BULL) { s1=15; d1="✅ 大盤多頭順風 (+15)"; } else if(regime === MarketRegime.SIDEWAY) { s1=8; d1="⚖️ 大盤整理 (+8)"; } else { s1=0; d1="❌ 大盤空頭逆風 (0)"; }
-            if(isETF) { s2=10; d2="🔄 ETF 免驗財報 (+10)"; } else { s2=5; d2="⚠️ 基礎分 (+5)"; }
-            if(L.close > avwapHigh && obvTrend) { s3=15; d3="✅ 站穩巨量錨點且 OBV 向上 (+15)"; } else if(L.close > avwapLow) { s3=8; d3="⚠️ 守住波谷錨點防線 (+8)"; } else { s3=0; d3="❌ 跌破絕對成本區 (0)"; }
+            if(regime === 'BULL') s1=15; else if(regime === 'SIDEWAY') s1=8; else s1=0; 
+            if(isETF) s2=10; else s2=5; 
+            if(L.close > avwapHigh && obvTrend) s3=15; else if(L.close > avwapLow) s3=8; else s3=0; 
 
-            let rsData = calculatePseudoRSRank(data, currentIndexData, len-1);
-            if(isETF) { s4=20; d4="🔄 ETF 豁免 Alpha (+20)"; } else {
-                if(rsData.pr >= 90) { s4=20; d4=`🔥 強勢領跑 ${rsData.desc} (+20)`; } else if(rsData.pr >= 70) { s4=15; d4=`✅ 優於大盤 ${rsData.desc} (+15)`; }
-                else if(rsData.pr >= 50) { s4=10; d4=`⚖️ 貼近大盤 ${rsData.desc} (+10)`; } else { s4=0; d4=`❌ 弱於大盤 ${rsData.desc} (0)`; }
-            }
+            let rsData = scorePseudoRSRank(data, currentIndexData, len-1);
+            if(isETF) s4=20; else s4 = rsData.score;
 
-            if(L.close > high20 * 0.98 && L.volume > vol20MA * 1.5) { s5=15; d5="🚀 帶量突破頸線 (+15)"; } else { s5=0; d5="❌ 無明顯 VCP 型態"; }
+            if(L.close > high20 * 0.98 && L.volume > vol20MA * 1.5) s5=15; else s5=0; 
 
             let distToChandelier = (hh22 - 3*atr14) / L.close;
-            if(atr14/L.close < 0.04 && distToChandelier < 0.1) { s6=10; d6="✅ 波動可控 (+10)"; } else { s6=5; d6="⚠️ 波動偏大 (+5)"; }
-
-            if(isETF) { s7=15; d7="🔄 ETF 豁免籌碼面 (+15)"; } else { s7=8; d7="⚠️ 基礎分 (+8)"; }
+            if(atr14/L.close < 0.04 && distToChandelier < 0.1) s6=10; else s6=5; 
+            if(isETF) s7=15; else s7=8; 
 
             let baseScore = s1+s2+s3+s4+s5+s6+s7;
-            let isHardVeto = false, hardReason = "";
-            let isSoftVeto = false, softReason = "", softPenalty = 0;
+            let isHardVeto = false, isSoftVeto = false, softPenalty = 0, hardReason = "", softReason = "";
 
-            if(L.close < ema60 && L.volume > vol20MA) { isHardVeto=true; hardReason="跌破生命線 (EMA60) 且放量"; }
+            if(L.close < ema60 && L.volume > vol20MA) { isHardVeto=true; hardReason="跌破季線 (EMA60) 且放量"; }
             else if(L.volume > vol20MA * 2.0 && L.close < L.open) { isHardVeto=true; hardReason="高檔爆量長黑 (Stage 4)"; }
 
             let upperShadow = (L.high - Math.max(L.open, L.close)) / L.close;
@@ -842,72 +949,30 @@
 
             let finalScore = baseScore;
             let vetoTitle="", vetoColor="", vetoIcon="🚨";
-            const vetoPanel = document.getElementById('vetoPanel');
 
             if(isHardVeto) {
                 finalScore = Math.min(finalScore, 40);
-                vetoPanel.className = "p-3.5 rounded-xl border relative overflow-hidden bg-red-950/50 border-red-500/50 block";
                 vetoTitle = "HARD VETO (強制出場)"; vetoColor="text-red-400";
-                document.getElementById('vetoReason').innerHTML = `${hardReason}。觸發強制鎖死分數。`;
             } else if (isSoftVeto) {
                 finalScore -= softPenalty;
-                vetoPanel.className = "p-3.5 rounded-xl border relative overflow-hidden bg-yellow-950/50 border-yellow-500/50 block";
                 vetoTitle = "SOFT VETO (軟性警告)"; vetoColor="text-yellow-400"; vetoIcon="⚠️";
-                document.getElementById('vetoReason').innerHTML = `${softReason}。系統動態扣減 ${softPenalty} 分。`;
-            } else { vetoPanel.classList.add('hidden'); }
+            } 
 
             let winRate = 0.3 + (Math.max(0, finalScore - 30) / 70) * 0.40; 
-            if(regime === MarketRegime.BEAR) winRate *= 0.8; 
+            if(regime === 'BEAR') winRate *= 0.8; 
             let halfKelly = Math.max(0, ((2.0 * winRate - (1 - winRate)) / 2.0) / 2); 
             const sizeStr = (Math.min(0.20, halfKelly) * 100).toFixed(1) + '%';
             
             let btMetrics = runHistoricalBacktest(data, currentIndexData);
+            let mcMetrics = runMonteCarlo(btMetrics.tradeList);
+            let pattern = detectPattern(data);
+            let mtfTrend = checkMTFTrend(data);
 
             updateDashboardUI({ 
-                finalScore, regime, s1,s2,s3,s4,s5,s6,s7, d1,d2,d3,d4,d5,d6,d7, 
-                sizeStr, sl: L.close - 2*atr14, chandelierExit: hh22 - 3*atr14, rsPr: rsData.pr, L,
-                vetoTitle, vetoColor, vetoIcon, isHardVeto, isSoftVeto, btMetrics
+                finalScore, regime, sizeStr, sl: L.close - 2*atr14, chandelierExit: hh22 - 3*atr14, 
+                rsPr: rsData.pr, L, vetoTitle, vetoColor, vetoIcon, isHardVeto, isSoftVeto, 
+                btMetrics, mcMetrics, pattern, mtfTrend
             });
-        }
-
-        function updateDashboardUI(v) {
-            const rb = document.getElementById('regimeBadge');
-            rb.classList.remove('hidden', 'bg-emerald-950/60', 'text-emerald-400', 'bg-yellow-950/60', 'text-yellow-400', 'bg-red-950/60', 'text-red-400');
-            if(v.regime === MarketRegime.BULL) { rb.classList.add('bg-emerald-950/60', 'text-emerald-400', 'border-emerald-800'); document.getElementById('regimeIcon').innerText="🐂"; document.getElementById('regimeText').innerText="BULL (多頭)"; }
-            else if(v.regime === MarketRegime.SIDEWAY) { rb.classList.add('bg-yellow-950/60', 'text-yellow-400', 'border-yellow-800'); document.getElementById('regimeIcon').innerText="⚖️"; document.getElementById('regimeText').innerText="SIDEWAY (盤整)"; }
-            else { rb.classList.add('bg-red-950/60', 'text-red-400', 'border-red-800'); document.getElementById('regimeIcon').innerText="🐻"; document.getElementById('regimeText').innerText="BEAR (空頭)"; }
-
-            const sf = (id, html) => document.getElementById(id).innerHTML = html;
-            sf('score-m1', `${v.s1}/15`); sf('desc-m1', v.d1); sf('score-m2', `${v.s2}/10`); sf('desc-m2', v.d2);
-            sf('score-m3', `${v.s3}/15`); sf('desc-m3', v.d3); sf('score-m4', `${v.s4}/20`); sf('desc-m4', v.d4);
-            sf('score-m5', `${v.s5}/15`); sf('desc-m5', v.d5); sf('score-m6', `${v.s6}/10`); sf('desc-m6', v.d6);
-            sf('score-m7', `${v.s7}/15`); sf('desc-m7', v.d7);
-
-            if(v.isHardVeto || v.isSoftVeto) { sf('vetoTitleIcon', v.vetoIcon); sf('vetoTitle', v.vetoTitle); document.getElementById('vetoTitle').className = `text-xs font-black tracking-wider ${v.vetoColor}`; }
-
-            sf('btWinRate', v.btMetrics.winRate); sf('btProfitFactor', v.btMetrics.pf); sf('btMDD', v.btMetrics.mdd); sf('btExpectancy', v.btMetrics.expectancy);
-
-            const circle = document.getElementById('scoreCircle');
-            document.getElementById('totalScore').innerText = v.finalScore;
-            circle.style.strokeDasharray = `${Math.max(0,v.finalScore)}, 100`;
-            
-            let colorCls = 'text-indigo-500', bgCls = 'bg-indigo-500', advice="";
-            if(v.finalScore >= 85) { colorCls='text-fuchsia-500'; bgCls='bg-fuchsia-500'; sf('finalRatingText','SSS 頂級飆股'); advice="🚀 突破強攻"; }
-            else if(v.finalScore >= 70) { colorCls='text-emerald-500'; bgCls='bg-emerald-500'; sf('finalRatingText','S 核心資產'); advice="🟢 順勢推進"; }
-            else if(v.finalScore >= 50) { colorCls='text-yellow-500'; bgCls='bg-yellow-500'; sf('finalRatingText','A 震盪整理'); advice="🟡 區間控盤"; }
-            else { colorCls='text-red-500'; bgCls='bg-red-500'; sf('finalRatingText','📉 轉弱清倉'); advice="🛑 空手觀望"; }
-            
-            circle.setAttribute('class', `score-circle ${colorCls}`);
-            document.getElementById('scoreBgGlow').setAttribute('class', `absolute -right-10 -top-10 w-40 h-40 rounded-full blur-3xl opacity-10 transition-colors duration-700 ${bgCls}`);
-
-            sf('rsRankingText', v.rsPr > 0 ? `PR ${v.rsPr}` : '--'); sf('actionAdvice', advice); sf('positionSizeAdvice', `Adaptive Size：${v.sizeStr}`);
-
-            if(v.finalScore < 50) {
-                sf('stopLoss', '--'); sf('trailingStop', '觸發離場'); document.getElementById('trailingStop').className = 'text-lg font-black text-red-500 font-mono';
-            } else {
-                sf('stopLoss', v.sl.toFixed(2)); sf('trailingStop', v.chandelierExit > v.L.close ? '觸發離場' : v.chandelierExit.toFixed(2));
-                document.getElementById('trailingStop').className = v.chandelierExit > v.L.close ? 'text-lg font-black text-red-500 font-mono' : 'text-lg font-black text-emerald-400 font-mono';
-            }
         }
     </script>
 </body>
