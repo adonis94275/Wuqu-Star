@@ -677,14 +677,28 @@
         async function runAnalysis(ticker) {
             if (isAnalyzing) return; 
             isAnalyzing = true;
-            document.getElementById('analyzeBtn').disabled = true;
-            document.getElementById('loadingOverlay').classList.remove('hidden');
+            
+            const btn = document.getElementById('analyzeBtn');
+            const overlay = document.getElementById('loadingOverlay');
+            
+            btn.disabled = true;
+            overlay.classList.remove('hidden');
             document.getElementById('errorDisplay').classList.add('hidden');
             document.getElementById('systemWarning').classList.add('hidden');
             
             let t = ticker.trim().toUpperCase();
             document.getElementById('chartTitle').innerText = t;
             
+            const safetyTimer = setTimeout(() => {
+                if (isAnalyzing) {
+                    overlay.classList.add('hidden');
+                    isAnalyzing = false;
+                    btn.disabled = false;
+                    document.getElementById('errorDisplay').classList.remove('hidden');
+                    document.getElementById('errorText').innerText = "連線逾時 (Timeout)。\n伺服器未回應或遭阻擋，請稍後重試。";
+                }
+            }, 45000);
+
             destroyCharts();
 
             try {
@@ -787,6 +801,8 @@
 
                 // UI Update
                 const sf = (id, html) => document.getElementById(id).innerHTML = html;
+                const circle = document.getElementById('scoreCircle');
+                
                 sf('totalScore', finalScore);
                 sf('rsRankingText', `${rsData.desc}`);
                 sf('flowMomText', flowText);
@@ -803,7 +819,6 @@
                 else if(finalScore >= 50) { colorCls='text-yellow-500'; bgCls='bg-yellow-500'; sf('finalRatingText','A 震盪整理'); }
                 else { colorCls='text-red-500'; bgCls='bg-red-500'; sf('finalRatingText','📉 轉弱清倉'); }
                 
-                const circle = document.getElementById('scoreCircle');
                 if(circle) { circle.setAttribute('class', `score-circle ${colorCls}`); circle.style.strokeDasharray = `${Math.max(0,finalScore)}, 100`; }
                 document.getElementById('scoreBgGlow').setAttribute('class', `absolute -right-10 -top-10 w-40 h-40 rounded-full blur-3xl opacity-10 transition-colors duration-700 ${bgCls}`);
 
@@ -832,15 +847,20 @@
                 } else { document.getElementById('vetoPanel').classList.add('hidden'); }
 
             } catch(e) {
-                console.error(e);
+                console.error("Analysis Error:", e);
                 document.getElementById('chartTitle').innerText = t + " (資料源失效)";
                 document.getElementById('errorDisplay').classList.remove('hidden');
                 document.getElementById('errorText').innerText = e.message || "官方 API 連線異常，請檢查金鑰狀態與權限。";
                 document.getElementById('finalRatingText').innerText = "連線遭拒";
+                document.getElementById('positionSizeAdvice').innerText = "資料不足，暫停評分";
+                document.getElementById('scoreBgGlow').className = "absolute -right-10 -top-10 w-40 h-40 rounded-full blur-3xl opacity-10 bg-red-500 transition-colors duration-700";
+                const circle = document.getElementById('scoreCircle');
+                if(circle) { circle.setAttribute('class', 'score-circle text-slate-700'); circle.style.strokeDasharray = `0, 100`; }
             } finally {
-                document.getElementById('loadingOverlay').classList.add('hidden');
-                isAnalyzing = false;
-                document.getElementById('analyzeBtn').disabled = false;
+                clearTimeout(safetyTimer); 
+                overlay.classList.add('hidden');
+                isAnalyzing = false; 
+                btn.disabled = false;
             }
         }
     </script>
