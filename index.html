@@ -18,9 +18,6 @@
         .fade-transition { transition: opacity 0.5s ease, visibility 0.5s ease; }
         .fade-out { opacity: 0 !important; visibility: hidden !important; }
         .fade-in { opacity: 1 !important; visibility: visible !important; }
-        /* Pulse Animation for Tactical Alerts */
-        @keyframes softPulse { 0% { opacity: 1; } 50% { opacity: 0.7; } 100% { opacity: 1; } }
-        .tactical-alert { animation: softPulse 2s infinite; }
     </style>
 </head>
 <body class="flex flex-col min-h-screen relative overflow-hidden">
@@ -30,12 +27,12 @@
         <div class="bg-slate-900 rounded-3xl p-8 w-full max-w-md flex flex-col items-center shadow-[0_0_60px_rgba(99,102,241,0.2)] border border-slate-800 relative overflow-hidden">
             <div class="absolute top-0 w-full h-1 bg-gradient-to-r from-blue-600 via-indigo-500 to-purple-600"></div>
             <div class="w-16 h-16 bg-slate-950 rounded-2xl flex items-center justify-center mb-5 border border-slate-700 shadow-inner">
-                <span class="text-3xl">⏱️</span>
+                <span class="text-3xl">🧮</span>
             </div>
             <h1 class="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-300 tracking-wider mb-1">ASQE v10.9</h1>
-            <p class="text-[10px] text-indigo-400 mb-8 font-mono tracking-widest uppercase bg-indigo-900/30 px-2 py-1 rounded">Tactical Timing Engine</p>
+            <p class="text-[10px] text-indigo-400 mb-8 font-mono tracking-widest uppercase bg-indigo-900/30 px-2 py-1 rounded">Tactical Engine</p>
             <input type="password" id="passwordInput" placeholder="輸入機構授權碼 (admin)" class="w-full bg-slate-950 text-white border border-slate-700 rounded-xl px-4 py-3.5 mb-5 focus:outline-none focus:border-indigo-500 text-center tracking-widest font-mono">
-            <button id="unlockBtn" class="w-full bg-gradient-to-r from-indigo-600 to-purple-700 hover:from-indigo-500 hover:to-purple-600 text-white font-black py-3.5 rounded-xl transition-all shadow-lg tracking-widest">啟動戰術核心</button>
+            <button id="unlockBtn" class="w-full bg-gradient-to-r from-indigo-600 to-purple-700 hover:from-indigo-500 hover:to-purple-600 text-white font-black py-3.5 rounded-xl transition-all shadow-lg tracking-widest">載入戰術核心</button>
             <p id="errorMsg" class="text-red-400 text-xs mt-4 opacity-0 transition-opacity">授權碼錯誤</p>
         </div>
     </div>
@@ -45,7 +42,7 @@
         <div class="bg-slate-900 rounded-3xl p-6 w-full max-w-lg border border-slate-700 shadow-2xl relative">
             <button id="closeSettingsBtn" class="absolute top-5 right-5 text-slate-400 hover:text-white transition-colors hidden">✕</button>
             <h2 class="text-xl font-black text-white mb-2 flex items-center gap-2 tracking-widest"><span class="text-indigo-400">⚙️</span> 數據源與 DCS 權重配置</h2>
-            <p class="text-[11px] text-slate-400 mb-4 leading-relaxed">v10.9 啟動 <span class="text-indigo-400 font-bold">DCS (Data Confidence Score)</span>。若 API 留空或失效，對應之基本面與籌碼分數將套用 $0.6$ 或 $0.3$ 信心衰減權重。</p>
+            <p class="text-[11px] text-slate-400 mb-4 leading-relaxed">v10.9 啟動 <span class="text-indigo-400 font-bold">DCS (Data Confidence Score)</span>。若 API 留空或失效，對應之基本面與籌碼分數將套用 0.6 或 0.3 信心衰減權重。</p>
             
             <div class="space-y-3 max-h-[65vh] overflow-y-auto custom-scrollbar pr-2">
                 <div class="bg-slate-950/50 p-3 rounded-xl border border-slate-800">
@@ -170,9 +167,9 @@
                         <div id="scoreBgGlow" class="absolute -right-10 -top-10 w-40 h-40 rounded-full blur-3xl opacity-10 bg-indigo-500 transition-colors duration-700"></div>
                         <div class="flex justify-between items-start relative z-10">
                             <div class="flex flex-col">
-                                <span class="text-[10px] font-bold text-slate-500 tracking-widest uppercase mb-1 font-mono">v10.9 Engine Score</span>
+                                <span class="text-[10px] font-bold text-slate-500 tracking-widest uppercase mb-1 font-mono">v10.9 ENGINE SCORE</span>
                                 <div id="finalRatingText" class="text-2xl font-black text-white">等待運算...</div>
-                                <div id="positionSizeAdvice" class="text-[11px] font-bold text-indigo-400 mt-2 bg-indigo-500/10 inline-block px-2 py-1 rounded border border-indigo-500/20">凱利公式建議佔比: --</div>
+                                <div id="positionSizeAdvice" class="text-[11px] font-bold text-indigo-400 mt-2 bg-indigo-500/10 inline-block px-2 py-1 rounded border border-indigo-500/20">凱利公式建議佔比：--</div>
                             </div>
                             <div class="relative w-20 h-20 shrink-0">
                                 <svg class="w-full h-full transform -rotate-90 drop-shadow-lg" viewBox="0 0 36 36">
@@ -186,31 +183,25 @@
                         </div>
                     </div>
 
-                    <!-- 🚀 全新：TTE 戰術時機引擎面板 (Tactical Timing Engine) -->
-                    <div id="tacticalPanel" class="p-4 rounded-2xl border bg-slate-900 border-slate-700 shadow-md relative overflow-hidden transition-colors duration-500">
-                        <div class="flex items-center justify-between mb-3">
-                            <span class="text-[10px] font-bold tracking-widest uppercase text-slate-400 flex items-center gap-2">
-                                <span class="text-base">⏱️</span> Tactical Command
-                            </span>
-                            <span id="biasWarning" class="text-[9px] px-1.5 py-0.5 rounded bg-slate-800 text-slate-400 border border-slate-700">乖離率測算中</span>
+                    <!-- 🚀 TACTICAL TIMING ENGINE (戰術指令面板) -->
+                    <div class="bg-slate-900 p-4 rounded-xl border border-rose-900/50 shadow-sm relative overflow-hidden">
+                        <div class="text-rose-400 text-[10px] uppercase tracking-widest font-bold mb-3 flex items-center justify-between">
+                            <span class="flex items-center gap-2"><span class="bg-rose-900/50 p-1 rounded">🎯</span> Tactical Command</span>
+                            <span id="biasText" class="text-[9px] text-slate-500 font-mono bg-slate-950 px-1.5 py-0.5 rounded">月線乖離: --</span>
                         </div>
-                        
                         <div class="grid grid-cols-2 gap-3">
-                            <!-- 進場建議 -->
-                            <div class="bg-slate-950/80 p-3 rounded-xl border border-slate-800 flex flex-col justify-center">
-                                <span class="text-[10px] text-slate-500 font-bold mb-1">進場時機 (Entry)</span>
-                                <div id="entryTimingText" class="text-sm font-black text-slate-300 leading-tight">等待分析...</div>
+                            <div class="bg-slate-950 p-3 rounded-lg border border-slate-800 flex flex-col justify-center">
+                                <span class="text-[10px] text-slate-500 mb-1">進場時機 (Entry)</span>
+                                <span id="entryTiming" class="text-sm font-black text-white">--</span>
                             </div>
-                            
-                            <!-- 出場/停利建議 -->
-                            <div class="bg-slate-950/80 p-3 rounded-xl border border-slate-800 flex flex-col justify-center">
-                                <span class="text-[10px] text-slate-500 font-bold mb-1">部位管理 (Exit/Take Profit)</span>
-                                <div id="exitStrategyText" class="text-sm font-black text-slate-300 leading-tight">等待分析...</div>
+                            <div class="bg-slate-950 p-3 rounded-lg border border-slate-800 flex flex-col justify-center">
+                                <span class="text-[10px] text-slate-500 mb-1">部位管理 (Exit/Take Profit)</span>
+                                <span id="exitStrategy" class="text-sm font-black text-white">--</span>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Veto 面板 -->
+                    <!-- Veto -->
                     <div id="vetoPanel" class="hidden p-3.5 rounded-xl border shadow-lg relative overflow-hidden">
                         <div id="vetoIcon" class="absolute -right-2 -top-2 text-4xl opacity-10">🚨</div>
                         <div class="flex items-center gap-2 mb-1">
@@ -227,7 +218,7 @@
                             <span id="dcsStatus" class="text-[9px] text-slate-500 font-mono bg-slate-950 px-1.5 py-0.5 rounded">DCS: 1.0</span>
                         </div>
                         <div class="grid grid-cols-3 gap-y-3 gap-x-2 pb-3 border-b border-slate-800">
-                            <div class="flex flex-col"><span class="text-[9px] text-slate-500">預期報酬 E[R]</span><span id="crdmER" class="text-xs font-black text-emerald-400 font-mono">--</span></div>
+                            <div class="flex flex-col"><span class="text-[9px] text-slate-500">預期報酬 Expected</span><span id="crdmER" class="text-xs font-black text-emerald-400 font-mono">--</span></div>
                             <div class="flex flex-col"><span class="text-[9px] text-slate-500">變異數 Variance</span><span id="crdmVar" class="text-xs font-black text-white font-mono">--</span></div>
                             <div class="flex flex-col"><span class="text-[9px] text-slate-500">Tail Loss (5%)</span><span id="crdmTail" class="text-xs font-black text-red-400 font-mono">--</span></div>
                         </div>
@@ -256,6 +247,14 @@
                             </div>
                         </div>
                     </div>
+
+                    <!-- 新聞面板 -->
+                    <div id="newsPanel" class="bg-slate-900 p-4 rounded-xl border border-purple-900/50 shadow-sm hidden">
+                        <div class="text-purple-400 text-[10px] uppercase tracking-widest font-bold mb-3 flex items-center gap-2">
+                            <span class="bg-purple-900/50 p-1 rounded">📰</span> Finnhub News
+                        </div>
+                        <div id="newsList" class="flex flex-col gap-2.5 text-[11px] text-slate-300"></div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -278,7 +277,7 @@
         let priceChart = null, dmiChart = null;
         let candleSeries, volSeries, ema20Series, ema60Series, avwapHighSeries, avwapLowSeries, adxSeries, rsiSeries;
         let currentChartData = null, currentIndexData = null;
-        let currentInstData = null;
+        let currentInstData = null, currentRevData = null;
 
         const getLocalStr = (d) => `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
         const delay = ms => new Promise(res => setTimeout(res, ms));
@@ -299,7 +298,7 @@
         }
 
         // ============================================================================
-        // 🧮 MATH & QUANTITATIVE LIBRARY
+        // 🧮 MATH & QUANTITATIVE LIBRARY (Wilder & AVWAP)
         // ============================================================================
         function calcRMA(data, period) {
             let res = [], sum = 0;
@@ -328,7 +327,7 @@
             }
             let mean = rets.reduce((a,b)=>a+b,0)/period;
             let variance = rets.reduce((a,b)=>a+Math.pow(b-mean,2),0)/period;
-            return Math.sqrt(variance) * Math.sqrt(252); 
+            return Math.sqrt(variance) * Math.sqrt(252); // Annualized Vol
         }
 
         function calcRSI_Wilder(data, period=14) {
@@ -399,7 +398,7 @@
         }
 
         // ============================================================================
-        // 🚀 INSTITUTIONAL PROBABILITY & TACTICAL MODELS
+        // 🚀 INSTITUTIONAL PROBABILITY MODELS (v10.8)
         // ============================================================================
         const MarketRegime = { BULL: 'BULL', SIDEWAY: 'SIDEWAY', BEAR: 'BEAR' };
 
@@ -413,11 +412,12 @@
             return MarketRegime.SIDEWAY;
         }
 
+        // ① E4: Volatility-Adjusted Z-Score 
         function calculateVolAdjustedZScore(data, idxData) {
             if(data.length < 126 || !idxData || idxData.length < 126) return { pr: 50, z: 0, desc: "Data NA" };
             
             let vol = calcVolatility(data, 126);
-            if (vol < 0.05) vol = 0.05; 
+            if (vol < 0.05) vol = 0.05; // Base floor
 
             const getRet = (arr) => (arr[arr.length-1].close - arr[arr.length-126].close) / arr[arr.length-126].close;
             let stockRet = getRet(data), idxRet = getRet(idxData);
@@ -431,6 +431,7 @@
             return { pr, z: zScore, desc: `Z: ${zScore.toFixed(2)} | PR ${pr}` };
         }
 
+        // ② CRDM (Conditional Return Distribution Model) 模擬回測生成矩陣
         function generateCRDM(data, idxData, currentScore) {
             if(data.length < 250) return { eR: 0.05, variance: 0.02, tailLoss: -0.1, trades: [] };
             
@@ -439,9 +440,12 @@
             let trades = [];
             let currentPos = null;
 
+            // 擷取所有歷史 Trade Returns
             for (let i = 200; i < data.length - 1; i++) {
                 let L = data[i], atr14 = atrArray[i].atr, e60 = ema60[i].value;
                 let high22 = Math.max(...data.slice(i-22, i+1).map(d=>d.high));
+                
+                // 簡化模擬：只要在季線之上、非爆量長黑就模擬進場，收集報酬樣本
                 let isHardVeto = (L.close < e60) || (L.close < L.open && (L.high-L.low)/L.close > 0.05);
 
                 if (currentPos) {
@@ -454,11 +458,13 @@
                 }
             }
 
-            if(trades.length < 5) trades = [0.05, 0.02, -0.02, -0.05, 0.1];
+            // CRDM 統計萃取
+            if(trades.length < 5) trades = [0.05, 0.02, -0.02, -0.05, 0.1]; // Fallback dummy
             let mean = trades.reduce((a,b)=>a+b,0) / trades.length;
             let variance = trades.reduce((a,b)=>a+Math.pow(b-mean,2),0) / trades.length;
             
-            let scoreShift = (currentScore - 50) / 100 * 0.15; 
+            // Score Adjustment: 根據當前 Score 強行平移期望值 (Calibration)
+            let scoreShift = (currentScore - 50) / 100 * 0.15; // Max 15% shift
             mean += scoreShift;
 
             let sortedTrades = [...trades].sort((a,b)=>a-b);
@@ -468,10 +474,18 @@
             return { eR: mean, variance: variance || 0.01, tailLoss, trades };
         }
 
+        // ③ Markov Regime Switching Monte Carlo
         function runMarkovMonteCarlo(trades, iterations=1000) {
             if(!trades || trades.length < 5) return { mcMDD: '--', mcReturn: '--' };
-            const trans = { 0: [0.8, 0.15, 0.05], 1: [0.2, 0.7, 0.1], 2: [0.1, 0.3, 0.6] };
             
+            // Simplified Transition Matrix [Bull, Sideway, Bear] -> [Bull, Sideway, Bear]
+            const trans = {
+                0: [0.8, 0.15, 0.05], // Bull
+                1: [0.2, 0.7, 0.1],  // Sideway
+                2: [0.1, 0.3, 0.6]   // Bear
+            };
+            
+            // Trade categorization (Simulated based on magnitude)
             const bullTrades = trades.filter(t => t > 0.02);
             const sideTrades = trades.filter(t => t >= -0.05 && t <= 0.02);
             const bearTrades = trades.filter(t => t < -0.05);
@@ -485,7 +499,9 @@
             let mdds = [], finalBalances = [];
             for(let i=0; i<iterations; i++) {
                 let balance = 100000, peak = 100000, maxDD = 0;
-                let currentState = 1; 
+                let currentState = 1; // Start in Sideway
+                
+                // Simulate N steps (e.g. 50 trades)
                 for(let j=0; j<50; j++) {
                     let rand = Math.random();
                     let probs = trans[currentState];
@@ -509,72 +525,14 @@
             return { mcMDD: (dar95 * 100).toFixed(1) + '%', mcReturn: (avgReturn * 100).toFixed(1) + '%' };
         }
 
-        // 🧠 v10.9 NEW: TTE - Tactical Timing Engine (戰術時機引擎)
-        function analyzeTacticalTiming(score, currentPrice, ema20, ema60, atr14, high20, chandelierExit, isHardVeto) {
-            let entryAdvice = "";
-            let exitAdvice = "";
-            let panelStyle = "border-slate-700 bg-slate-900"; // Default
-            
-            // 1. Calculate Bias (乖離率)
-            let bias20 = (currentPrice - ema20) / ema20;
-            let biasColor = bias20 > 0.08 ? "text-red-400" : (bias20 < -0.05 ? "text-blue-400" : "text-emerald-400");
-            let biasStatus = bias20 > 0.08 ? "正乖離過大" : (bias20 < -0.05 ? "負乖離(超賣)" : "乖離健康");
-
-            // 2. Entry Timing Logic
-            if (score < 50 || isHardVeto) {
-                entryAdvice = "<span class='text-red-400'>嚴禁進場 (趨勢破線)</span>";
-                panelStyle = "border-red-900/50 bg-red-950/20 tactical-alert";
-            } else if (score >= 70) {
-                if (bias20 > 0.08) {
-                    entryAdvice = "<span class='text-yellow-400'>追高風險大，建議等拉回月線</span>";
-                    panelStyle = "border-yellow-700/50 bg-yellow-900/10";
-                } else if (currentPrice > high20 * 0.98) {
-                    entryAdvice = "<span class='text-fuchsia-400'>🎯 突破買點 (Sweet Spot)</span>";
-                    panelStyle = "border-fuchsia-700/50 bg-fuchsia-900/10 tactical-alert";
-                } else {
-                    entryAdvice = "<span class='text-emerald-400'>可分批建倉，靠近均線佈局</span>";
-                    panelStyle = "border-emerald-700/50 bg-emerald-900/10";
-                }
-            } else {
-                entryAdvice = "<span class='text-slate-300'>震盪整理，觀察支撐</span>";
-            }
-
-            // 3. Exit Strategy Logic
-            if (isHardVeto || currentPrice < ema60) {
-                exitAdvice = "<span class='text-red-500'>🚨 觸發停損/否決，立即清倉</span>";
-            } else if (score >= 70) {
-                let distToExit = (currentPrice - chandelierExit) / currentPrice;
-                if (distToExit < 0.03) {
-                    exitAdvice = "<span class='text-orange-400'>逼近停利線，可先入袋 1/3</span>";
-                } else if (bias20 > 0.12) {
-                    exitAdvice = "<span class='text-yellow-400'>極度噴出，分批停利 1/2</span>";
-                } else {
-                    exitAdvice = "<span class='text-emerald-400'>🛡️ 趨勢完好，讓利潤奔跑</span>";
-                }
-            } else if (score >= 50 && score < 70) {
-                exitAdvice = "<span class='text-yellow-400'>動能轉弱，逢反彈減碼</span>";
-            } else {
-                exitAdvice = "<span class='text-slate-400'>空手觀望</span>";
-            }
-
-            return {
-                entryAdvice,
-                exitAdvice,
-                panelStyle,
-                biasText: `月線乖離: ${(bias20*100).toFixed(1)}% (${biasStatus})`,
-                biasColor
-            };
-        }
-
         // ============================================================================
         // 🌐 API DATA FETCHERS
         // ============================================================================
         async function fetchYahooFallback(ticker) {
             const url = `https://query2.finance.yahoo.com/v8/finance/chart/${ticker}?range=2y&interval=1d`;
             const proxies = [
-                `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`,
-                `https://api.codetabs.com/v1/proxy/?quest=${encodeURIComponent(url)}`,
-                `https://corsproxy.io/?${encodeURIComponent(url)}`
+                `https://corsproxy.io/?url=${encodeURIComponent(url)}`,
+                `https://api.allorigins.win/get?url=${encodeURIComponent(url)}`
             ];
             for (let p of proxies) {
                 try {
@@ -650,25 +608,37 @@
         }
 
         // ============================================================================
-        // 🔄 MAIN APP LOGIC & RENDERING (ASQE v10.9)
+        // 🔄 MAIN APP LOGIC (ASQE v10.9 Tactical)
         // ============================================================================
         document.addEventListener('DOMContentLoaded', () => {
-            document.getElementById('unlockBtn').addEventListener('click', () => {
-                if (ALLOWED_PASS.includes(document.getElementById('passwordInput').value)) {
+            const pwdInput = document.getElementById('passwordInput');
+            
+            document.getElementById('unlockBtn').addEventListener('click', attemptUnlock);
+            pwdInput.addEventListener('keypress', (e) => { if(e.key==='Enter') attemptUnlock(); });
+
+            function attemptUnlock() {
+                if (ALLOWED_PASS.includes(pwdInput.value)) {
                     document.getElementById('launchScreen').classList.add('fade-out');
                     setTimeout(() => {
                         document.getElementById('setupModal').classList.remove('fade-out');
                         document.getElementById('finmindKeyInput').value = KEY_FINMIND;
+                        document.getElementById('fugleKeyInput').value = KEY_FUGLE;
                         document.getElementById('fmpKeyInput').value = KEY_FMP;
+                        document.getElementById('finnhubKeyInput').value = KEY_FINNHUB;
                     }, 500);
                 } else document.getElementById('errorMsg').style.opacity = '1';
-            });
+            }
 
             document.getElementById('saveAndStartBtn').addEventListener('click', () => {
                 KEY_FINMIND = document.getElementById('finmindKeyInput').value.trim();
+                KEY_FUGLE = document.getElementById('fugleKeyInput').value.trim();
                 KEY_FMP = document.getElementById('fmpKeyInput').value.trim();
+                KEY_FINNHUB = document.getElementById('finnhubKeyInput').value.trim();
+                
                 localStorage.setItem('ASQE_FINMIND_KEY', KEY_FINMIND);
+                localStorage.setItem('ASQE_FUGLE_KEY', KEY_FUGLE);
                 localStorage.setItem('ASQE_FMP_KEY', KEY_FMP);
+                localStorage.setItem('ASQE_FINNHUB_KEY', KEY_FINNHUB);
 
                 document.getElementById('setupModal').classList.add('fade-out');
                 setTimeout(() => {
@@ -727,8 +697,41 @@
                 sf('leg-ema20', `E20: ${d.ema[20]?.toFixed(2) || '-'}`); sf('leg-ema60', `E60: ${d.ema[60]?.toFixed(2) || '-'}`);
                 sf('leg-avwapHigh', `AVWAP(H): ${d.avwap.high?.toFixed(2) || '-'}`); sf('leg-avwapLow', `AVWAP(L): ${d.avwap.low?.toFixed(2) || '-'}`);
                 sf('leg-vol', `Vol: ${d.price.volume.toLocaleString()}`);
-                sf('leg-adx', `ADX: ${d.adx?.toFixed(2)}`); sf('leg-rsi', `RSI: ${d.rsi?.toFixed(2)}`); sf('leg-atr', `ATR: ${d.atr?.toFixed(2)}`);
+                sf('leg-adx', `ADX(W): ${d.adx?.toFixed(2)}`); sf('leg-rsi', `RSI(W): ${d.rsi?.toFixed(2)}`); sf('leg-atr', `ATR: ${d.atr?.toFixed(2)}`);
             });
+        }
+
+        // TTE 戰術時機引擎核心
+        function generateTacticalCommand(score, L, ema20, atr, hh22, regime, isHardVeto) {
+            let bias = (L.close - ema20) / ema20;
+            let distToChandelier = (L.close - (hh22 - 3*atr)) / L.close;
+
+            let entryText = "", exitText = "";
+            let entryColor = "", exitColor = "";
+
+            if (isHardVeto || score < 50) {
+                entryText = "嚴禁進場 (趨勢破線)"; entryColor = "text-red-500";
+                exitText = "觸發離場"; exitColor = "text-red-500";
+            } else if (score >= 70) {
+                if (bias > 0.15) {
+                    entryText = "追高風險 (拉回再買)"; entryColor = "text-yellow-400";
+                } else {
+                    entryText = "絕佳買點 (多頭發動)"; entryColor = "text-emerald-400";
+                }
+                
+                if (distToChandelier < 0.05) {
+                    exitText = "緊盯停利 (防線逼近)"; exitColor = "text-yellow-400";
+                } else if (bias > 0.2) {
+                    exitText = "分批停利 (乖離過大)"; exitColor = "text-yellow-400";
+                } else {
+                    exitText = "讓利潤奔跑 (抱緊)"; exitColor = "text-emerald-400";
+                }
+            } else {
+                entryText = "區間試單 (低買高賣)"; entryColor = "text-yellow-400";
+                exitText = "觀望 / 逢高減碼"; exitColor = "text-slate-400";
+            }
+
+            return { entryText, entryColor, exitText, exitColor, bias };
         }
 
         async function runAnalysis(ticker) {
@@ -770,7 +773,6 @@
 
                 initCharts();
 
-                // Sort & Alignment
                 stockData = stockData.sort((a, b) => new Date(a.time) - new Date(b.time));
                 if (currentIndexData && currentIndexData.length > 0) currentIndexData = currentIndexData.sort((a, b) => new Date(a.time) - new Date(b.time));
 
@@ -796,7 +798,9 @@
                 adxSeries.setData(dmi.map(d=>({time:d.time, value:d.adx})));
                 priceChart.timeScale().fitContent();
 
-                // Core Logic Execution
+                // ==========================================
+                // v10.9 Core Logic Execution
+                // ==========================================
                 const len = stockData.length, L = stockData[len-1];
                 const regime = determineMarketRegime(currentIndexData || stockData);
                 const isETF = t.startsWith('00') || ['SPY','QQQ'].includes(t);
@@ -809,7 +813,6 @@
                 else if (rsData.pr >= 50) baseScore += 10;
                 else baseScore -= 10;
 
-                let flowText = "--";
                 if(currentInstData && currentInstData.length > 0) {
                     let dates = [...new Set(currentInstData.map(d=>d.date))].sort();
                     let d3 = dates.slice(-3), d10 = dates.slice(-10);
@@ -822,10 +825,10 @@
                     let avg3 = net3/3, avg10 = net10/10;
                     let acceleration = (avg3 - avg10) / (Math.abs(avg10) + 1); 
                     
-                    if (acceleration > 0.5) { baseScore += 15 * DCS; flowText = "🚀 強烈流入 (dF/dt > 0.5)"; }
-                    else if (acceleration > 0) { baseScore += 8 * DCS; flowText = "✅ 慣性流入 (dF/dt > 0)"; }
-                    else { baseScore -= 5 * DCS; flowText = "⚠️ 動能衰退 (dF/dt < 0)"; }
-                } else if (!isETF) { flowText = "DCS Penalty"; baseScore += 5 * DCS; }
+                    if (acceleration > 0.5) { baseScore += 15 * DCS; }
+                    else if (acceleration > 0) { baseScore += 8 * DCS; }
+                    else { baseScore -= 5 * DCS; }
+                } else if (!isETF) { baseScore += 5 * DCS; }
 
                 let stockVol = calcVolatility(stockData, 60);
                 if (baseScore < 70) {
@@ -834,9 +837,6 @@
                 }
 
                 const vol20MA = stockData.slice(-20).reduce((s,d)=>s+d.volume,0)/20;
-                const high20 = Math.max(...stockData.slice(-20).map(d=>d.high));
-                const hh22 = Math.max(...stockData.slice(-22).map(d=>d.high));
-
                 let isHardVeto = false, vetoMult = regime === MarketRegime.BULL ? 2.5 : (regime === MarketRegime.BEAR ? 1.5 : 2.0);
                 if (L.close < ema60[len-1].value && L.volume > vol20MA * (vetoMult - 0.5)) isHardVeto = true;
                 else if (L.volume > vol20MA * vetoMult && L.close < L.open) isHardVeto = true;
@@ -848,85 +848,102 @@
                 let crdm = generateCRDM(stockData, currentIndexData, finalScore);
                 let kellyF = Math.max(0, crdm.eR / crdm.variance);
                 let halfKelly = Math.min(0.20, kellyF / 2);
+
                 let mcMetrics = runMarkovMonteCarlo(crdm.trades);
 
-                // --- 🧠 TTE 戰術時機引擎運算 ---
-                let chandelierExit = hh22 - 3*atr14;
-                let tactical = analyzeTacticalTiming(finalScore, L.close, ema20[len-1].value, ema60[len-1].value, atr14, high20, chandelierExit, isHardVeto);
-
-
-                // --- UI Update ---
-                const sf = (id, html) => {
-                    const el = document.getElementById(id);
-                    if (el) el.innerHTML = html; // 💡 加上防呆機制：只有當元素存在時才更新，防止崩潰
-                };
-                const circle = document.getElementById('scoreCircle');
+                // --- UI 更新 ---
+                const sf = (id, html) => { const el = document.getElementById(id); if (el) el.innerHTML = html; };
                 
                 sf('totalScore', finalScore);
-                sf('rsRankingText', `${rsData.desc}`);
-                sf('flowMomText', flowText);
-
-                // 戰術面板更新
-                const tacPanel = document.getElementById('tacticalPanel');
-                tacPanel.className = `p-4 rounded-2xl border bg-slate-900 shadow-md relative overflow-hidden transition-colors duration-500 mt-4 ${tactical.panelStyle}`;
-                sf('biasWarning', tactical.biasText);
-                document.getElementById('biasWarning').className = `text-[9px] px-1.5 py-0.5 rounded bg-slate-800 border border-slate-700 font-mono ${tactical.biasColor}`;
-                sf('entryTimingText', tactical.entryAdvice);
-                sf('exitStrategyText', tactical.exitAdvice);
-
-                const rb = document.getElementById('regimeBadge');
-                rb.classList.remove('hidden', 'bg-emerald-950/60', 'text-emerald-400', 'bg-yellow-950/60', 'text-yellow-400', 'bg-red-950/60', 'text-red-400');
-                if(regime === MarketRegime.BULL) { rb.classList.add('bg-emerald-950/60', 'text-emerald-400', 'border-emerald-800'); document.getElementById('regimeIcon').innerText="🐂"; document.getElementById('regimeText').innerText="BULL (多頭)"; }
-                else if(regime === MarketRegime.SIDEWAY) { rb.classList.add('bg-yellow-950/60', 'text-yellow-400', 'border-yellow-800'); document.getElementById('regimeIcon').innerText="⚖️"; document.getElementById('regimeText').innerText="SIDEWAY (盤整)"; }
-                else { rb.classList.add('bg-red-950/60', 'text-red-400', 'border-red-800'); document.getElementById('regimeIcon').innerText="🐻"; document.getElementById('regimeText').innerText="BEAR (空頭)"; }
-
+                const circle = document.getElementById('scoreCircle');
+                if (circle) circle.style.strokeDasharray = `${Math.max(0,finalScore)}, 100`;
+                
                 let colorCls = 'text-indigo-500', bgCls = 'bg-indigo-500';
                 if(finalScore >= 85) { colorCls='text-fuchsia-500'; bgCls='bg-fuchsia-500'; sf('finalRatingText','SSS 頂級飆股'); }
                 else if(finalScore >= 70) { colorCls='text-emerald-500'; bgCls='bg-emerald-500'; sf('finalRatingText','S 核心資產'); }
                 else if(finalScore >= 50) { colorCls='text-yellow-500'; bgCls='bg-yellow-500'; sf('finalRatingText','A 震盪整理'); }
                 else { colorCls='text-red-500'; bgCls='bg-red-500'; sf('finalRatingText','📉 轉弱清倉'); }
                 
-                if(circle) { circle.setAttribute('class', `score-circle ${colorCls}`); circle.style.strokeDasharray = `${Math.max(0,finalScore)}, 100`; }
-                document.getElementById('scoreBgGlow').setAttribute('class', `absolute -right-10 -top-10 w-40 h-40 rounded-full blur-3xl opacity-10 transition-colors duration-700 ${bgCls}`);
+                if (circle) circle.setAttribute('class', `score-circle ${colorCls}`);
+                const scoreBgGlow = document.getElementById('scoreBgGlow');
+                if (scoreBgGlow) scoreBgGlow.setAttribute('class', `absolute -right-10 -top-10 w-40 h-40 rounded-full blur-3xl opacity-10 transition-colors duration-700 ${bgCls}`);
+
+                const rb = document.getElementById('regimeBadge');
+                if (rb) {
+                    rb.classList.remove('hidden', 'bg-emerald-950/60', 'text-emerald-400', 'bg-yellow-950/60', 'text-yellow-400', 'bg-red-950/60', 'text-red-400');
+                    if(regime === MarketRegime.BULL) { rb.classList.add('bg-emerald-950/60', 'text-emerald-400', 'border-emerald-800'); sf('regimeIcon', '🐂'); sf('regimeText', 'BULL (多頭)'); }
+                    else if(regime === MarketRegime.SIDEWAY) { rb.classList.add('bg-yellow-950/60', 'text-yellow-400', 'border-yellow-800'); sf('regimeIcon', '⚖️'); sf('regimeText', 'SIDEWAY (盤整)'); }
+                    else { rb.classList.add('bg-red-950/60', 'text-red-400', 'border-red-800'); sf('regimeIcon', '🐻'); sf('regimeText', 'BEAR (空頭)'); }
+                }
 
                 sf('crdmER', `+${(crdm.eR*100).toFixed(1)}%`);
                 sf('crdmVar', crdm.variance.toFixed(4));
                 sf('crdmTail', `${(crdm.tailLoss*100).toFixed(1)}%`);
                 sf('mcMDD', mcMetrics.mcMDD);
                 sf('mcReturn', mcMetrics.mcReturn);
-                sf('positionSizeAdvice', `凱利公式建議佔比: ${(halfKelly*100).toFixed(1)}%`);
+                sf('positionSizeAdvice', `凱利公式建議佔比：${(halfKelly*100).toFixed(1)}%`);
 
+                let hh22 = Math.max(...stockData.slice(-22).map(d=>d.high));
+                let sl = L.close - 2*atr14, tp = hh22 - 3*atr14;
+                
                 if(finalScore < 50) {
-                    sf('stopLoss', '--'); sf('trailingStop', '觸發離場'); document.getElementById('trailingStop').className = 'text-lg font-black text-red-500 font-mono';
+                    sf('stopLoss', '--'); sf('trailingStop', '觸發離場');
+                    const ts = document.getElementById('trailingStop');
+                    if (ts) ts.className = 'text-lg font-black text-red-500 font-mono';
                 } else {
-                    let sl = L.close - 2*atr14;
-                    sf('stopLoss', sl.toFixed(2)); sf('trailingStop', chandelierExit > L.close ? '觸發離場' : chandelierExit.toFixed(2));
-                    document.getElementById('trailingStop').className = chandelierExit > L.close ? 'text-lg font-black text-red-500 font-mono' : 'text-lg font-black text-emerald-400 font-mono';
+                    sf('stopLoss', sl.toFixed(2)); sf('trailingStop', tp > L.close ? '觸發離場' : tp.toFixed(2));
+                    const ts = document.getElementById('trailingStop');
+                    if (ts) ts.className = tp > L.close ? 'text-lg font-black text-red-500 font-mono' : 'text-lg font-black text-emerald-400 font-mono';
                 }
 
-                if(isHardVeto) {
-                    document.getElementById('vetoPanel').classList.remove('hidden');
-                    document.getElementById('vetoPanel').className = "p-3.5 rounded-xl border relative overflow-hidden bg-red-950/50 border-red-500/50 block mt-4";
-                    sf('vetoTitleIcon', "❌"); sf('vetoTitle', "Regime-Aware VETO (強制出場)");
-                    document.getElementById('vetoTitle').className = "text-xs font-black tracking-wider text-red-400";
-                    sf('vetoReason', "觸發大盤動態否決閾值，模型強制切斷多單機率。");
-                } else { document.getElementById('vetoPanel').classList.add('hidden'); }
+                // 🚀 TTE 戰術時機引擎
+                let tactical = generateTacticalCommand(finalScore, L, ema20[len-1].value, atr14, hh22, regime, isHardVeto);
+                sf('entryTiming', tactical.entryText);
+                const et = document.getElementById('entryTiming');
+                if (et) et.className = `text-sm font-black ${tactical.entryColor}`;
+                
+                sf('exitStrategy', tactical.exitText);
+                const ex = document.getElementById('exitStrategy');
+                if (ex) ex.className = `text-sm font-black ${tactical.exitColor}`;
+                
+                let biasStr = (tactical.bias * 100).toFixed(1) + '%';
+                sf('biasText', `月線乖離: ${biasStr} (${Math.abs(tactical.bias) < 0.1 ? '乖離健康' : '乖離過大'})`);
 
-            } catch(e) {
+                const vetoEl = document.getElementById('vetoPanel');
+                if(isHardVeto || isSoftVeto) {
+                    if (vetoEl) {
+                        vetoEl.classList.remove('hidden');
+                        vetoEl.className = `p-3.5 rounded-xl border relative overflow-hidden ${isHardVeto ? 'bg-red-950/50 border-red-500/50' : 'bg-yellow-950/50 border-yellow-500/50'} block mt-4`;
+                        sf('vetoTitleIcon', isHardVeto ? "❌" : "⚠️");
+                        sf('vetoTitle', isHardVeto ? "Regime-Aware VETO (強制出場)" : "SOFT VETO (軟性警告)");
+                        const vt = document.getElementById('vetoTitle');
+                        if (vt) vt.className = `text-xs font-black tracking-wider ${isHardVeto ? 'text-red-400' : 'text-yellow-400'}`;
+                        sf('vetoReason', isHardVeto ? "觸發大盤動態否決閾值，模型強制切斷多單機率。" : "動態扣分。");
+                    }
+                } else { if(vetoEl) vetoEl.classList.add('hidden'); }
+
+                updateLegends(stockData[stockData.length-1].time);
+
+            } catch (e) {
                 console.error("Analysis Error:", e);
-                document.getElementById('chartTitle').innerText = t + " (資料源失效)";
-                document.getElementById('errorDisplay').classList.remove('hidden');
-                document.getElementById('errorText').innerText = e.message || "官方 API 連線異常，請檢查金鑰狀態與權限。";
-                document.getElementById('finalRatingText').innerText = "連線遭拒";
-                document.getElementById('positionSizeAdvice').innerText = "資料不足，暫停評分";
-                document.getElementById('scoreBgGlow').className = "absolute -right-10 -top-10 w-40 h-40 rounded-full blur-3xl opacity-10 bg-red-500 transition-colors duration-700";
+                const sf = (id, html) => { const el = document.getElementById(id); if (el) el.innerHTML = html; };
+                sf('chartTitle', t + " (資料源失效)");
+                const errDisp = document.getElementById('errorDisplay');
+                if (errDisp) errDisp.classList.remove('hidden');
+                sf('errorText', e.message || "官方 API 連線異常，請檢查金鑰狀態與權限。");
+                sf('finalRatingText', "連線遭拒");
+                sf('positionSizeAdvice', "請配置合法 API Key");
+                const sbg = document.getElementById('scoreBgGlow');
+                if(sbg) sbg.className = "absolute -right-10 -top-10 w-40 h-40 rounded-full blur-3xl opacity-10 bg-red-500 transition-colors duration-700";
                 const circle = document.getElementById('scoreCircle');
                 if(circle) { circle.setAttribute('class', 'score-circle text-slate-700'); circle.style.strokeDasharray = `0, 100`; }
             } finally {
                 clearTimeout(safetyTimer); 
-                overlay.classList.add('hidden');
+                const overlay = document.getElementById('loadingOverlay');
+                if (overlay) overlay.classList.add('hidden');
                 isAnalyzing = false; 
-                btn.disabled = false;
+                const btn = document.getElementById('analyzeBtn');
+                if (btn) btn.disabled = false;
             }
         }
     </script>
