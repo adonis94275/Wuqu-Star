@@ -29,7 +29,7 @@
                 <span class="text-3xl">🧮</span>
             </div>
             <h1 class="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-300 tracking-wider mb-1">ASQE v8.3</h1>
-            <p class="text-[10px] text-teal-400 mb-8 font-mono tracking-widest uppercase bg-teal-900/30 px-2 py-1 rounded">Official API Routing</p>
+            <p class="text-[10px] text-teal-400 mb-8 font-mono tracking-widest uppercase bg-teal-900/30 px-2 py-1 rounded">Quad-Core Routing Engine</p>
             <input type="password" id="passwordInput" placeholder="輸入機構授權碼 (admin)" class="w-full bg-slate-950 text-white border border-slate-700 rounded-xl px-4 py-3.5 mb-5 focus:outline-none focus:border-indigo-500 text-center tracking-widest transition-all font-mono">
             <button id="unlockBtn" class="w-full bg-slate-100 hover:bg-white text-slate-900 font-black py-3.5 rounded-xl transition-all shadow-lg tracking-widest">系統解鎖</button>
             <p id="errorMsg" class="text-red-400 text-xs mt-4 opacity-0 transition-opacity">授權碼錯誤</p>
@@ -39,13 +39,13 @@
     <div id="setupModal" class="fixed inset-0 z-[200] bg-slate-950 flex items-center justify-center fade-transition fade-out backdrop-blur-md p-4">
         <div class="bg-slate-900 rounded-3xl p-6 w-full max-w-lg border border-slate-700 shadow-2xl relative">
             <button id="closeSettingsBtn" class="absolute top-5 right-5 text-slate-400 hover:text-white transition-colors hidden">✕</button>
-            <h2 class="text-xl font-black text-white mb-2 flex items-center gap-2 tracking-widest"><span class="text-indigo-400">⚙️</span> 官方數據源配置</h2>
-            <p class="text-xs font-bold text-red-400 mb-4 bg-red-950/30 p-2 rounded border border-red-900/50">⚠️ Yahoo 免費備援節點已全面停用。系統將嚴格要求配置官方 API 金鑰以確保連線品質。</p>
+            <h2 class="text-xl font-black text-white mb-2 flex items-center gap-2 tracking-widest"><span class="text-indigo-400">⚙️</span> 四核心數據源配置</h2>
+            <p class="text-xs text-slate-400 mb-4">請填入機構級 API 金鑰，建立雙層備援防護網。</p>
             
             <div class="space-y-3 max-h-[65vh] overflow-y-auto custom-scrollbar pr-2">
                 <div class="bg-slate-950/50 p-3 rounded-xl border border-slate-800">
                     <label class="flex justify-between items-center text-[11px] text-slate-400 font-bold mb-1.5 uppercase tracking-wider">
-                        <span>FinMind API Key <span class="text-green-500 ml-1 font-normal">台股首選</span></span>
+                        <span>FinMind API Key <span class="text-green-500 ml-1 font-normal">台股主力</span></span>
                     </label>
                     <input type="password" id="finmindKeyInput" class="w-full bg-slate-900 text-white border border-slate-700 rounded-lg px-3 py-2 focus:outline-none focus:border-green-500 font-mono text-xs" placeholder="貼上 FinMind Token">
                 </div>
@@ -54,19 +54,19 @@
                     <label class="flex justify-between items-center text-[11px] text-slate-400 font-bold mb-1.5 uppercase tracking-wider">
                         <span>Fugle API Key <span class="text-teal-500 ml-1 font-normal">台股備援</span></span>
                     </label>
-                    <input type="password" id="fugleKeyInput" class="w-full bg-slate-900 text-white border border-slate-700 rounded-lg px-3 py-2 focus:outline-none focus:border-teal-500 font-mono text-xs" placeholder="貼上 Fugle (富果) X-API-KEY">
+                    <input type="password" id="fugleKeyInput" class="w-full bg-slate-900 text-white border border-slate-700 rounded-lg px-3 py-2 focus:outline-none focus:border-teal-500 font-mono text-xs" placeholder="貼上 Fugle X-API-KEY">
                 </div>
 
                 <div class="bg-slate-950/50 p-3 rounded-xl border border-slate-800">
                     <label class="flex justify-between items-center text-[11px] text-slate-400 font-bold mb-1.5 uppercase tracking-wider">
-                        <span>FMP API Key <span class="text-blue-500 ml-1 font-normal">美股專用</span></span>
+                        <span>FMP API Key <span class="text-blue-500 ml-1 font-normal">美股主力</span></span>
                     </label>
                     <input type="password" id="fmpKeyInput" class="w-full bg-slate-900 text-white border border-slate-700 rounded-lg px-3 py-2 focus:outline-none focus:border-blue-500 font-mono text-xs" placeholder="貼上 FMP API Key">
                 </div>
 
                 <div class="bg-slate-950/50 p-3 rounded-xl border border-slate-800">
                     <label class="flex justify-between items-center text-[11px] text-slate-400 font-bold mb-1.5 uppercase tracking-wider">
-                        <span>Finnhub API Key <span class="text-purple-500 ml-1 font-normal">即時報價/新聞</span></span>
+                        <span>Finnhub API Key <span class="text-purple-500 ml-1 font-normal">即時報價</span></span>
                     </label>
                     <input type="password" id="finnhubKeyInput" class="w-full bg-slate-900 text-white border border-slate-700 rounded-lg px-3 py-2 focus:outline-none focus:border-purple-500 font-mono text-xs" placeholder="貼上 Finnhub Token">
                 </div>
@@ -84,7 +84,7 @@
                 <div class="w-9 h-9 bg-gradient-to-br from-indigo-600 to-slate-800 rounded-xl flex items-center justify-center font-bold text-lg border border-slate-700">⚡</div>
                 <div class="flex flex-col">
                     <h1 class="text-lg font-black tracking-widest text-slate-100 leading-tight">ASQE v8.3</h1>
-                    <span class="text-[10px] text-teal-400 font-mono tracking-wider">OFFICIAL ROUTING EDITION</span>
+                    <span class="text-[10px] text-teal-400 font-mono tracking-wider">QUAD-CORE EDITION</span>
                 </div>
             </div>
             
@@ -200,15 +200,6 @@
                                 <span class="text-[10px] text-slate-500">每筆期望值</span>
                                 <span id="btExpectancy" class="text-sm font-black text-indigo-400 font-mono">--</span>
                             </div>
-                        </div>
-                    </div>
-
-                    <div class="bg-slate-900 p-4 rounded-xl border border-purple-900/50 shadow-sm relative overflow-hidden">
-                        <div class="text-purple-400 text-[10px] uppercase tracking-widest font-bold mb-3 flex items-center gap-2">
-                            <span class="bg-purple-900/50 p-1 rounded">📰</span> News Engine
-                        </div>
-                        <div id="newsList" class="flex flex-col gap-2.5 text-xs text-slate-300">
-                            <!-- 動態插入新聞 -->
                         </div>
                     </div>
 
@@ -376,17 +367,59 @@
             if(d.atr !== undefined) sf('leg-atr', `ATR: ${d.atr.toFixed(2)}`);
         }
 
-        // ========================================================
-        // 🚀 OFFICIAL ROUTING ENGINE (FinMind / Fugle / FMP / Finnhub ONLY)
-        // ========================================================
         const getLocalStr = (d) => `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+
+        async function fetchYahooFallback(ticker) {
+            const url1 = `https://query1.finance.yahoo.com/v8/finance/chart/${ticker}?range=3y&interval=1d`;
+            const url2 = `https://query2.finance.yahoo.com/v8/finance/chart/${ticker}?range=3y&interval=1d`;
+            
+            const proxies = [
+                `https://api.allorigins.win/raw?url=${encodeURIComponent(url1)}`,
+                `https://api.codetabs.com/v1/proxy/?quest=${encodeURIComponent(url2)}`,
+                `https://corsproxy.io/?${encodeURIComponent(url1)}`,
+                `https://api.allorigins.win/get?url=${encodeURIComponent(url2)}`
+            ];
+
+            let json = null;
+            
+            try {
+                let directRes = await fetch(url1);
+                if (directRes.ok) json = await directRes.json();
+            } catch (e) {}
+
+            if (!json || !json.chart) {
+                for (let proxy of proxies) {
+                    try {
+                        const res = await fetch(proxy);
+                        if (!res.ok) continue;
+                        const text = await res.text();
+                        try {
+                            json = JSON.parse(text);
+                            if (json.contents) json = JSON.parse(json.contents);
+                        } catch (parseErr) { continue; }
+                        if (json && json.chart && json.chart.result) break; 
+                        json = null;
+                    } catch (e) {}
+                }
+            }
+
+            if (!json || !json.chart || !json.chart.result) throw new Error("所有備援節點失效");
+
+            const chart = json.chart.result[0];
+            return chart.timestamp.map((t,i) => {
+                const c = chart.indicators.quote[0].close[i];
+                return { 
+                    time: getLocalStr(new Date(t*1000)), open: chart.indicators.quote[0].open[i] ?? c, high: chart.indicators.quote[0].high[i] ?? c, 
+                    low: chart.indicators.quote[0].low[i] ?? c, close: c, volume: chart.indicators.quote[0].volume[i] ?? 0 
+                };
+            }).filter(d => d.close != null);
+        }
 
         async function fetchTWData(ticker) {
             let q = ticker.replace('.TW', '').trim().toUpperCase();
             if (/^\d{4}$/.test(q)) q += '.TW';
             const rawTicker = q.replace('.TW', '');
 
-            // 1. 首選：FinMind
             if (KEY_FINMIND) {
                 try {
                     let fmTicker = rawTicker === '^TWII' ? 'TAIEX' : rawTicker;
@@ -403,7 +436,6 @@
                 } catch(e) { console.warn("FinMind 失效，轉向 Fugle 備援", e); }
             }
 
-            // 2. 備援：Fugle (富果)
             if (KEY_FUGLE) {
                 try {
                     let fugleTicker = rawTicker === '^TWII' ? 'IX0001' : rawTicker;
@@ -418,11 +450,10 @@
                             time: d.date, open: d.open, high: d.high, low: d.low, close: d.close, volume: d.volume
                         })).filter(d => !isNaN(d.close));
                     }
-                } catch(e) { console.warn("Fugle 失效", e); }
+                } catch(e) { console.warn("Fugle 失效，轉向 Yahoo 終極備援", e); }
             }
 
-            // 若兩者皆無配置或失效，直接拋出錯誤 (無 Yahoo)
-            throw new Error("台股官方資料源 (FinMind/Fugle) 皆失效或未配置金鑰");
+            return await fetchYahooFallback(q);
         }
 
         async function fetchUSData(ticker) {
@@ -439,46 +470,11 @@
                             time: d.date, open: d.open, high: d.high, low: d.low, close: d.close, volume: d.volume
                         }));
                     }
-                } catch(e) { console.warn("FMP 失效", e); }
+                } catch(e) { console.warn("FMP 失效，轉向 Yahoo 備援", e); }
             }
-            throw new Error("美股官方資料源 (FMP) 失效或未配置金鑰");
+            return await fetchYahooFallback(q);
         }
 
-        async function fetchNewsAndRealtime(ticker) {
-            let q = ticker.replace('.TW', '').trim().toUpperCase();
-            document.getElementById('rtPrice').innerText = "";
-            let newsHtml = "";
-
-            if (KEY_FINNHUB) {
-                // 抓取即時報價
-                try {
-                    const qUrl = `https://finnhub.io/api/v1/quote?symbol=${q}&token=${KEY_FINNHUB}`;
-                    const qRes = await fetch(qUrl); const qJson = await qRes.json();
-                    if (qJson && qJson.c) document.getElementById('rtPrice').innerText = `$${qJson.c.toFixed(2)}`;
-                } catch(e) {}
-                
-                // 抓取新聞
-                try {
-                    const toDate = new Date().toISOString().split('T')[0];
-                    const fromDate = new Date(Date.now() - 7*24*60*60*1000).toISOString().split('T')[0];
-                    const nUrl = `https://finnhub.io/api/v1/company-news?symbol=${q}&from=${fromDate}&to=${toDate}&token=${KEY_FINNHUB}`;
-                    const nRes = await fetch(nUrl); const nJson = await nRes.json();
-                    if (nJson && nJson.length > 0) {
-                        nJson.slice(0, 3).forEach(n => {
-                            newsHtml += `<a href="${n.url}" target="_blank" class="block bg-slate-800 hover:bg-slate-700 p-2 rounded truncate transition-colors">▪ ${n.headline}</a>`;
-                        });
-                        document.getElementById('newsList').innerHTML = newsHtml;
-                        return;
-                    }
-                } catch(e) {}
-            }
-            
-            document.getElementById('newsList').innerHTML = `<span class="text-slate-500 italic">暫無相關新聞數據 (未設定 Finnhub 金鑰或連線失敗)</span>`;
-        }
-
-        // ========================================================
-        // 核心量化指標函式庫
-        // ========================================================
         function calcRMA(data, period) {
             let res = [], sum = 0;
             for (let i = 0; i < data.length; i++) {
@@ -577,6 +573,7 @@
         function calculatePseudoRSRank(data, idxData, currentIndex) {
             if(currentIndex < 252 || !idxData || idxData.length < 252) return { pr: 50, desc: "數據不足" };
             
+            // 安全取得歷史報酬，防止 Array Out of Bounds 導致崩潰
             const getAlignedRet = (arr, i, days) => {
                 if(i < 0 || i >= arr.length || i-days < 0 || !arr[i] || !arr[i-days]) return 0;
                 return (arr[i].close - arr[i-days].close) / arr[i-days].close;
@@ -618,9 +615,6 @@
             return { pr, desc: `PR ${pr} (超越大盤 ${(wRet*100).toFixed(1)}%)` };
         }
 
-        // ========================================================
-        // ASQE ENGINE & UI UPDATE
-        // ========================================================
         const MarketRegime = { BULL: 'BULL', SIDEWAY: 'SIDEWAY', BEAR: 'BEAR' };
 
         function determineMarketRegime(idxData) {
@@ -662,13 +656,16 @@
                     } else { currentPos.tp = Math.max(currentPos.tp, high22 - 3*atr14); }
                 }
                 
+                // 確保大盤資料的安全對齊，防止長度不一造成的 Crash
                 let idxI = 0;
-                if (idxData) {
+                if (idxData && idxData.length > 0) {
                     let matchingIdx = idxData.findIndex(d => d.time === L.time);
                     if (matchingIdx !== -1) {
                         idxI = matchingIdx;
                     } else {
+                        // 找不到當天大盤，往前找最近一天
                         for(let j=i-1; j>=0; j--) {
+                            if (!data[j]) continue;
                             let fallback = idxData.findIndex(d => d.time === data[j].time);
                             if(fallback !== -1) { idxI = fallback; break; }
                         }
@@ -713,7 +710,7 @@
             let t = ticker.trim().toUpperCase();
             document.getElementById('chartTitle').innerText = t;
             
-            // 💡 清空舊圖表防殘留
+            // 💡 核心修復：強制絕對清空所有圖表殘留，徹底解決幽靈資料
             if (candleSeries) {
                 candleSeries.setData([]);
                 ema20Series.setData([]); ema60Series.setData([]);
@@ -721,21 +718,13 @@
                 volSeries.setData([]); rsiSeries.setData([]); adxSeries.setData([]);
             }
             
-            // 初始化 UI
             document.getElementById('finalRatingText').innerText = "運算中...";
             document.getElementById('totalScore').innerText = "0";
             document.getElementById('vetoPanel').classList.add('hidden');
             document.getElementById('scoreBgGlow').className = "absolute -right-10 -top-10 w-40 h-40 rounded-full blur-3xl opacity-10 bg-indigo-500 transition-colors duration-700";
             document.getElementById('scoreCircle').setAttribute('class', 'score-circle text-indigo-500');
-            document.getElementById('btWinRate').innerText = "--";
-            document.getElementById('btProfitFactor').innerText = "--";
-            document.getElementById('btMDD').innerText = "--";
-            document.getElementById('btExpectancy').innerText = "--";
-            document.getElementById('rsRankingText').innerText = "--";
 
             try {
-                fetchNewsAndRealtime(t);
-
                 let idxQ = currentMarket === 'TW' ? '^TWII' : '^GSPC';
                 
                 try {
@@ -743,16 +732,17 @@
                     else currentIndexData = await fetchUSData(idxQ);
                 } catch (idxErr) {
                     console.warn("大盤指數抓取失敗，降級為無大盤模式", idxErr);
-                    currentIndexData = []; 
+                    currentIndexData = []; // 降級容錯
                 }
 
-                await delay(500); 
+                await delay(500); // 防被 Proxy Rate Limit
 
                 if (currentMarket === 'TW') currentChartData = await fetchTWData(t);
                 else currentChartData = await fetchUSData(t);
                 
                 if(!currentChartData || currentChartData.length < 50) throw new Error("Data insufficient");
 
+                // 💡 核心修復：剔除重複時間戳並強制遞增排序，防止 LightweightCharts 崩潰
                 const uniqueDataMap = new Map();
                 currentChartData.forEach(d => uniqueDataMap.set(d.time, d));
                 currentChartData = Array.from(uniqueDataMap.values()).sort((a, b) => new Date(a.time) - new Date(b.time));
