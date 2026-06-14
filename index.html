@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html lang="zh-TW">
+<html lang="zh-TW" translate="no">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ASQE v10.4 | Web-Native Professional</title>
+    <meta name="google" content="notranslate">
+    <title>ASQE v10.5 | Web-Native Professional</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lightweight-charts@4.1.1/dist/lightweight-charts.standalone.production.js"></script>
     <style>
@@ -28,8 +29,8 @@
             <div class="w-16 h-16 bg-slate-800 rounded-2xl flex items-center justify-center mb-5 border border-slate-700 shadow-inner">
                 <span class="text-3xl">🏛️</span>
             </div>
-            <h1 class="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-300 tracking-wider mb-1">ASQE v10.4</h1>
-            <p class="text-[10px] text-indigo-400 mb-8 font-mono tracking-widest uppercase bg-indigo-900/30 px-2 py-1 rounded">Web-Native Professional</p>
+            <h1 class="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-300 tracking-wider mb-1">ASQE v10.5</h1>
+            <p class="text-[10px] text-indigo-400 mb-8 font-mono tracking-widest uppercase bg-indigo-900/30 px-2 py-1 rounded">Extreme Protection Edition</p>
             <input type="password" id="passwordInput" placeholder="輸入機構授權碼 (admin)" class="w-full bg-slate-950 text-white border border-slate-700 rounded-xl px-4 py-3.5 mb-5 focus:outline-none focus:border-indigo-500 text-center tracking-widest transition-all font-mono">
             <button id="unlockBtn" class="w-full bg-slate-100 hover:bg-white text-slate-900 font-black py-3.5 rounded-xl transition-all shadow-lg tracking-widest">初始化量化模組</button>
             <p id="errorMsg" class="text-red-400 text-xs mt-4 opacity-0 transition-opacity">授權碼錯誤</p>
@@ -41,7 +42,7 @@
         <div class="bg-slate-900 rounded-3xl p-6 w-full max-w-lg border border-slate-700 shadow-2xl relative">
             <button id="closeSettingsBtn" class="absolute top-5 right-5 text-slate-400 hover:text-white transition-colors hidden">✕</button>
             <h2 class="text-xl font-black text-white mb-2 flex items-center gap-2 tracking-widest"><span class="text-indigo-400">⚙️</span> 官方 API 金鑰配置</h2>
-            <p class="text-[11px] text-red-400 mb-4 font-bold border border-red-500/50 bg-red-900/20 p-2 rounded">v10.3 跨域穿透模式：已內建 Proxy 代理自動切換。未配置有效金鑰將拒絕運算。</p>
+            <p class="text-[11px] text-red-400 mb-4 font-bold border border-red-500/50 bg-red-900/20 p-2 rounded">v10.5 防護模式：全面攔截瀏覽器翻譯。系統將精準回報 API 金鑰是否額度耗盡或無效。</p>
             
             <div class="space-y-3 max-h-[65vh] overflow-y-auto custom-scrollbar pr-2">
                 <div class="bg-slate-950/50 p-3 rounded-xl border border-slate-800">
@@ -81,8 +82,8 @@
             <div class="flex items-center gap-4">
                 <div class="w-9 h-9 bg-gradient-to-br from-indigo-600 to-purple-800 rounded-xl flex items-center justify-center font-bold text-lg border border-slate-700">⚡</div>
                 <div class="flex flex-col">
-                    <h1 class="text-lg font-black tracking-widest text-slate-100 leading-tight">ASQE v10.3</h1>
-                    <span class="text-[10px] text-indigo-400 font-mono tracking-wider">PROXY ROUTING EDITION</span>
+                    <h1 class="text-lg font-black tracking-widest text-slate-100 leading-tight">ASQE v10.5</h1>
+                    <span class="text-[10px] text-indigo-400 font-mono tracking-wider">SECURE ROUTING EDITION</span>
                 </div>
             </div>
             
@@ -102,7 +103,7 @@
 
         <div id="loadingOverlay" class="fixed inset-0 bg-slate-950/90 z-50 flex flex-col items-center justify-center hidden backdrop-blur-md">
             <div class="animate-spin rounded-full h-12 w-12 border-4 border-slate-800 border-t-indigo-500 mb-4"></div>
-            <p id="loadingText" class="text-xs font-mono text-indigo-400 tracking-widest animate-pulse">連線建立中...</p>
+            <p id="loadingText" class="text-xs font-mono text-indigo-400 tracking-widest animate-pulse">建立加密連線中...</p>
         </div>
 
         <div class="flex-1 flex flex-col lg:flex-row relative overflow-hidden bg-slate-950">
@@ -130,14 +131,14 @@
                         </div>
                     </div>
                     
-                    <!-- 🚨 錯誤狀態顯示區 -->
+                    <!-- 🚨 精準錯誤狀態顯示區 -->
                     <div id="errorDisplay" class="hidden absolute inset-0 flex flex-col items-center justify-center z-20 bg-slate-900/95 backdrop-blur-sm">
                         <span class="text-5xl mb-4">🚨</span>
-                        <div id="errorText" class="text-red-400 text-sm font-mono font-bold bg-red-950/80 border border-red-900 p-4 rounded-xl shadow-2xl max-w-sm text-center leading-relaxed"></div>
+                        <div id="errorText" class="text-red-400 text-sm font-mono font-bold bg-red-950/80 border border-red-900 p-4 rounded-xl shadow-2xl max-w-sm text-center leading-relaxed tracking-wide"></div>
                         <button onclick="document.getElementById('errorDisplay').classList.add('hidden')" class="mt-6 text-slate-400 hover:text-white text-xs underline cursor-pointer pointer-events-auto">關閉警告面板</button>
                     </div>
 
-                    <div id="priceChartContainer" class="w-full flex-1 pointer-events-auto mt-2"></div>
+                    <div id="priceChartContainer" class="w-full flex-1 pointer-events-auto mt-2 relative z-0"></div>
                 </div>
 
                 <div class="relative w-full rounded-xl border border-slate-800 bg-slate-900 shadow-inner flex flex-col h-[180px] shrink-0 overflow-hidden">
@@ -146,7 +147,7 @@
                         <span class="text-cyan-400" id="leg-rsi">RSI(W): --</span>
                         <span class="text-slate-400 border-l border-slate-700 pl-4" id="leg-atr">ATR: --</span>
                     </div>
-                    <div id="dmiChartContainer" class="w-full flex-1 mt-6"></div>
+                    <div id="dmiChartContainer" class="w-full flex-1 mt-6 relative z-0"></div>
                 </div>
             </div>
 
@@ -158,7 +159,7 @@
                         <div id="scoreBgGlow" class="absolute -right-10 -top-10 w-40 h-40 rounded-full blur-3xl opacity-10 bg-indigo-500 transition-colors duration-700"></div>
                         <div class="flex justify-between items-start relative z-10">
                             <div class="flex flex-col">
-                                <span class="text-[10px] font-bold text-slate-500 tracking-widest uppercase mb-1 font-mono">v10.3 Engine Rating</span>
+                                <span class="text-[10px] font-bold text-slate-500 tracking-widest uppercase mb-1 font-mono">v10.5 Engine Rating</span>
                                 <div id="finalRatingText" class="text-2xl font-black text-white">等待運算...</div>
                                 <div id="positionSizeAdvice" class="text-[11px] font-bold text-indigo-400 mt-2 bg-indigo-500/10 inline-block px-2 py-1 rounded border border-indigo-500/20">Kelly Size：--</div>
                             </div>
@@ -264,8 +265,7 @@
         const getLocalStr = (d) => `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
         const delay = ms => new Promise(res => setTimeout(res, ms));
 
-        // 💡 [v10.3 核心] 具備跨域代理穿透能力的 fetch 封裝器，每次限時 4 秒，防止卡死
-        async function fetchWithTimeout(url, options = {}, timeoutMs = 4000) {
+        async function fetchWithTimeout(url, options = {}, timeoutMs = 8000) {
             const controller = new AbortController();
             const id = setTimeout(() => controller.abort(), timeoutMs);
             try {
@@ -276,6 +276,7 @@
             }
         }
 
+        // ================== MODULE: CORE MATH ==================
         function calcRMA(data, period) {
             let res = [], sum = 0;
             for (let i = 0; i < data.length; i++) {
@@ -561,51 +562,54 @@
         }
 
         // ============================================================================
-        // 🌐 DATA FETCHERS (Multi-Node Proxy Routing)
+        // 🌐 DATA FETCHERS (Strict Official API Routing)
         // ============================================================================
         async function fetchTWData(symbol) {
             let q = symbol.replace('.TW', '').trim().toUpperCase();
             if (/^\d{4}$/.test(q)) q += '.TW';
             const rawTicker = q.replace('.TW', '');
 
-            let errorMessages = [];
-
             if (KEY_FINMIND) {
                 let fmTicker = rawTicker === '^TWII' ? 'TAIEX' : rawTicker;
                 const fromDate = new Date(); fromDate.setFullYear(fromDate.getFullYear() - 3);
                 const targetUrl = `https://api.finmindtrade.com/api/v4/data?dataset=TaiwanStockPrice&data_id=${fmTicker}&start_date=${fromDate.toISOString().split('T')[0]}&token=${KEY_FINMIND}`;
                 
-                // 💡 內建多節點 Proxy 自動切換，突破跨域阻擋
                 const proxies = [
                     targetUrl,
-                    `https://corsproxy.io/?${encodeURIComponent(targetUrl)}`,
-                    `https://api.allorigins.win/raw?url=${encodeURIComponent(targetUrl)}`
+                    `https://api.allorigins.win/raw?url=${encodeURIComponent(targetUrl)}`,
+                    `https://corsproxy.io/?url=${encodeURIComponent(targetUrl)}`
                 ];
 
                 for (let url of proxies) {
                     try {
-                        const res = await fetchWithTimeout(url, {}, 4000);
+                        const res = await fetchWithTimeout(url, {}, 6000);
                         if (res.ok) {
                             const json = await res.json();
                             if (json.status === 200 && json.data?.length > 0) {
                                 return json.data.map(d => ({ time: d.date, open: Number(d.open||d.Open), high: Number(d.max||d.High), low: Number(d.min||d.Low), close: Number(d.close||d.Close), volume: Number(d.Trading_Volume||d.Volume) })).filter(d => !isNaN(d.close));
                             } else if (json.status !== 200) {
-                                errorMessages.push(`FinMind 拒絕 (${json.msg})`);
-                                break; // 金鑰錯誤或明確拒絕，直接中斷該 API 嘗試
+                                throw new Error(`FinMind API 拒絕: ${json.msg}`);
+                            }
+                        } else {
+                            if (res.status === 429) throw new Error("FinMind 請求次數已達上限 (Rate Limit)");
+                            if (url === targetUrl && (res.status === 401 || res.status === 403)) {
+                                throw new Error("FinMind 金鑰無效或被封鎖 (401/403)");
                             }
                         }
-                    } catch(e) { /* 網路或 CORS 失敗，自動嘗試下一個 Proxy */ }
+                    } catch(e) {
+                        if (e.message.includes("FinMind")) throw e;
+                    }
                 }
             }
 
             if (KEY_FUGLE) {
                 let fugleTicker = rawTicker === '^TWII' ? 'IX0001' : rawTicker;
                 const targetUrl = `https://api.fugle.tw/marketdata/v1.0/stock/historical/candles/${fugleTicker}?timeframe=D`;
-                const proxies = [targetUrl, `https://corsproxy.io/?${encodeURIComponent(targetUrl)}`];
+                const proxies = [targetUrl, `https://corsproxy.io/?url=${encodeURIComponent(targetUrl)}`];
                 
                 for (let url of proxies) {
                     try {
-                        const res = await fetchWithTimeout(url, { headers: { 'X-API-KEY': KEY_FUGLE } }, 4000);
+                        const res = await fetchWithTimeout(url, { headers: { 'X-API-KEY': KEY_FUGLE } }, 6000);
                         if (res.ok) {
                             const json = await res.json();
                             if (json?.data?.length > 0) {
@@ -614,48 +618,53 @@
                                 return rawData.map(d => ({ time: d.date, open: d.open, high: d.high, low: d.low, close: d.close, volume: d.volume })).filter(d => !isNaN(d.close));
                             }
                         } else if (res.status === 401 || res.status === 403) {
-                            errorMessages.push(`Fugle 金鑰無效`);
-                            break;
+                             if(url === targetUrl) throw new Error("Fugle 金鑰無效或已被停用");
                         }
-                    } catch(e) { }
+                    } catch(e) { 
+                        if (e.message.includes("Fugle")) throw e;
+                    }
                 }
             }
             
-            throw new Error(errorMessages.length > 0 ? errorMessages.join(" | ") : "無法連接至官方 API，請檢查網路環境或防火牆設定。");
+            throw new Error("無可用之官方台股 API，請檢查金鑰設定或網路連線。");
         }
 
         async function fetchUSData(symbol) {
             let q = symbol.replace(/\./g, '-').trim().toUpperCase();
-            let errorMessages = [];
 
             if (KEY_FMP) {
                 let fmpTicker = q === '^GSPC' ? '^GSPC' : q;
                 const targetUrl = `https://financialmodelingprep.com/api/v3/historical-price-full/${fmpTicker}?timeseries=750&apikey=${KEY_FMP}`;
                 const proxies = [
                     targetUrl,
-                    `https://corsproxy.io/?${encodeURIComponent(targetUrl)}`,
-                    `https://api.allorigins.win/raw?url=${encodeURIComponent(targetUrl)}`
+                    `https://api.allorigins.win/raw?url=${encodeURIComponent(targetUrl)}`,
+                    `https://corsproxy.io/?url=${encodeURIComponent(targetUrl)}`
                 ];
 
                 for (let url of proxies) {
                     try {
-                        const res = await fetchWithTimeout(url, {}, 4000);
+                        const res = await fetchWithTimeout(url, {}, 6000);
                         if (res.ok) {
                             const json = await res.json();
                             if (json.historical && json.historical.length > 0) {
                                 return json.historical.reverse().map(d => ({ time: d.date, open: d.open, high: d.high, low: d.low, close: d.close, volume: d.volume }));
                             } else if (json['Error Message']) {
-                                errorMessages.push(`FMP 拒絕 (${json['Error Message']})`);
-                                break;
+                                throw new Error(`FMP API 拒絕: ${json['Error Message']}`);
                             }
-                        } else if (res.status === 401 || res.status === 403) {
-                            errorMessages.push(`FMP 金鑰無效`);
-                            break;
+                        } else {
+                            if (res.status === 429) throw new Error("FMP 請求次數已達上限 (Rate Limit)");
+                            if (url === targetUrl && (res.status === 401 || res.status === 403)) {
+                                throw new Error("FMP 金鑰無效或免費額度耗盡 (401/403)");
+                            }
                         }
-                    } catch(e) {}
+                    } catch(e) {
+                        if (e.message.includes("FMP")) throw e; 
+                    }
                 }
+            } else {
+                throw new Error("請先至設定面板配置 FMP API Key");
             }
-            throw new Error(errorMessages.length > 0 ? errorMessages.join(" | ") : "無法連接至官方 API，請檢查網路環境或防火牆設定。");
+            throw new Error("FMP 伺服器無回應，請檢查網路連線或 Proxy 狀態。");
         }
 
         async function fetchNewsAndRT(symbol) {
@@ -669,13 +678,13 @@
                 const nUrl = `https://finnhub.io/api/v1/company-news?symbol=${q}&from=${new Date(Date.now() - 7*24*60*60*1000).toISOString().split('T')[0]}&to=${new Date().toISOString().split('T')[0]}&token=${KEY_FINNHUB}`;
                 
                 try {
-                    let qRes = await fetchWithTimeout(qUrl, {}, 4000).catch(() => fetchWithTimeout(`https://corsproxy.io/?${encodeURIComponent(qUrl)}`, {}, 4000));
+                    let qRes = await fetchWithTimeout(qUrl, {}, 4000).catch(() => fetchWithTimeout(`https://api.allorigins.win/raw?url=${encodeURIComponent(qUrl)}`, {}, 4000));
                     if (qRes && qRes.ok) {
                         const qJson = await qRes.json();
                         if (qJson?.c) document.getElementById('rtPrice').innerText = `$${qJson.c.toFixed(2)}`;
                     }
                     
-                    let nRes = await fetchWithTimeout(nUrl, {}, 4000).catch(() => fetchWithTimeout(`https://corsproxy.io/?${encodeURIComponent(nUrl)}`, {}, 4000));
+                    let nRes = await fetchWithTimeout(nUrl, {}, 4000).catch(() => fetchWithTimeout(`https://api.allorigins.win/raw?url=${encodeURIComponent(nUrl)}`, {}, 4000));
                     if (nRes && nRes.ok) {
                         const nJson = await nRes.json();
                         if (nJson?.length > 0) {
@@ -687,7 +696,7 @@
                             document.getElementById('newsPanel').classList.remove('hidden');
                         }
                     }
-                } catch(e) { console.warn("Finnhub Error"); }
+                } catch(e) { console.warn("Finnhub Error", e); }
             }
         }
 
@@ -775,8 +784,10 @@
             try {
                 if (priceChart) { priceChart.remove(); priceChart = null; }
                 if (dmiChart) { dmiChart.remove(); dmiChart = null; }
-                document.getElementById('priceChartContainer').innerHTML = '';
-                document.getElementById('dmiChartContainer').innerHTML = '';
+                const pc = document.getElementById('priceChartContainer');
+                while (pc.firstChild) { pc.removeChild(pc.firstChild); }
+                const dc = document.getElementById('dmiChartContainer');
+                while (dc.firstChild) { dc.removeChild(dc.firstChild); }
             } catch (e) {
                 console.warn("Chart destroy safety catch:", e);
             }
@@ -838,18 +849,7 @@
             let t = ticker.trim().toUpperCase();
             document.getElementById('chartTitle').innerText = t;
             
-            // 💡 延長安全計時器至 45 秒，適應多重 Proxy 的等待時間
-            const safetyTimer = setTimeout(() => {
-                if (isAnalyzing) {
-                    overlay.classList.add('hidden');
-                    isAnalyzing = false;
-                    btn.disabled = false;
-                    document.getElementById('errorDisplay').classList.remove('hidden');
-                    document.getElementById('errorText').innerText = "連線逾時 (Timeout)。\n伺服器未回應或遭瀏覽器嚴格阻擋，請稍後重試。";
-                }
-            }, 45000);
-
-            // 絕對清空圖表
+            // 💡 絕對清空：銷毀舊圖表，保證沒有幽靈殘留
             destroyCharts();
             
             document.getElementById('finalRatingText').innerText = "運算中...";
@@ -970,8 +970,7 @@
                 const circle = document.getElementById('scoreCircle');
                 const scoreBg = document.getElementById('scoreBgGlow');
                 sf('totalScore', finalScore);
-                
-                if (circle) circle.style.strokeDasharray = `${Math.max(0,finalScore)}, 100`;
+                circle.style.strokeDasharray = `${Math.max(0,finalScore)}, 100`;
                 
                 let colorCls = 'text-indigo-500', bgCls = 'bg-indigo-500';
                 if(finalScore >= 85) { colorCls='text-fuchsia-500'; bgCls='bg-fuchsia-500'; sf('finalRatingText','SSS 頂級飆股'); }
@@ -979,8 +978,8 @@
                 else if(finalScore >= 50) { colorCls='text-yellow-500'; bgCls='bg-yellow-500'; sf('finalRatingText','A 震盪整理'); }
                 else { colorCls='text-red-500'; bgCls='bg-red-500'; sf('finalRatingText','📉 轉弱清倉'); }
                 
-                if (circle) circle.setAttribute('class', `score-circle ${colorCls}`);
-                if (scoreBg) scoreBg.setAttribute('class', `absolute -right-10 -top-10 w-40 h-40 rounded-full blur-3xl opacity-10 transition-colors duration-700 ${bgCls}`);
+                circle.setAttribute('class', `score-circle ${colorCls}`);
+                scoreBg.setAttribute('class', `absolute -right-10 -top-10 w-40 h-40 rounded-full blur-3xl opacity-10 transition-colors duration-700 ${bgCls}`);
 
                 sf('positionSizeAdvice', `Kelly Size：${sizeStr}`);
                 sf('rsRankingText', rsData.pr ? `PR ${rsData.pr}` : '--');
@@ -1025,7 +1024,6 @@
                 document.getElementById('scoreBgGlow').className = "absolute -right-10 -top-10 w-40 h-40 rounded-full blur-3xl opacity-10 bg-red-500 transition-colors duration-700";
                 document.getElementById('scoreCircle').setAttribute('class', 'score-circle text-slate-700');
             } finally {
-                clearTimeout(safetyTimer); // 清除防掛死計時器
                 overlay.classList.add('hidden');
                 isAnalyzing = false; 
                 btn.disabled = false;
