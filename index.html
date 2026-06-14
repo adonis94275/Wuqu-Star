@@ -514,7 +514,11 @@
         // ============================================================================
         async function fetchYahooFallback(ticker) {
             const url = `https://query2.finance.yahoo.com/v8/finance/chart/${ticker}?range=2y&interval=1d`;
-            const proxies = [`https://corsproxy.io/?${encodeURIComponent(url)}`, `https://api.allorigins.win/get?url=${encodeURIComponent(url)}`];
+            const proxies = [
+                `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`,
+                `https://api.codetabs.com/v1/proxy/?quest=${encodeURIComponent(url)}`,
+                `https://corsproxy.io/?${encodeURIComponent(url)}`
+            ];
             for (let p of proxies) {
                 try {
                     const res = await fetchWithTimeout(p, {}, 6000);
@@ -531,7 +535,7 @@
                     }
                 } catch(e) {}
             }
-            throw new Error("API Dead");
+            throw new Error("備援 API 皆無回應 (網路阻擋或格式異常)");
         }
 
         async function fetchTWData(symbol) {
@@ -834,7 +838,7 @@
                 document.getElementById('errorText').innerText = e.message || "官方 API 連線異常，請檢查金鑰狀態與權限。";
                 document.getElementById('finalRatingText').innerText = "連線遭拒";
             } finally {
-                overlay.classList.add('hidden');
+                document.getElementById('loadingOverlay').classList.add('hidden');
                 isAnalyzing = false;
                 document.getElementById('analyzeBtn').disabled = false;
             }
