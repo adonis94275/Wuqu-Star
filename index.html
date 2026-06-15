@@ -4,9 +4,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="google" content="notranslate" />
-  <title>ASQE v16.7 GitHub Pro | US Router Fixed</title>
+  <title>ASQE v17.0 Practical Trading Edition | GitHub Pages Pro</title>
 
-  <script type="text/javascript" nonce="f0ba7b011bb84778ba15d2ee5da" src="//local.adguard.org?ts=1781500361483&amp;type=content-script&amp;dmn=chatgpt.com&amp;url=https%3A%2F%2Fchatgpt.com%2Fbackend-api%2Festuary%2Fcontent%3Fid%3Dfile_000000009fb0720986f2c116895fe40d%26ts%3D494862%26p%3Dfs%26cid%3D1%26sig%3D5ef3e96ce345d8768b69b9df9153137e3dbea4d6ce776648e37722c4a88a7669%26v%3D0&amp;app=chrome.exe&amp;css=2&amp;js=1&amp;rel=1&amp;rji=1&amp;sbe=1"></script><script type="text/javascript" nonce="f0ba7b011bb84778ba15d2ee5da" src="//local.adguard.org?ts=1781500361483&amp;name=AdGuard%20Extra&amp;name=AdGuard%20Popup%20Blocker&amp;type=user-script"></script><script>
+  <script type="text/javascript" nonce="f0ba7b011bb84778ba15d2ee5da" src="//local.adguard.org?ts=1781500361483&amp;type=content-script&amp;dmn=chatgpt.com&amp;url=https%3A%2F%2Fchatgpt.com%2Fbackend-api%2Festuary%2Fcontent%3Fid%3Dfile_000000006694720b98034971fcc3629e%26ts%3D494862%26p%3Dfs%26cid%3D1%26sig%3Dd7d52e23beff8ea1108f8a78bab99565be64117d17a015ced549022421b9b27c%26v%3D0&amp;app=chrome.exe&amp;css=2&amp;js=1&amp;rel=1&amp;rji=1&amp;sbe=1"></script><script type="text/javascript" nonce="f0ba7b011bb84778ba15d2ee5da" src="//local.adguard.org?ts=1781500361483&amp;name=AdGuard%20Extra&amp;name=AdGuard%20Popup%20Blocker&amp;type=user-script"></script><script>
     window.IS_CODE_COMPLETE = false;
 
     window.onerror = function(msg, url, lineNo) {
@@ -41,8 +41,8 @@
     };
 
     window.saveAndStart = function() {
-      var ids = ['finmindKeyInput','fugleKeyInput','fmpKeyInput','finnhubKeyInput'];
-      var names = ['ASQE_FINMIND_KEY','ASQE_FUGLE_KEY','ASQE_FMP_KEY','ASQE_FINNHUB_KEY'];
+      var ids = ['finmindKeyInput','fugleKeyInput','fmpKeyInput','finnhubKeyInput','capitalInput','riskPctInput','twCostPctInput','twSlipPctInput','usCostPctInput','usSlipPctInput','sectorCapInput','totalCapInput'];
+      var names = ['ASQE_FINMIND_KEY','ASQE_FUGLE_KEY','ASQE_FMP_KEY','ASQE_FINNHUB_KEY','ASQE_CAPITAL','ASQE_RISK_PCT','ASQE_TW_COST_PCT','ASQE_TW_SLIP_PCT','ASQE_US_COST_PCT','ASQE_US_SLIP_PCT','ASQE_SECTOR_CAP_PCT','ASQE_TOTAL_CAP_PCT'];
       for (var i=0; i<ids.length; i++) {
         var el = document.getElementById(ids[i]);
         var val = el ? el.value.trim() : '';
@@ -115,8 +115,8 @@
       <div class="w-16 h-16 bg-slate-950 rounded-2xl flex items-center justify-center mb-5 border border-slate-700 shadow-inner">
         <span class="text-3xl">🏛️</span>
       </div>
-      <h1 class="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-indigo-300 to-orange-300 tracking-wider mb-1">ASQE v16.7</h1>
-      <p class="text-[9px] text-indigo-100 mb-8 font-mono tracking-widest uppercase px-2 py-1 rounded badge-elite">GitHub Pages Pro</p>
+      <h1 class="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-indigo-300 to-orange-300 tracking-wider mb-1">ASQE v17.0</h1>
+      <p class="text-[9px] text-indigo-100 mb-8 font-mono tracking-widest uppercase px-2 py-1 rounded badge-elite">Practical Trading Edition</p>
       <input type="password" id="passwordInput" autocomplete="off" inputmode="numeric" placeholder="輸入授權碼" onkeypress="if(event.key==='Enter') window.checkAndUnlock()" class="w-full bg-slate-950 text-white border border-slate-700 rounded-xl px-4 py-3.5 mb-5 focus:outline-none focus:border-indigo-500 text-center tracking-widest font-mono">
       <button id="unlockBtn" onclick="window.checkAndUnlock()" class="w-full bg-gradient-to-r from-indigo-700 to-purple-700 hover:from-indigo-600 hover:to-purple-600 text-white font-black py-3.5 rounded-xl transition-all shadow-lg tracking-widest cursor-pointer">啟動量化核心</button>
       <p id="errorMsg" class="text-red-400 text-[11px] mt-4 opacity-0 transition-opacity font-bold bg-red-950/50 px-3 py-1 rounded">授權碼錯誤</p>
@@ -146,6 +146,19 @@
           <label class="text-[9px] text-slate-400 font-bold uppercase block">Finnhub Token（美股備援）</label>
           <input type="password" id="finnhubKeyInput" autocomplete="off" spellcheck="false" class="w-full bg-slate-900 text-white border border-slate-700 rounded-lg px-3 py-2 focus:outline-none focus:border-indigo-500 font-mono text-xs mt-1">
         </div>
+        <div class="bg-slate-950/50 p-3 rounded-xl border border-slate-800">
+          <div class="text-[9px] text-slate-400 font-bold uppercase mb-2">實盤參數 / Practical Trading</div>
+          <div class="grid grid-cols-2 gap-2">
+            <label class="text-[9px] text-slate-500">資金額<input type="number" id="capitalInput" value="1000000" autocomplete="off" class="mt-1 w-full bg-slate-900 text-white border border-slate-700 rounded-lg px-2 py-1.5 font-mono text-xs"></label>
+            <label class="text-[9px] text-slate-500">單筆風險 %<input type="number" id="riskPctInput" value="1" step="0.1" autocomplete="off" class="mt-1 w-full bg-slate-900 text-white border border-slate-700 rounded-lg px-2 py-1.5 font-mono text-xs"></label>
+            <label class="text-[9px] text-slate-500">台股交易成本 %<input type="number" id="twCostPctInput" value="0.45" step="0.01" autocomplete="off" class="mt-1 w-full bg-slate-900 text-white border border-slate-700 rounded-lg px-2 py-1.5 font-mono text-xs"></label>
+            <label class="text-[9px] text-slate-500">台股滑價 %<input type="number" id="twSlipPctInput" value="0.15" step="0.01" autocomplete="off" class="mt-1 w-full bg-slate-900 text-white border border-slate-700 rounded-lg px-2 py-1.5 font-mono text-xs"></label>
+            <label class="text-[9px] text-slate-500">美股交易成本 %<input type="number" id="usCostPctInput" value="0.15" step="0.01" autocomplete="off" class="mt-1 w-full bg-slate-900 text-white border border-slate-700 rounded-lg px-2 py-1.5 font-mono text-xs"></label>
+            <label class="text-[9px] text-slate-500">美股滑價 %<input type="number" id="usSlipPctInput" value="0.10" step="0.01" autocomplete="off" class="mt-1 w-full bg-slate-900 text-white border border-slate-700 rounded-lg px-2 py-1.5 font-mono text-xs"></label>
+            <label class="text-[9px] text-slate-500">單產業上限 %<input type="number" id="sectorCapInput" value="35" step="1" autocomplete="off" class="mt-1 w-full bg-slate-900 text-white border border-slate-700 rounded-lg px-2 py-1.5 font-mono text-xs"></label>
+            <label class="text-[9px] text-slate-500">總曝險上限 %<input type="number" id="totalCapInput" value="80" step="5" autocomplete="off" class="mt-1 w-full bg-slate-900 text-white border border-slate-700 rounded-lg px-2 py-1.5 font-mono text-xs"></label>
+          </div>
+        </div>
         <button onclick="window.saveAndStart()" class="w-full bg-gradient-to-r from-indigo-700 to-purple-700 hover:from-indigo-600 hover:to-purple-600 text-white font-black py-3 rounded-xl transition-all mt-2 text-sm shadow-lg tracking-widest cursor-pointer">寫入本機設定並啟動</button>
       </div>
     </div>
@@ -156,8 +169,8 @@
       <div class="flex items-center gap-3">
         <div class="w-8 h-8 bg-gradient-to-br from-indigo-600 to-purple-900 rounded-lg flex items-center justify-center font-bold text-sm border border-slate-700">🏛️</div>
         <div class="flex flex-col">
-          <h1 class="text-base font-black tracking-widest text-slate-100 leading-none">ASQE v16.7</h1>
-          <span class="text-[9px] text-indigo-400 font-mono tracking-wider mt-0.5">GITHUB PAGES SAFE ROUTER</span>
+          <h1 class="text-base font-black tracking-widest text-slate-100 leading-none">ASQE v17.0</h1>
+          <span class="text-[9px] text-indigo-400 font-mono tracking-wider mt-0.5">PRACTICAL TRADING EDITION</span>
         </div>
       </div>
 
@@ -172,6 +185,9 @@
         </div>
         <input type="text" id="tickerInput" value="2330.TW" onkeypress="if(event.key==='Enter') window.triggerAnalysis()" class="bg-slate-950 text-white border border-slate-700 rounded-lg px-3 py-1.5 focus:outline-none focus:border-indigo-500 w-28 uppercase font-mono text-xs">
         <button id="analyzeBtn" onclick="window.triggerAnalysis()" class="bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-1.5 px-4 rounded-lg shadow-lg text-xs transition-colors cursor-pointer">量化分析</button>
+        <button id="batchBtn" onclick="window.runBatchPreset()" class="bg-emerald-700 hover:bg-emerald-600 text-white font-bold py-1.5 px-3 rounded-lg shadow-lg text-xs transition-colors cursor-pointer">8檔批次測試</button>
+        <button onclick="window.logCurrentSignal()" class="bg-amber-700 hover:bg-amber-600 text-white font-bold py-1.5 px-3 rounded-lg shadow-lg text-xs transition-colors cursor-pointer">記錄訊號</button>
+        <button onclick="window.openSignalLog()" class="bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold py-1.5 px-3 rounded-lg shadow-lg text-xs border border-slate-700 cursor-pointer">訊號日誌</button>
         <button onclick="document.getElementById('setupModal').style.display='flex'; setTimeout(function(){document.getElementById('setupModal').style.opacity='1';document.getElementById('setupModal').classList.remove('fade-out');},10)" class="bg-slate-800 text-slate-300 py-1.5 px-2 rounded-lg text-xs border border-slate-700 cursor-pointer">⚙️</button>
       </div>
     </header>
@@ -179,6 +195,67 @@
     <div id="loadingOverlay" class="fixed inset-0 bg-slate-950/90 z-50 flex flex-col items-center justify-center hidden backdrop-blur-md">
       <div class="animate-spin rounded-full h-12 w-12 border-4 border-slate-800 border-t-indigo-500 mb-4"></div>
       <p class="text-[10px] font-mono text-indigo-400 tracking-widest animate-pulse" id="loadingText">Fetching Market Data...</p>
+    </div>
+
+
+    <div id="batchPanel" class="fixed inset-0 z-[60] hidden bg-slate-950/92 backdrop-blur-md p-4 overflow-y-auto">
+      <div class="max-w-7xl mx-auto bg-slate-900 border border-slate-700 rounded-2xl shadow-2xl overflow-hidden">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-3 p-4 border-b border-slate-800">
+          <div>
+            <div class="text-lg font-black tracking-widest text-white">ASQE v17.0 批次測試</div>
+            <div class="text-[11px] text-slate-400 mt-1">測試標的：2308、1802、2330、3189、DELL、ARM、RGTI、TSLA。評估期間從 2026-01-01 起；指標使用更早資料暖機。</div>
+          </div>
+          <div class="flex items-center gap-2">
+            <input id="batchStartDate" type="date" value="2026-01-01" class="bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-xs font-mono text-white">
+            <button onclick="window.runBatchPreset()" class="bg-emerald-700 hover:bg-emerald-600 text-white px-3 py-2 rounded-lg text-xs font-bold">重新測試</button>
+            <button onclick="document.getElementById('batchPanel').classList.add('hidden')" class="bg-slate-800 hover:bg-slate-700 text-slate-200 px-3 py-2 rounded-lg text-xs font-bold">關閉</button>
+          </div>
+        </div>
+        <div class="p-4">
+          <div id="batchSummary" class="text-xs text-slate-300 mb-3 bg-slate-950/70 border border-slate-800 rounded-xl p-3">尚未開始。</div>
+          <div class="overflow-x-auto border border-slate-800 rounded-xl">
+            <table class="w-full text-[11px] text-left min-w-[1100px]">
+              <thead class="bg-slate-950 text-slate-400 uppercase tracking-wider">
+                <tr>
+                  <th class="p-2">市場</th><th class="p-2">代碼</th><th class="p-2">資料源</th><th class="p-2 text-right">起始價</th><th class="p-2 text-right">最新價</th><th class="p-2 text-right">區間報酬</th><th class="p-2 text-right">MDD</th><th class="p-2 text-right">ASQE</th><th class="p-2">燈號</th><th class="p-2 text-right">部位</th><th class="p-2 text-right">DaR95</th><th class="p-2 text-right">Confidence</th><th class="p-2">風險旗標</th>
+                </tr>
+              </thead>
+              <tbody id="batchTable" class="divide-y divide-slate-800 bg-slate-900"></tbody>
+            </table>
+          </div>
+          <div id="batchNotes" class="mt-3 text-[11px] text-slate-400 leading-relaxed"></div>
+        </div>
+      </div>
+    </div>
+
+    <div id="signalLogPanel" class="fixed inset-0 z-[70] hidden bg-slate-950/92 backdrop-blur-md p-4 overflow-y-auto">
+      <div class="max-w-7xl mx-auto bg-slate-900 border border-slate-700 rounded-2xl shadow-2xl overflow-hidden">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-3 p-4 border-b border-slate-800">
+          <div>
+            <div class="text-lg font-black tracking-widest text-white">ASQE v17.0 Forward Test 訊號日誌</div>
+            <div class="text-[11px] text-slate-400 mt-1">把每次分析的 Score、燈號、價格、部位與風險寫入 localStorage，可匯出 CSV 追蹤 5/20 日後績效。</div>
+          </div>
+          <div class="flex flex-wrap items-center gap-2">
+            <button onclick="window.logCurrentSignal()" class="bg-amber-700 hover:bg-amber-600 text-white px-3 py-2 rounded-lg text-xs font-bold">記錄目前訊號</button>
+            <button onclick="window.exportSignalCSV()" class="bg-emerald-700 hover:bg-emerald-600 text-white px-3 py-2 rounded-lg text-xs font-bold">匯出 CSV</button>
+            <button onclick="window.clearSignalLog()" class="bg-red-900 hover:bg-red-800 text-red-100 px-3 py-2 rounded-lg text-xs font-bold">清空</button>
+            <button onclick="document.getElementById('signalLogPanel').classList.add('hidden')" class="bg-slate-800 hover:bg-slate-700 text-slate-200 px-3 py-2 rounded-lg text-xs font-bold">關閉</button>
+          </div>
+        </div>
+        <div class="p-4">
+          <div id="signalLogSummary" class="text-xs text-slate-300 mb-3 bg-slate-950/70 border border-slate-800 rounded-xl p-3">尚未載入。</div>
+          <div class="overflow-x-auto border border-slate-800 rounded-xl">
+            <table class="w-full text-[11px] text-left min-w-[1200px]">
+              <thead class="bg-slate-950 text-slate-400 uppercase tracking-wider">
+                <tr>
+                  <th class="p-2">日期</th><th class="p-2">市場</th><th class="p-2">代碼</th><th class="p-2">資料源</th><th class="p-2 text-right">價格</th><th class="p-2 text-right">Score</th><th class="p-2">Grade</th><th class="p-2">Action</th><th class="p-2 text-right">建議部位</th><th class="p-2 text-right">Net Exp</th><th class="p-2 text-right">DaR95</th><th class="p-2 text-right">Confidence</th><th class="p-2">Flags</th>
+                </tr>
+              </thead>
+              <tbody id="signalLogTable" class="divide-y divide-slate-800 bg-slate-900"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
     </div>
 
     <div class="flex-1 flex flex-col lg:flex-row relative overflow-hidden bg-slate-950 p-1.5 gap-1.5">
@@ -191,6 +268,8 @@
                 <span class="text-fuchsia-400" id="leg-ema20">E20: --</span>
                 <span class="text-cyan-400" id="leg-ema60">E60: --</span>
                 <span class="text-yellow-500" id="leg-poc">POC: --</span>
+                <span class="text-violet-300" id="leg-bbu">BBU: --</span>
+                <span class="text-violet-500" id="leg-bbl">BBL: --</span>
                 <span class="text-emerald-400" id="leg-source">Source: --</span>
               </div>
             </div>
@@ -208,6 +287,9 @@
         <div class="relative w-full rounded-xl border border-slate-800 bg-slate-900 shadow-inner h-[100px] shrink-0 overflow-hidden">
           <div class="absolute top-1 left-3 z-10 text-[9px] font-mono flex gap-3 text-slate-400">
             <span class="text-blue-400" id="leg-rsi">RSI: --</span>
+            <span class="text-indigo-300" id="leg-adx">ADX: --</span>
+            <span class="text-emerald-400" id="leg-pdi">+DI: --</span>
+            <span class="text-red-400" id="leg-mdi">-DI: --</span>
             <span class="text-slate-500" id="leg-atr">ATR: --</span>
           </div>
           <div id="dmiChartContainer" class="w-full h-full mt-2"></div>
@@ -238,6 +320,20 @@
             </div>
           </div>
 
+          <div class="data-card border-amber-900/30">
+            <div class="flex justify-between items-center mb-2">
+              <span class="text-amber-400 text-[10px] font-black uppercase tracking-wider">🧾 Practical Trading Decision</span>
+              <span id="tradeGradeBadge" class="text-[9px] px-1.5 py-0.5 rounded font-mono bg-slate-950 text-slate-400 border border-slate-800">Grade: --</span>
+            </div>
+            <div class="grid grid-cols-4 gap-1.5 text-center mb-2">
+              <div class="bg-slate-950 p-1.5 rounded border border-slate-800"><div class="text-[8px] text-slate-500 mb-0.5">Net Exp</div><div id="netExpectancy" class="text-[11px] font-bold text-white metric-value">--</div></div>
+              <div class="bg-slate-950 p-1.5 rounded border border-slate-800"><div class="text-[8px] text-slate-500 mb-0.5">Cost+Slip</div><div id="costModelTxt" class="text-[11px] font-bold text-white metric-value">--</div></div>
+              <div class="bg-slate-950 p-1.5 rounded border border-slate-800"><div class="text-[8px] text-slate-500 mb-0.5">Risk Rule</div><div id="riskRuleTxt" class="text-[11px] font-bold text-white metric-value">--</div></div>
+              <div class="bg-slate-950 p-1.5 rounded border border-slate-800"><div class="text-[8px] text-slate-500 mb-0.5">Portfolio</div><div id="portfolioTxt" class="text-[11px] font-bold text-white metric-value">--</div></div>
+            </div>
+            <div id="tradingRuleText" class="bg-slate-950 p-2 rounded border border-slate-800 text-[10px] text-slate-300 leading-relaxed">等待訊號。</div>
+          </div>
+
           <div class="data-card border-indigo-900/30">
             <div class="flex justify-between items-center mb-2">
               <span class="text-indigo-400 text-[10px] font-black uppercase tracking-wider">🧠 Regime / Alpha / Weights</span>
@@ -248,6 +344,23 @@
               <div class="bg-slate-950 p-1.5 rounded border border-slate-800"><div class="text-[8px] text-slate-500 mb-0.5">Momentum</div><div id="modMom" class="text-[11px] font-bold text-white metric-value">--</div><div id="wMom" class="text-[8px] text-emerald-500 mt-0.5 font-bold">W: --</div></div>
               <div class="bg-slate-950 p-1.5 rounded border border-slate-800"><div class="text-[8px] text-slate-500 mb-0.5">Risk</div><div id="modRisk" class="text-[11px] font-bold text-white metric-value">--</div><div id="wRisk" class="text-[8px] text-emerald-500 mt-0.5 font-bold">W: --</div></div>
               <div class="bg-slate-950 p-1.5 rounded border border-slate-800"><div class="text-[8px] text-slate-500 mb-0.5">Flow</div><div id="modFlow" class="text-[11px] font-bold text-white metric-value">--</div><div id="flowStatusTxt" class="text-[8px] text-blue-400 mt-0.5 overflow-hidden text-ellipsis whitespace-nowrap" title="Wait">W: --</div></div>
+            </div>
+          </div>
+
+          <div class="data-card border-cyan-900/30">
+            <div class="flex justify-between items-center mb-2">
+              <span class="text-cyan-400 text-[10px] font-black uppercase tracking-wider">📊 DMI + Bollinger Squeeze</span>
+              <span id="breakoutBadge" class="text-[8px] px-1 py-0.5 rounded font-mono bg-slate-950 text-slate-400 border border-slate-800">Breakout: --</span>
+            </div>
+            <div class="grid grid-cols-4 gap-1.5 text-center mb-2">
+              <div class="bg-slate-950 p-1.5 rounded border border-slate-800"><div class="text-[8px] text-slate-500 mb-0.5">DMI Direction</div><div id="dmiTrend" class="text-[11px] font-bold text-white metric-value">--</div></div>
+              <div class="bg-slate-950 p-1.5 rounded border border-slate-800"><div class="text-[8px] text-slate-500 mb-0.5">DMI Spread</div><div id="dmiSpread" class="text-[11px] font-bold text-white metric-value">--</div></div>
+              <div class="bg-slate-950 p-1.5 rounded border border-slate-800"><div class="text-[8px] text-slate-500 mb-0.5">BB %B</div><div id="bbPercentB" class="text-[11px] font-bold text-white metric-value">--</div></div>
+              <div class="bg-slate-950 p-1.5 rounded border border-slate-800"><div class="text-[8px] text-slate-500 mb-0.5">Width PR</div><div id="bbWidthRank" class="text-[11px] font-bold text-white metric-value">--</div></div>
+            </div>
+            <div class="flex justify-between items-center bg-slate-950 p-1.5 rounded border border-slate-800">
+              <span class="text-[9px] text-slate-400">Volatility Compression / Squeeze</span>
+              <span id="squeezeBadge" class="text-[10px] font-bold text-slate-300">--</span>
             </div>
           </div>
 
@@ -330,7 +443,15 @@
       ['finmindKeyInput', window.KEY_FINMIND],
       ['fugleKeyInput', window.KEY_FUGLE],
       ['fmpKeyInput', window.KEY_FMP],
-      ['finnhubKeyInput', window.KEY_FINNHUB]
+      ['finnhubKeyInput', window.KEY_FINNHUB],
+      ['capitalInput', localStorage.getItem('ASQE_CAPITAL') || '1000000'],
+      ['riskPctInput', localStorage.getItem('ASQE_RISK_PCT') || '1'],
+      ['twCostPctInput', localStorage.getItem('ASQE_TW_COST_PCT') || '0.45'],
+      ['twSlipPctInput', localStorage.getItem('ASQE_TW_SLIP_PCT') || '0.15'],
+      ['usCostPctInput', localStorage.getItem('ASQE_US_COST_PCT') || '0.15'],
+      ['usSlipPctInput', localStorage.getItem('ASQE_US_SLIP_PCT') || '0.10'],
+      ['sectorCapInput', localStorage.getItem('ASQE_SECTOR_CAP_PCT') || '35'],
+      ['totalCapInput', localStorage.getItem('ASQE_TOTAL_CAP_PCT') || '80']
     ];
     setTimeout(function(){
       prefill.forEach(function(x) {
@@ -342,8 +463,9 @@
 
   var priceChart, macdChart, dmiChart;
   var candleSeries, volSeries, ema20Series, ema60Series, pocSeries;
+  var bbUpperSeries, bbMidSeries, bbLowerSeries;
   var macdLine, signalLine, macdHist;
-  var rsiSeries, atrSeries;
+  var rsiSeries, adxSeries, pdiSeries, mdiSeries;
 
   function $(id) { return document.getElementById(id); }
   function sf(id, html) { var el = $(id); if (el) el.innerHTML = html; }
@@ -359,6 +481,111 @@
     var n = Number(x);
     return isFinite(n) ? n : (fallback || 0);
   }
+
+  function readCfg(key, fallback) {
+    try {
+      var v = localStorage.getItem(key);
+      var n = Number(v);
+      return isFinite(n) ? n : fallback;
+    } catch(e) { return fallback; }
+  }
+  function practicalConfig(market) {
+    var isTW = market === 'TW';
+    return {
+      capital: readCfg('ASQE_CAPITAL', 1000000),
+      riskPct: readCfg('ASQE_RISK_PCT', 1) / 100,
+      costPct: (isTW ? readCfg('ASQE_TW_COST_PCT', 0.45) : readCfg('ASQE_US_COST_PCT', 0.15)) / 100,
+      slipPct: (isTW ? readCfg('ASQE_TW_SLIP_PCT', 0.15) : readCfg('ASQE_US_SLIP_PCT', 0.10)) / 100,
+      sectorCap: readCfg('ASQE_SECTOR_CAP_PCT', 35) / 100,
+      totalCap: readCfg('ASQE_TOTAL_CAP_PCT', 80) / 100
+    };
+  }
+  function estimateRoundTripCost(market, ui, avgTurnover20) {
+    var cfg = practicalConfig(market);
+    var illiq = avgTurnover20 > 0 ? clamp(3000000 / avgTurnover20, 0, 0.0025) : 0.0025;
+    var pain = clamp(ui * 0.15, 0, 0.004);
+    return { total: cfg.costPct + cfg.slipPct + illiq + pain, base: cfg.costPct, slip: cfg.slipPct, illiq: illiq, pain: pain, cfg: cfg };
+  }
+  function computeTradeGrade(o) {
+    if (o.veto || o.score < 50 || o.pos <= 0) return {grade:'C', color:'text-red-400', rule:'禁止進場：分數低、VETO 或建議部位為 0。'};
+    if (o.confidence < 65) return {grade:'B', color:'text-yellow-300', rule:'資料信心不足：只可觀察或極小部位。'};
+    if (o.netExp <= 0) return {grade:'B', color:'text-yellow-300', rule:'扣除成本後期望值不足：不追價。'};
+    if (o.dar95 > 0.35 || o.ruin > 0.10) return {grade:'B', color:'text-yellow-300', rule:'尾部風險過高：降低部位。'};
+    if (o.score >= 82 && o.pos >= 0.08 && o.confidence >= 78 && !o.stop) return {grade:'S', color:'text-emerald-400', rule:'S級：可正式布局，但仍須依ATR停損與總曝險控管。'};
+    if (o.score >= 70 && o.pos >= 0.05 && !o.stop) return {grade:'A', color:'text-cyan-300', rule:'A級：可小部位試單，續強再加碼。'};
+    return {grade:'B', color:'text-yellow-300', rule:'B級：觀察為主，等待突破或回測。'};
+  }
+  function getSignalLog() {
+    try { return JSON.parse(localStorage.getItem('ASQE_SIGNAL_LOG') || '[]'); } catch(e) { return []; }
+  }
+  function setSignalLog(rows) {
+    try { localStorage.setItem('ASQE_SIGNAL_LOG', JSON.stringify(rows.slice(-300))); } catch(e) {}
+  }
+  function latestSignalExposure() {
+    var rows = getSignalLog(), map = {}, total = 0;
+    rows.forEach(function(r){ map[r.market + ':' + r.ticker] = r; });
+    Object.keys(map).forEach(function(k){ if (map[k].pos > 0 && map[k].grade !== 'C') total += map[k].pos; });
+    return total;
+  }
+  function csvEscape(v) {
+    var s = String(v == null ? '' : v);
+    return '"' + s.replace(/"/g, '""') + '"';
+  }
+  function renderSignalLog() {
+    var rows = getSignalLog().slice().reverse();
+    var table = $('signalLogTable'), summary = $('signalLogSummary');
+    if (!table) return;
+    table.innerHTML = rows.length ? rows.map(function(r){
+      var gradeColor = r.grade === 'S' ? 'text-emerald-400' : r.grade === 'A' ? 'text-cyan-300' : r.grade === 'B' ? 'text-yellow-300' : 'text-red-400';
+      return '<tr class="hover:bg-slate-800/60">' +
+        '<td class="p-2 text-slate-400 font-mono">'+r.date+'</td>' +
+        '<td class="p-2 text-slate-400">'+r.market+'</td>' +
+        '<td class="p-2 font-mono font-black text-white">'+r.ticker+'</td>' +
+        '<td class="p-2 text-slate-400 max-w-[150px] truncate" title="'+r.source+'">'+r.source+'</td>' +
+        '<td class="p-2 text-right font-mono">'+Number(r.price).toFixed(2)+'</td>' +
+        '<td class="p-2 text-right font-mono font-black">'+r.score+'</td>' +
+        '<td class="p-2 font-black '+gradeColor+'">'+r.grade+'</td>' +
+        '<td class="p-2 text-slate-200">'+r.action+'</td>' +
+        '<td class="p-2 text-right font-mono text-emerald-300">'+(r.pos*100).toFixed(1)+'%</td>' +
+        '<td class="p-2 text-right font-mono '+(r.netExp>=0?'text-emerald-300':'text-red-300')+'">'+(r.netExp*100).toFixed(2)+'%</td>' +
+        '<td class="p-2 text-right font-mono text-red-300">'+(r.dar95*100).toFixed(1)+'%</td>' +
+        '<td class="p-2 text-right font-mono text-indigo-300">'+r.confidence.toFixed(0)+'%</td>' +
+        '<td class="p-2 text-slate-300">'+r.flags+'</td>' +
+      '</tr>';
+    }).join('') : '<tr><td colspan="13" class="p-4 text-center text-slate-400">尚無訊號紀錄。</td></tr>';
+    if (summary) {
+      var active = latestSignalExposure();
+      summary.innerHTML = '紀錄筆數：' + rows.length + '。目前依最後一次訊號估算的建議總曝險：約 ' + (active*100).toFixed(1) + '%。Forward Test 需連續記錄 1–3 個月後再評估勝率與期望值。';
+    }
+  }
+  window.openSignalLog = function() {
+    var p = $('signalLogPanel'); if (p) p.classList.remove('hidden');
+    renderSignalLog();
+  };
+  window.logCurrentSignal = function() {
+    if (!window.lastSignal) { alert('尚無可記錄訊號，請先完成一次分析。'); return; }
+    var rows = getSignalLog();
+    rows.push(window.lastSignal);
+    setSignalLog(rows);
+    renderSignalLog();
+    alert('已記錄目前訊號：' + window.lastSignal.ticker + ' / Grade ' + window.lastSignal.grade);
+  };
+  window.exportSignalCSV = function() {
+    var rows = getSignalLog();
+    if (!rows.length) { alert('沒有訊號可以匯出。'); return; }
+    var headers = ['date','market','ticker','source','price','score','grade','action','pos','netExp','dar95','confidence','flags'];
+    var csv = headers.join(',') + '\n' + rows.map(function(r){ return headers.map(function(h){ return csvEscape(r[h]); }).join(','); }).join('\n');
+    var blob = new Blob(['﻿' + csv], {type:'text/csv;charset=utf-8;'});
+    var a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'ASQE_v17_forward_test_log.csv';
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+    setTimeout(function(){ URL.revokeObjectURL(a.href); }, 1000);
+  };
+  window.clearSignalLog = function() {
+    if (!confirm('確定清空所有 Forward Test 訊號紀錄？')) return;
+    setSignalLog([]); renderSignalLog();
+  };
   function getDateStr(d) {
     var m = String(d.getMonth()+1).padStart(2,'0');
     var day = String(d.getDate()).padStart(2,'0');
@@ -736,13 +963,39 @@
       mdm.push((dn>up && dn>0) ? dn : 0);
     }
     var aR=calcRMA(trs,p), pR=calcRMA(pdm,p), mR=calcRMA(mdm,p), dx=[0];
+    var pdi=[0], mdi=[0];
     for (var j=1; j<data.length; j++) {
       var pi = aR[j]===0 ? 0 : 100*(pR[j]/aR[j]);
       var mi = aR[j]===0 ? 0 : 100*(mR[j]/aR[j]);
+      pdi.push(pi); mdi.push(mi);
       dx.push((pi+mi)===0 ? 0 : 100*Math.abs(pi-mi)/(pi+mi));
     }
     var adx=calcRMA(dx,p);
-    return data.map(function(d,i){ return { time:d.time, adx:adx[i] }; });
+    return data.map(function(d,i){ return { time:d.time, adx:adx[i]||0, pdi:pdi[i]||0, mdi:mdi[i]||0, spread:(pdi[i]||0)-(mdi[i]||0) }; });
+  }
+
+  function calcBollinger(data, period, mult) {
+    period = period || 20; mult = mult || 2;
+    var res = [];
+    for (var i=0; i<data.length; i++) {
+      var start = Math.max(0, i-period+1);
+      var slice = data.slice(start, i+1).map(function(d){ return d.close; });
+      var mid = avg(slice);
+      var sd = std(slice);
+      var upper = mid + mult*sd;
+      var lower = mid - mult*sd;
+      var width = mid > 0 ? (upper-lower)/mid : 0;
+      var pctB = (upper-lower) !== 0 ? (data[i].close-lower)/(upper-lower) : 0.5;
+      res.push({ time:data[i].time, mid:mid, upper:upper, lower:lower, width:width, pctB:pctB });
+    }
+    return res;
+  }
+
+  function percentileRank(values, current) {
+    if (!values || !values.length) return 0.5;
+    var count = 0;
+    for (var i=0; i<values.length; i++) if (values[i] <= current) count++;
+    return count / values.length;
   }
 
   function calcMACD(data) {
@@ -1004,7 +1257,7 @@
     return { dar95: mdds[Math.floor(iters*0.05)] || 0, ruinProb: ruins/iters, blockSize:blockSize };
   }
 
-  function updateCharts(data, e20, e60, poc, rsi, atr, macdObj) {
+  function updateCharts(data, e20, e60, poc, rsi, atr, macdObj, dmi, bb) {
     try {
       if (priceChart) priceChart.remove();
       if (macdChart) macdChart.remove();
@@ -1027,6 +1280,9 @@
     ema20Series = priceChart.addLineSeries({ color:'#d946ef', lineWidth:1 });
     ema60Series = priceChart.addLineSeries({ color:'#22d3ee', lineWidth:1 });
     pocSeries = priceChart.addLineSeries({ color:'#eab308', lineWidth:1, lineStyle:2 });
+    bbUpperSeries = priceChart.addLineSeries({ color:'#a78bfa', lineWidth:1, lineStyle:2 });
+    bbMidSeries = priceChart.addLineSeries({ color:'#8b5cf6', lineWidth:1, lineStyle:3 });
+    bbLowerSeries = priceChart.addLineSeries({ color:'#a78bfa', lineWidth:1, lineStyle:2 });
 
     macdChart = LightweightCharts.createChart($('macdChartContainer'), cOpt);
     macdLine = macdChart.addLineSeries({ color:'#3b82f6', lineWidth:1 });
@@ -1035,20 +1291,27 @@
 
     dmiChart = LightweightCharts.createChart($('dmiChartContainer'), cOpt);
     rsiSeries = dmiChart.addLineSeries({ color:'#3b82f6', lineWidth:2 });
-    atrSeries = dmiChart.addLineSeries({ color:'#64748b', lineWidth:1, lineStyle:2 });
+    adxSeries = dmiChart.addLineSeries({ color:'#a5b4fc', lineWidth:1, lineStyle:2 });
+    pdiSeries = dmiChart.addLineSeries({ color:'#34d399', lineWidth:1 });
+    mdiSeries = dmiChart.addLineSeries({ color:'#f87171', lineWidth:1 });
 
     candleSeries.setData(data);
     volSeries.setData(data.map(function(d){ return { time:d.time, value:d.volume, color:d.close>=d.open?'rgba(239,68,68,0.28)':'rgba(34,197,94,0.28)' }; }));
     ema20Series.setData(e20);
     ema60Series.setData(e60);
     pocSeries.setData(data.map(function(d){ return { time:d.time, value:poc.poc }; }));
+    bbUpperSeries.setData(bb.map(function(d){ return { time:d.time, value:d.upper }; }));
+    bbMidSeries.setData(bb.map(function(d){ return { time:d.time, value:d.mid }; }));
+    bbLowerSeries.setData(bb.map(function(d){ return { time:d.time, value:d.lower }; }));
 
     macdLine.setData(macdObj.macd);
     signalLine.setData(macdObj.signal);
     macdHist.setData(macdObj.histogram.map(function(d){ return { time:d.time, value:d.value, color:d.value>=0?'rgba(34,197,94,0.55)':'rgba(239,68,68,0.55)' }; }));
 
     rsiSeries.setData(rsi.map(function(d){ return { time:d.time, value:d.rsi }; }));
-    atrSeries.setData(atr.map(function(d){ return { time:d.time, value:d.atr }; }));
+    adxSeries.setData(dmi.map(function(d){ return { time:d.time, value:d.adx }; }));
+    pdiSeries.setData(dmi.map(function(d){ return { time:d.time, value:d.pdi }; }));
+    mdiSeries.setData(dmi.map(function(d){ return { time:d.time, value:d.mdi }; }));
 
     priceChart.subscribeCrosshairMove(function(p) {
       if (!p || !p.time) return;
@@ -1057,8 +1320,13 @@
       sf('leg-ema20', 'E20: ' + (e20[i] ? e20[i].value.toFixed(2) : '--'));
       sf('leg-ema60', 'E60: ' + (e60[i] ? e60[i].value.toFixed(2) : '--'));
       sf('leg-poc', 'POC: ' + (poc.poc ? poc.poc.toFixed(2) : '--'));
+      sf('leg-bbu', 'BBU: ' + (bb[i] ? bb[i].upper.toFixed(2) : '--'));
+      sf('leg-bbl', 'BBL: ' + (bb[i] ? bb[i].lower.toFixed(2) : '--'));
       sf('leg-macd', 'MACD: ' + (macdObj.macd[i] ? macdObj.macd[i].value.toFixed(2) : '--'));
       sf('leg-rsi', 'RSI: ' + (rsi[i] ? rsi[i].rsi.toFixed(1) : '--'));
+      sf('leg-adx', 'ADX: ' + (dmi[i] ? dmi[i].adx.toFixed(1) : '--'));
+      sf('leg-pdi', '+DI: ' + (dmi[i] ? dmi[i].pdi.toFixed(1) : '--'));
+      sf('leg-mdi', '-DI: ' + (dmi[i] ? dmi[i].mdi.toFixed(1) : '--'));
       sf('leg-atr', 'ATR: ' + (atr[i] ? atr[i].atr.toFixed(2) : '--'));
     });
 
@@ -1083,17 +1351,7 @@
       window.KEY_FINNHUB = localStorage.getItem('ASQE_FINNHUB_KEY') || window.KEY_FINNHUB || '';
 
       var market = window.currentMarket || 'TW';
-      var inputTicker = (ticker || (market === 'TW' ? '2330.TW' : 'SPY')).trim().toUpperCase();
-      st('chartTitle', inputTicker);
-      st('routerLog', '開始路由 ' + inputTicker + '...');
-
-      // 清除上一檔或失敗狀態留下的圖表與錯誤遮罩。
-      if (priceChart) { try { priceChart.remove(); } catch(e) {} priceChart = null; }
-      if (macdChart) { try { macdChart.remove(); } catch(e) {} macdChart = null; }
-      if (dmiChart) { try { dmiChart.remove(); } catch(e) {} dmiChart = null; }
-      ['priceChartContainer','macdChartContainer','dmiChartContainer'].forEach(function(id){ var el=$(id); if(el) el.innerHTML=''; });
-
-      var result = await fetchMarketData(inputTicker, market);
+      var result = await fetchMarketData(ticker, market);
       var data = result.data;
       if (!data || data.length < 120) throw new Error('資料量不足，至少需要 120 根日K');
 
@@ -1104,11 +1362,19 @@
 
       st('loadingText', 'Running ASQE Math Engine...');
       var e20=calcEMA(data,20), e60=calcEMA(data,60), e120=calcEMA(data,120), e200=calcEMA(data,200);
-      var atr=calcATR(data,14), rsi=calcRSI(data,14), adx=calcDMI(data,14), obv=calcOBV(data), macdObj=calcMACD(data);
+      var atr=calcATR(data,14), rsi=calcRSI(data,14), adx=calcDMI(data,14), obv=calcOBV(data), macdObj=calcMACD(data), bb=calcBollinger(data,20,2);
       var L = data[data.length-1];
       var e20Val=e20[e20.length-1].value, e60Val=e60[e60.length-1].value, e120Val=e120[e120.length-1].value;
       var a14=atr[atr.length-1].atr || 1;
       var adxVal=adx[adx.length-1].adx || 20;
+      var lastDmi = adx[adx.length-1] || {pdi:0, mdi:0, adx:adxVal, spread:0};
+      var bbLast = bb[bb.length-1] || {mid:L.close, upper:L.close, lower:L.close, width:0, pctB:0.5};
+      var bbWidthRank = percentileRank(bb.slice(-120).map(function(x){return x.width;}), bbLast.width);
+      var vol20 = avg(data.slice(-20).map(function(d){return d.volume;}));
+      var isBBSqueeze = bbWidthRank <= 0.20;
+      var isBBBreakout = L.close > bbLast.upper && L.volume > vol20*1.2 && lastDmi.pdi > lastDmi.mdi && adxVal > 20;
+      var bbScore = isBBBreakout ? 100 : (isBBSqueeze && L.close > bbLast.mid ? 82 : (bbLast.pctB >= 0.80 ? 72 : (bbLast.pctB <= 0.20 ? 32 : 55)));
+      var dmiDirectionalScore = clamp(50 + lastDmi.spread*1.2 + (adxVal-20)*1.3, 0, 100);
       var poc=calcPOC(data,120,40);
 
       var benchForRegime = benchmark || data;
@@ -1124,7 +1390,7 @@
       var rs = calcRelativeStrengthScore(data, benchmark);
       var adxScore = clamp((adxVal-12)*4, 0, 100);
       var biasScore = clamp(55 + bias20*250, 0, 100);
-      var sMom = clamp(rs.score*0.45 + adxScore*0.35 + biasScore*0.20, 0, 100);
+      var sMom = clamp(rs.score*0.34 + adxScore*0.16 + biasScore*0.14 + dmiDirectionalScore*0.18 + bbScore*0.18, 0, 100);
       if (bias20 > 0.18) sMom = Math.min(sMom, 72);
 
       var ui = calcUlcerIndex(data,60);
@@ -1135,6 +1401,9 @@
       var riskStop = clamp(stopDistancePct * 500, 0, 35);
       var riskUI = clamp(35 - ui*350, 0, 35);
       var sRisk = clamp(riskTrend + riskStop + riskUI, 0, 100);
+      if (lastDmi.mdi > lastDmi.pdi && adxVal > 25) sRisk = Math.min(sRisk, 58);
+      if (L.close < bbLast.mid) sRisk = Math.min(sRisk, 76);
+      if (L.close < bbLast.lower) sRisk = Math.min(sRisk, 45);
 
       var flow = calcFlowScore(flowRows, data, e20Val);
       var sFlow = flow.score;
@@ -1170,8 +1439,9 @@
 
       var div = checkMultiDivergence(data, rsi, macdObj, obv);
       finalScore += div.score;
+      if (isBBBreakout && finalScore >= 60 && bias20 < 0.12) finalScore += 4;
+      var isBBVeto = L.close < bbLast.lower && lastDmi.mdi > lastDmi.pdi && adxVal > 25;
 
-      var vol20 = avg(data.slice(-20).map(function(d){return d.volume;}));
       var volThreshold = hmm.pBear > 0.5 ? 1.5 : (hmm.pBull > 0.6 ? 2.5 : 2.0);
       var isHardVeto = L.close < e60Val && L.volume > vol20*volThreshold;
       var prevL = data[data.length-2] || L;
@@ -1179,7 +1449,9 @@
       var isStop = L.close < chandelier;
 
       if (isHardVeto || isGapDown) finalScore = Math.min(finalScore, 40);
+      if (isBBVeto) finalScore = Math.min(finalScore, 45);
       if (isStop) finalScore = Math.min(finalScore, 59);
+      finalScore = clamp(finalScore, 0, 100);
 
       var avgTurnover20 = avg(data.slice(-20).map(function(d){return d.volume*d.close;}));
       var liquidityCap = 100, liquidityTxt='充足';
@@ -1195,13 +1467,17 @@
       var stats = runBayesianCVaREngine(data, e20, e60, atr);
       var mc = runBlockBootstrapMC(stats.trades);
 
-      var capital = 1000000;
+      var pcfg = practicalConfig(market);
+      var capital = pcfg.capital;
       var stopDist = Math.max(a14*2, L.close*0.005);
-      var atrShares = Math.floor((capital*0.01) / stopDist);
+      var atrShares = Math.floor((capital*pcfg.riskPct) / stopDist);
+      var costModel = estimateRoundTripCost(market, ui, avgTurnover20);
+      var netExpectancy = (stats.mu || 0) - costModel.total;
       var cvarRisk = Math.abs(stats.cvar || -0.03);
       var uiMultiplier = clamp(0.08 / Math.max(ui,0.01), 0.25, 2.0);
       var finalPosSize = clamp(stats.halfKelly * (0.05 / cvarRisk) * uiMultiplier, 0, 0.20);
-      if (finalScore < 50 || isHardVeto || isGapDown) finalPosSize = 0;
+      if (netExpectancy <= 0) finalPosSize = Math.min(finalPosSize, 0.03);
+      if (finalScore < 50 || isHardVeto || isGapDown || isBBVeto) finalPosSize = 0;
 
       var confidence = 50;
       confidence += Math.min(20, data.length/50);
@@ -1217,6 +1493,7 @@
       $('scoreGlow').style.backgroundColor = scoreColor;
       var rating = finalScore < 50 ? '📉 轉弱防守' : finalScore >= 85 ? '🚀 SSS 強勢 Alpha' : finalScore >= 75 ? '📈 SS 趨勢多頭' : finalScore >= 65 ? '🟢 A 級觀察' : '🟡 區間試單';
       if (isHardVeto || isGapDown) rating = '🚨 VETO 強制防守';
+      if (isBBVeto) rating = '🚨 布林+DMI 轉弱';
       if (isStop && finalScore >= 50) rating = '⚠️ 跌破吊燈防線';
       st('finalRatingText', rating);
       $('finalRatingText').style.color = scoreColor;
@@ -1237,6 +1514,13 @@
       sf('wMom', 'W: ' + (wMom*100).toFixed(0) + '%');
       sf('wRisk', 'W: ' + (wRisk*100).toFixed(0) + '%');
       sf('flowStatusTxt', 'W: ' + (wFlow*100).toFixed(0) + '% ' + flow.text);
+      var dmiText = lastDmi.pdi > lastDmi.mdi ? '+DI 多方' : '-DI 空方';
+      sf('dmiTrend', '<span class="' + (lastDmi.pdi>lastDmi.mdi?'text-emerald-400':'text-red-400') + '">' + dmiText + '</span>');
+      sf('dmiSpread', (lastDmi.spread>=0?'+':'') + lastDmi.spread.toFixed(1));
+      sf('bbPercentB', (bbLast.pctB*100).toFixed(0) + '%');
+      sf('bbWidthRank', (bbWidthRank*100).toFixed(0) + '%');
+      sf('squeezeBadge', isBBSqueeze ? '<span class="text-cyan-300">SQUEEZE 壓縮</span>' : '<span class="text-slate-400">Normal</span>');
+      sf('breakoutBadge', isBBBreakout ? '<span class="text-emerald-400">BB+DMI BREAKOUT</span>' : (isBBVeto ? '<span class="text-red-400">BB+DMI VETO</span>' : 'Breakout: --'));
 
       sf('infoRatioBadge', 'IR: ' + rs.ir.toFixed(2) + ' / ρ: ' + rho.toFixed(2));
       sf('liquidityBadge', 'Liquidity: ' + liquidityTxt);
@@ -1251,21 +1535,60 @@
 
       sf('gapVeto', isGapDown ? '<span class="text-red-500">FAIL</span>' : '<span class="text-emerald-400">PASS</span>');
       sf('volVeto', isHardVeto ? '<span class="text-red-500">FAIL</span>' : '<span class="text-emerald-400">PASS</span>');
-      sf('divVeto', '<span class="' + div.color + '">' + div.text + ' / Ortho ' + (orthoPenalty<1?'ON':'PASS') + '</span>');
+      sf('divVeto', '<span class="' + div.color + '">' + div.text + ' / Ortho ' + (orthoPenalty<1?'ON':'PASS') + ' / ' + (isBBVeto?'BB VETO':'BB PASS') + '</span>');
 
       var action = '區間觀察', actionClass='text-slate-300';
-      if (finalScore < 50 || isHardVeto || isGapDown) { action='嚴禁進場 / 降低曝險'; actionClass='text-red-400'; }
+      if (finalScore < 50 || isHardVeto || isGapDown || isBBVeto) { action='嚴禁進場 / 降低曝險'; actionClass='text-red-400'; }
       else if (isStop) { action='暫緩進場 / 等收復防線'; actionClass='text-orange-400'; }
+      else if (isBBBreakout && finalScore >= 70) { action='布林壓縮突破 / DMI確認'; actionClass='text-cyan-300'; }
       else if (finalScore >= 75 && bias20 < 0.08) { action='趨勢多頭 / 回測布局'; actionClass='text-emerald-400'; }
       else if (finalScore >= 70 && bias20 >= 0.15) { action='追高風險 / 分批停利'; actionClass='text-yellow-400'; }
       else if (finalScore >= 65) { action='小部位試單 / 嚴守停損'; actionClass='text-emerald-300'; }
+
+      var flags = [];
+      if (isHardVeto) flags.push('Volume VETO');
+      if (isGapDown) flags.push('Gap VETO');
+      if (isBBVeto) flags.push('BB+DMI VETO');
+      if (isStop) flags.push('Chandelier');
+      if (div.score < 0) flags.push(div.text.replace(/[🚨⚠️⚡]/g,''));
+      if (orthoPenalty < 1) flags.push('Ortho Penalty');
+      if (liquidityTxt !== '充足') flags.push('Liquidity ' + liquidityTxt);
+      if (!flow.real && market === 'TW') flags.push('Flow Proxy');
+      var gradeObj = computeTradeGrade({score:finalScore, confidence:confidence, pos:finalPosSize, netExp:netExpectancy, dar95:mc.dar95, ruin:mc.ruinProb, veto:(isHardVeto||isGapDown||isBBVeto), stop:isStop});
+      var existingExposure = latestSignalExposure();
+      var projectedExposure = clamp(existingExposure + finalPosSize, 0, 2);
+      var portfolioWarn = projectedExposure > pcfg.totalCap ? '超過上限' : 'OK';
+      if (portfolioWarn !== 'OK' && finalPosSize > 0) gradeObj = {grade:'B', color:'text-yellow-300', rule:'投資組合總曝險可能過高，建議先減少其他持股或降低本次部位。'};
+
+      sf('tradeGradeBadge', '<span class="' + gradeObj.color + ' font-black">Grade: ' + gradeObj.grade + '</span>');
+      sf('netExpectancy', '<span class="' + (netExpectancy>=0?'text-emerald-400':'text-red-400') + '">' + (netExpectancy*100).toFixed(2) + '%</span>');
+      sf('costModelTxt', (costModel.total*100).toFixed(2) + '%');
+      sf('riskRuleTxt', (pcfg.riskPct*100).toFixed(1) + '% / ' + atrShares.toLocaleString() + '股');
+      sf('portfolioTxt', (projectedExposure*100).toFixed(1) + '% / ' + (pcfg.totalCap*100).toFixed(0) + '%');
+      sf('tradingRuleText', gradeObj.rule + '｜成本模型：交易成本 ' + (costModel.base*100).toFixed(2) + '% + 滑價 ' + (costModel.slip*100).toFixed(2) + '% + 流動性/波動補償 ' + ((costModel.illiq+costModel.pain)*100).toFixed(2) + '%。');
+
+      window.lastSignal = {
+        date: new Date().toISOString().slice(0,19).replace('T',' '),
+        market: market,
+        ticker: result.symbol.display,
+        source: result.source,
+        price: L.close,
+        score: finalScore,
+        grade: gradeObj.grade,
+        action: action,
+        pos: finalPosSize,
+        netExp: netExpectancy,
+        dar95: mc.dar95,
+        confidence: confidence,
+        flags: flags.join(' / ') || 'PASS'
+      };
 
       sf('actionText', '<span class="' + actionClass + '">' + action + '</span>');
       sf('trailingStop', '<span class="' + (isStop ? 'text-red-500' : 'text-emerald-400') + '">' + chandelier.toFixed(2) + '</span>');
       sf('leg-source', 'Source: ' + result.source);
       sf('leg-poc', 'POC: ' + poc.poc.toFixed(2));
 
-      updateCharts(data, e20, e60, poc, rsi, atr, macdObj);
+      updateCharts(data, e20, e60, poc, rsi, atr, macdObj, adx, bb);
     } catch(e) {
       console.error(e);
       var html = '<div class="flex flex-col items-center justify-center h-full w-full bg-slate-900/80 absolute inset-0 z-20">' +
@@ -1278,6 +1601,192 @@
     } finally {
       if (overlay) overlay.classList.add('hidden');
       window.isAnalyzing = false;
+    }
+  };
+
+
+
+  function maxDrawdownFrom(data, startIndex) {
+    var peak = data[startIndex] ? data[startIndex].close : 1;
+    var mdd = 0;
+    for (var i=startIndex; i<data.length; i++) {
+      if (data[i].close > peak) peak = data[i].close;
+      var dd = peak > 0 ? (peak - data[i].close) / peak : 0;
+      if (dd > mdd) mdd = dd;
+    }
+    return mdd;
+  }
+
+  function findStartIndex(data, startDate) {
+    for (var i=0; i<data.length; i++) {
+      if ((data[i].time || data[i].date) >= startDate) return i;
+    }
+    return Math.max(0, data.length - 1);
+  }
+
+  function batchRowHtml(r) {
+    if (r.error) {
+      return '<tr class="text-red-300"><td class="p-2">'+r.market+'</td><td class="p-2 font-mono font-bold">'+r.ticker+'</td><td colspan="11" class="p-2">失敗：'+r.error+'</td></tr>';
+    }
+    var scoreClass = r.score >= 75 ? 'text-emerald-400' : r.score >= 60 ? 'text-yellow-300' : 'text-red-400';
+    var retClass = r.ret >= 0 ? 'text-emerald-400' : 'text-red-400';
+    var posClass = r.pos > 0 ? 'text-emerald-400' : 'text-slate-500';
+    return '<tr class="hover:bg-slate-800/60">' +
+      '<td class="p-2 text-slate-400">'+r.market+'</td>' +
+      '<td class="p-2 font-mono font-black text-white">'+r.ticker+'</td>' +
+      '<td class="p-2 text-slate-400 max-w-[150px] truncate" title="'+r.source+'">'+r.source+'</td>' +
+      '<td class="p-2 text-right font-mono">'+r.startClose.toFixed(2)+'</td>' +
+      '<td class="p-2 text-right font-mono">'+r.lastClose.toFixed(2)+'</td>' +
+      '<td class="p-2 text-right font-mono '+retClass+'">'+(r.ret*100).toFixed(1)+'%</td>' +
+      '<td class="p-2 text-right font-mono text-red-300">'+(r.mdd*100).toFixed(1)+'%</td>' +
+      '<td class="p-2 text-right font-mono font-black '+scoreClass+'">'+r.score+'</td>' +
+      '<td class="p-2 '+r.actionClass+' font-bold">'+r.action+'</td>' +
+      '<td class="p-2 text-right font-mono '+posClass+'">'+(r.pos*100).toFixed(1)+'%</td>' +
+      '<td class="p-2 text-right font-mono text-red-300">'+(r.dar95*100).toFixed(1)+'%</td>' +
+      '<td class="p-2 text-right font-mono text-indigo-300">'+r.confidence.toFixed(0)+'%</td>' +
+      '<td class="p-2 text-slate-300">'+r.flags+'</td>' +
+      '</tr>';
+  }
+
+  async function analyzeForBatch(ticker, market, startDate, benchCache) {
+    var oldMarket = window.currentMarket;
+    window.currentMarket = market;
+    var result = await fetchMarketData(ticker, market);
+    var data = result.data;
+    if (!data || data.length < 220) throw new Error('資料不足，EMA200 暖機不完整');
+
+    var benchmark = benchCache[market];
+    if (!benchmark) {
+      benchmark = await fetchBenchmarkData(market);
+      benchCache[market] = benchmark;
+    }
+    var flowRows = market === 'TW' ? await fetchFinMindFlow(result.symbol) : null;
+
+    var e20=calcEMA(data,20), e60=calcEMA(data,60), e120=calcEMA(data,120), e200=calcEMA(data,200);
+    var atr=calcATR(data,14), rsi=calcRSI(data,14), adx=calcDMI(data,14), obv=calcOBV(data), macdObj=calcMACD(data), bb=calcBollinger(data,20,2);
+    var L=data[data.length-1], e20Val=e20[e20.length-1].value, e60Val=e60[e60.length-1].value, e120Val=e120[e120.length-1].value;
+    var a14=atr[atr.length-1].atr || 1, adxVal=adx[adx.length-1].adx || 20, lastDmi=adx[adx.length-1];
+    var bbLast=bb[bb.length-1], bbWidthRank=percentileRank(bb.slice(-120).map(function(x){return x.width;}), bbLast.width);
+    var vol20=avg(data.slice(-20).map(function(d){return d.volume;}));
+    var isBBSqueeze = bbWidthRank <= 0.20;
+    var isBBBreakout = L.close > bbLast.upper && L.volume > vol20*1.2 && lastDmi.pdi > lastDmi.mdi && adxVal > 20;
+    var bbScore = isBBBreakout ? 100 : (isBBSqueeze && L.close > bbLast.mid ? 82 : (bbLast.pctB >= 0.80 ? 72 : (bbLast.pctB <= 0.20 ? 32 : 55)));
+    var dmiDirectionalScore = clamp(50 + lastDmi.spread*1.2 + (adxVal-20)*1.3, 0, 100);
+    var benchForRegime = benchmark || data;
+    var hmm = calculateRegimeProbability(benchForRegime, calcDMI(benchForRegime,14));
+
+    var dScore=L.close>e20Val?100:35, wScore=e20Val>e60Val?100:35, mScore=e60Val>e120Val?100:35;
+    var sTrend=Math.round(dScore*0.4+wScore*0.4+mScore*0.2);
+    var bias20=(L.close-e20Val)/e20Val, rs=calcRelativeStrengthScore(data, benchmark);
+    var adxScore=clamp((adxVal-12)*4,0,100), biasScore=clamp(55+bias20*250,0,100);
+    var sMom=clamp(rs.score*0.34 + adxScore*0.16 + biasScore*0.14 + dmiDirectionalScore*0.18 + bbScore*0.18,0,100);
+    if (bias20 > 0.18) sMom = Math.min(sMom,72);
+    var ui=calcUlcerIndex(data,60);
+    var hh22=Math.max.apply(null,data.slice(-22).map(function(d){return d.high;}));
+    var chandelier=hh22-3*a14;
+    var stopDistancePct=(L.close-chandelier)/L.close;
+    var sRisk=clamp((L.close>e60Val?65:20)+clamp(stopDistancePct*500,0,35)+clamp(35-ui*350,0,35),0,100);
+    if (lastDmi.mdi > lastDmi.pdi && adxVal > 25) sRisk = Math.min(sRisk,58);
+    if (L.close < bbLast.mid) sRisk = Math.min(sRisk,76);
+    if (L.close < bbLast.lower) sRisk = Math.min(sRisk,45);
+
+    var flow = calcFlowScore(flowRows, data, e20Val);
+    var sFlow = flow.score;
+    var returns=[], volChg=[];
+    for (var i=Math.max(1,data.length-61); i<data.length; i++) { returns.push(data[i].close/data[i-1].close-1); volChg.push(data[i-1].volume>0?data[i].volume/data[i-1].volume-1:0); }
+    var rho=spearman(returns,volChg), orthoPenalty=1;
+    if (Math.abs(rho)>0.70 && Math.abs(bias20)>0.10) orthoPenalty=0.85;
+    sMom*=orthoPenalty;
+    var wTrend=0.25,wMom=0.25,wRisk=0.25,wFlow=0.25;
+    if (hmm.pBear>0.55) {wTrend=0.16;wMom=0.12;wRisk=0.52;wFlow=0.20;} else if (hmm.pBull>0.55) {wTrend=0.30;wMom=0.34;wRisk=0.16;wFlow=0.20;} else {wTrend=0.22;wMom=0.20;wRisk=0.35;wFlow=0.23;}
+    var past=data[data.length-21]||data[0], pastRet=(L.close-past.close)/past.close;
+    if (pastRet>0.06 && hmm.pBear<0.45) {wTrend+=0.04;wMom+=0.04;wRisk-=0.05;wFlow-=0.03;}
+    if (pastRet<-0.06) {wRisk+=0.08;wMom-=0.05;wTrend-=0.03;}
+    wMom*=orthoPenalty; var wSum=wTrend+wMom+wRisk+wFlow; wTrend/=wSum;wMom/=wSum;wRisk/=wSum;wFlow/=wSum;
+    var finalScore=Math.round(sTrend*wTrend+sMom*wMom+sRisk*wRisk+sFlow*wFlow);
+    var div=checkMultiDivergence(data,rsi,macdObj,obv); finalScore += div.score;
+    if (isBBBreakout && finalScore>=60 && bias20<0.12) finalScore += 4;
+    var isBBVeto=L.close<bbLast.lower && lastDmi.mdi>lastDmi.pdi && adxVal>25;
+    var volThreshold=hmm.pBear>0.5?1.5:(hmm.pBull>0.6?2.5:2.0);
+    var isHardVeto=L.close<e60Val && L.volume>vol20*volThreshold;
+    var prevL=data[data.length-2]||L;
+    var isGapDown=L.open<prevL.low*0.97 && L.volume>vol20*1.5;
+    var isStop=L.close<chandelier;
+    if (isHardVeto||isGapDown) finalScore=Math.min(finalScore,40);
+    if (isBBVeto) finalScore=Math.min(finalScore,45);
+    if (isStop) finalScore=Math.min(finalScore,59);
+    finalScore=clamp(finalScore,0,100);
+
+    var avgTurnover20=avg(data.slice(-20).map(function(d){return d.volume*d.close;}));
+    var liquidityCap=100, liquidityTxt='OK';
+    if (market==='TW') { if (avgTurnover20<5000000){liquidityCap=65;liquidityTxt='流動性過低';} else if (avgTurnover20<20000000){liquidityCap=80;liquidityTxt='流動性偏低';} }
+    else { if (avgTurnover20<1000000){liquidityCap=65;liquidityTxt='流動性過低';} else if (avgTurnover20<5000000){liquidityCap=80;liquidityTxt='流動性偏低';} }
+    finalScore=clamp(Math.min(finalScore,liquidityCap),0,100);
+
+    var stats=runBayesianCVaREngine(data,e20,e60,atr), mc=runBlockBootstrapMC(stats.trades);
+    var cvarRisk=Math.abs(stats.cvar || -0.03), uiMultiplier=clamp(0.08/Math.max(ui,0.01),0.25,2.0);
+    var batchCost=estimateRoundTripCost(market, ui, avgTurnover20);
+    var batchNetExp=(stats.mu||0)-batchCost.total;
+    var finalPosSize=clamp(stats.halfKelly*(0.05/cvarRisk)*uiMultiplier,0,0.20);
+    if (batchNetExp<=0) finalPosSize=Math.min(finalPosSize,0.03);
+    if (finalScore<50||isHardVeto||isGapDown||isBBVeto) finalPosSize=0;
+    var confidence=clamp(50+Math.min(20,data.length/50)+Math.min(15,stats.trades.length*1.2)+(result.source.indexOf('Yahoo')>=0?-8:8)+(flow.real?8:-4)+(benchmark?5:-4),30,98);
+
+    var startIdx=findStartIndex(data,startDate);
+    var startClose=data[startIdx].close;
+    var ret=startClose>0?(L.close-startClose)/startClose:0;
+    var mdd=maxDrawdownFrom(data,startIdx);
+    var action='觀察'; var actionClass='text-slate-300';
+    if (finalScore<50||isHardVeto||isGapDown||isBBVeto) { action='防守/不進場'; actionClass='text-red-400'; }
+    else if (isStop) { action='跌破防線'; actionClass='text-orange-400'; }
+    else if (isBBBreakout && finalScore>=70) { action='突破候選'; actionClass='text-cyan-300'; }
+    else if (finalScore>=75 && bias20<0.08) { action='回測布局'; actionClass='text-emerald-400'; }
+    else if (finalScore>=70 && bias20>=0.15) { action='過熱停利'; actionClass='text-yellow-400'; }
+    else if (finalScore>=65) { action='小部位試單'; actionClass='text-emerald-300'; }
+    var flags=[];
+    if (isHardVeto) flags.push('Volume VETO');
+    if (isGapDown) flags.push('Gap VETO');
+    if (isBBVeto) flags.push('BB+DMI VETO');
+    if (isStop) flags.push('Chandelier');
+    if (div.score<0) flags.push(div.text.replace(/[🚨⚠️⚡]/g,''));
+    if (orthoPenalty<1) flags.push('Ortho Penalty');
+    if (liquidityTxt!=='OK') flags.push(liquidityTxt);
+    if (isBBBreakout) flags.push('BB+DMI Breakout');
+    if (!flow.real && market==='TW') flags.push('Flow Proxy');
+    window.currentMarket = oldMarket;
+    return { market:market, ticker:result.symbol.display, source:result.source, startClose:startClose, lastClose:L.close, ret:ret, mdd:mdd, score:finalScore, action:action, actionClass:actionClass, pos:finalPosSize, dar95:mc.dar95, confidence:confidence, flags:flags.join(' / ') || 'PASS' };
+  }
+
+  window.runBatchPreset = async function() {
+    if (window.isBatchRunning) return;
+    window.isBatchRunning = true;
+    var panel=$('batchPanel'), table=$('batchTable'), summary=$('batchSummary'), notes=$('batchNotes');
+    if (panel) panel.classList.remove('hidden');
+    if (table) table.innerHTML='';
+    var startDate=($('batchStartDate') && $('batchStartDate').value) || '2026-01-01';
+    var cases=[
+      {market:'TW',ticker:'2308.TW'}, {market:'TW',ticker:'1802.TW'}, {market:'TW',ticker:'2330.TW'}, {market:'TW',ticker:'3189.TW'},
+      {market:'US',ticker:'DELL'}, {market:'US',ticker:'ARM'}, {market:'US',ticker:'RGTI'}, {market:'US',ticker:'TSLA'}
+    ];
+    var results=[], benchCache={};
+    try {
+      for (var i=0;i<cases.length;i++) {
+        if (summary) summary.innerHTML='執行中：'+(i+1)+' / '+cases.length+'，目前測試 '+cases[i].ticker+'。';
+        if (table) table.innerHTML += '<tr id="batch-loading-'+i+'"><td class="p-2 text-slate-400">'+cases[i].market+'</td><td class="p-2 font-mono text-white">'+cases[i].ticker+'</td><td colspan="11" class="p-2 text-indigo-300">讀取資料與計算中...</td></tr>';
+        var r;
+        try { r = await analyzeForBatch(cases[i].ticker, cases[i].market, startDate, benchCache); }
+        catch(e) { r = {market:cases[i].market, ticker:cases[i].ticker, error:e.message||String(e)}; }
+        results.push(r);
+        var row=$('batch-loading-'+i); if (row) row.outerHTML=batchRowHtml(r);
+        await sleep(250);
+      }
+      var ok=results.filter(function(x){return !x.error;});
+      var high=ok.filter(function(x){return x.score>=70 && x.pos>0;});
+      var warn=ok.filter(function(x){return x.score<50 || x.pos===0;});
+      if (summary) summary.innerHTML='完成：成功 '+ok.length+' 檔，失敗 '+(results.length-ok.length)+' 檔。可優先觀察分數 ≥70 且 Safe ERC >0 的標的；分數 <50 或 VETO 者不建議追價。';
+      if (notes) notes.innerHTML='判讀提醒：本批次測試以 '+startDate+' 後的價格區間計算報酬與 MDD，但 EMA120/EMA200、ADX、布林寬度分位、CVaR 與 MC 皆使用較長歷史資料暖機，避免 2026-01-01 起算造成長均線失真。若資料源為 Yahoo 或 Flow Proxy，Confidence 會自動降低；v17.0 另加入交易成本、滑價與 Forward Test 訊號日誌，實盤前需連續追蹤訊號。';
+    } finally {
+      window.isBatchRunning=false;
     }
   };
 
