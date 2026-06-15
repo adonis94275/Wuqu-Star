@@ -5,8 +5,8 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <meta content="notranslate" name="google"/>
-<title>ASQE v17.4.1 實戰訊號驗證版 | GitHub Pages Pro</title>
-<script type="text/javascript" nonce="d8cbadd62b354cb3bac5816de5b" src="//local.adguard.org?ts=1781524122383&amp;type=content-script&amp;dmn=chatgpt.com&amp;url=https%3A%2F%2Fchatgpt.com%2Fbackend-api%2Festuary%2Fcontent%3Fid%3Dfile_00000000e02c7209b122565b8f42e27f%26ts%3D494868%26p%3Dfs%26cid%3D1%26sig%3Dc0eef31a142b3d40ec1f597d43135144509f0adea37b953601b1eef7c83751d7%26v%3D0&amp;app=chrome.exe&amp;css=2&amp;js=1&amp;rel=1&amp;rji=1&amp;sbe=1&amp;stealth=1&amp;st-dnt"></script><script type="text/javascript" nonce="d8cbadd62b354cb3bac5816de5b" src="//local.adguard.org?ts=1781524122383&amp;name=AdGuard%20Extra&amp;name=AdGuard%20Popup%20Blocker&amp;type=user-script"></script><script>
+<title>ASQE v17.4.2 實戰訊號驗證版 | GitHub Pages Pro</title>
+<script type="text/javascript" nonce="d8cbadd62b354cb3bac5816de5b" src="//local.adguard.org?ts=1781525720805&amp;type=content-script&amp;dmn=chatgpt.com&amp;url=https%3A%2F%2Fchatgpt.com%2Fbackend-api%2Festuary%2Fcontent%3Fid%3Dfile_0000000059287209bf10e053212b9552%26ts%3D494868%26p%3Dfs%26cid%3D1%26sig%3D8f8ded0c30140b171856925677f5d2041c444e90fb65318ea297ed84afdc7a66%26v%3D0&amp;app=chrome.exe&amp;css=2&amp;js=1&amp;rel=1&amp;rji=1&amp;sbe=1&amp;stealth=1&amp;st-dnt"></script><script type="text/javascript" nonce="d8cbadd62b354cb3bac5816de5b" src="//local.adguard.org?ts=1781525720805&amp;name=AdGuard%20Extra&amp;name=AdGuard%20Popup%20Blocker&amp;type=user-script"></script><script>
     window.IS_CODE_COMPLETE = false;
 
     window.onerror = function(msg, url, lineNo) {
@@ -84,8 +84,8 @@
       window.holdingMode = mode === 'HOLDING' ? 'HOLDING' : 'NONE';
       var btnNone = document.getElementById('holdModeNone');
       var btnHolding = document.getElementById('holdModeHolding');
-      if (btnNone) btnNone.className = 'px-2 py-1 rounded-md text-[10px] font-black border ' + (window.holdingMode==='NONE' ? 'bg-indigo-600 text-white border-indigo-500' : 'bg-slate-950 text-slate-400 border-slate-700');
-      if (btnHolding) btnHolding.className = 'px-2 py-1 rounded-md text-[10px] font-black border ' + (window.holdingMode==='HOLDING' ? 'bg-emerald-700 text-white border-emerald-500' : 'bg-slate-950 text-slate-400 border-slate-700');
+      if (btnNone) btnNone.className = 'px-3 py-1.5 rounded-md text-[12px] font-black border ' + (window.holdingMode==='NONE' ? 'bg-indigo-600 text-white border-indigo-500' : 'bg-slate-950 text-slate-400 border-slate-700');
+      if (btnHolding) btnHolding.className = 'px-3 py-1.5 rounded-md text-[12px] font-black border ' + (window.holdingMode==='HOLDING' ? 'bg-emerald-700 text-white border-emerald-500' : 'bg-slate-950 text-slate-400 border-slate-700');
       if (typeof window.runAnalysis === 'function') {
         var val = (document.getElementById('tickerInput') || {}).value || '2330.TW';
         if (!window.isAnalyzing) window.runAnalysis(val);
@@ -116,6 +116,22 @@
     .data-card { background: #0f172a; border: 1px solid #1e293b; border-radius: 0.75rem; padding: 0.75rem; }
     .metric-value { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; font-weight: 900; }
     .badge-elite { background: linear-gradient(135deg, #1e3a8a, #4c1d95); border: 1px solid #7c3aed; }
+
+    /* v17.4.2：放大進出場訊號區塊，手機與桌面都更容易閱讀 */
+    .signal-decision-card { padding: 1rem !important; }
+    .signal-decision-title { font-size: 13px !important; letter-spacing: .08em; }
+    .signal-label { font-size: 10.5px !important; color: #94a3b8 !important; margin-bottom: 0.22rem !important; }
+    .signal-main-value { font-size: 15px !important; line-height: 1.45 !important; }
+    .signal-sub-value { font-size: 16px !important; line-height: 1.45 !important; }
+    #tradingRuleText { font-size: 13px !important; line-height: 1.85 !important; padding: .85rem !important; }
+    #tradeGradeBadge { font-size: 11px !important; padding: .25rem .45rem !important; }
+    #holdModeNone, #holdModeHolding { font-size: 12px !important; padding: .38rem .7rem !important; }
+    @media (max-width: 640px) {
+      .signal-decision-title { font-size: 12px !important; }
+      .signal-main-value { font-size: 14px !important; }
+      .signal-sub-value { font-size: 15px !important; }
+      #tradingRuleText { font-size: 12.5px !important; }
+    }
   </style>
 </head>
 <body class="flex flex-col min-h-screen relative overflow-hidden">
@@ -125,7 +141,7 @@
 <div class="w-16 h-16 bg-slate-950 rounded-2xl flex items-center justify-center mb-5 border border-slate-700 shadow-inner">
 <span class="text-3xl">🏛️</span>
 </div>
-<h1 class="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-indigo-300 to-orange-300 tracking-wider mb-1">ASQE v17.4.1</h1>
+<h1 class="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-indigo-300 to-orange-300 tracking-wider mb-1">ASQE v17.4.2</h1>
 <p class="text-[9px] text-indigo-100 mb-8 font-mono tracking-widest uppercase px-2 py-1 rounded badge-elite">實戰訊號驗證版</p>
 <input autocomplete="off" class="w-full bg-slate-950 text-white border border-slate-700 rounded-xl px-4 py-3.5 mb-5 focus:outline-none focus:border-indigo-500 text-center tracking-widest font-mono" id="passwordInput" inputmode="numeric" onkeypress="if(event.key==='Enter') window.checkAndUnlock()" placeholder="輸入授權碼" type="password"/>
 <button class="w-full bg-gradient-to-r from-indigo-700 to-purple-700 hover:from-indigo-600 hover:to-purple-600 text-white font-black py-3.5 rounded-xl transition-all shadow-lg tracking-widest cursor-pointer" id="unlockBtn" onclick="window.checkAndUnlock()">啟動量化核心</button>
@@ -165,7 +181,7 @@
 <div class="flex items-center gap-3">
 <div class="w-8 h-8 bg-gradient-to-br from-indigo-600 to-purple-900 rounded-lg flex items-center justify-center font-bold text-sm border border-slate-700">🏛️</div>
 <div class="flex flex-col">
-<h1 class="text-base font-black tracking-widest text-slate-100 leading-none">ASQE v17.4.1</h1>
+<h1 class="text-base font-black tracking-widest text-slate-100 leading-none">ASQE v17.4.2</h1>
 <span class="text-[9px] text-indigo-400 font-mono tracking-wider mt-0.5">實戰訊號驗證版</span>
 </div>
 </div>
@@ -195,7 +211,7 @@
 <div class="flex flex-col gap-3 p-4 border-b border-slate-800">
 <div class="flex flex-col md:flex-row md:items-center justify-between gap-3">
 <div>
-<div class="text-lg font-black tracking-widest text-white">ASQE v17.4.1 個股區間測試</div>
+<div class="text-lg font-black tracking-widest text-white">ASQE v17.4.2 個股區間測試</div>
 <div class="text-[11px] text-slate-400 mt-1">輸入任一台股或美股代碼，設定開始日與結束日，回放 ASQE 進出場規則，檢查期間操作是否合適。指標會使用起始日前資料暖機，避免長均線失真。</div>
 </div>
 <div class="flex items-center gap-2">
@@ -304,26 +320,26 @@
 </div>
 </div>
 </div>
-<div class="data-card border-emerald-900/30">
+<div class="data-card border-emerald-900/30 signal-decision-card">
 <div class="flex justify-between items-center mb-2">
-<span class="text-emerald-400 text-[10px] font-black uppercase tracking-wider">🚦 實戰進出場訊號（未持股 / 已持股）</span>
+<span class="text-emerald-400 signal-decision-title font-black uppercase tracking-wider">🚦 實戰進出場訊號（未持股 / 已持股）</span>
 <div class="flex items-center gap-1">
-<button id="holdModeNone" onclick="window.setHoldingMode('NONE')" class="px-2 py-1 rounded-md text-[10px] font-black border bg-indigo-600 text-white border-indigo-500">未持股</button>
-<button id="holdModeHolding" onclick="window.setHoldingMode('HOLDING')" class="px-2 py-1 rounded-md text-[10px] font-black border bg-slate-950 text-slate-400 border-slate-700">已持股</button>
-<span class="text-[9px] px-1.5 py-0.5 rounded font-mono bg-slate-950 text-slate-400 border border-slate-800" id="tradeGradeBadge">燈號: --</span>
+<button id="holdModeNone" onclick="window.setHoldingMode('NONE')" class="px-3 py-1.5 rounded-md text-[12px] font-black border bg-indigo-600 text-white border-indigo-500">未持股</button>
+<button id="holdModeHolding" onclick="window.setHoldingMode('HOLDING')" class="px-3 py-1.5 rounded-md text-[12px] font-black border bg-slate-950 text-slate-400 border-slate-700">已持股</button>
+<span class="text-[11px] px-2 py-1 rounded font-mono bg-slate-950 text-slate-400 border border-slate-800" id="tradeGradeBadge">燈號: --</span>
 </div>
 </div>
-<div class="grid grid-cols-4 gap-1.5 text-center mb-2">
-<div class="bg-slate-950 p-1.5 rounded border border-slate-800"><div class="text-[8px] text-slate-500 mb-0.5">目前實際指令</div><div class="text-[11px] font-bold text-white metric-value" id="actualActionText">--</div></div>
-<div class="bg-slate-950 p-1.5 rounded border border-slate-800"><div class="text-[8px] text-slate-500 mb-0.5">訊號型態</div><div class="text-[11px] font-bold text-white metric-value" id="signalTypeTxt">--</div></div>
-<div class="bg-slate-950 p-1.5 rounded border border-slate-800"><div class="text-[8px] text-slate-500 mb-0.5">停利 / 減碼</div><div class="text-[11px] font-bold text-white metric-value" id="riskRuleTxt">--</div></div>
-<div class="bg-slate-950 p-1.5 rounded border border-slate-800"><div class="text-[8px] text-slate-500 mb-0.5">關鍵防線</div><div class="text-[11px] font-bold text-white metric-value" id="portfolioTxt">--</div></div>
+<div class="grid grid-cols-4 gap-2 text-center mb-2">
+<div class="bg-slate-950 p-2.5 rounded border border-slate-800"><div class="signal-label">目前實際指令</div><div class="signal-main-value font-black text-white metric-value" id="actualActionText">--</div></div>
+<div class="bg-slate-950 p-2.5 rounded border border-slate-800"><div class="signal-label">訊號型態</div><div class="signal-main-value font-black text-white metric-value" id="signalTypeTxt">--</div></div>
+<div class="bg-slate-950 p-2.5 rounded border border-slate-800"><div class="signal-label">停利 / 減碼</div><div class="signal-main-value font-black text-white metric-value" id="riskRuleTxt">--</div></div>
+<div class="bg-slate-950 p-2.5 rounded border border-slate-800"><div class="signal-label">關鍵防線</div><div class="signal-main-value font-black text-white metric-value" id="portfolioTxt">--</div></div>
 </div>
-<div class="grid grid-cols-2 gap-1.5 text-center mb-2">
-<div class="bg-slate-950 p-1.5 rounded border border-slate-800"><div class="text-[8px] text-slate-500 mb-0.5">未持股該怎麼做</div><div class="text-[11px] font-bold text-white metric-value" id="netExpectancy">--</div></div>
-<div class="bg-slate-950 p-1.5 rounded border border-slate-800"><div class="text-[8px] text-slate-500 mb-0.5">已持股該怎麼做</div><div class="text-[11px] font-bold text-white metric-value" id="costModelTxt">--</div></div>
+<div class="grid grid-cols-2 gap-2 text-center mb-2">
+<div class="bg-slate-950 p-2.5 rounded border border-slate-800"><div class="signal-label">未持股該怎麼做</div><div class="signal-sub-value font-black text-white metric-value" id="netExpectancy">--</div></div>
+<div class="bg-slate-950 p-2.5 rounded border border-slate-800"><div class="signal-label">已持股該怎麼做</div><div class="signal-sub-value font-black text-white metric-value" id="costModelTxt">--</div></div>
 </div>
-<div class="bg-slate-950 p-2 rounded border border-slate-800 text-[10px] text-slate-300 leading-relaxed" id="tradingRuleText">等待訊號。</div>
+<div class="bg-slate-950 p-3 rounded border border-slate-800 text-slate-200 leading-relaxed" id="tradingRuleText">等待訊號。</div>
 </div>
 <div class="data-card border-indigo-900/30">
 <div class="flex justify-between items-center mb-2">
@@ -570,21 +586,6 @@
     var m = String(d.getMonth()+1).padStart(2,'0');
     var day = String(d.getDate()).padStart(2,'0');
     return d.getFullYear() + '-' + m + '-' + day;
-  }
-  function formatCloseDate(timeStr) {
-    if (!timeStr) return '--/--';
-    var parts = String(timeStr).split('-');
-    if (parts.length >= 3) return Number(parts[1]) + '/' + Number(parts[2]);
-    var d = new Date(timeStr);
-    if (!isNaN(d.getTime())) return (d.getMonth()+1) + '/' + d.getDate();
-    return String(timeStr);
-  }
-  function formatPriceByMarket(price, market) {
-    var v = Number(price);
-    if (!isFinite(v)) return '--';
-    var decimals = v >= 100 ? 2 : (v >= 10 ? 2 : 3);
-    var formatted = v.toLocaleString('zh-TW', { minimumFractionDigits: decimals, maximumFractionDigits: decimals });
-    return market === 'US' ? '$' + formatted : formatted + ' 元';
   }
   function yearsAgo(n) {
     var d = new Date();
