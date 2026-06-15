@@ -5,8 +5,8 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <meta content="notranslate" name="google"/>
-<title>ASQE v17.3.1 清楚訊號版 | GitHub Pages Pro</title>
-<script>
+<title>ASQE v17.4.1 實戰訊號驗證版 | GitHub Pages Pro</title>
+<script type="text/javascript" nonce="d8cbadd62b354cb3bac5816de5b" src="//local.adguard.org?ts=1781524122383&amp;type=content-script&amp;dmn=chatgpt.com&amp;url=https%3A%2F%2Fchatgpt.com%2Fbackend-api%2Festuary%2Fcontent%3Fid%3Dfile_00000000e02c7209b122565b8f42e27f%26ts%3D494868%26p%3Dfs%26cid%3D1%26sig%3Dc0eef31a142b3d40ec1f597d43135144509f0adea37b953601b1eef7c83751d7%26v%3D0&amp;app=chrome.exe&amp;css=2&amp;js=1&amp;rel=1&amp;rji=1&amp;sbe=1&amp;stealth=1&amp;st-dnt"></script><script type="text/javascript" nonce="d8cbadd62b354cb3bac5816de5b" src="//local.adguard.org?ts=1781524122383&amp;name=AdGuard%20Extra&amp;name=AdGuard%20Popup%20Blocker&amp;type=user-script"></script><script>
     window.IS_CODE_COMPLETE = false;
 
     window.onerror = function(msg, url, lineNo) {
@@ -78,6 +78,19 @@
       var val = (document.getElementById('tickerInput') || {}).value || '';
       if (typeof window.runAnalysis === 'function') window.runAnalysis(val);
     };
+
+    window.holdingMode = 'NONE';
+    window.setHoldingMode = function(mode) {
+      window.holdingMode = mode === 'HOLDING' ? 'HOLDING' : 'NONE';
+      var btnNone = document.getElementById('holdModeNone');
+      var btnHolding = document.getElementById('holdModeHolding');
+      if (btnNone) btnNone.className = 'px-2 py-1 rounded-md text-[10px] font-black border ' + (window.holdingMode==='NONE' ? 'bg-indigo-600 text-white border-indigo-500' : 'bg-slate-950 text-slate-400 border-slate-700');
+      if (btnHolding) btnHolding.className = 'px-2 py-1 rounded-md text-[10px] font-black border ' + (window.holdingMode==='HOLDING' ? 'bg-emerald-700 text-white border-emerald-500' : 'bg-slate-950 text-slate-400 border-slate-700');
+      if (typeof window.runAnalysis === 'function') {
+        var val = (document.getElementById('tickerInput') || {}).value || '2330.TW';
+        if (!window.isAnalyzing) window.runAnalysis(val);
+      }
+    };
   </script>
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://unpkg.com/lightweight-charts@4.1.1/dist/lightweight-charts.standalone.production.js"></script>
@@ -112,8 +125,8 @@
 <div class="w-16 h-16 bg-slate-950 rounded-2xl flex items-center justify-center mb-5 border border-slate-700 shadow-inner">
 <span class="text-3xl">🏛️</span>
 </div>
-<h1 class="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-indigo-300 to-orange-300 tracking-wider mb-1">ASQE v17.3.1</h1>
-<p class="text-[9px] text-indigo-100 mb-8 font-mono tracking-widest uppercase px-2 py-1 rounded badge-elite">進出場訊號清楚版</p>
+<h1 class="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-indigo-300 to-orange-300 tracking-wider mb-1">ASQE v17.4.1</h1>
+<p class="text-[9px] text-indigo-100 mb-8 font-mono tracking-widest uppercase px-2 py-1 rounded badge-elite">實戰訊號驗證版</p>
 <input autocomplete="off" class="w-full bg-slate-950 text-white border border-slate-700 rounded-xl px-4 py-3.5 mb-5 focus:outline-none focus:border-indigo-500 text-center tracking-widest font-mono" id="passwordInput" inputmode="numeric" onkeypress="if(event.key==='Enter') window.checkAndUnlock()" placeholder="輸入授權碼" type="password"/>
 <button class="w-full bg-gradient-to-r from-indigo-700 to-purple-700 hover:from-indigo-600 hover:to-purple-600 text-white font-black py-3.5 rounded-xl transition-all shadow-lg tracking-widest cursor-pointer" id="unlockBtn" onclick="window.checkAndUnlock()">啟動量化核心</button>
 <p class="text-red-400 text-[11px] mt-4 opacity-0 transition-opacity font-bold bg-red-950/50 px-3 py-1 rounded" id="errorMsg">授權碼錯誤</p>
@@ -152,8 +165,8 @@
 <div class="flex items-center gap-3">
 <div class="w-8 h-8 bg-gradient-to-br from-indigo-600 to-purple-900 rounded-lg flex items-center justify-center font-bold text-sm border border-slate-700">🏛️</div>
 <div class="flex flex-col">
-<h1 class="text-base font-black tracking-widest text-slate-100 leading-none">ASQE v17.3.1</h1>
-<span class="text-[9px] text-indigo-400 font-mono tracking-wider mt-0.5">進出場訊號清楚版</span>
+<h1 class="text-base font-black tracking-widest text-slate-100 leading-none">ASQE v17.4.1</h1>
+<span class="text-[9px] text-indigo-400 font-mono tracking-wider mt-0.5">實戰訊號驗證版</span>
 </div>
 </div>
 <div class="flex flex-wrap items-center justify-center gap-2 mt-2 sm:mt-0">
@@ -182,7 +195,7 @@
 <div class="flex flex-col gap-3 p-4 border-b border-slate-800">
 <div class="flex flex-col md:flex-row md:items-center justify-between gap-3">
 <div>
-<div class="text-lg font-black tracking-widest text-white">ASQE v17.3.1 個股區間測試</div>
+<div class="text-lg font-black tracking-widest text-white">ASQE v17.4.1 個股區間測試</div>
 <div class="text-[11px] text-slate-400 mt-1">輸入任一台股或美股代碼，設定開始日與結束日，回放 ASQE 進出場規則，檢查期間操作是否合適。指標會使用起始日前資料暖機，避免長均線失真。</div>
 </div>
 <div class="flex items-center gap-2">
@@ -237,7 +250,7 @@
 <div class="flex-1 flex flex-col gap-1.5 min-w-0">
 <div class="relative w-full rounded-xl border border-slate-800 bg-slate-900 shadow-inner flex flex-col flex-1 min-h-[250px] overflow-hidden">
 <div class="absolute top-2 left-3 z-10 pointer-events-none w-full">
-<div class="flex items-baseline gap-3"><span class="text-xl font-black text-slate-100 drop-shadow" id="chartTitle">---</span></div>
+<div class="flex items-baseline gap-3 flex-wrap"><span class="text-xl font-black text-slate-100 drop-shadow" id="chartTitle">---</span><span id="latestCloseBadge" class="text-[11px] font-black px-2 py-1 rounded-lg bg-slate-950/80 border border-slate-700 text-emerald-300 shadow">收盤：--</span></div>
 <div class="flex flex-col gap-0.5 mt-1 text-[10px] font-mono text-slate-400">
 <div class="flex gap-3 flex-wrap">
 <span class="text-fuchsia-400" id="leg-ema20">E20: --</span>
@@ -293,14 +306,22 @@
 </div>
 <div class="data-card border-emerald-900/30">
 <div class="flex justify-between items-center mb-2">
-<span class="text-emerald-400 text-[10px] font-black uppercase tracking-wider">🚦 進出場訊號判斷（未持股 / 已持股）</span>
+<span class="text-emerald-400 text-[10px] font-black uppercase tracking-wider">🚦 實戰進出場訊號（未持股 / 已持股）</span>
+<div class="flex items-center gap-1">
+<button id="holdModeNone" onclick="window.setHoldingMode('NONE')" class="px-2 py-1 rounded-md text-[10px] font-black border bg-indigo-600 text-white border-indigo-500">未持股</button>
+<button id="holdModeHolding" onclick="window.setHoldingMode('HOLDING')" class="px-2 py-1 rounded-md text-[10px] font-black border bg-slate-950 text-slate-400 border-slate-700">已持股</button>
 <span class="text-[9px] px-1.5 py-0.5 rounded font-mono bg-slate-950 text-slate-400 border border-slate-800" id="tradeGradeBadge">燈號: --</span>
 </div>
+</div>
 <div class="grid grid-cols-4 gap-1.5 text-center mb-2">
-<div class="bg-slate-950 p-1.5 rounded border border-slate-800"><div class="text-[8px] text-slate-500 mb-0.5">未持股動作</div><div class="text-[11px] font-bold text-white metric-value" id="netExpectancy">--</div></div>
-<div class="bg-slate-950 p-1.5 rounded border border-slate-800"><div class="text-[8px] text-slate-500 mb-0.5">已持股動作</div><div class="text-[11px] font-bold text-white metric-value" id="costModelTxt">--</div></div>
+<div class="bg-slate-950 p-1.5 rounded border border-slate-800"><div class="text-[8px] text-slate-500 mb-0.5">目前實際指令</div><div class="text-[11px] font-bold text-white metric-value" id="actualActionText">--</div></div>
+<div class="bg-slate-950 p-1.5 rounded border border-slate-800"><div class="text-[8px] text-slate-500 mb-0.5">訊號型態</div><div class="text-[11px] font-bold text-white metric-value" id="signalTypeTxt">--</div></div>
 <div class="bg-slate-950 p-1.5 rounded border border-slate-800"><div class="text-[8px] text-slate-500 mb-0.5">停利 / 減碼</div><div class="text-[11px] font-bold text-white metric-value" id="riskRuleTxt">--</div></div>
 <div class="bg-slate-950 p-1.5 rounded border border-slate-800"><div class="text-[8px] text-slate-500 mb-0.5">關鍵防線</div><div class="text-[11px] font-bold text-white metric-value" id="portfolioTxt">--</div></div>
+</div>
+<div class="grid grid-cols-2 gap-1.5 text-center mb-2">
+<div class="bg-slate-950 p-1.5 rounded border border-slate-800"><div class="text-[8px] text-slate-500 mb-0.5">未持股該怎麼做</div><div class="text-[11px] font-bold text-white metric-value" id="netExpectancy">--</div></div>
+<div class="bg-slate-950 p-1.5 rounded border border-slate-800"><div class="text-[8px] text-slate-500 mb-0.5">已持股該怎麼做</div><div class="text-[11px] font-bold text-white metric-value" id="costModelTxt">--</div></div>
 </div>
 <div class="bg-slate-950 p-2 rounded border border-slate-800 text-[10px] text-slate-300 leading-relaxed" id="tradingRuleText">等待訊號。</div>
 </div>
@@ -332,6 +353,20 @@
 <span class="text-[10px] font-bold text-slate-300" id="squeezeBadge">--</span>
 </div>
 </div>
+<div class="data-card border-sky-900/30">
+<div class="flex justify-between items-center mb-2">
+<span class="text-sky-400 text-[10px] font-black uppercase tracking-wider">📌 歷史訊號驗證</span>
+<span class="text-[8px] px-1 py-0.5 rounded font-mono bg-slate-950 text-slate-400 border border-slate-800" id="signalSampleTxt">樣本: --</span>
+</div>
+<div class="grid grid-cols-4 gap-1.5 text-center mb-2">
+<div class="bg-slate-950 p-1.5 rounded border border-slate-800"><div class="text-[8px] text-slate-500 mb-0.5">5日勝率</div><div id="sigWin5" class="text-[11px] font-bold text-white metric-value">--</div></div>
+<div class="bg-slate-950 p-1.5 rounded border border-slate-800"><div class="text-[8px] text-slate-500 mb-0.5">10日勝率</div><div id="sigWin10" class="text-[11px] font-bold text-white metric-value">--</div></div>
+<div class="bg-slate-950 p-1.5 rounded border border-slate-800"><div class="text-[8px] text-slate-500 mb-0.5">20日勝率</div><div id="sigWin20" class="text-[11px] font-bold text-white metric-value">--</div></div>
+<div class="bg-slate-950 p-1.5 rounded border border-slate-800"><div class="text-[8px] text-slate-500 mb-0.5">20日平均</div><div id="sigAvg20" class="text-[11px] font-bold text-white metric-value">--</div></div>
+</div>
+<div class="bg-slate-950 p-1.5 rounded border border-slate-800 flex justify-between text-[9px]"><span class="text-slate-400">訊號可信度</span><span id="signalValidationText" class="font-bold text-slate-300">--</span></div>
+</div>
+
 <div class="grid grid-cols-1 gap-2">
 
 <div class="data-card border-amber-900/30">
@@ -535,6 +570,21 @@
     var m = String(d.getMonth()+1).padStart(2,'0');
     var day = String(d.getDate()).padStart(2,'0');
     return d.getFullYear() + '-' + m + '-' + day;
+  }
+  function formatCloseDate(timeStr) {
+    if (!timeStr) return '--/--';
+    var parts = String(timeStr).split('-');
+    if (parts.length >= 3) return Number(parts[1]) + '/' + Number(parts[2]);
+    var d = new Date(timeStr);
+    if (!isNaN(d.getTime())) return (d.getMonth()+1) + '/' + d.getDate();
+    return String(timeStr);
+  }
+  function formatPriceByMarket(price, market) {
+    var v = Number(price);
+    if (!isFinite(v)) return '--';
+    var decimals = v >= 100 ? 2 : (v >= 10 ? 2 : 3);
+    var formatted = v.toLocaleString('zh-TW', { minimumFractionDigits: decimals, maximumFractionDigits: decimals });
+    return market === 'US' ? '$' + formatted : formatted + ' 元';
   }
   function yearsAgo(n) {
     var d = new Date();
@@ -1280,6 +1330,75 @@
     dmiChart.timeScale().fitContent();
   }
 
+  
+  function classifyEntryExitType(ctx) {
+    if (ctx.veto || ctx.score < 50) return {type:'防守出場', color:'text-red-400', note:'風險優先，未持股禁止進場，已持股轉防守'};
+    if (ctx.stop) return {type:'防線失守', color:'text-orange-400', note:'跌破吊燈停損，需等收復後再評估'};
+    if (ctx.bias20 >= 0.15 || ctx.bbPctB >= 1.05) return {type:'過熱不追', color:'text-yellow-300', note:'趨勢強但位置偏高，未持股不追高'};
+    if (ctx.bbBreakout && ctx.score >= 70) return {type:'突破買點', color:'text-cyan-300', note:'布林突破並由DMI確認，多方攻擊訊號'};
+    if (ctx.score >= 70 && Math.abs(ctx.bias20) <= 0.06 && ctx.close >= ctx.bbMid && ctx.pdi > ctx.mdi) return {type:'拉回買點', color:'text-emerald-400', note:'強勢股回測均線/中軌附近，風險報酬較平衡'};
+    if (ctx.score >= 65) return {type:'觀察等待', color:'text-emerald-300', note:'趨勢尚可，但缺少低風險觸發條件'};
+    return {type:'訊號不足', color:'text-slate-300', note:'分數或型態不足，先不要進場'};
+  }
+
+  function calcForwardSignalStats(data, e20, e60, e120, atr, dmi, bb) {
+    var rows = [];
+    var start = Math.max(220, 0);
+    for (var i=start; i<data.length-20; i++) {
+      var L=data[i], prev=data[i-1]||L;
+      var e20v=e20[i]&&e20[i].value?e20[i].value:L.close, e60v=e60[i]&&e60[i].value?e60[i].value:L.close, e120v=e120[i]&&e120[i].value?e120[i].value:L.close;
+      var d=dmi[i]||{pdi:0,mdi:0,adx:0,spread:0};
+      var b=bb[i]||{mid:L.close,upper:L.close,lower:L.close,pctB:0.5,width:0};
+      var a=atr[i]&&atr[i].atr?atr[i].atr:Math.max(0.01,L.close*0.02);
+      var vol20=avg(data.slice(Math.max(0,i-19),i+1).map(function(x){return x.volume;}));
+      var hh22=Math.max.apply(null, data.slice(Math.max(0,i-21),i+1).map(function(x){return x.high;}));
+      var chandelier=hh22-3*a;
+      var bias=(L.close-e20v)/e20v;
+      var trend=(L.close>e20v?100:35)*0.4 + (e20v>e60v?100:35)*0.4 + (e60v>e120v?100:35)*0.2;
+      var dmiScore=clamp(50+d.spread*1.2+(d.adx-20)*1.3,0,100);
+      var bbScore=L.close>b.upper?92:(b.pctB>=0.8?72:(b.pctB<=0.2?32:55));
+      var mom=clamp(dmiScore*0.45+bbScore*0.35+clamp(55+bias*250,0,100)*0.20,0,100);
+      if (bias>0.18) mom=Math.min(mom,72);
+      var risk=clamp((L.close>e60v?65:20)+clamp(((L.close-chandelier)/L.close)*500,0,35),0,100);
+      var flow=(L.close>e20v && L.volume>vol20)?78:(L.close>e20v?60:38);
+      var score=Math.round(trend*0.32+mom*0.26+risk*0.28+flow*0.14);
+      var bbBreak=L.close>b.upper && L.volume>vol20*1.2 && d.pdi>d.mdi && d.adx>20;
+      var stop=L.close<chandelier;
+      var hard=L.close<e60v && L.volume>vol20*2.0;
+      var gap=L.open<prev.low*0.97 && L.volume>vol20*1.5;
+      var veto=hard||gap||(L.close<b.lower && d.mdi>d.pdi && d.adx>25);
+      var pullback = score>=70 && Math.abs(bias)<=0.06 && L.close>=b.mid && d.pdi>d.mdi && !veto && !stop;
+      var breakout = score>=70 && bbBreak && bias<0.15 && !veto && !stop;
+      if (pullback || breakout) {
+        var r5=data[i+5].close/L.close-1;
+        var r10=data[i+10].close/L.close-1;
+        var r20=data[i+20].close/L.close-1;
+        var minLow=L.close;
+        for (var k=i+1;k<=i+20;k++) if (data[k].low<minLow) minLow=data[k].low;
+        rows.push({r5:r5,r10:r10,r20:r20,mae:minLow/L.close-1});
+      }
+    }
+    if (!rows.length) return {n:0, win5:0, win10:0, win20:0, avg20:0, mae:0, text:'樣本不足', color:'text-yellow-300'};
+    function win(key){ return rows.filter(function(x){return x[key]>0;}).length/rows.length; }
+    var avg20=avg(rows.map(function(x){return x.r20;}));
+    var mae=avg(rows.map(function(x){return x.mae;}));
+    var w20=win('r20');
+    var text='可參考', color='text-yellow-300';
+    if (rows.length>=20 && w20>=0.60 && avg20>0) { text='高可信'; color='text-emerald-400'; }
+    else if (rows.length<8) { text='樣本偏少'; color='text-orange-300'; }
+    else if (w20<0.45 || avg20<0) { text='需謹慎'; color='text-red-300'; }
+    return {n:rows.length, win5:win('r5'), win10:win('r10'), win20:w20, avg20:avg20, mae:mae, text:text, color:color};
+  }
+
+  function calcProfitPlan(close, chandelier, atr, bias20, bbPctB) {
+    var risk = Math.max(close - chandelier, atr*2, close*0.02);
+    var p1 = close + risk;
+    var p2 = close + risk*2;
+    var heat = bias20>=0.15 || bbPctB>=1.05;
+    if (heat) return '偏熱：可先停利1/3；1R=' + p1.toFixed(2) + '，2R=' + p2.toFixed(2);
+    return '1R=' + p1.toFixed(2) + '；2R=' + p2.toFixed(2) + '；跌破防線出場';
+  }
+
   window.runAnalysis = async function(ticker) {
     if (window.isAnalyzing) return;
     window.isAnalyzing = true;
@@ -1301,6 +1420,7 @@
       if (!data || data.length < 120) throw new Error('資料量不足，至少需要 120 根日K');
 
       st('chartTitle', result.symbol.display);
+      st('latestCloseBadge', '收盤：讀取中');
       st('loadingText', '讀取大盤與籌碼資料...');
       var benchmark = await fetchBenchmarkData(market);
       var flowRows = await fetchFinMindFlow(result.symbol);
@@ -1309,6 +1429,9 @@
       var e20=calcEMA(data,20), e60=calcEMA(data,60), e120=calcEMA(data,120), e200=calcEMA(data,200);
       var atr=calcATR(data,14), rsi=calcRSI(data,14), adx=calcDMI(data,14), obv=calcOBV(data), macdObj=calcMACD(data), bb=calcBollinger(data,20,2);
       var L = data[data.length-1];
+      var closeDateLabel = formatCloseDate(L.time);
+      var closePriceLabel = formatPriceByMarket(L.close, result.symbol.market || market);
+      st('latestCloseBadge', closeDateLabel + ' 收盤 ' + closePriceLabel);
       var e20Val=e20[e20.length-1].value, e60Val=e60[e60.length-1].value, e120Val=e120[e120.length-1].value;
       var a14=atr[atr.length-1].atr || 1;
       var adxVal=adx[adx.length-1].adx || 20;
@@ -1411,6 +1534,7 @@
 
       var stats = runBayesianCVaREngine(data, e20, e60, atr);
       var mc = runBlockBootstrapMC(stats.trades);
+      var sigStats = calcForwardSignalStats(data, e20, e60, e120, atr, adx, bb);
 
       var pcfg = practicalConfig(market);
       var capital = pcfg.capital;
@@ -1446,7 +1570,8 @@
       var sqnRating = stats.sqn > 6 ? 'SSS Holy Grail' : stats.sqn > 5 ? 'SS Superb' : stats.sqn > 3 ? 'S Excellent' : stats.sqn > 2 ? 'A Good' : 'B Average';
       sf('sqnText', 'SQN: ' + stats.sqn.toFixed(2) + ' (' + sqnRating + ')');
       sf('recoveryFactor', 'RF: ' + stats.recoveryFactor.toFixed(1));
-      sf('confidenceBadge', '信心度: ' + confidence.toFixed(0) + '%');
+      var confidenceGrade = confidence>=85 ? '高可信' : (confidence>=70 ? '可參考' : (confidence>=60 ? '謹慎' : '低可信'));
+      sf('confidenceBadge', '信心度: ' + confidence.toFixed(0) + '% / ' + confidenceGrade);
       sf('txtBull', '多頭: ' + (hmm.pBull*100).toFixed(0) + '%');
       sf('txtSide', '盤整: ' + (hmm.pSide*100).toFixed(0) + '%');
       sf('txtBear', '空頭: ' + (hmm.pBear*100).toFixed(0) + '%');
@@ -1478,6 +1603,12 @@
       sf('finalPosSize', riskState);
       sf('mcDaR', (mc.dar95*100).toFixed(1) + '%');
       sf('mcRuin', (mc.ruinProb*100).toFixed(2) + '%');
+      sf('signalSampleTxt', '樣本: ' + sigStats.n);
+      sf('sigWin5', sigStats.n ? (sigStats.win5*100).toFixed(0) + '%' : '--');
+      sf('sigWin10', sigStats.n ? (sigStats.win10*100).toFixed(0) + '%' : '--');
+      sf('sigWin20', sigStats.n ? (sigStats.win20*100).toFixed(0) + '%' : '--');
+      sf('sigAvg20', sigStats.n ? (sigStats.avg20*100).toFixed(1) + '%' : '--');
+      sf('signalValidationText', '<span class= + sigStats.color + >' + sigStats.text + '</span>' + (sigStats.n ? ' ｜ 平均回撤 ' + (sigStats.mae*100).toFixed(1) + '%' : ''));
 
       sf('gapVeto', isGapDown ? '<span class="text-red-500">觸發</span>' : '<span class="text-emerald-400">通過</span>');
       sf('volVeto', isHardVeto ? '<span class="text-red-500">觸發</span>' : '<span class="text-emerald-400">通過</span>');
@@ -1544,6 +1675,8 @@
       if (orthoPenalty < 1) flags.push('Ortho Penalty');
       if (liquidityTxt !== '充足') flags.push('Liquidity ' + liquidityTxt);
       if (!flow.real && market === 'TW') flags.push('籌碼代理');
+      var entryTypeObj = classifyEntryExitType({score:final分數, veto:(isHardVeto||isGapDown||isBBVeto), stop:isStop, bias20:bias20, bbPctB:bbLast.pctB, bbBreakout:isBBBreakout, close:L.close, bbMid:bbLast.mid, pdi:lastDmi.pdi, mdi:lastDmi.mdi});
+      var profitPlan = calcProfitPlan(L.close, chandelier, a14, bias20, bbLast.pctB);
       var gradeObj = computeTradeGrade({score:final分數, confidence:confidence, pos:finalPosSize, netExp:netExpectancy, dar95:mc.dar95, ruin:mc.ruinProb, veto:(isHardVeto||isGapDown||isBBVeto), stop:isStop});
       var existingExposure = latestSignalExposure();
       var projectedExposure = clamp(existingExposure + finalPosSize, 0, 2);
@@ -1554,13 +1687,18 @@
       var entryColor = notHoldingAction.indexOf('禁止')>=0 ? 'text-red-400' : (notHoldingAction.indexOf('暫緩')>=0 || notHoldingAction.indexOf('不追高')>=0 ? 'text-orange-400' : (notHoldingAction.indexOf('可')>=0 ? 'text-emerald-400' : 'text-yellow-300'));
       var holdColor = holdingAction.indexOf('清倉')>=0 || holdingAction.indexOf('減碼')>=0 ? 'text-orange-400' : 'text-emerald-400';
       if (holdingAction.indexOf('清倉')>=0) holdColor = 'text-red-400';
+      var actual = (window.holdingMode === 'HOLDING') ? holdingAction : notHoldingAction;
+      var actualColor = (window.holdingMode === 'HOLDING') ? holdColor : entryColor;
+      sf('actualActionText', '<span class="' + actualColor + '">' + actual + '</span>');
+      sf('signalTypeTxt', '<span class="' + entryTypeObj.color + '">' + entryTypeObj.type + '</span>');
       sf('netExpectancy', '<span class="' + entryColor + '">' + notHoldingAction + '</span>');
       sf('costModelTxt', '<span class="' + holdColor + '">' + holdingAction + '</span>');
       sf('riskRuleTxt', '<span class="' + (profitStatus.indexOf('過熱')>=0 || profitStatus.indexOf('停利')>=0 ? 'text-yellow-300' : 'text-slate-200') + '">' + profitStatus + '</span>');
       sf('portfolioTxt', chandelier.toFixed(2));
       var ruleHtml = '<div class="mb-1"><span class="text-indigo-300 font-bold">目前結論：</span><span class="' + actionClass + ' font-bold">' + action + '</span></div>' +
         '<div class="mb-1"><span class="text-slate-400">未持股：</span><span class="' + entryColor + ' font-bold">' + notHoldingAction + '</span> ｜ <span class="text-slate-400">已持股：</span><span class="' + holdColor + ' font-bold">' + holdingAction + '</span></div>' +
-        '<div class="text-slate-400">原因：' + (signalReason.join('；') || '等待更多確認') + '。關鍵防線：' + chandelier.toFixed(2) + '。</div>';
+        '<div class="mb-1"><span class="text-slate-400">型態：</span><span class="' + entryTypeObj.color + ' font-bold">' + entryTypeObj.type + '</span> ｜ <span class="text-slate-400">停利：</span>' + profitPlan + '</div>' +
+        '<div class="text-slate-400">原因：' + (signalReason.join('；') || entryTypeObj.note || '等待更多確認') + '。關鍵防線：' + chandelier.toFixed(2) + '。訊號驗證：' + sigStats.text + '。</div>';
       sf('tradingRuleText', ruleHtml);
 
       window.lastSignal = {
