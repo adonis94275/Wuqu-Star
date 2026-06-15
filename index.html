@@ -4,20 +4,62 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="google" content="notranslate">
-    <title>ASQE v14.0 | Monolithic Institutional Edition</title>
+    <title>ASQE v15.0 | Institutional Alpha</title>
     
     <script>
         window.IS_CODE_COMPLETE = false;
+        window.onerror = function(msg, url, lineNo) {
+            console.error("System Error (Line " + lineNo + "): " + msg);
+            var err = document.getElementById('errorMsg');
+            if(err) { err.innerText = "系統錯誤: " + msg; err.style.opacity = '1'; }
+            return false;
+        };
         window.checkAndUnlock = function() {
             if (!window.IS_CODE_COMPLETE) {
-                alert("🚨 嚴重錯誤：程式碼複製不完整！\n\n您的檔案尾端缺失了關鍵代碼。請回到 ChatGPT，點擊程式碼區塊右上角的「Copy (複製)」按鈕，並確保覆蓋到底部的 </html>。");
+                alert("🚨 嚴重錯誤：程式碼複製不完整！\n\n您的檔案尾端缺失了關鍵代碼。請回到 ChatGPT 點擊右上角「Copy」按鈕，並確保覆蓋到底部的 </html>。");
                 return;
             }
-            if(typeof window.unlockSystem === 'function') window.unlockSystem();
+            var pass = document.getElementById('passwordInput').value.trim();
+            if(pass === '852767' || pass === 'admin') {
+                var ls = document.getElementById('launchScreen');
+                ls.style.opacity = '0';
+                setTimeout(function() {
+                    ls.style.display = 'none';
+                    document.getElementById('setupModal').classList.remove('fade-out');
+                }, 400);
+            } else {
+                document.getElementById('errorMsg').style.opacity = '1';
+            }
         };
-        window.onerror = function(msg, url, lineNo) {
-            console.error("Global Error: " + msg + " at " + lineNo);
-            return false;
+        window.saveAndStart = function() {
+            var fKey = document.getElementById('finmindKeyInput');
+            var mKey = document.getElementById('fmpKeyInput');
+            window.KEY_FINMIND = fKey ? fKey.value.trim() : '';
+            window.KEY_FMP = mKey ? mKey.value.trim() : '';
+            try {
+                if (window.localStorage) {
+                    localStorage.setItem('ASQE_FINMIND_KEY', window.KEY_FINMIND);
+                    localStorage.setItem('ASQE_FMP_KEY', window.KEY_FMP);
+                }
+            } catch(e) {}
+            var modal = document.getElementById('setupModal');
+            modal.style.opacity = '0';
+            setTimeout(function() {
+                modal.style.display = 'none';
+                document.getElementById('mainApp').classList.remove('fade-out');
+                if(typeof window.runAnalysis === 'function') window.runAnalysis('2330.TW');
+            }, 400);
+        };
+        window.switchTab = function(m, t) {
+            window.currentMarket = m;
+            document.getElementById('tickerInput').value = t;
+            document.getElementById('tabTW').className = "px-3 py-1.5 rounded-md text-[11px] font-bold transition-all " + (m==='TW'?"bg-orange-600 text-white shadow":"text-slate-400 hover:text-white");
+            document.getElementById('tabUS').className = "px-3 py-1.5 rounded-md text-[11px] font-bold transition-all " + (m==='US'?"bg-orange-600 text-white shadow":"text-slate-400 hover:text-white");
+            if(typeof window.runAnalysis === 'function') window.runAnalysis(t);
+        };
+        window.triggerAnalysis = function() {
+            var val = document.getElementById('tickerInput').value;
+            if(typeof window.runAnalysis === 'function') window.runAnalysis(val);
         };
     </script>
 
@@ -42,10 +84,10 @@
         <div class="bg-slate-900 rounded-3xl p-8 w-full max-w-md flex flex-col items-center shadow-[0_0_80px_rgba(234,179,8,0.15)] border border-slate-800 relative overflow-hidden">
             <div class="absolute top-0 w-full h-1 bg-gradient-to-r from-yellow-600 via-orange-500 to-red-600"></div>
             <div class="w-16 h-16 bg-slate-950 rounded-2xl flex items-center justify-center mb-5 border border-slate-700 shadow-inner">
-                <span class="text-3xl">👑</span>
+                <span class="text-3xl">🏛️</span>
             </div>
-            <h1 class="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-orange-300 tracking-wider mb-1">ASQE v14.0</h1>
-            <p class="text-[9px] text-orange-400 mb-8 font-mono tracking-widest uppercase bg-orange-900/30 px-2 py-1 rounded">Monolithic Edition</p>
+            <h1 class="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-orange-300 tracking-wider mb-1">ASQE v15.0</h1>
+            <p class="text-[9px] text-orange-400 mb-8 font-mono tracking-widest uppercase bg-orange-900/30 px-2 py-1 rounded">Institutional Alpha Edition</p>
             <input type="password" id="passwordInput" placeholder="輸入機構授權碼 (admin)" onkeypress="if(event.key==='Enter') window.checkAndUnlock()" class="w-full bg-slate-950 text-white border border-slate-700 rounded-xl px-4 py-3.5 mb-5 focus:outline-none focus:border-orange-500 text-center tracking-widest font-mono">
             <button id="unlockBtn" onclick="window.checkAndUnlock()" class="w-full bg-gradient-to-r from-yellow-600 to-orange-600 hover:from-yellow-500 hover:to-orange-500 text-white font-black py-3.5 rounded-xl transition-all shadow-lg tracking-widest cursor-pointer">啟動量化避險核心</button>
             <p id="errorMsg" class="text-red-400 text-[11px] mt-4 opacity-0 transition-opacity font-bold bg-red-950/50 px-3 py-1 rounded">授權碼錯誤</p>
@@ -55,9 +97,9 @@
     <div id="setupModal" class="fixed inset-0 z-[200] bg-slate-950/90 flex items-center justify-center fade-transition fade-out backdrop-blur-md p-4 transition-opacity duration-300">
         <div class="bg-slate-900 rounded-3xl p-6 w-full max-w-lg border border-slate-700 shadow-2xl relative">
             <h2 class="text-lg font-black text-white mb-2 flex items-center gap-2 tracking-widest"><span>⚙️</span> 機構 API 路由配置</h2>
-            <p class="text-[10px] text-slate-400 mb-4">v14.0 已全面解除金鑰限制！台股將調用免費公共池，美股將由 Yahoo 備援。</p>
+            <p class="text-[10px] text-slate-400 mb-4">v15.0 已全面解除金鑰限制！台股將調用免費公共池，美股將由 Yahoo 備援。</p>
             <div class="space-y-3 max-h-[65vh] overflow-y-auto pr-2 mt-2">
-                <div class="bg-slate-950/50 p-3 rounded-xl border border-slate-800"><label class="text-[9px] text-slate-400 font-bold mb-1 uppercase block">FinMind API Key (提高三大法人穩定度 - 可留空)</label><input type="password" id="finmindKeyInput" class="w-full bg-slate-900 text-white border border-slate-700 rounded-lg px-3 py-2 focus:outline-none focus:border-orange-500 font-mono text-xs mt-1"></div>
+                <div class="bg-slate-950/50 p-3 rounded-xl border border-slate-800"><label class="text-[9px] text-slate-400 font-bold mb-1 uppercase block">FinMind API Key (台股三大法人 - 可留空)</label><input type="password" id="finmindKeyInput" class="w-full bg-slate-900 text-white border border-slate-700 rounded-lg px-3 py-2 focus:outline-none focus:border-orange-500 font-mono text-xs mt-1"></div>
                 <div class="bg-slate-950/50 p-3 rounded-xl border border-slate-800"><label class="text-[9px] text-slate-400 font-bold mb-1 uppercase block">FMP API Key (美股主力 - 可留空)</label><input type="password" id="fmpKeyInput" class="w-full bg-slate-900 text-white border border-slate-700 rounded-lg px-3 py-2 focus:outline-none focus:border-orange-500 font-mono text-xs mt-1"></div>
                 <button id="saveAndStartBtn" onclick="window.saveAndStart()" class="w-full bg-gradient-to-r from-yellow-600 to-orange-600 text-white font-black py-3 rounded-xl transition-all mt-3 text-sm shadow-lg tracking-widest cursor-pointer">無金鑰直接啟動 / 儲存配置</button>
             </div>
@@ -67,8 +109,8 @@
     <div id="mainApp" class="flex flex-col min-h-screen w-full h-full absolute inset-0 fade-transition fade-out transition-opacity duration-500">
         <header class="bg-slate-900 border-b border-slate-800 p-2.5 flex flex-col sm:flex-row items-center justify-between z-40 shrink-0 shadow-md">
             <div class="flex items-center gap-3">
-                <div class="w-8 h-8 bg-gradient-to-br from-yellow-600 to-red-900 rounded-lg flex items-center justify-center font-bold text-sm border border-slate-700">👑</div>
-                <div class="flex flex-col"><h1 class="text-base font-black tracking-widest text-slate-100 leading-none">ASQE v14.0</h1><span class="text-[9px] text-orange-400 font-mono tracking-wider mt-0.5">MONOLITHIC CORE</span></div>
+                <div class="w-8 h-8 bg-gradient-to-br from-yellow-600 to-red-900 rounded-lg flex items-center justify-center font-bold text-sm border border-slate-700">🏛️</div>
+                <div class="flex flex-col"><h1 class="text-base font-black tracking-widest text-slate-100 leading-none">ASQE v15.0</h1><span class="text-[9px] text-orange-400 font-mono tracking-wider mt-0.5">INSTITUTIONAL ALPHA</span></div>
             </div>
             <div class="flex items-center gap-2 mt-2 sm:mt-0">
                 <div id="apiStatusBadge" class="hidden sm:flex text-[9px] px-2 py-1 rounded font-mono bg-slate-950 border border-slate-700 text-slate-400 items-center gap-1"><span id="apiStatusDot" class="w-1.5 h-1.5 rounded-full bg-green-500"></span><span id="apiStatusText">Ready</span></div>
@@ -122,6 +164,7 @@
                                     <div id="finalRatingText" class="text-lg font-black text-white leading-tight">等待運算...</div>
                                     <div class="text-[9px] flex gap-2 mt-0.5 font-mono">
                                         <span class="text-emerald-400" id="txtBull">Bull: --</span>
+                                        <span class="text-slate-400" id="txtSide">Side: --</span>
                                         <span class="text-red-400" id="txtBear">Bear: --</span>
                                     </div>
                                 </div>
@@ -132,13 +175,13 @@
                     <div class="data-card border-orange-900/30">
                         <div class="flex justify-between items-center mb-2">
                             <span class="text-orange-400 text-[10px] font-black uppercase tracking-wider">🧩 Sub-Models & Dynamic Weights</span>
-                            <span id="orthoBadge" class="text-[8px] px-1 py-0.5 rounded font-mono bg-slate-950 text-slate-400 border border-slate-800">檢測中</span>
+                            <span id="orthoBadge" class="text-[8px] px-1 py-0.5 rounded font-mono bg-slate-950 text-slate-400 border border-slate-800" title="Spearman Rank Correlation">檢測中</span>
                         </div>
                         <div class="grid grid-cols-4 gap-2 text-center">
                             <div class="bg-slate-950 p-1.5 rounded border border-slate-800"><div class="text-[8px] text-slate-500 mb-0.5">Trend</div><div id="modTrend" class="text-[11px] font-bold text-white metric-value">--</div><div id="wTrend" class="text-[8px] text-emerald-500 mt-0.5">W: --</div></div>
                             <div class="bg-slate-950 p-1.5 rounded border border-slate-800"><div class="text-[8px] text-slate-500 mb-0.5">Momentum</div><div id="modMom" class="text-[11px] font-bold text-white metric-value">--</div><div id="wMom" class="text-[8px] text-emerald-500 mt-0.5">W: --</div></div>
                             <div class="bg-slate-950 p-1.5 rounded border border-slate-800"><div class="text-[8px] text-slate-500 mb-0.5">Risk Parity</div><div id="modRisk" class="text-[11px] font-bold text-white metric-value">--</div><div id="wRisk" class="text-[8px] text-emerald-500 mt-0.5">W: --</div></div>
-                            <div class="bg-slate-950 p-1.5 rounded border border-slate-800"><div class="text-[8px] text-slate-500 mb-0.5">Flow (Inst)</div><div id="modFlow" class="text-[11px] font-bold text-white metric-value">--</div><div id="flowStatusTxt" class="text-[8px] text-blue-400 mt-0.5">W: --</div></div>
+                            <div class="bg-slate-950 p-1.5 rounded border border-slate-800"><div class="text-[8px] text-slate-500 mb-0.5">Flow (EMA)</div><div id="modFlow" class="text-[11px] font-bold text-white metric-value">--</div><div id="flowStatusTxt" class="text-[8px] text-blue-400 mt-0.5">W: --</div></div>
                         </div>
                     </div>
 
@@ -162,26 +205,26 @@
 
                     <div class="data-card border-emerald-900/30">
                         <div class="flex justify-between items-center mb-2">
-                            <span class="text-emerald-500 text-[10px] font-black uppercase tracking-wider flex items-center gap-1">🔬 ERC & Bayesian Sizing</span>
+                            <span class="text-emerald-500 text-[10px] font-black uppercase tracking-wider flex items-center gap-1">🔬 Clamped Half-Kelly ERC Sizing</span>
                         </div>
                         <div class="grid grid-cols-4 gap-2 text-center mb-1">
                             <div class="flex flex-col bg-slate-950 p-1.5 rounded border border-slate-800"><span class="text-[8px] text-slate-500">貝氏勝率</span><span id="bayesWin" class="text-[11px] font-bold text-white metric-value">--</span></div>
-                            <div class="flex flex-col bg-slate-950 p-1.5 rounded border border-slate-800"><span class="text-[8px] text-slate-500">CVaR(95%)</span><span id="cvar95" class="text-[11px] font-bold text-red-400 metric-value">--</span></div>
-                            <div class="flex flex-col bg-slate-950 p-1.5 rounded border border-slate-800"><span class="text-[8px] text-slate-500">Raw Kelly</span><span id="rawKelly" class="text-[11px] font-bold text-slate-300 metric-value">--</span></div>
-                            <div class="flex flex-col bg-slate-950 p-1.5 rounded border border-slate-800 border-emerald-500/50 shadow-[0_0_10px_rgba(16,185,129,0.1)]"><span class="text-[8px] text-emerald-500 font-bold">ERC Sizing</span><span id="finalPosSize" class="text-xs font-black text-emerald-400 metric-value">--</span></div>
+                            <div class="flex flex-col bg-slate-950 p-1.5 rounded border border-slate-800"><span class="text-[8px] text-slate-500">CVaR(90%)</span><span id="cvar90" class="text-[11px] font-bold text-red-400 metric-value">--</span></div>
+                            <div class="flex flex-col bg-slate-950 p-1.5 rounded border border-slate-800"><span class="text-[8px] text-slate-500">Half Kelly</span><span id="halfKelly" class="text-[11px] font-bold text-slate-300 metric-value">--</span></div>
+                            <div class="flex flex-col bg-slate-950 p-1.5 rounded border border-slate-800 border-emerald-500/50 shadow-[0_0_10px_rgba(16,185,129,0.1)]"><span class="text-[8px] text-emerald-500 font-bold">Safe ERC%</span><span id="finalPosSize" class="text-xs font-black text-emerald-400 metric-value">--</span></div>
                         </div>
                     </div>
 
                     <div class="flex gap-2">
                         <div class="data-card flex-1">
-                            <div class="text-[9px] text-slate-500 font-bold mb-2 uppercase">🎲 GARCH-MC (N=1000)</div>
-                            <div class="flex justify-between items-center mb-1"><span class="text-[9px] text-slate-400">DaR (95%)</span><span id="mcDaR" class="text-[11px] font-bold text-red-400 metric-value">--</span></div>
+                            <div class="text-[9px] text-slate-500 font-bold mb-2 uppercase">🎲 Markov GARCH-MC (N=1000)</div>
+                            <div class="flex justify-between items-center mb-1"><span class="text-[9px] text-slate-400">DaR (90%)</span><span id="mcDaR" class="text-[11px] font-bold text-red-400 metric-value">--</span></div>
                             <div class="flex justify-between items-center"><span class="text-[9px] text-slate-400">Ruin Prob</span><span id="mcRuin" class="text-[11px] font-bold text-yellow-400 metric-value">--</span></div>
                         </div>
                         <div class="data-card flex-1">
-                            <div class="text-[9px] text-slate-500 font-bold mb-2 uppercase">🚨 Security VETO</div>
+                            <div class="text-[9px] text-slate-500 font-bold mb-2 uppercase">🚨 Strict Security VETO</div>
                             <div class="flex justify-between items-center mb-1"><span class="text-[9px] text-slate-400">Regime VETO</span><span id="sysVeto" class="text-[11px] font-bold text-emerald-400">PASS</span></div>
-                            <div class="flex justify-between items-center"><span class="text-[9px] text-slate-400">OBV Diverge</span><span id="obvDiv" class="text-[11px] font-bold text-slate-400">NONE</span></div>
+                            <div class="flex justify-between items-center" title="Requires RSI<70 & ADX<25"><span class="text-[9px] text-slate-400">Strict OBV Div</span><span id="obvDiv" class="text-[11px] font-bold text-slate-400">NONE</span></div>
                         </div>
                     </div>
                 </div>
@@ -190,59 +233,10 @@
     </div>
 
     <script>
+    (function() {
         window.currentMarket = 'TW';
         window.isAnalyzing = false;
-        var priceChart = null, dmiChart = null, candleSeries, volSeries, ema20Series, ema60Series, pocSeries, adxSeries, rsiSeries;
-
-        window.unlockSystem = function() {
-            var pass = document.getElementById('passwordInput').value.trim();
-            if(pass === '852767' || pass === 'admin') {
-                var ls = document.getElementById('launchScreen');
-                ls.style.opacity = '0';
-                setTimeout(function() {
-                    ls.style.display = 'none';
-                    document.getElementById('setupModal').classList.remove('fade-out');
-                }, 400);
-            } else {
-                document.getElementById('errorMsg').style.opacity = '1';
-            }
-        };
-
-        window.saveAndStart = function() {
-            var fKey = document.getElementById('finmindKeyInput');
-            var mKey = document.getElementById('fmpKeyInput');
-            window.KEY_FINMIND = fKey ? fKey.value.trim() : '';
-            window.KEY_FMP = mKey ? mKey.value.trim() : '';
-            
-            try {
-                if (window.localStorage) {
-                    localStorage.setItem('ASQE_FINMIND_KEY', window.KEY_FINMIND);
-                    localStorage.setItem('ASQE_FMP_KEY', window.KEY_FMP);
-                }
-            } catch(e) {}
-            
-            var modal = document.getElementById('setupModal');
-            modal.style.opacity = '0';
-            setTimeout(function() {
-                modal.style.display = 'none';
-                document.getElementById('mainApp').classList.remove('fade-out');
-                window.runAnalysis('2330.TW');
-            }, 400);
-        };
-
-        window.switchTab = function(m, t) {
-            window.currentMarket = m;
-            document.getElementById('tickerInput').value = t;
-            document.getElementById('tabTW').className = "px-3 py-1.5 rounded-md text-[11px] font-bold transition-all " + (m==='TW'?"bg-orange-600 text-white shadow":"text-slate-400 hover:text-white");
-            document.getElementById('tabUS').className = "px-3 py-1.5 rounded-md text-[11px] font-bold transition-all " + (m==='US'?"bg-orange-600 text-white shadow":"text-slate-400 hover:text-white");
-            window.runAnalysis(t);
-        };
         
-        window.triggerAnalysis = function() {
-            var val = document.getElementById('tickerInput').value;
-            window.runAnalysis(val);
-        };
-
         try {
             if (window.localStorage) {
                 window.KEY_FINMIND = localStorage.getItem('ASQE_FINMIND_KEY') || '';
@@ -252,6 +246,8 @@
             }
         } catch(e) {}
 
+        var priceChart = null, dmiChart = null, candleSeries, volSeries, ema20Series, ema60Series, pocSeries, adxSeries, rsiSeries;
+
         function getLocalStr(d) {
             var m = (d.getMonth()+1).toString(); if(m.length<2) m='0'+m;
             var day = d.getDate().toString(); if(day.length<2) day='0'+day;
@@ -260,7 +256,7 @@
 
         function fetchWithTimeout(url, timeoutMs) {
             return new Promise(function(resolve, reject) {
-                var timeout = setTimeout(function() { reject(new Error("API 連線逾時 (" + timeoutMs + "ms)")); }, timeoutMs || 10000);
+                var timeout = setTimeout(function() { reject(new Error("API 連線逾時")); }, timeoutMs || 10000);
                 fetch(url).then(function(res) { clearTimeout(timeout); resolve(res); }).catch(function(err) { clearTimeout(timeout); reject(err); });
             });
         }
@@ -274,6 +270,7 @@
                 if(dot) dot.className = "w-1.5 h-1.5 rounded-full bg-" + color + "-500";
             };
 
+            // 1. 台股直連 FinMind (Free Tier)
             if (market === 'TW') {
                 var fmTicker = q.replace('.TW', '');
                 if (fmTicker === '^TWII') fmTicker = 'TAIEX';
@@ -290,9 +287,10 @@
                         }).filter(function(x){return !isNaN(x.close)});
                         if(processedFM.length > 0) return processedFM;
                     }
-                } catch(e) { console.warn("FinMind Error, Falling back to Yahoo"); }
+                } catch(e) { console.warn("FinMind 價格庫連線失敗, 嘗試備援..."); }
             }
             
+            // 2. 美股直連 FMP
             if (market === 'US' && window.KEY_FMP) {
                 try {
                     updateStatus("FMP", "blue");
@@ -304,14 +302,15 @@
                             return { time: x.date, open: x.open, high: x.high, low: x.low, close: x.close, volume: x.volume };
                         });
                     }
-                } catch(e) { console.warn("FMP Error, Falling back to Yahoo"); }
+                } catch(e) { console.warn("FMP 連線失敗, 嘗試備援..."); }
             }
 
+            // 3. 終極備援 Yahoo Finance (修復字串解析)
             updateStatus("Yahoo Fallback", "yellow");
             var yahooUrl = 'https://query2.finance.yahoo.com/v8/finance/chart/' + q + '?range=2y&interval=1d';
             var proxies = [
-                { url: 'https://api.codetabs.com/v1/proxy/?quest=', parse: function(r){ return r; } },
-                { url: 'https://api.allorigins.win/get?url=', parse: function(r){ return JSON.parse(r.contents); } }
+                { url: 'https://api.allorigins.win/get?url=', parse: function(r){ return typeof r.contents === 'string' ? JSON.parse(r.contents) : r.contents; } },
+                { url: 'https://api.codetabs.com/v1/proxy/?quest=', parse: function(r){ return r; } }
             ];
             
             for (var p=0; p<proxies.length; p++) {
@@ -337,15 +336,21 @@
                         }
                         if(dataY.length > 0) return dataY;
                     }
-                } catch(e) { console.warn("Proxy " + p + " Failed"); }
+                } catch(e) {}
             }
-            throw new Error("API 伺服器拒絕連線，若是免費用戶請稍後重試。");
+            throw new Error("API 伺服器與代理節點均拒絕連線。");
         }
 
-        function calcEMA(data, period) {
+        // ================= MATH CORE (v15.0 Upgrades) =================
+        function calcEMA(data, period, key) {
+            key = key || 'close';
             if(!data||data.length===0) return []; 
-            var res=[], k=2/(period+1), ema=data[0].close;
-            for(var i=0; i<data.length; i++) { if(i>0) ema=(data[i].close-ema)*k+ema; res.push({time:data[i].time, value:ema}); }
+            var res=[], k=2/(period+1), ema=(typeof data[0] === 'object' ? data[0][key] : data[0]);
+            for(var i=0; i<data.length; i++) { 
+                var val = typeof data[i] === 'object' ? data[i][key] : data[i];
+                if(i>0) ema=(val-ema)*k+ema; 
+                res.push({time: data[i].time || i, value:ema}); 
+            }
             return res;
         }
         function calcRMA(data, period) {
@@ -388,6 +393,12 @@
             for(var i=0; i<data.length; i++){ if(i>0){ if(data[i].close>data[i-1].close) obv+=data[i].volume; else if(data[i].close<data[i-1].close) obv-=data[i].volume; } res.push(obv); }
             return res;
         }
+
+        // v15.0: Spearman Rank Correlation (Anti-Outlier)
+        function getRanks(arr) {
+            var sorted = arr.slice().sort(function(a,b){return a-b});
+            return arr.map(function(v){ return sorted.indexOf(v) + 1; });
+        }
         function calcPearson(x, y) {
             var n = x.length; if(n===0||n!==y.length) return 0;
             var sumX=0, sumY=0, sumXY=0, sumX2=0, sumY2=0;
@@ -395,21 +406,38 @@
             var den = Math.sqrt((n*sumX2 - sumX*sumX)*(n*sumY2 - sumY*sumY));
             return den===0 ? 0 : (n*sumXY - sumX*sumY)/den;
         }
+        function calcSpearman(x, y) { return calcPearson(getRanks(x), getRanks(y)); }
 
-        function calculateHMMRegime(data, e200, adx) {
-            var L = data[data.length-1];
-            var lastE200 = e200[e200.length-1];
-            var lastAdx = adx[adx.length-1];
-            var E = (lastE200 && lastE200.value) ? lastE200.value : L.close;
-            var A = (lastAdx && lastAdx.adx) ? lastAdx.adx : 20;
+        // v15.0: True HMM with Transition Matrix
+        function calculateTrueHMM(data, e200, adx) {
+            // Transition Matrix: [Bull, Side, Bear]
+            var T = [ [0.92, 0.07, 0.01], [0.15, 0.70, 0.15], [0.02, 0.08, 0.90] ];
+            var pBull=0.33, pSide=0.34, pBear=0.33; // Initial Priors
             
-            var dist = (L.close - E) / E; 
-            var pBull=0, pBear=0, pSide=0;
-            if (dist > 0.05) { pBull = 0.6 + (A/100)*0.3; pSide = 1 - pBull; pBear = 0; }
-            else if (dist < -0.05) { pBear = 0.6 + (A/100)*0.3; pSide = 1 - pBear; pBull = 0; }
-            else { pSide = 0.7; pBull = dist > 0 ? 0.2 : 0.1; pBear = dist < 0 ? 0.2 : 0.1; }
-            var sum = pBull + pSide + pBear; 
-            return { pBull: pBull/sum, pSide: pSide/sum, pBear: pBear/sum };
+            for(var i=100; i<data.length; i++) {
+                // 1. Transition Update
+                var priorBull = pBull*T[0][0] + pSide*T[1][0] + pBear*T[2][0];
+                var priorSide = pBull*T[0][1] + pSide*T[1][1] + pBear*T[2][1];
+                var priorBear = pBull*T[0][2] + pSide*T[1][2] + pBear*T[2][2];
+
+                // 2. Observation Emission (Distance + ADX)
+                var dist = (data[i].close - e200[i].value) / e200[i].value;
+                var adxVal = adx[i].adx;
+                
+                var obsBull = dist > 0.03 ? (adxVal>25?0.8:0.5) : 0.1;
+                var obsBear = dist < -0.03 ? (adxVal>25?0.8:0.5) : 0.1;
+                var obsSide = (dist >= -0.03 && dist <= 0.03) ? 0.8 : 0.2;
+
+                // 3. Bayesian Update
+                pBull = priorBull * obsBull;
+                pSide = priorSide * obsSide;
+                pBear = priorBear * obsBear;
+
+                // Normalize
+                var sum = pBull + pSide + pBear;
+                pBull/=sum; pSide/=sum; pBear/=sum;
+            }
+            return { pBull: pBull, pSide: pSide, pBear: pBear };
         }
 
         function calculatePOC(data, lookback) {
@@ -431,6 +459,7 @@
             return Math.round(dScore*0.4 + wScore*0.4 + mScore*0.2);
         }
 
+        // v15.0: CVaR90 & Half-Kelly ERC Clamp
         function runBayesianCVaREngine(data, e60, atr, stockVol) {
             var trades = [], pos = null;
             for(var i=100; i<data.length-1; i++) {
@@ -446,34 +475,55 @@
             var bayesWinRate = (50 + wins) / (100 + trades.length);
 
             var sorted = trades.slice().sort(function(a,b){return a-b});
-            var tailCount = Math.max(1, Math.floor(sorted.length * 0.05));
-            var cvar95 = sorted.slice(0, tailCount).reduce(function(a,b){return a+b},0) / tailCount;
+            var tailCount = Math.max(1, Math.floor(sorted.length * 0.10)); // CVaR 90%
+            var cvar90 = sorted.slice(0, tailCount).reduce(function(a,b){return a+b},0) / tailCount;
+            
             var expMu = trades.reduce(function(a,b){return a+b},0)/trades.length;
             var expVar = trades.reduce(function(a,b){return a+Math.pow(b-expMu,2)},0)/trades.length || 0.01;
             var rawKelly = expMu > 0 ? expMu / expVar : 0;
+            var halfKelly = rawKelly / 2;
             
             var ercMultiplier = Math.min(2.0, 0.15 / stockVol);
-            var cvarPos = Math.min(0.20, rawKelly * (0.05 / Math.abs(cvar95)));
-            var ercFinalPos = cvarPos * ercMultiplier;
+            var targetPos = halfKelly * (0.05 / Math.abs(cvar90)) * ercMultiplier;
+            
+            // Clamping 5% ~ 20%
+            var finalPos = 0;
+            if (expMu > 0) finalPos = Math.max(0.05, Math.min(0.20, targetPos));
 
-            return { winRate: bayesWinRate, cvar95: cvar95, rawKelly: rawKelly, ercPos: ercFinalPos, trades: trades, expectancy: expMu };
+            return { winRate: bayesWinRate, cvar90: cvar90, halfKelly: halfKelly, ercPos: finalPos, trades: trades, expectancy: expMu };
         }
 
-        function runGarchMC(trades) {
+        // v15.0: Markov Chain Monte Carlo (Volatility Clustering)
+        function runMarkovGarchMC(trades) {
             var mdds = [], ruins = 0, iters = 1000;
+            var winTrades = trades.filter(function(t){return t>0});
+            var lossTrades = trades.filter(function(t){return t<=0});
+            if(winTrades.length===0) winTrades=[0.01]; if(lossTrades.length===0) lossTrades=[-0.01];
+
             for(var i=0; i<iters; i++) {
                 var bal=1, peak=1, mdd=0;
+                var lastWasLoss = false;
                 for(var j=0; j<40; j++) {
-                    var t = trades[Math.floor(Math.random()*trades.length)];
+                    var isLoss = false;
+                    // Markov Transition: If last was loss, 60% chance to lose again (Clustering)
+                    if(lastWasLoss) {
+                        isLoss = Math.random() < 0.6;
+                    } else {
+                        isLoss = Math.random() < (lossTrades.length/trades.length);
+                    }
+                    
+                    var t = isLoss ? lossTrades[Math.floor(Math.random()*lossTrades.length)] : winTrades[Math.floor(Math.random()*winTrades.length)];
                     bal *= (1+t); if(bal>peak) peak=bal;
                     var d = (peak-bal)/peak; if(d>mdd) mdd=d;
                     if(bal < 0.5) { ruins++; break; }
+                    lastWasLoss = isLoss;
                 }
                 mdds.push(mdd);
             }
-            mdds.sort(function(a,b){return b-a}); return { dar95: mdds[Math.floor(iters*0.05)], ruinProb: ruins/iters };
+            mdds.sort(function(a,b){return b-a}); return { dar90: mdds[Math.floor(iters*0.10)], ruinProb: ruins/iters };
         }
 
+        // ================= MAIN EXPORT =================
         window.runAnalysis = async function(ticker) {
             if(window.isAnalyzing) return; 
             window.isAnalyzing = true;
@@ -489,13 +539,13 @@
                 document.getElementById('apiStatusBadge').classList.remove('hidden');
 
                 var data = await fetchMarketData(q, window.currentMarket);
-                if (!data || data.length < 120) throw new Error("資料量不足以驅動量化模型");
+                if (!data || data.length < 120) throw new Error("資料量不足");
 
-                document.getElementById('loadingText').innerText = "Processing Institutional Math...";
+                document.getElementById('loadingText').innerText = "Running Institutional Math...";
 
-                var e20 = calcEMA(data,20), e60 = calcEMA(data,60), e120 = calcEMA(data,120);
+                var e20 = calcEMA(data,20), e60 = calcEMA(data,60), e120 = calcEMA(data,120), e200 = calcEMA(data,200);
                 var atr = calcATR(data,14), rsi = calcRSI(data,14), adx = calcDMI(data,14), obv = calcOBV(data);
-                var poc = calculatePOC(data, 120), hmm = calculateHMMRegime(data, e120, adx), mtf = calculateMTF(data, e20, e60, e120);
+                var poc = calculatePOC(data, 120), hmm = calculateTrueHMM(data, e200, adx), mtf = calculateMTF(data, e20, e60, e120);
                 var L = data[data.length-1], stockVol = calcVolatility(data, 60);
 
                 var sTrend = mtf; 
@@ -506,16 +556,16 @@
                 var e60Val = e60[e60.length-1]?e60[e60.length-1].value:L.close;
                 var sRisk = L.close > e60Val ? 100 : 0;
                 
+                // v15.0 True Flow (EMA3 - EMA15)
                 var sFlow = 50; 
                 var flowTxt = "未啟動/備援模式";
                 if (window.currentMarket === 'TW') {
                     try {
                         document.getElementById('loadingText').innerText = "Fetching Institutional Flow...";
                         var d = new Date(); d.setDate(d.getDate() - 60); 
-                        var flowDate = getLocalStr(d);
                         var fmInstTicker = q.replace('.TW', '');
                         if(fmInstTicker !== '^TWII' && fmInstTicker !== 'TAIEX') { 
-                            var flowUrl = 'https://api.finmindtrade.com/api/v4/data?dataset=TaiwanStockInstitutionalInvestorsBuySell&data_id=' + fmInstTicker + '&start_date=' + flowDate;
+                            var flowUrl = 'https://api.finmindtrade.com/api/v4/data?dataset=TaiwanStockInstitutionalInvestorsBuySell&data_id=' + fmInstTicker + '&start_date=' + getLocalStr(d);
                             if (window.KEY_FINMIND) flowUrl += '&token=' + window.KEY_FINMIND;
                             
                             var flowRes = await fetchWithTimeout(flowUrl, 5000);
@@ -527,30 +577,29 @@
                                     if(!netFlows[d.date]) netFlows[d.date] = 0;
                                     netFlows[d.date] += (d.buy - d.sell);
                                 });
-                                var dates = Object.keys(netFlows).sort();
-                                if (dates.length >= 10) {
-                                    var d3 = dates.slice(-3), d10 = dates.slice(-10);
-                                    var sum3=0, sum10=0;
-                                    d3.forEach(function(d){ sum3 += netFlows[d]; });
-                                    d10.forEach(function(d){ sum10 += netFlows[d]; });
-                                    var avg3 = sum3/3, avg10 = sum10/10;
-                                    var dFlow = (avg3 - avg10) / (Math.abs(avg10) + 1);
+                                var flowArr = Object.keys(netFlows).sort().map(function(k){return netFlows[k]});
+                                if (flowArr.length >= 15) {
+                                    var fEma3 = calcEMA(flowArr, 3, null);
+                                    var fEma15 = calcEMA(flowArr, 15, null);
+                                    var currE3 = fEma3[fEma3.length-1].value, currE15 = fEma15[fEma15.length-1].value;
+                                    var flowOsc = currE3 - currE15; // Flow Oscillator
                                     
-                                    if (dFlow > 0.5) { sFlow = 100; flowTxt = "強烈流入"; }
-                                    else if (dFlow > 0) { sFlow = 75; flowTxt = "穩健流入"; }
-                                    else if (dFlow > -0.5) { sFlow = 40; flowTxt = "力道衰退"; }
-                                    else { sFlow = 10; flowTxt = "強烈流出"; }
+                                    if (flowOsc > 0 && currE3 > 0) { sFlow = 100; flowTxt = "資金匯聚 (EMA+)"; }
+                                    else if (flowOsc > 0) { sFlow = 70; flowTxt = "流出收斂 (EMA+)"; }
+                                    else if (flowOsc <= 0 && currE3 > 0) { sFlow = 40; flowTxt = "流入衰退 (EMA-)"; }
+                                    else { sFlow = 10; flowTxt = "資金撤退 (EMA-)"; }
                                 } else { flowTxt = "資料天數不足"; }
                             } else { flowTxt = "無籌碼資料"; }
                         }
-                    } catch(e) { console.warn("Inst Flow Fetch Error:", e); flowTxt = "籌碼連線失敗"; }
+                    } catch(e) { console.warn("Inst Flow Fetch Error"); flowTxt = "籌碼連線失敗"; }
                 }
                 
+                // v15.0 Spearman Orthogonalization
                 var retArr=[], volArr=[];
                 for(var i=data.length-30; i<data.length; i++){ retArr.push((data[i].close-data[i-1].close)/data[i-1].close); volArr.push((data[i].volume-data[i-1].volume)/(data[i-1].volume||1)); }
-                var corr = calcPearson(retArr, volArr);
+                var corr = calcSpearman(retArr, volArr);
                 var orthoPenalty = 1.0, orthoTxt = "獨立";
-                if(corr > 0.6) { orthoPenalty = Math.sqrt(1 - corr*corr); orthoTxt = "高度相關 ("+corr.toFixed(2)+")"; }
+                if(corr > 0.5) { orthoPenalty = Math.sqrt(1 - corr*corr); orthoTxt = "相關降維 (ρ=" + corr.toFixed(2) + ")"; }
 
                 var wTrend=0.30, wMom=0.30, wRisk=0.20, wFlow=0.20;
                 if(hmm.pBear > 0.5) { wRisk=0.50; wTrend=0.20; wMom=0.10; wFlow=0.20; }
@@ -565,18 +614,23 @@
                 var hh22 = Math.max.apply(null, data.slice(-22).map(function(d){return d.high}));
                 var tp = hh22 - 3*a14, isStop = tp > L.close;
 
+                // Stop Penalty
                 if (isStop && finalScore >= 60) finalScore = 59; 
 
+                // v15.0 Strict OBV Divergence (Price High + OBV Low + RSI<70 + ADX<25)
                 var obvDivTxt = "PASS";
                 var maxC20 = Math.max.apply(null, data.slice(-20).map(function(d){return d.close}));
                 var maxO20 = Math.max.apply(null, obv.slice(-20));
-                if(data.length>20 && L.close >= maxC20 && obv[obv.length-1] < maxO20) { obvDivTxt="⚠️ 頂部背離"; finalScore -= 10; }
+                var rsiVal = rsi[rsi.length-1]?rsi[rsi.length-1].rsi:50;
+                if(data.length>20 && L.close >= maxC20 && obv[obv.length-1] < maxO20 && rsiVal < 70 && adxVal < 25) { 
+                    obvDivTxt="⚠️ 嚴格背離"; finalScore -= 15; 
+                }
 
                 var vol20 = data.slice(-20).reduce(function(a,b){return a+b.volume},0)/20;
                 var isHardVeto = (L.close < e60Val && L.volume > vol20*(hmm.pBull>0.5?2.5:1.5));
                 if(isHardVeto) finalScore = Math.min(finalScore, 40);
 
-                var stats = runBayesianCVaREngine(data, e60, atr, stockVol), mc = runGarchMC(stats.trades);
+                var stats = runBayesianCVaREngine(data, e60, atr, stockVol), mc = runMarkovGarchMC(stats.trades);
 
                 var eTxt="", eCol="", xTxt="", xCol="";
                 if(finalScore < 50 || isHardVeto) { eTxt="嚴禁進場 (空頭破位)"; eCol="text-red-400"; xTxt="強制清倉"; xCol="text-red-500 font-bold"; }
@@ -594,21 +648,23 @@
                 document.getElementById('finalRatingText').innerText = finalScore>=80?'SSS 極限飆股':finalScore>=60?'S 核心配置':finalScore>=40?'A 震盪整理':'📉 轉弱防守';
                 document.getElementById('finalRatingText').style.color = sCol;
 
-                sf('txtBull', "Bull: " + (hmm.pBull*100).toFixed(0) + "%"); sf('txtBear', "Bear: " + (hmm.pBear*100).toFixed(0) + "%");
+                sf('txtBull', "Bull: " + (hmm.pBull*100).toFixed(0) + "%"); 
+                sf('txtSide', "Side: " + (hmm.pSide*100).toFixed(0) + "%");
+                sf('txtBear', "Bear: " + (hmm.pBear*100).toFixed(0) + "%");
+                
                 sf('orthoBadge', orthoTxt);
                 sf('modTrend', Math.round(sTrend)); sf('wTrend', "W: " + (wTrend*100).toFixed(0) + "%");
                 sf('modMom', Math.round(sMom)); sf('wMom', "W: " + (wMom*100).toFixed(0) + "%");
                 sf('modRisk', Math.round(sRisk)); sf('wRisk', "W: " + (wRisk*100).toFixed(0) + "%");
-                sf('modFlow', Math.round(sFlow)); 
-                sf('flowStatusTxt', "W: " + (wFlow*100).toFixed(0) + "% (" + flowTxt + ")");
+                sf('modFlow', Math.round(sFlow)); sf('flowStatusTxt', "W: " + (wFlow*100).toFixed(0) + "% (" + flowTxt + ")");
 
                 sf('biasBadge', "乖離: " + (bias20*100).toFixed(1) + "%");
                 sf('entryTimingText', '<span class="'+eCol+'">'+eTxt+'</span>'); sf('exitTimingText', '<span class="'+xCol+'">'+xTxt+'</span>');
                 sf('trailingStop', '<span class="'+(isStop||finalScore<50?'text-red-500':'text-emerald-400')+'">'+(finalScore<50?'清倉':isStop?'觸發離場':tp.toFixed(2))+'</span>');
 
-                sf('bayesWin', (stats.winRate*100).toFixed(1) + "%"); sf('cvar95', (stats.cvar95*100).toFixed(1) + "%");
-                sf('rawKelly', (stats.rawKelly*100).toFixed(1) + "%"); sf('finalPosSize', (stats.ercPos*100).toFixed(1) + "%");
-                sf('mcDaR', (mc.dar95*100).toFixed(1) + "%"); sf('mcRuin', (mc.ruinProb*100).toFixed(2) + "%");
+                sf('bayesWin', (stats.winRate*100).toFixed(1) + "%"); sf('cvar90', (stats.cvar90*100).toFixed(1) + "%");
+                sf('halfKelly', (stats.halfKelly*100).toFixed(1) + "%"); sf('finalPosSize', (stats.ercPos*100).toFixed(1) + "%");
+                sf('mcDaR', (mc.dar90*100).toFixed(1) + "%"); sf('mcRuin', (mc.ruinProb*100).toFixed(2) + "%");
                 sf('sysVeto', isHardVeto?'<span class="text-red-500 font-bold">FAIL (爆量)</span>':'<span class="text-emerald-400">PASS</span>'); 
                 sf('obvDiv', obvDivTxt);
 
@@ -653,8 +709,8 @@
             finally { if(overlay) overlay.classList.add('hidden'); window.isAnalyzing = false; }
         };
 
-        // 宣告完成，設定標記
         window.IS_CODE_COMPLETE = true;
+    })();
     </script>
 </body>
 </html>
