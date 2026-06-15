@@ -4,9 +4,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="google" content="notranslate" />
-  <title>ASQE v16.6 GitHub Pro | Institutional Alpha</title>
+  <title>ASQE v16.7 GitHub Pro | US Router Fixed</title>
 
-  <script type="text/javascript" nonce="f0ba7b011bb84778ba15d2ee5da" src="//local.adguard.org?ts=1781500361483&amp;type=content-script&amp;dmn=chatgpt.com&amp;url=https%3A%2F%2Fchatgpt.com%2Fbackend-api%2Festuary%2Fcontent%3Fid%3Dfile_000000008e547209bf0d2461340cd1ed%26ts%3D494862%26p%3Dfs%26cid%3D1%26sig%3D3955048f1b7c193a8527867b520f6bcf7501babbe4fe3e75a21c53a908f4afc0%26v%3D0&amp;app=chrome.exe&amp;css=2&amp;js=1&amp;rel=1&amp;rji=1&amp;sbe=1"></script><script type="text/javascript" nonce="f0ba7b011bb84778ba15d2ee5da" src="//local.adguard.org?ts=1781500361483&amp;name=AdGuard%20Extra&amp;name=AdGuard%20Popup%20Blocker&amp;type=user-script"></script><script>
+  <script type="text/javascript" nonce="f0ba7b011bb84778ba15d2ee5da" src="//local.adguard.org?ts=1781500361483&amp;type=content-script&amp;dmn=chatgpt.com&amp;url=https%3A%2F%2Fchatgpt.com%2Fbackend-api%2Festuary%2Fcontent%3Fid%3Dfile_000000009fb0720986f2c116895fe40d%26ts%3D494862%26p%3Dfs%26cid%3D1%26sig%3D5ef3e96ce345d8768b69b9df9153137e3dbea4d6ce776648e37722c4a88a7669%26v%3D0&amp;app=chrome.exe&amp;css=2&amp;js=1&amp;rel=1&amp;rji=1&amp;sbe=1"></script><script type="text/javascript" nonce="f0ba7b011bb84778ba15d2ee5da" src="//local.adguard.org?ts=1781500361483&amp;name=AdGuard%20Extra&amp;name=AdGuard%20Popup%20Blocker&amp;type=user-script"></script><script>
     window.IS_CODE_COMPLETE = false;
 
     window.onerror = function(msg, url, lineNo) {
@@ -115,7 +115,7 @@
       <div class="w-16 h-16 bg-slate-950 rounded-2xl flex items-center justify-center mb-5 border border-slate-700 shadow-inner">
         <span class="text-3xl">🏛️</span>
       </div>
-      <h1 class="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-indigo-300 to-orange-300 tracking-wider mb-1">ASQE v16.6</h1>
+      <h1 class="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-indigo-300 to-orange-300 tracking-wider mb-1">ASQE v16.7</h1>
       <p class="text-[9px] text-indigo-100 mb-8 font-mono tracking-widest uppercase px-2 py-1 rounded badge-elite">GitHub Pages Pro</p>
       <input type="password" id="passwordInput" autocomplete="off" inputmode="numeric" placeholder="輸入授權碼" onkeypress="if(event.key==='Enter') window.checkAndUnlock()" class="w-full bg-slate-950 text-white border border-slate-700 rounded-xl px-4 py-3.5 mb-5 focus:outline-none focus:border-indigo-500 text-center tracking-widest font-mono">
       <button id="unlockBtn" onclick="window.checkAndUnlock()" class="w-full bg-gradient-to-r from-indigo-700 to-purple-700 hover:from-indigo-600 hover:to-purple-600 text-white font-black py-3.5 rounded-xl transition-all shadow-lg tracking-widest cursor-pointer">啟動量化核心</button>
@@ -156,7 +156,7 @@
       <div class="flex items-center gap-3">
         <div class="w-8 h-8 bg-gradient-to-br from-indigo-600 to-purple-900 rounded-lg flex items-center justify-center font-bold text-sm border border-slate-700">🏛️</div>
         <div class="flex flex-col">
-          <h1 class="text-base font-black tracking-widest text-slate-100 leading-none">ASQE v16.6</h1>
+          <h1 class="text-base font-black tracking-widest text-slate-100 leading-none">ASQE v16.7</h1>
           <span class="text-[9px] text-indigo-400 font-mono tracking-wider mt-0.5">GITHUB PAGES SAFE ROUTER</span>
         </div>
       </div>
@@ -481,12 +481,40 @@
 
   async function fetchFmpHistorical(sym) {
     if (!window.KEY_FMP) throw new Error("no FMP key");
-    var url = 'https://financialmodelingprep.com/api/v3/historical-price-full/' + encodeURIComponent(sym.apiSymbol) + '?timeseries=1100&apikey=' + encodeURIComponent(window.KEY_FMP);
-    var json = await fetchJsonWithTimeout(url, {}, 12000);
-    if (!json.historical || !json.historical.length) throw new Error(json["Error Message"] || "FMP no data");
-    return parseAndCleanData(json.historical.slice().reverse().map(function(x) {
-      return { date: x.date, open: x.open, high: x.high, low: x.low, close: x.close, volume: x.volume };
-    }), 'FMP');
+
+    // FMP 2026 後舊版 /api/v3/historical-price-full 可能回 Legacy Endpoint 403，
+    // 因此優先使用 Stable API；若帳號仍是 legacy user，才回退舊端點。
+    var from = getDateStr(yearsAgo(4));
+    var to = getDateStr(new Date());
+    var urls = [
+      'https://financialmodelingprep.com/stable/historical-price-eod/full?symbol=' + encodeURIComponent(sym.apiSymbol) + '&from=' + from + '&to=' + to + '&apikey=' + encodeURIComponent(window.KEY_FMP),
+      'https://financialmodelingprep.com/stable/historical-price-eod/full?symbol=' + encodeURIComponent(sym.apiSymbol) + '&apikey=' + encodeURIComponent(window.KEY_FMP),
+      'https://financialmodelingprep.com/api/v3/historical-price-full/' + encodeURIComponent(sym.apiSymbol) + '?timeseries=1100&apikey=' + encodeURIComponent(window.KEY_FMP)
+    ];
+
+    var lastErr = null;
+    for (var u=0; u<urls.length; u++) {
+      try {
+        var json = await fetchJsonWithTimeout(urls[u], {}, 12000);
+        if (json && json["Error Message"]) throw new Error(json["Error Message"]);
+        var arr = Array.isArray(json) ? json : (json.historical || json.data || []);
+        if (!arr || !arr.length) throw new Error("FMP no data");
+        return parseAndCleanData(arr.map(function(x) {
+          return {
+            date: x.date || x.time || x.calendarYear,
+            open: x.open,
+            high: x.high,
+            low: x.low,
+            close: x.close || x.adjClose || x.price,
+            volume: x.volume || x.vol
+          };
+        }), u < 2 ? 'FMP Stable' : 'FMP Legacy');
+      } catch(e) {
+        lastErr = e;
+        await sleep(250);
+      }
+    }
+    throw lastErr || new Error("FMP failed");
   }
 
   async function fetchFinnhubCandles(sym) {
@@ -513,20 +541,39 @@
   async function fetchYahooOHLCV(yahooSymbol, sourceName) {
     var to = Math.floor(Date.now()/1000);
     var from = Math.floor(yearsAgo(4).getTime()/1000);
-    var yahooUrl = 'https://query2.finance.yahoo.com/v8/finance/chart/' + encodeURIComponent(yahooSymbol) + '?period1=' + from + '&period2=' + to + '&interval=1d&events=history&includeAdjustedClose=true';
+    var bases = ['https://query1.finance.yahoo.com/v8/finance/chart/', 'https://query2.finance.yahoo.com/v8/finance/chart/'];
+    var urls = bases.map(function(base) {
+      return base + encodeURIComponent(yahooSymbol) + '?period1=' + from + '&period2=' + to + '&interval=1d&events=history&includeAdjustedClose=true';
+    });
 
-    var proxyCalls = [
-      {
-        name: 'AllOrigins',
+    var proxyCalls = [];
+    urls.forEach(function(yahooUrl) {
+      proxyCalls.push({
+        name: 'Yahoo Direct',
+        url: yahooUrl,
+        parse: function(raw) { return raw; }
+      });
+      proxyCalls.push({
+        name: 'AllOrigins Get',
         url: 'https://api.allorigins.win/get?url=' + encodeURIComponent(yahooUrl),
         parse: function(raw) { return typeof raw.contents === 'string' ? JSON.parse(raw.contents) : raw.contents; }
-      },
-      {
+      });
+      proxyCalls.push({
+        name: 'AllOrigins Raw',
+        url: 'https://api.allorigins.win/raw?url=' + encodeURIComponent(yahooUrl),
+        parse: function(raw) { return raw; }
+      });
+      proxyCalls.push({
         name: 'CodeTabs',
         url: 'https://api.codetabs.com/v1/proxy/?quest=' + encodeURIComponent(yahooUrl),
         parse: function(raw) { return raw; }
-      }
-    ];
+      });
+      proxyCalls.push({
+        name: 'CorsProxy',
+        url: 'https://corsproxy.io/?' + encodeURIComponent(yahooUrl),
+        parse: function(raw) { return raw; }
+      });
+    });
 
     var lastErr = null;
     for (var p=0; p<proxyCalls.length; p++) {
@@ -535,26 +582,29 @@
         var json = proxyCalls[p].parse(raw);
         if (!json || !json.chart || !json.chart.result || !json.chart.result[0]) throw new Error("Yahoo malformed");
         var result = json.chart.result[0];
-        var ts = result.timestamp || [];
-        var quote = result.indicators && result.indicators.quote ? result.indicators.quote[0] : {};
-        var rawData = [];
-        for (var i=0; i<ts.length; i++) {
-          var c = quote.close[i];
-          if (c != null) {
-            rawData.push({
-              date: getDateStr(new Date(ts[i]*1000)),
-              open: quote.open[i] != null ? quote.open[i] : c,
-              high: quote.high[i] != null ? quote.high[i] : c,
-              low: quote.low[i] != null ? quote.low[i] : c,
-              close: c,
-              volume: quote.volume[i] != null ? quote.volume[i] : 0
-            });
+        if (result.indicators && result.indicators.quote && result.indicators.quote[0] && result.timestamp) {
+          var ts = result.timestamp || [];
+          var quote = result.indicators.quote[0];
+          var rawData = [];
+          for (var i=0; i<ts.length; i++) {
+            var c = quote.close[i];
+            if (c != null) {
+              rawData.push({
+                date: getDateStr(new Date(ts[i]*1000)),
+                open: quote.open[i] != null ? quote.open[i] : c,
+                high: quote.high[i] != null ? quote.high[i] : c,
+                low: quote.low[i] != null ? quote.low[i] : c,
+                close: c,
+                volume: quote.volume[i] != null ? quote.volume[i] : 0
+              });
+            }
           }
+          return parseAndCleanData(rawData, (sourceName || 'Yahoo') + '/' + proxyCalls[p].name);
         }
-        return parseAndCleanData(rawData, sourceName || ('Yahoo/' + proxyCalls[p].name));
+        throw new Error("Yahoo no candles");
       } catch(e) {
         lastErr = e;
-        await sleep(250);
+        await sleep(180);
       }
     }
     throw lastErr || new Error("Yahoo fallback failed");
@@ -1033,7 +1083,17 @@
       window.KEY_FINNHUB = localStorage.getItem('ASQE_FINNHUB_KEY') || window.KEY_FINNHUB || '';
 
       var market = window.currentMarket || 'TW';
-      var result = await fetchMarketData(ticker, market);
+      var inputTicker = (ticker || (market === 'TW' ? '2330.TW' : 'SPY')).trim().toUpperCase();
+      st('chartTitle', inputTicker);
+      st('routerLog', '開始路由 ' + inputTicker + '...');
+
+      // 清除上一檔或失敗狀態留下的圖表與錯誤遮罩。
+      if (priceChart) { try { priceChart.remove(); } catch(e) {} priceChart = null; }
+      if (macdChart) { try { macdChart.remove(); } catch(e) {} macdChart = null; }
+      if (dmiChart) { try { dmiChart.remove(); } catch(e) {} dmiChart = null; }
+      ['priceChartContainer','macdChartContainer','dmiChartContainer'].forEach(function(id){ var el=$(id); if(el) el.innerHTML=''; });
+
+      var result = await fetchMarketData(inputTicker, market);
       var data = result.data;
       if (!data || data.length < 120) throw new Error('資料量不足，至少需要 120 根日K');
 
