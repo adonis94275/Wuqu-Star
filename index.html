@@ -76,4 +76,585 @@
                     <button id="tabTW" onclick="window.switchTab('TW', '2330.TW')" class="px-3 py-1.5 rounded-md text-[11px] font-bold transition-all bg-orange-600 text-white shadow cursor-pointer">台股 TW</button>
                     <button id="tabUS" onclick="window.switchTab('US', 'SPY')" class="px-3 py-1.5 rounded-md text-[11px] font-bold transition-all text-slate-400 hover:text-white cursor-pointer">美股 US</button>
                 </div>
-                <input type="text" id="tickerInput" value="2330.TW" onkeypress="if(event.key==='Enter') window.triggerAnalysis()" class="bg-slate-950 text-white border border-slate-700 rounded-lg px-3
+                <input type="text" id="tickerInput" value="2330.TW" onkeypress="if(event.key==='Enter') window.triggerAnalysis()" class="bg-slate-950 text-white border border-slate-700 rounded-lg px-3 py-1.5 focus:outline-none focus:border-orange-500 w-28 uppercase font-mono text-xs">
+                <button id="analyzeBtn" onclick="window.triggerAnalysis()" class="bg-orange-600 hover:bg-orange-500 text-white font-bold py-1.5 px-4 rounded-lg shadow-lg text-xs transition-colors cursor-pointer">極限運算</button>
+                <button onclick="document.getElementById('setupModal').style.display='flex'; setTimeout(function(){document.getElementById('setupModal').style.opacity='1'},10)" class="bg-slate-800 text-slate-300 py-1.5 px-2 rounded-lg text-xs border border-slate-700 cursor-pointer">⚙️</button>
+            </div>
+        </header>
+
+        <div id="loadingOverlay" class="fixed inset-0 bg-slate-950/90 z-50 flex flex-col items-center justify-center hidden backdrop-blur-md">
+            <div class="animate-spin rounded-full h-12 w-12 border-4 border-slate-800 border-t-orange-500 mb-4"></div>
+            <p class="text-[10px] font-mono text-orange-400 tracking-widest animate-pulse" id="loadingText">Fetching Market & Flow Data...</p>
+        </div>
+
+        <div class="flex-1 flex flex-col lg:flex-row relative overflow-hidden bg-slate-950 p-1.5 gap-1.5">
+            <div class="flex-1 flex flex-col gap-1.5 min-w-0">
+                <div class="relative w-full rounded-xl border border-slate-800 bg-slate-900 shadow-inner flex flex-col flex-1 min-h-[300px] overflow-hidden">
+                    <div class="absolute top-2 left-3 z-10 pointer-events-none w-full">
+                        <div class="flex items-baseline gap-3"><span id="chartTitle" class="text-xl font-black text-slate-100 drop-shadow">---</span></div>
+                        <div class="flex flex-col gap-0.5 mt-1 text-[10px] font-mono text-slate-400">
+                            <div class="flex gap-3"><span class="text-fuchsia-400" id="leg-ema20">E20: --</span><span class="text-cyan-400" id="leg-ema60">E60: --</span><span class="text-yellow-500" id="leg-poc">POC: --</span></div>
+                            <div id="leg-vol">Vol: --</div>
+                        </div>
+                    </div>
+                    <div id="priceChartContainer" class="w-full flex-1 mt-2"></div>
+                </div>
+                <div class="relative w-full rounded-xl border border-slate-800 bg-slate-900 shadow-inner h-[140px] shrink-0 overflow-hidden">
+                    <div class="absolute top-1 left-3 z-10 text-[9px] font-mono flex gap-3 text-slate-400">
+                        <span class="text-purple-400" id="leg-adx">ADX: --</span><span class="text-blue-400" id="leg-rsi">RSI: --</span><span class="text-slate-500" id="leg-atr">ATR: --</span>
+                    </div>
+                    <div id="dmiChartContainer" class="w-full h-full mt-4"></div>
+                </div>
+            </div>
+
+            <div class="w-full lg:w-[480px] glass-panel flex flex-col shrink-0 overflow-y-auto h-[calc(100vh-56px)] custom-scrollbar rounded-xl border border-slate-800">
+                <div class="p-3 flex flex-col gap-3">
+                    <div class="bg-slate-900 p-4 rounded-xl border border-slate-700 relative overflow-hidden flex items-center justify-between shadow-lg">
+                        <div class="absolute -right-10 -top-10 w-32 h-32 rounded-full blur-3xl opacity-20 bg-orange-500" id="scoreGlow"></div>
+                        <div class="flex flex-col relative z-10 w-full">
+                            <div class="flex justify-between w-full mb-1">
+                                <span class="text-[10px] font-bold text-slate-500 tracking-widest uppercase">ENSEMBLE FINAL SCORE</span>
+                                <span class="text-[9px] text-slate-400 font-mono" id="mtfScore">MTF 共振: --</span>
+                            </div>
+                            <div class="flex items-end gap-4">
+                                <div id="totalScore" class="text-5xl font-black font-mono text-white leading-none">0</div>
+                                <div class="flex flex-col pb-1">
+                                    <div id="finalRatingText" class="text-lg font-black text-white leading-tight">等待運算...</div>
+                                    <div class="text-[9px] flex gap-2 mt-0.5 font-mono">
+                                        <span class="text-emerald-400" id="txtBull">Bull: --</span>
+                                        <span class="text-red-400" id="txtBear">Bear: --</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="data-card border-orange-900/30">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-orange-400 text-[10px] font-black uppercase tracking-wider">🧩 Sub-Models & Dynamic Weights</span>
+                            <span id="orthoBadge" class="text-[8px] px-1 py-0.5 rounded font-mono bg-slate-950 text-slate-400 border border-slate-800">檢測中</span>
+                        </div>
+                        <div class="grid grid-cols-4 gap-2 text-center">
+                            <div class="bg-slate-950 p-1.5 rounded border border-slate-800"><div class="text-[8px] text-slate-500 mb-0.5">Trend</div><div id="modTrend" class="text-[11px] font-bold text-white metric-value">--</div><div id="wTrend" class="text-[8px] text-emerald-500 mt-0.5">W: --</div></div>
+                            <div class="bg-slate-950 p-1.5 rounded border border-slate-800"><div class="text-[8px] text-slate-500 mb-0.5">Momentum</div><div id="modMom" class="text-[11px] font-bold text-white metric-value">--</div><div id="wMom" class="text-[8px] text-emerald-500 mt-0.5">W: --</div></div>
+                            <div class="bg-slate-950 p-1.5 rounded border border-slate-800"><div class="text-[8px] text-slate-500 mb-0.5">Risk Parity</div><div id="modRisk" class="text-[11px] font-bold text-white metric-value">--</div><div id="wRisk" class="text-[8px] text-emerald-500 mt-0.5">W: --</div></div>
+                            <div class="bg-slate-950 p-1.5 rounded border border-slate-800"><div class="text-[8px] text-slate-500 mb-0.5">Flow (Inst)</div><div id="modFlow" class="text-[11px] font-bold text-white metric-value">--</div><div id="flowStatusTxt" class="text-[8px] text-blue-400 mt-0.5">W: --</div></div>
+                        </div>
+                    </div>
+
+                    <div class="data-card border-indigo-900/50">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-indigo-400 text-[10px] font-black uppercase tracking-wider flex items-center gap-1">🎯 Tactical Engine</span>
+                            <span id="biasBadge" class="text-[9px] px-1.5 py-0.5 rounded font-mono bg-slate-950 text-slate-400 border border-slate-800">乖離: --</span>
+                        </div>
+                        <div class="bg-slate-950 p-2.5 rounded border border-slate-800 mb-2">
+                            <div class="text-[8px] text-slate-500 mb-0.5 uppercase">進場 (Entry)</div><div id="entryTimingText" class="text-[11px] font-black text-white">等待數據</div>
+                        </div>
+                        <div class="flex gap-2">
+                            <div class="bg-slate-950 p-2.5 rounded border border-slate-800 flex-1">
+                                <div class="text-[8px] text-slate-500 mb-0.5 uppercase">出場 (Exit)</div><div id="exitTimingText" class="text-[11px] font-black text-white">等待數據</div>
+                            </div>
+                            <div class="bg-slate-950 p-2.5 rounded border border-slate-800 w-24 shrink-0 flex flex-col justify-center text-center">
+                                <div class="text-[8px] text-slate-500 mb-0.5 uppercase">吊燈防線</div><div id="trailingStop" class="text-sm font-black text-slate-200 metric-value">--</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="data-card border-emerald-900/30">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-emerald-500 text-[10px] font-black uppercase tracking-wider flex items-center gap-1">🔬 ERC & Bayesian Sizing</span>
+                        </div>
+                        <div class="grid grid-cols-4 gap-2 text-center mb-1">
+                            <div class="flex flex-col bg-slate-950 p-1.5 rounded border border-slate-800"><span class="text-[8px] text-slate-500">貝氏勝率</span><span id="bayesWin" class="text-[11px] font-bold text-white metric-value">--</span></div>
+                            <div class="flex flex-col bg-slate-950 p-1.5 rounded border border-slate-800"><span class="text-[8px] text-slate-500">CVaR(95%)</span><span id="cvar95" class="text-[11px] font-bold text-red-400 metric-value">--</span></div>
+                            <div class="flex flex-col bg-slate-950 p-1.5 rounded border border-slate-800"><span class="text-[8px] text-slate-500">Raw Kelly</span><span id="rawKelly" class="text-[11px] font-bold text-slate-300 metric-value">--</span></div>
+                            <div class="flex flex-col bg-slate-950 p-1.5 rounded border border-slate-800 border-emerald-500/50 shadow-[0_0_10px_rgba(16,185,129,0.1)]"><span class="text-[8px] text-emerald-500 font-bold">ERC Sizing</span><span id="finalPosSize" class="text-xs font-black text-emerald-400 metric-value">--</span></div>
+                        </div>
+                    </div>
+
+                    <div class="flex gap-2">
+                        <div class="data-card flex-1">
+                            <div class="text-[9px] text-slate-500 font-bold mb-2 uppercase">🎲 GARCH-MC (N=1000)</div>
+                            <div class="flex justify-between items-center mb-1"><span class="text-[9px] text-slate-400">DaR (95%)</span><span id="mcDaR" class="text-[11px] font-bold text-red-400 metric-value">--</span></div>
+                            <div class="flex justify-between items-center"><span class="text-[9px] text-slate-400">Ruin Prob</span><span id="mcRuin" class="text-[11px] font-bold text-yellow-400 metric-value">--</span></div>
+                        </div>
+                        <div class="data-card flex-1">
+                            <div class="text-[9px] text-slate-500 font-bold mb-2 uppercase">🚨 Security VETO</div>
+                            <div class="flex justify-between items-center mb-1"><span class="text-[9px] text-slate-400">Regime VETO</span><span id="sysVeto" class="text-[11px] font-bold text-emerald-400">PASS</span></div>
+                            <div class="flex justify-between items-center"><span class="text-[9px] text-slate-400">OBV Diverge</span><span id="obvDiv" class="text-[11px] font-bold text-slate-400">NONE</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        window.currentMarket = 'TW';
+        window.isAnalyzing = false;
+        var priceChart = null, dmiChart = null, candleSeries, volSeries, ema20Series, ema60Series, pocSeries, adxSeries, rsiSeries;
+
+        window.unlockSystem = function() {
+            var pass = document.getElementById('passwordInput').value.trim();
+            if(pass === '852767' || pass === 'admin') {
+                var ls = document.getElementById('launchScreen');
+                ls.style.opacity = '0';
+                setTimeout(function() {
+                    ls.style.display = 'none';
+                    document.getElementById('setupModal').classList.remove('fade-out');
+                }, 400);
+            } else {
+                document.getElementById('errorMsg').style.opacity = '1';
+            }
+        };
+
+        window.saveAndStart = function() {
+            var fKey = document.getElementById('finmindKeyInput');
+            var mKey = document.getElementById('fmpKeyInput');
+            window.KEY_FINMIND = fKey ? fKey.value.trim() : '';
+            window.KEY_FMP = mKey ? mKey.value.trim() : '';
+            
+            try {
+                if (window.localStorage) {
+                    localStorage.setItem('ASQE_FINMIND_KEY', window.KEY_FINMIND);
+                    localStorage.setItem('ASQE_FMP_KEY', window.KEY_FMP);
+                }
+            } catch(e) {}
+            
+            var modal = document.getElementById('setupModal');
+            modal.style.opacity = '0';
+            setTimeout(function() {
+                modal.style.display = 'none';
+                document.getElementById('mainApp').classList.remove('fade-out');
+                window.runAnalysis('2330.TW');
+            }, 400);
+        };
+
+        window.switchTab = function(m, t) {
+            window.currentMarket = m;
+            document.getElementById('tickerInput').value = t;
+            document.getElementById('tabTW').className = "px-3 py-1.5 rounded-md text-[11px] font-bold transition-all " + (m==='TW'?"bg-orange-600 text-white shadow":"text-slate-400 hover:text-white");
+            document.getElementById('tabUS').className = "px-3 py-1.5 rounded-md text-[11px] font-bold transition-all " + (m==='US'?"bg-orange-600 text-white shadow":"text-slate-400 hover:text-white");
+            window.runAnalysis(t);
+        };
+        
+        window.triggerAnalysis = function() {
+            var val = document.getElementById('tickerInput').value;
+            window.runAnalysis(val);
+        };
+
+        try {
+            if (window.localStorage) {
+                window.KEY_FINMIND = localStorage.getItem('ASQE_FINMIND_KEY') || '';
+                window.KEY_FMP = localStorage.getItem('ASQE_FMP_KEY') || '';
+                if(document.getElementById('finmindKeyInput')) document.getElementById('finmindKeyInput').value = window.KEY_FINMIND;
+                if(document.getElementById('fmpKeyInput')) document.getElementById('fmpKeyInput').value = window.KEY_FMP;
+            }
+        } catch(e) {}
+
+        function getLocalStr(d) {
+            var m = (d.getMonth()+1).toString(); if(m.length<2) m='0'+m;
+            var day = d.getDate().toString(); if(day.length<2) day='0'+day;
+            return d.getFullYear() + '-' + m + '-' + day;
+        }
+
+        function fetchWithTimeout(url, timeoutMs) {
+            return new Promise(function(resolve, reject) {
+                var timeout = setTimeout(function() { reject(new Error("API 連線逾時 (" + timeoutMs + "ms)")); }, timeoutMs || 10000);
+                fetch(url).then(function(res) { clearTimeout(timeout); resolve(res); }).catch(function(err) { clearTimeout(timeout); reject(err); });
+            });
+        }
+
+        async function fetchMarketData(ticker, market) {
+            var q = ticker.trim().toUpperCase();
+            var updateStatus = function(txt, color) {
+                var el = document.getElementById('apiStatusText');
+                var dot = document.getElementById('apiStatusDot');
+                if(el) el.innerText = txt;
+                if(dot) dot.className = "w-1.5 h-1.5 rounded-full bg-" + color + "-500";
+            };
+
+            if (market === 'TW') {
+                var fmTicker = q.replace('.TW', '');
+                if (fmTicker === '^TWII') fmTicker = 'TAIEX';
+                var fromDate = new Date(Date.now() - 3*365*24*60*60*1000).toISOString().split('T')[0];
+                try {
+                    updateStatus("FinMind", "green");
+                    var urlFM = 'https://api.finmindtrade.com/api/v4/data?dataset=TaiwanStockPrice&data_id=' + fmTicker + '&start_date=' + fromDate;
+                    if (window.KEY_FINMIND) urlFM += '&token=' + window.KEY_FINMIND;
+                    var resFM = await fetchWithTimeout(urlFM, 8000);
+                    var jsonFM = await resFM.json();
+                    if (jsonFM.data && jsonFM.data.length > 0) {
+                        var processedFM = jsonFM.data.map(function(x) { 
+                            return { time: x.date, open: Number(x.open||x.Open), high: Number(x.max||x.High), low: Number(x.min||x.Low), close: Number(x.close||x.Close), volume: Number(x.Trading_Volume||x.Volume) };
+                        }).filter(function(x){return !isNaN(x.close)});
+                        if(processedFM.length > 0) return processedFM;
+                    }
+                } catch(e) { console.warn("FinMind Error, Falling back to Yahoo"); }
+            }
+            
+            if (market === 'US' && window.KEY_FMP) {
+                try {
+                    updateStatus("FMP", "blue");
+                    var urlFMP = 'https://financialmodelingprep.com/api/v3/historical-price-full/' + q + '?timeseries=750&apikey=' + window.KEY_FMP;
+                    var resFMP = await fetchWithTimeout(urlFMP, 8000);
+                    var jsonFMP = await resFMP.json();
+                    if (jsonFMP.historical && jsonFMP.historical.length > 0) {
+                        return jsonFMP.historical.reverse().map(function(x) { 
+                            return { time: x.date, open: x.open, high: x.high, low: x.low, close: x.close, volume: x.volume };
+                        });
+                    }
+                } catch(e) { console.warn("FMP Error, Falling back to Yahoo"); }
+            }
+
+            updateStatus("Yahoo Fallback", "yellow");
+            var yahooUrl = 'https://query2.finance.yahoo.com/v8/finance/chart/' + q + '?range=2y&interval=1d';
+            var proxies = [
+                { url: 'https://api.codetabs.com/v1/proxy/?quest=', parse: function(r){ return r; } },
+                { url: 'https://api.allorigins.win/get?url=', parse: function(r){ return JSON.parse(r.contents); } }
+            ];
+            
+            for (var p=0; p<proxies.length; p++) {
+                try {
+                    var resY = await fetchWithTimeout(proxies[p].url + encodeURIComponent(yahooUrl), 8000);
+                    if (!resY.ok) continue;
+                    var rawJson = await resY.json();
+                    var jsonY = proxies[p].parse(rawJson); 
+                    
+                    if (jsonY && jsonY.chart && jsonY.chart.result && jsonY.chart.result[0]) {
+                        var timestamps = jsonY.chart.result[0].timestamp;
+                        var quote = jsonY.chart.result[0].indicators.quote[0];
+                        var dataY = [];
+                        for(var i=0; i<timestamps.length; i++) {
+                            var c = quote.close[i];
+                            if (c != null) {
+                                dataY.push({
+                                    time: getLocalStr(new Date(timestamps[i]*1000)), open: quote.open[i] != null ? quote.open[i] : c,
+                                    high: quote.high[i] != null ? quote.high[i] : c, low: quote.low[i] != null ? quote.low[i] : c,
+                                    close: c, volume: quote.volume[i] != null ? quote.volume[i] : 0
+                                });
+                            }
+                        }
+                        if(dataY.length > 0) return dataY;
+                    }
+                } catch(e) { console.warn("Proxy " + p + " Failed"); }
+            }
+            throw new Error("API 伺服器拒絕連線，若是免費用戶請稍後重試。");
+        }
+
+        function calcEMA(data, period) {
+            if(!data||data.length===0) return []; 
+            var res=[], k=2/(period+1), ema=data[0].close;
+            for(var i=0; i<data.length; i++) { if(i>0) ema=(data[i].close-ema)*k+ema; res.push({time:data[i].time, value:ema}); }
+            return res;
+        }
+        function calcRMA(data, period) {
+            var res=[], sum=0;
+            for(var i=0; i<data.length; i++){ if(i<period){sum+=data[i]; res.push(sum/(i+1));} else res.push((res[i-1]*(period-1)+data[i])/period); }
+            return res;
+        }
+        function calcVolatility(data, period) {
+            if(data.length < period) return 0.05; var rets=[];
+            for(var i=data.length-period; i<data.length; i++) { rets.push((data[i].close-data[i-1].close)/data[i-1].close); }
+            var mean = rets.reduce(function(a,b){return a+b},0)/period; 
+            var variance = rets.reduce(function(a,b){return a+Math.pow(b-mean,2)},0)/period;
+            return Math.sqrt(variance) * Math.sqrt(252);
+        }
+        function calcATR(data, p) {
+            if(!data.length) return []; var trs=[0];
+            for(var i=1; i<data.length; i++) { var h=data[i].high, l=data[i].low, pc=data[i-1].close; trs.push(Math.max(h-l, Math.abs(h-pc), Math.abs(l-pc))); }
+            var atrs = calcRMA(trs, p); return data.map(function(d,i){return {time:d.time, atr:atrs[i]}});
+        }
+        function calcRSI(data, p) {
+            if(!data.length) return []; var res=[{time:data[0].time, rsi:50}], g=[0], l=[0];
+            for(var i=1; i<data.length; i++){ var d=data[i].close-data[i-1].close; g.push(Math.max(0,d)); l.push(Math.max(0,-d)); }
+            var ag=calcRMA(g,p), al=calcRMA(l,p);
+            for(var i=1; i<data.length; i++){ res.push({time:data[i].time, rsi:al[i]===0?100:(100-(100/(1+(ag[i]/al[i]))))}); }
+            return res;
+        }
+        function calcDMI(data, p) {
+            var trs=[0], pdm=[0], mdm=[0];
+            for(var i=1; i<data.length; i++) {
+                var h=data[i].high, l=data[i].low, ph=data[i-1].high, pl=data[i-1].low, pc=data[i-1].close;
+                trs.push(Math.max(h-l, Math.abs(h-pc), Math.abs(l-pc))); var up=h-ph, dn=pl-l;
+                pdm.push((up>dn&&up>0)?up:0); mdm.push((dn>up&&dn>0)?dn:0);
+            }
+            var aR=calcRMA(trs,p), pR=calcRMA(pdm,p), mR=calcRMA(mdm,p), dx=[0];
+            for(var i=1; i<data.length; i++) { var pi=aR[i]===0?0:100*(pR[i]/aR[i]), mi=aR[i]===0?0:100*(mR[i]/aR[i]); dx.push((pi+mi)===0?0:100*Math.abs(pi-mi)/(pi+mi)); }
+            var adx=calcRMA(dx,p); return data.map(function(d,i){return {time:d.time, adx:adx[i]}});
+        }
+        function calcOBV(data) {
+            var obv=0, res=[];
+            for(var i=0; i<data.length; i++){ if(i>0){ if(data[i].close>data[i-1].close) obv+=data[i].volume; else if(data[i].close<data[i-1].close) obv-=data[i].volume; } res.push(obv); }
+            return res;
+        }
+        function calcPearson(x, y) {
+            var n = x.length; if(n===0||n!==y.length) return 0;
+            var sumX=0, sumY=0, sumXY=0, sumX2=0, sumY2=0;
+            for(var i=0; i<n; i++) { sumX+=x[i]; sumY+=y[i]; sumXY+=x[i]*y[i]; sumX2+=x[i]*x[i]; sumY2+=y[i]*y[i]; }
+            var den = Math.sqrt((n*sumX2 - sumX*sumX)*(n*sumY2 - sumY*sumY));
+            return den===0 ? 0 : (n*sumXY - sumX*sumY)/den;
+        }
+
+        function calculateHMMRegime(data, e200, adx) {
+            var L = data[data.length-1];
+            var lastE200 = e200[e200.length-1];
+            var lastAdx = adx[adx.length-1];
+            var E = (lastE200 && lastE200.value) ? lastE200.value : L.close;
+            var A = (lastAdx && lastAdx.adx) ? lastAdx.adx : 20;
+            
+            var dist = (L.close - E) / E; 
+            var pBull=0, pBear=0, pSide=0;
+            if (dist > 0.05) { pBull = 0.6 + (A/100)*0.3; pSide = 1 - pBull; pBear = 0; }
+            else if (dist < -0.05) { pBear = 0.6 + (A/100)*0.3; pSide = 1 - pBear; pBull = 0; }
+            else { pSide = 0.7; pBull = dist > 0 ? 0.2 : 0.1; pBear = dist < 0 ? 0.2 : 0.1; }
+            var sum = pBull + pSide + pBear; 
+            return { pBull: pBull/sum, pSide: pSide/sum, pBear: pBear/sum };
+        }
+
+        function calculatePOC(data, lookback) {
+            var slice = data.slice(-lookback); if(!slice.length) return 0;
+            var maxP = Math.max.apply(null, slice.map(function(d){return d.high}));
+            var minP = Math.min.apply(null, slice.map(function(d){return d.low}));
+            var binSize = (maxP - minP) / 12, bins = new Array(12).fill(0);
+            slice.forEach(function(d) { var idx = Math.floor((d.close - minP) / binSize); if(idx>11) idx=11; bins[idx] += d.volume; });
+            var maxIdx = 0; for(var i=1;i<bins.length;i++){ if(bins[i]>bins[maxIdx]) maxIdx=i; }
+            return minP + (maxIdx + 0.5) * binSize;
+        }
+
+        function calculateMTF(data, e20, e60, e120) {
+            var L = data[data.length-1].close;
+            var v20 = e20[e20.length-1]?e20[e20.length-1].value:L;
+            var v60 = e60[e60.length-1]?e60[e60.length-1].value:L;
+            var v120 = e120[e120.length-1]?e120[e120.length-1].value:L;
+            var dScore = L > v20 ? 100 : 40, wScore = v20 > v60 ? 100 : 40, mScore = v60 > v120 ? 100 : 40;
+            return Math.round(dScore*0.4 + wScore*0.4 + mScore*0.2);
+        }
+
+        function runBayesianCVaREngine(data, e60, atr, stockVol) {
+            var trades = [], pos = null;
+            for(var i=100; i<data.length-1; i++) {
+                var L = data[i], E = e60[i]?e60[i].value:L.close, A = atr[i]?atr[i].atr:0.5;
+                if(pos) {
+                    if(L.low < pos.sl) { trades.push((L.close-pos.entry)/pos.entry); pos=null; }
+                    else { pos.sl = Math.max(pos.sl, L.high - 3*A); }
+                } else if (L.close > E) { pos = {entry: L.close, sl: L.close - 2*A}; }
+            }
+            if(trades.length<5) trades = [0.05, -0.02, 0.08, -0.04, 0.02];
+
+            var wins = trades.filter(function(t){return t>0}).length;
+            var bayesWinRate = (50 + wins) / (100 + trades.length);
+
+            var sorted = trades.slice().sort(function(a,b){return a-b});
+            var tailCount = Math.max(1, Math.floor(sorted.length * 0.05));
+            var cvar95 = sorted.slice(0, tailCount).reduce(function(a,b){return a+b},0) / tailCount;
+            var expMu = trades.reduce(function(a,b){return a+b},0)/trades.length;
+            var expVar = trades.reduce(function(a,b){return a+Math.pow(b-expMu,2)},0)/trades.length || 0.01;
+            var rawKelly = expMu > 0 ? expMu / expVar : 0;
+            
+            var ercMultiplier = Math.min(2.0, 0.15 / stockVol);
+            var cvarPos = Math.min(0.20, rawKelly * (0.05 / Math.abs(cvar95)));
+            var ercFinalPos = cvarPos * ercMultiplier;
+
+            return { winRate: bayesWinRate, cvar95: cvar95, rawKelly: rawKelly, ercPos: ercFinalPos, trades: trades, expectancy: expMu };
+        }
+
+        function runGarchMC(trades) {
+            var mdds = [], ruins = 0, iters = 1000;
+            for(var i=0; i<iters; i++) {
+                var bal=1, peak=1, mdd=0;
+                for(var j=0; j<40; j++) {
+                    var t = trades[Math.floor(Math.random()*trades.length)];
+                    bal *= (1+t); if(bal>peak) peak=bal;
+                    var d = (peak-bal)/peak; if(d>mdd) mdd=d;
+                    if(bal < 0.5) { ruins++; break; }
+                }
+                mdds.push(mdd);
+            }
+            mdds.sort(function(a,b){return b-a}); return { dar95: mdds[Math.floor(iters*0.05)], ruinProb: ruins/iters };
+        }
+
+        window.runAnalysis = async function(ticker) {
+            if(window.isAnalyzing) return; 
+            window.isAnalyzing = true;
+            var overlay = document.getElementById('loadingOverlay');
+            if(overlay) {
+                overlay.classList.remove('hidden');
+                document.getElementById('loadingText').innerText = "Routing API & Fetching Data...";
+            }
+            
+            try {
+                var q = ticker.trim().toUpperCase();
+                document.getElementById('chartTitle').innerText = q;
+                document.getElementById('apiStatusBadge').classList.remove('hidden');
+
+                var data = await fetchMarketData(q, window.currentMarket);
+                if (!data || data.length < 120) throw new Error("資料量不足以驅動量化模型");
+
+                document.getElementById('loadingText').innerText = "Processing Institutional Math...";
+
+                var e20 = calcEMA(data,20), e60 = calcEMA(data,60), e120 = calcEMA(data,120);
+                var atr = calcATR(data,14), rsi = calcRSI(data,14), adx = calcDMI(data,14), obv = calcOBV(data);
+                var poc = calculatePOC(data, 120), hmm = calculateHMMRegime(data, e120, adx), mtf = calculateMTF(data, e20, e60, e120);
+                var L = data[data.length-1], stockVol = calcVolatility(data, 60);
+
+                var sTrend = mtf; 
+                var e20Val = e20[e20.length-1]?e20[e20.length-1].value:L.close;
+                var bias20 = (L.close - e20Val) / e20Val;
+                var adxVal = adx[adx.length-1]?adx[adx.length-1].adx:20;
+                var sMom = (bias20 > 0 && adxVal > 25) ? 100 : (bias20 < 0 ? 0 : 50);
+                var e60Val = e60[e60.length-1]?e60[e60.length-1].value:L.close;
+                var sRisk = L.close > e60Val ? 100 : 0;
+                
+                var sFlow = 50; 
+                var flowTxt = "未啟動/備援模式";
+                if (window.currentMarket === 'TW') {
+                    try {
+                        document.getElementById('loadingText').innerText = "Fetching Institutional Flow...";
+                        var d = new Date(); d.setDate(d.getDate() - 60); 
+                        var flowDate = getLocalStr(d);
+                        var fmInstTicker = q.replace('.TW', '');
+                        if(fmInstTicker !== '^TWII' && fmInstTicker !== 'TAIEX') { 
+                            var flowUrl = 'https://api.finmindtrade.com/api/v4/data?dataset=TaiwanStockInstitutionalInvestorsBuySell&data_id=' + fmInstTicker + '&start_date=' + flowDate;
+                            if (window.KEY_FINMIND) flowUrl += '&token=' + window.KEY_FINMIND;
+                            
+                            var flowRes = await fetchWithTimeout(flowUrl, 5000);
+                            var flowJson = await flowRes.json();
+                            
+                            if (flowJson.data && flowJson.data.length > 0) {
+                                var netFlows = {};
+                                flowJson.data.forEach(function(d) {
+                                    if(!netFlows[d.date]) netFlows[d.date] = 0;
+                                    netFlows[d.date] += (d.buy - d.sell);
+                                });
+                                var dates = Object.keys(netFlows).sort();
+                                if (dates.length >= 10) {
+                                    var d3 = dates.slice(-3), d10 = dates.slice(-10);
+                                    var sum3=0, sum10=0;
+                                    d3.forEach(function(d){ sum3 += netFlows[d]; });
+                                    d10.forEach(function(d){ sum10 += netFlows[d]; });
+                                    var avg3 = sum3/3, avg10 = sum10/10;
+                                    var dFlow = (avg3 - avg10) / (Math.abs(avg10) + 1);
+                                    
+                                    if (dFlow > 0.5) { sFlow = 100; flowTxt = "強烈流入"; }
+                                    else if (dFlow > 0) { sFlow = 75; flowTxt = "穩健流入"; }
+                                    else if (dFlow > -0.5) { sFlow = 40; flowTxt = "力道衰退"; }
+                                    else { sFlow = 10; flowTxt = "強烈流出"; }
+                                } else { flowTxt = "資料天數不足"; }
+                            } else { flowTxt = "無籌碼資料"; }
+                        }
+                    } catch(e) { console.warn("Inst Flow Fetch Error:", e); flowTxt = "籌碼連線失敗"; }
+                }
+                
+                var retArr=[], volArr=[];
+                for(var i=data.length-30; i<data.length; i++){ retArr.push((data[i].close-data[i-1].close)/data[i-1].close); volArr.push((data[i].volume-data[i-1].volume)/(data[i-1].volume||1)); }
+                var corr = calcPearson(retArr, volArr);
+                var orthoPenalty = 1.0, orthoTxt = "獨立";
+                if(corr > 0.6) { orthoPenalty = Math.sqrt(1 - corr*corr); orthoTxt = "高度相關 ("+corr.toFixed(2)+")"; }
+
+                var wTrend=0.30, wMom=0.30, wRisk=0.20, wFlow=0.20;
+                if(hmm.pBear > 0.5) { wRisk=0.50; wTrend=0.20; wMom=0.10; wFlow=0.20; }
+                else if(hmm.pBull > 0.6) { wMom=0.40; wTrend=0.30; wRisk=0.10; wFlow=0.20; }
+                wMom *= orthoPenalty; 
+                var wTotal = wTrend + wMom + wRisk + wFlow; 
+                wTrend/=wTotal; wMom/=wTotal; wRisk/=wTotal; wFlow/=wTotal; 
+
+                var finalScore = Math.round(sTrend*wTrend + sMom*wMom + sRisk*wRisk + sFlow*wFlow);
+                
+                var a14 = atr[atr.length-1]?atr[atr.length-1].atr:1.0;
+                var hh22 = Math.max.apply(null, data.slice(-22).map(function(d){return d.high}));
+                var tp = hh22 - 3*a14, isStop = tp > L.close;
+
+                if (isStop && finalScore >= 60) finalScore = 59; 
+
+                var obvDivTxt = "PASS";
+                var maxC20 = Math.max.apply(null, data.slice(-20).map(function(d){return d.close}));
+                var maxO20 = Math.max.apply(null, obv.slice(-20));
+                if(data.length>20 && L.close >= maxC20 && obv[obv.length-1] < maxO20) { obvDivTxt="⚠️ 頂部背離"; finalScore -= 10; }
+
+                var vol20 = data.slice(-20).reduce(function(a,b){return a+b.volume},0)/20;
+                var isHardVeto = (L.close < e60Val && L.volume > vol20*(hmm.pBull>0.5?2.5:1.5));
+                if(isHardVeto) finalScore = Math.min(finalScore, 40);
+
+                var stats = runBayesianCVaREngine(data, e60, atr, stockVol), mc = runGarchMC(stats.trades);
+
+                var eTxt="", eCol="", xTxt="", xCol="";
+                if(finalScore < 50 || isHardVeto) { eTxt="嚴禁進場 (空頭破位)"; eCol="text-red-400"; xTxt="強制清倉"; xCol="text-red-500 font-bold"; }
+                else if(isStop) { eTxt="暫緩進場 (跌破防線)"; eCol="text-orange-400"; xTxt="觸發吊燈停利"; xCol="text-red-400 font-bold"; }
+                else if(finalScore >= 70) {
+                    if(bias20 > 0.15) { eTxt="追高風險 (正乖離)"; eCol="text-yellow-400"; xTxt="分批停利"; xCol="text-yellow-400"; }
+                    else if(bias20 <= 0.05) { eTxt="絕佳買點 (回測支撐)"; eCol="text-emerald-400"; xTxt="讓利潤奔跑"; xCol="text-emerald-400"; }
+                    else { eTxt="趨勢多頭 (有節奏佈局)"; eCol="text-teal-400"; xTxt="讓利潤奔跑"; xCol="text-emerald-400"; }
+                } else { eTxt="區間試單"; eCol="text-slate-300"; xTxt="沿均線防守"; xCol="text-slate-300"; }
+
+                var sf = function(id, html) { var el = document.getElementById(id); if(el) el.innerHTML = html; };
+                sf('totalScore', finalScore); sf('mtfScore', "MTF 共振: " + mtf);
+                var sCol = finalScore>=80?'#f97316':finalScore>=60?'#10b981':finalScore>=40?'#eab308':'#ef4444';
+                document.getElementById('scoreGlow').style.backgroundColor = sCol;
+                document.getElementById('finalRatingText').innerText = finalScore>=80?'SSS 極限飆股':finalScore>=60?'S 核心配置':finalScore>=40?'A 震盪整理':'📉 轉弱防守';
+                document.getElementById('finalRatingText').style.color = sCol;
+
+                sf('txtBull', "Bull: " + (hmm.pBull*100).toFixed(0) + "%"); sf('txtBear', "Bear: " + (hmm.pBear*100).toFixed(0) + "%");
+                sf('orthoBadge', orthoTxt);
+                sf('modTrend', Math.round(sTrend)); sf('wTrend', "W: " + (wTrend*100).toFixed(0) + "%");
+                sf('modMom', Math.round(sMom)); sf('wMom', "W: " + (wMom*100).toFixed(0) + "%");
+                sf('modRisk', Math.round(sRisk)); sf('wRisk', "W: " + (wRisk*100).toFixed(0) + "%");
+                sf('modFlow', Math.round(sFlow)); 
+                sf('flowStatusTxt', "W: " + (wFlow*100).toFixed(0) + "% (" + flowTxt + ")");
+
+                sf('biasBadge', "乖離: " + (bias20*100).toFixed(1) + "%");
+                sf('entryTimingText', '<span class="'+eCol+'">'+eTxt+'</span>'); sf('exitTimingText', '<span class="'+xCol+'">'+xTxt+'</span>');
+                sf('trailingStop', '<span class="'+(isStop||finalScore<50?'text-red-500':'text-emerald-400')+'">'+(finalScore<50?'清倉':isStop?'觸發離場':tp.toFixed(2))+'</span>');
+
+                sf('bayesWin', (stats.winRate*100).toFixed(1) + "%"); sf('cvar95', (stats.cvar95*100).toFixed(1) + "%");
+                sf('rawKelly', (stats.rawKelly*100).toFixed(1) + "%"); sf('finalPosSize', (stats.ercPos*100).toFixed(1) + "%");
+                sf('mcDaR', (mc.dar95*100).toFixed(1) + "%"); sf('mcRuin', (mc.ruinProb*100).toFixed(2) + "%");
+                sf('sysVeto', isHardVeto?'<span class="text-red-500 font-bold">FAIL (爆量)</span>':'<span class="text-emerald-400">PASS</span>'); 
+                sf('obvDiv', obvDivTxt);
+
+                if(priceChart) { priceChart.remove(); dmiChart.remove(); }
+                var cOpt = { layout: { background: { type: 'solid', color: 'transparent' }, textColor: '#64748b' }, grid: { vertLines: { color: '#0f172a' }, horzLines: { color: '#0f172a' } }, timeScale: { borderColor: '#1e293b' }, rightPriceScale: { borderColor: '#1e293b' } };
+                priceChart = LightweightCharts.createChart(document.getElementById('priceChartContainer'), cOpt);
+                candleSeries = priceChart.addCandlestickSeries({ upColor: '#ef4444', downColor: '#22c55e', borderVisible: false });
+                volSeries = priceChart.addHistogramSeries({ priceFormat: { type: 'volume' }, scaleMargins: { top: 0.8, bottom: 0 }, priceScaleId: '' });
+                ema20Series = priceChart.addLineSeries({ color: '#d946ef', lineWidth: 1 }); ema60Series = priceChart.addLineSeries({ color: '#22d3ee', lineWidth: 1 });
+                pocSeries = priceChart.addLineSeries({ color: '#eab308', lineWidth: 1, lineStyle: 2 });
+                
+                dmiChart = LightweightCharts.createChart(document.getElementById('dmiChartContainer'), cOpt);
+                adxSeries = dmiChart.addLineSeries({ color: '#c084fc', lineWidth: 2 }); rsiSeries = dmiChart.addLineSeries({ color: '#3b82f6', lineWidth: 2 });
+
+                candleSeries.setData(data); 
+                volSeries.setData(data.map(function(d){return {time:d.time, value:d.volume, color:d.close>d.open?'rgba(34,197,94,0.4)':'rgba(239,68,68,0.4)'}}));
+                ema20Series.setData(e20); ema60Series.setData(e60); 
+                pocSeries.setData(data.map(function(d){return {time:d.time, value:poc}}));
+                adxSeries.setData(adx.map(function(d){return {time:d.time, value:d.adx}})); 
+                rsiSeries.setData(rsi.map(function(d){return {time:d.time, value:d.rsi}}));
+
+                priceChart.subscribeCrosshairMove(function(p) {
+                    if(!p||!p.time) return; var i = data.findIndex(function(x){return x.time===p.time}); if(i===-1) return;
+                    var cE20 = e20[i]&&e20[i].value?e20[i].value.toFixed(2):'--';
+                    var cE60 = e60[i]&&e60[i].value?e60[i].value.toFixed(2):'--';
+                    var cAdx = adx[i]&&adx[i].adx?adx[i].adx.toFixed(1):'--';
+                    var cRsi = rsi[i]&&rsi[i].rsi?rsi[i].rsi.toFixed(1):'--';
+                    var cAtr = atr[i]&&atr[i].atr?atr[i].atr.toFixed(2):'--';
+                    
+                    sf('leg-ema20', "E20: " + cE20); sf('leg-ema60', "E60: " + cE60);
+                    sf('leg-vol', "Vol: " + data[i].volume.toLocaleString()); sf('leg-poc', "POC: " + poc.toFixed(2));
+                    sf('leg-adx', "ADX: " + cAdx); sf('leg-rsi', "RSI: " + cRsi); sf('leg-atr', "ATR: " + cAtr);
+                });
+                sf('leg-poc', "POC: " + poc.toFixed(2));
+                priceChart.timeScale().fitContent(); dmiChart.timeScale().fitContent();
+
+            } catch(e) { 
+                console.error(e); 
+                var errHtml = '<div class="flex flex-col items-center justify-center h-full w-full bg-slate-900/80 absolute inset-0 z-20"><div class="text-4xl mb-3">🚨</div><div class="text-red-400 font-bold text-lg mb-1">發生錯誤</div><div class="text-slate-400 text-xs px-10 text-center leading-relaxed max-w-md">' + e.message + '</div></div>';
+                document.getElementById('priceChartContainer').innerHTML = errHtml;
+            }
+            finally { if(overlay) overlay.classList.add('hidden'); window.isAnalyzing = false; }
+        };
+
+        // 宣告完成，設定標記
+        window.IS_CODE_COMPLETE = true;
+    </script>
+</body>
+</html>
