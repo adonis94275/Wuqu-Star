@@ -5,8 +5,8 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <meta content="notranslate" name="google"/>
-<title>ASQE v17.9 Forward Test & Watchlist Edition | GitHub Pages Pro</title>
-<script type="text/javascript" nonce="d8cbadd62b354cb3bac5816de5b" src="//local.adguard.org?ts=1781527521133&amp;type=content-script&amp;dmn=chatgpt.com&amp;url=https%3A%2F%2Fchatgpt.com%2Fbackend-api%2Festuary%2Fcontent%3Fid%3Dfile_00000000c17c720bb91c998a7323a73e%26ts%3D494870%26p%3Dfs%26cid%3D1%26sig%3D26b1af24ba6f2f0e267a3ea385a3de96cf394d123b34c411fe010dab93948989%26v%3D0&amp;app=chrome.exe&amp;css=2&amp;js=1&amp;rel=1&amp;rji=1&amp;sbe=1&amp;stealth=1&amp;st-dnt"></script><script type="text/javascript" nonce="d8cbadd62b354cb3bac5816de5b" src="//local.adguard.org?ts=1781527521133&amp;name=AdGuard%20Extra&amp;name=AdGuard%20Popup%20Blocker&amp;type=user-script"></script><script>
+<title>ASQE v17.9.1.1 永豐登入檢測版 | Forward Test & Watchlist | GitHub Pages Pro</title>
+<script type="text/javascript" nonce="a203cdcd3b6143cc9364514c71a" src="//local.adguard.org?ts=1781534030817&amp;type=content-script&amp;dmn=chatgpt.com&amp;url=https%3A%2F%2Fchatgpt.com%2Fbackend-api%2Festuary%2Fcontent%3Fid%3Dfile_000000000d4871f8b7ac69ae3918e5d5%26ts%3D494870%26p%3Dfs%26cid%3D1%26sig%3Dc9275f17d5d1d0b934cdf9629988698b4e10cde41170a81b1b0f2890075cc3ac%26v%3D0&amp;app=chrome.exe&amp;css=2&amp;js=1&amp;rel=1&amp;rji=1&amp;sbe=1&amp;stealth=1&amp;st-dnt"></script><script type="text/javascript" nonce="a203cdcd3b6143cc9364514c71a" src="//local.adguard.org?ts=1781534030817&amp;name=AdGuard%20Extra&amp;name=AdGuard%20Popup%20Blocker&amp;type=user-script"></script><script>
     window.IS_CODE_COMPLETE = false;
 
     window.onerror = function(msg, url, lineNo) {
@@ -45,7 +45,8 @@
       var names = ['ASQE_FINMIND_KEY','ASQE_FUGLE_KEY','ASQE_FMP_KEY','ASQE_FINNHUB_KEY','ASQE_SINOPAC_GATEWAY','ASQE_SINOPAC_USE'];
       for (var i=0; i<ids.length; i++) {
         var el = document.getElementById(ids[i]);
-        var val = el ? el.value.trim() : '';
+        var val = '';
+        if (el) val = (el.type === 'checkbox') ? (el.checked ? 'true' : 'false') : (el.value || '').trim();
         try { localStorage.setItem(names[i], val); } catch(e) {}
       }
       window.KEY_FINMIND = (document.getElementById('finmindKeyInput') || {}).value || '';
@@ -88,6 +89,88 @@
     window.triggerAnalysis = function() {
       var val = (document.getElementById('tickerInput') || {}).value || '';
       if (typeof window.runAnalysis === 'function') window.runAnalysis(val);
+    };
+
+    window.setSinopacLoginDiagnostic = function(kind, html) {
+      var box = document.getElementById('sinopacLoginDiag');
+      if (!box) return;
+      var cls = 'bg-slate-950/70 border-slate-800 text-slate-300';
+      if (kind === 'ok') cls = 'bg-emerald-950/40 border-emerald-800 text-emerald-200';
+      else if (kind === 'warn') cls = 'bg-amber-950/40 border-amber-800 text-amber-200';
+      else if (kind === 'fail') cls = 'bg-red-950/40 border-red-800 text-red-200';
+      box.className = 'mt-2 rounded-lg border p-2 text-[11px] leading-relaxed ' + cls;
+      box.innerHTML = html;
+    };
+
+    window.testSinopacLogin = async function() {
+      var gatewayEl = document.getElementById('sinopacGatewayInput');
+      var gateway = ((gatewayEl && gatewayEl.value) || window.SINOPAC_GATEWAY || 'http://127.0.0.1:8080').trim().replace(/\/$/, '');
+      var apiKey = ((document.getElementById('sinopacApiKeyInput') || {}).value || '').trim();
+      var secretKey = ((document.getElementById('sinopacSecretKeyInput') || {}).value || '').trim();
+      var useEl = document.getElementById('sinopacUseInput');
+      if (useEl) useEl.checked = true;
+      window.SINOPAC_GATEWAY = gateway;
+      window.USE_SINOPAC = true;
+      try {
+        localStorage.setItem('ASQE_SINOPAC_GATEWAY', gateway);
+        localStorage.setItem('ASQE_SINOPAC_USE', 'true');
+        sessionStorage.setItem('ASQE_SINOPAC_API_KEY_SESSION', apiKey);
+        sessionStorage.setItem('ASQE_SINOPAC_SECRET_KEY_SESSION', secretKey);
+      } catch(e) {}
+
+      if (!gateway) {
+        window.setSinopacLoginDiagnostic('fail', '❌ 請先輸入 Gateway URL，例如 <span class="font-mono">http://127.0.0.1:8080</span>。');
+        return;
+      }
+
+      var localHost = /^https?:\/\/(127\.0\.0\.1|localhost)(:\d+)?/i.test(gateway);
+      if (location.protocol === 'https:' && /^http:\/\//i.test(gateway) && !localHost) {
+        window.setSinopacLoginDiagnostic('warn', '⚠️ 目前頁面是 HTTPS，但 Gateway 是 HTTP。瀏覽器可能因 Mixed Content 阻擋。若不是本機 localhost，建議改用 HTTPS Proxy。');
+      } else {
+        window.setSinopacLoginDiagnostic('warn', '⏳ 正在測試永豐 Gateway 登入狀態：<span class="font-mono">' + gateway + '/api/v1/auth/accounts</span>');
+      }
+
+      var headers = { 'Content-Type': 'application/json' };
+      if (apiKey) headers['X-Sinopac-Api-Key'] = apiKey;
+      if (secretKey) headers['X-Sinopac-Secret-Key'] = secretKey;
+      var ctrl = new AbortController();
+      var timer = setTimeout(function(){ try { ctrl.abort(); } catch(e) {} }, 8000);
+      try {
+        var res = await fetch(gateway + '/api/v1/auth/accounts', { method: 'GET', headers: headers, signal: ctrl.signal });
+        clearTimeout(timer);
+        var raw = await res.text();
+        var json = null;
+        try { json = raw ? JSON.parse(raw) : null; } catch(e) {}
+        if (!res.ok) throw new Error('HTTP ' + res.status + '｜' + raw.slice(0, 160));
+        var payload = json || raw;
+        var arr = [];
+        if (Array.isArray(payload)) arr = payload;
+        else if (payload && Array.isArray(payload.accounts)) arr = payload.accounts;
+        else if (payload && payload.data && Array.isArray(payload.data)) arr = payload.data;
+        else if (payload && payload.account) arr = [payload.account];
+        var countText = arr.length ? ('已回傳 ' + arr.length + ' 筆帳戶資料') : '已回應，但未偵測到標準 accounts 陣列';
+        var modeText = (String(raw).toLowerCase().indexOf('simulation') >= 0 || String(raw).toLowerCase().indexOf('sim') >= 0) ? '｜可能為模擬模式' : '';
+        window.SINOPAC_AUTH_OK = true;
+        window.SINOPAC_AUTH_LAST = { ok: true, at: new Date().toISOString(), gateway: gateway, count: arr.length };
+        window.setSinopacLoginDiagnostic('ok', '✅ 永豐 Gateway 已連線，登入檢測成功。<br><span class="font-mono">' + countText + modeText + '</span><br><span class="text-[10px] text-emerald-300/80">ASQE 會優先使用永豐主路由；若 OHLCV 資料不足，仍會自動切換 FinMind / Fugle / FMP / Finnhub / Yahoo 備援。</span>');
+      } catch(e) {
+        clearTimeout(timer);
+        window.SINOPAC_AUTH_OK = false;
+        var msg = e && e.name === 'AbortError' ? '連線逾時' : (e && e.message ? e.message : String(e));
+        var hint = '';
+        if (/Failed to fetch|NetworkError|Load failed/i.test(msg)) {
+          hint = '可能原因：Shioaji Server 沒啟動、Gateway URL 錯誤、CORS 未開、HTTPS/HTTP 被瀏覽器擋、或你不是在啟動 Gateway 的同一台設備上開 ASQE。';
+        } else if (/401|403/.test(msg)) {
+          hint = '可能原因：API Key / Secret 錯誤、權限未開、正式/模擬環境不一致。';
+        } else if (/404/.test(msg)) {
+          hint = '可能原因：Gateway 不是 Shioaji Server，或沒有提供 /api/v1/auth/accounts 端點。';
+        } else if (/timeout|逾時/i.test(msg)) {
+          hint = '可能原因：Gateway 沒回應或被防火牆阻擋。';
+        } else {
+          hint = '請先用 Terminal 測試：curl ' + gateway + '/api/v1/auth/accounts';
+        }
+        window.setSinopacLoginDiagnostic('fail', '❌ 永豐登入檢測失敗：<span class="font-mono">' + msg.replace(/[<>]/g, '') + '</span><br><span class="text-[10px] text-red-200/90">' + hint + '</span>');
+      }
     };
 
     window.holdingMode = 'NONE';
@@ -186,7 +269,7 @@
 <div class="w-16 h-16 bg-slate-950 rounded-2xl flex items-center justify-center mb-5 border border-slate-700 shadow-inner">
 <span class="text-3xl">🏛️</span>
 </div>
-<h1 class="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-indigo-300 to-orange-300 tracking-wider mb-1">ASQE v17.9</h1>
+<h1 class="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-indigo-300 to-orange-300 tracking-wider mb-1">ASQE v17.9.1</h1>
 <p class="text-[9px] text-indigo-100 mb-8 font-mono tracking-widest uppercase px-2 py-1 rounded badge-elite">Forward Test 追蹤版</p>
 <input autocomplete="off" class="w-full bg-slate-950 text-white border border-slate-700 rounded-xl px-4 py-3.5 mb-5 focus:outline-none focus:border-indigo-500 text-center tracking-widest font-mono" id="passwordInput" inputmode="numeric" onkeypress="if(event.key==='Enter') window.checkAndUnlock()" placeholder="輸入授權碼" type="password"/>
 <button class="w-full bg-gradient-to-r from-indigo-700 to-purple-700 hover:from-indigo-600 hover:to-purple-600 text-white font-black py-3.5 rounded-xl transition-all shadow-lg tracking-widest cursor-pointer" id="unlockBtn" onclick="window.checkAndUnlock()">啟動量化核心</button>
@@ -219,6 +302,11 @@
   </div>
 </div>
 <div class="text-[10px] text-amber-300 mt-2 leading-relaxed">安全建議：若使用官方 Shioaji，請把 API Key / Secret 放在本機 .env 並啟動 <span class="font-mono">shioaji server start</span>；GitHub Pages 只填 Gateway URL。直接把 Secret 放前端風險較高。</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-2 mt-3">
+  <button type="button" onclick="window.testSinopacLogin()" class="bg-emerald-700 hover:bg-emerald-600 text-white font-black py-2.5 rounded-lg text-xs shadow border border-emerald-400/30">測試永豐登入</button>
+  <button type="button" onclick="document.getElementById('sinopacLoginDiag').innerHTML='尚未測試永豐登入。建議先啟動 shioaji server start，再按左側測試。';document.getElementById('sinopacLoginDiag').className='mt-2 rounded-lg border p-2 text-[11px] leading-relaxed bg-slate-950/70 border-slate-800 text-slate-300';" class="bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold py-2.5 rounded-lg text-xs border border-slate-700">重設檢測訊息</button>
+</div>
+<div id="sinopacLoginDiag" class="mt-2 rounded-lg border p-2 text-[11px] leading-relaxed bg-slate-950/70 border-slate-800 text-slate-300">尚未測試永豐登入。建議先啟動 <span class="font-mono">shioaji server start</span>，再按「測試永豐登入」。</div>
 </div>
 <div class="bg-slate-950/50 p-3 rounded-xl border border-slate-800">
 <label class="text-[9px] text-slate-400 font-bold uppercase block">FinMind Token（台股 OHLCV / 三大法人）</label>
@@ -255,8 +343,8 @@
 <div class="flex items-center gap-3">
 <div class="w-8 h-8 bg-gradient-to-br from-indigo-600 to-purple-900 rounded-lg flex items-center justify-center font-bold text-sm border border-slate-700">🏛️</div>
 <div class="flex flex-col">
-<h1 class="text-base font-black tracking-widest text-slate-100 leading-none">ASQE v17.9</h1>
-<span class="text-[9px] text-indigo-400 font-mono tracking-wider mt-0.5">Forward Test 追蹤版</span>
+<h1 class="text-base font-black tracking-widest text-slate-100 leading-none">ASQE v17.9.1.1</h1>
+<span class="text-[9px] text-indigo-400 font-mono tracking-wider mt-0.5">永豐登入檢測 + Forward Test</span>
 </div>
 </div>
 <div class="flex flex-wrap items-center justify-center gap-2 mt-2 sm:mt-0">
@@ -273,6 +361,7 @@
 <button class="bg-emerald-700 hover:bg-emerald-600 text-white font-bold py-1.5 px-3 rounded-lg shadow-lg text-xs transition-colors cursor-pointer" id="batchBtn" onclick="window.openSingleTest()">個股區間測試</button>
 <button class="bg-cyan-700 hover:bg-cyan-600 text-white font-bold py-1.5 px-3 rounded-lg shadow-lg text-xs transition-colors cursor-pointer" id="watchlistBtn" onclick="window.openWatchlistPanel()">觀察清單</button>
 <button class="bg-orange-700 hover:bg-orange-600 text-white font-bold py-1.5 px-3 rounded-lg shadow-lg text-xs transition-colors cursor-pointer" id="forwardBtn" onclick="window.openForwardPanel()">訊號追蹤</button>
+<button class="bg-emerald-800 hover:bg-emerald-700 text-emerald-100 font-bold py-1.5 px-3 rounded-lg shadow-lg text-xs transition-colors cursor-pointer" onclick="document.getElementById('setupModal').style.display='flex'; setTimeout(function(){document.getElementById('setupModal').style.opacity='1';document.getElementById('setupModal').classList.remove('fade-out'); if(window.testSinopacLogin) window.testSinopacLogin();},10)">永豐檢測</button>
 
 
 <button class="bg-slate-800 text-slate-300 py-1.5 px-2 rounded-lg text-xs border border-slate-700 cursor-pointer" onclick="document.getElementById('setupModal').style.display='flex'; setTimeout(function(){document.getElementById('setupModal').style.opacity='1';document.getElementById('setupModal').classList.remove('fade-out');},10)">⚙️</button>
@@ -287,7 +376,7 @@
 <div class="flex flex-col gap-3 p-4 border-b border-slate-800">
 <div class="flex flex-col md:flex-row md:items-center justify-between gap-3">
 <div>
-<div class="text-lg font-black tracking-widest text-white">ASQE v17.9 個股區間測試</div>
+<div class="text-lg font-black tracking-widest text-white">ASQE v17.9.1 個股區間測試</div>
 <div class="text-[11px] text-slate-400 mt-1">輸入任一台股或美股代碼，設定開始日與結束日，回放 ASQE 進出場規則，檢查期間操作是否合適。指標會使用起始日前資料暖機，避免長均線失真。</div>
 </div>
 <div class="flex items-center gap-2">
@@ -344,7 +433,7 @@
     <div class="flex flex-col gap-3 p-4 border-b border-slate-800">
       <div class="flex flex-col md:flex-row md:items-center justify-between gap-3">
         <div>
-          <div class="text-lg font-black tracking-widest text-white">ASQE v17.9 觀察清單掃描</div>
+          <div class="text-lg font-black tracking-widest text-white">ASQE v17.9.1 觀察清單掃描</div>
           <div class="text-[12px] text-slate-400 mt-1 leading-relaxed">輸入多檔台股 / 美股代碼後批次掃描，快速找出可進場、觀察、過熱、轉弱或事件風險標的。這是輔助篩選，不會自動下單。</div>
         </div>
         <div class="flex items-center gap-2">
@@ -393,7 +482,7 @@
     <div class="flex flex-col gap-3 p-4 border-b border-slate-800">
       <div class="flex flex-col md:flex-row md:items-center justify-between gap-3">
         <div>
-          <div class="text-lg font-black tracking-widest text-white">ASQE v17.9 Forward Test 訊號追蹤</div>
+          <div class="text-lg font-black tracking-widest text-white">ASQE v17.9.1 Forward Test 訊號追蹤</div>
           <div class="text-[12px] text-slate-400 mt-1 leading-relaxed">記錄當下訊號，未來自動回看 5 / 10 / 20 日結果，統計 ASQE 的真實命中率。資料存在本機瀏覽器 localStorage。</div>
         </div>
         <div class="flex items-center gap-2 flex-wrap">
