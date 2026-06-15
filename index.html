@@ -5,8 +5,8 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <meta content="notranslate" name="google"/>
-<title>ASQE v17.2 個股區間測試版 | GitHub Pages Pro</title>
-<script type="text/javascript" nonce="f0ba7b011bb84778ba15d2ee5da" src="//local.adguard.org?ts=1781507563183&amp;type=content-script&amp;dmn=chatgpt.com&amp;url=https%3A%2F%2Fchatgpt.com%2Fbackend-api%2Festuary%2Fcontent%3Fid%3Dfile_000000005768720686041dab6dab0eb2%26fn%3Dasqe_v17_3_single_stock_backtest_github_pages.html%26cd%3Dattachment%26ts%3D494865%26p%3Dfs%26cid%3D1%26sig%3D65e6fc7a7e0374e440e180b79f4ed1640aef474fb4df014f88017bbce4cc03af%26v%3D0&amp;app=chrome.exe&amp;css=2&amp;js=1&amp;rel=1&amp;rji=1&amp;sbe=1"></script><script type="text/javascript" nonce="f0ba7b011bb84778ba15d2ee5da" src="//local.adguard.org?ts=1781507563183&amp;name=AdGuard%20Extra&amp;name=AdGuard%20Popup%20Blocker&amp;type=user-script"></script><script>
+<title>ASQE v17.3.1 清楚訊號版 | GitHub Pages Pro</title>
+<script>
     window.IS_CODE_COMPLETE = false;
 
     window.onerror = function(msg, url, lineNo) {
@@ -112,8 +112,8 @@
 <div class="w-16 h-16 bg-slate-950 rounded-2xl flex items-center justify-center mb-5 border border-slate-700 shadow-inner">
 <span class="text-3xl">🏛️</span>
 </div>
-<h1 class="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-indigo-300 to-orange-300 tracking-wider mb-1">ASQE v17.3</h1>
-<p class="text-[9px] text-indigo-100 mb-8 font-mono tracking-widest uppercase px-2 py-1 rounded badge-elite">個股區間測試版</p>
+<h1 class="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-indigo-300 to-orange-300 tracking-wider mb-1">ASQE v17.3.1</h1>
+<p class="text-[9px] text-indigo-100 mb-8 font-mono tracking-widest uppercase px-2 py-1 rounded badge-elite">進出場訊號清楚版</p>
 <input autocomplete="off" class="w-full bg-slate-950 text-white border border-slate-700 rounded-xl px-4 py-3.5 mb-5 focus:outline-none focus:border-indigo-500 text-center tracking-widest font-mono" id="passwordInput" inputmode="numeric" onkeypress="if(event.key==='Enter') window.checkAndUnlock()" placeholder="輸入授權碼" type="password"/>
 <button class="w-full bg-gradient-to-r from-indigo-700 to-purple-700 hover:from-indigo-600 hover:to-purple-600 text-white font-black py-3.5 rounded-xl transition-all shadow-lg tracking-widest cursor-pointer" id="unlockBtn" onclick="window.checkAndUnlock()">啟動量化核心</button>
 <p class="text-red-400 text-[11px] mt-4 opacity-0 transition-opacity font-bold bg-red-950/50 px-3 py-1 rounded" id="errorMsg">授權碼錯誤</p>
@@ -152,8 +152,8 @@
 <div class="flex items-center gap-3">
 <div class="w-8 h-8 bg-gradient-to-br from-indigo-600 to-purple-900 rounded-lg flex items-center justify-center font-bold text-sm border border-slate-700">🏛️</div>
 <div class="flex flex-col">
-<h1 class="text-base font-black tracking-widest text-slate-100 leading-none">ASQE v17.3</h1>
-<span class="text-[9px] text-indigo-400 font-mono tracking-wider mt-0.5">個股區間測試版</span>
+<h1 class="text-base font-black tracking-widest text-slate-100 leading-none">ASQE v17.3.1</h1>
+<span class="text-[9px] text-indigo-400 font-mono tracking-wider mt-0.5">進出場訊號清楚版</span>
 </div>
 </div>
 <div class="flex flex-wrap items-center justify-center gap-2 mt-2 sm:mt-0">
@@ -182,7 +182,7 @@
 <div class="flex flex-col gap-3 p-4 border-b border-slate-800">
 <div class="flex flex-col md:flex-row md:items-center justify-between gap-3">
 <div>
-<div class="text-lg font-black tracking-widest text-white">ASQE v17.3 個股區間測試</div>
+<div class="text-lg font-black tracking-widest text-white">ASQE v17.3.1 個股區間測試</div>
 <div class="text-[11px] text-slate-400 mt-1">輸入任一台股或美股代碼，設定開始日與結束日，回放 ASQE 進出場規則，檢查期間操作是否合適。指標會使用起始日前資料暖機，避免長均線失真。</div>
 </div>
 <div class="flex items-center gap-2">
@@ -293,13 +293,13 @@
 </div>
 <div class="data-card border-emerald-900/30">
 <div class="flex justify-between items-center mb-2">
-<span class="text-emerald-400 text-[10px] font-black uppercase tracking-wider">🚦 進出場訊號判斷</span>
+<span class="text-emerald-400 text-[10px] font-black uppercase tracking-wider">🚦 進出場訊號判斷（未持股 / 已持股）</span>
 <span class="text-[9px] px-1.5 py-0.5 rounded font-mono bg-slate-950 text-slate-400 border border-slate-800" id="tradeGradeBadge">燈號: --</span>
 </div>
 <div class="grid grid-cols-4 gap-1.5 text-center mb-2">
-<div class="bg-slate-950 p-1.5 rounded border border-slate-800"><div class="text-[8px] text-slate-500 mb-0.5">進場狀態</div><div class="text-[11px] font-bold text-white metric-value" id="netExpectancy">--</div></div>
-<div class="bg-slate-950 p-1.5 rounded border border-slate-800"><div class="text-[8px] text-slate-500 mb-0.5">出場狀態</div><div class="text-[11px] font-bold text-white metric-value" id="costModelTxt">--</div></div>
-<div class="bg-slate-950 p-1.5 rounded border border-slate-800"><div class="text-[8px] text-slate-500 mb-0.5">停利提醒</div><div class="text-[11px] font-bold text-white metric-value" id="riskRuleTxt">--</div></div>
+<div class="bg-slate-950 p-1.5 rounded border border-slate-800"><div class="text-[8px] text-slate-500 mb-0.5">未持股動作</div><div class="text-[11px] font-bold text-white metric-value" id="netExpectancy">--</div></div>
+<div class="bg-slate-950 p-1.5 rounded border border-slate-800"><div class="text-[8px] text-slate-500 mb-0.5">已持股動作</div><div class="text-[11px] font-bold text-white metric-value" id="costModelTxt">--</div></div>
+<div class="bg-slate-950 p-1.5 rounded border border-slate-800"><div class="text-[8px] text-slate-500 mb-0.5">停利 / 減碼</div><div class="text-[11px] font-bold text-white metric-value" id="riskRuleTxt">--</div></div>
 <div class="bg-slate-950 p-1.5 rounded border border-slate-800"><div class="text-[8px] text-slate-500 mb-0.5">關鍵防線</div><div class="text-[11px] font-bold text-white metric-value" id="portfolioTxt">--</div></div>
 </div>
 <div class="bg-slate-950 p-2 rounded border border-slate-800 text-[10px] text-slate-300 leading-relaxed" id="tradingRuleText">等待訊號。</div>
@@ -367,7 +367,7 @@
 </div>
 <div class="flex gap-2">
 <div class="bg-slate-950 p-2 rounded border border-slate-800 flex-1 flex flex-col justify-center">
-<div class="text-[8px] text-slate-500 mb-0.5 uppercase">戰術指令</div>
+<div class="text-[8px] text-slate-500 mb-0.5 uppercase">總結指令</div>
 <div class="text-[11px] font-black text-white" id="actionText">等待數據</div>
 </div>
 <div class="bg-slate-950 p-2 rounded border border-slate-800 w-24 shrink-0 flex flex-col justify-center text-center">
@@ -1022,7 +1022,7 @@
   }
 
   function calculateRegimeProbability(data, adx) {
-    if (!data || data.length < 200) return { pBull:0.34, pSide:0.33, pBear:0.33, p多頭:0.34, p盤整:0.33, p空頭:0.33 };
+    if (!data || data.length < 200) return { p多頭:0.34, p盤整:0.33, p空頭:0.33 };
     var e200 = calcEMA(data,200,'close');
     var L = data[data.length-1];
     var E = e200[e200.length-1].value || L.close;
@@ -1036,7 +1036,7 @@
     var maxZ = Math.max(zBull,zBear,zSide);
     var eb = Math.exp(zBull-maxZ), es = Math.exp(zSide-maxZ), er = Math.exp(zBear-maxZ);
     var sum = eb+es+er;
-    return { pBull: eb/sum, pSide: es/sum, pBear: er/sum, p多頭: eb/sum, p盤整: es/sum, p空頭: er/sum };
+    return { p多頭: eb/sum, p盤整: es/sum, p空頭: er/sum };
   }
 
   function calcRelativeStrength分數(stock, bench) {
@@ -1483,13 +1483,57 @@
       sf('volVeto', isHardVeto ? '<span class="text-red-500">觸發</span>' : '<span class="text-emerald-400">通過</span>');
       sf('divVeto', '<span class="' + div.color + '">' + div.text + ' / Ortho ' + (orthoPenalty<1?'ON':'通過') + ' / ' + (isBBVeto?'BB VETO':'BB 通過') + '</span>');
 
-      var action = '區間觀察', actionClass='text-slate-300';
-      if (final分數 < 50 || isHardVeto || isGapDown || isBBVeto) { action='嚴禁進場 / 轉防守'; actionClass='text-red-400'; }
-      else if (isStop) { action='暫緩進場 / 等收復防線'; actionClass='text-orange-400'; }
-      else if (isBBBreakout && final分數 >= 70) { action='布林壓縮突破 / DMI確認'; actionClass='text-cyan-300'; }
-      else if (final分數 >= 75 && bias20 < 0.08) { action='趨勢多頭 / 回測布局'; actionClass='text-emerald-400'; }
-      else if (final分數 >= 70 && bias20 >= 0.15) { action='追高風險 / 分批停利'; actionClass='text-yellow-400'; }
-      else if (final分數 >= 65) { action='觀察試單 / 嚴守停損'; actionClass='text-emerald-300'; }
+      var action = '觀察，等待更明確訊號', actionClass='text-slate-300';
+      var notHoldingAction = '先觀望';
+      var holdingAction = '續抱觀察';
+      var profitStatus = '正常';
+      var signalReason = [];
+      if (final分數 < 50 || isHardVeto || isGapDown || isBBVeto) {
+        action = '紅燈：未持股禁止進場；已持股轉防守 / 減碼';
+        actionClass = 'text-red-400';
+        notHoldingAction = '禁止進場';
+        holdingAction = '減碼/清倉';
+        signalReason.push('分數偏弱或觸發 VETO，風險優先於分數');
+      } else if (isStop) {
+        action = '橘燈：跌破吊燈防線，等收復後再評估';
+        actionClass = 'text-orange-400';
+        notHoldingAction = '暫緩，等收復';
+        holdingAction = '跌破防線，減碼';
+        signalReason.push('收盤價低於吊燈停損線，短線防線失守');
+      } else if (final分數 >= 70 && bias20 >= 0.15) {
+        action = '黃燈：股票很強但已偏熱；未持股不追高，已持股分批停利';
+        actionClass = 'text-yellow-400';
+        notHoldingAction = '不追高，等拉回';
+        holdingAction = '續抱但分批停利';
+        profitStatus = '分批停利';
+        signalReason.push('乖離率偏高，適合等拉回 EMA20 / 布林中軌附近');
+      } else if (isBBBreakout && final分數 >= 70) {
+        action = '綠燈：布林 + DMI 突破確認，可分批進場';
+        actionClass = 'text-cyan-300';
+        notHoldingAction = '可分批進場';
+        holdingAction = '續抱，可加碼小部位';
+        signalReason.push('布林突破且 DMI 多方確認');
+      } else if (final分數 >= 75 && bias20 < 0.08) {
+        action = '綠燈：趨勢多頭且未過熱，可分批布局';
+        actionClass = 'text-emerald-400';
+        notHoldingAction = '可分批布局';
+        holdingAction = '續抱，守吊燈';
+        signalReason.push('分數高、未過熱，風險報酬較平衡');
+      } else if (final分數 >= 65) {
+        action = '觀察：趨勢尚可，但不是明確進場點';
+        actionClass = 'text-emerald-300';
+        notHoldingAction = '觀察，等拉回/突破';
+        holdingAction = '續抱觀察';
+        signalReason.push('分數尚可，但缺少低風險進場觸發條件');
+      } else {
+        action = '觀望：訊號不足，先不要進場';
+        actionClass = 'text-slate-300';
+        notHoldingAction = '觀望';
+        holdingAction = '縮小部位/觀察';
+        signalReason.push('分數未達進場門檻');
+      }
+      if (bias20 >= 0.15 && profitStatus === '正常') profitStatus = '過熱警戒';
+      else if (bias20 >= 0.08 && profitStatus === '正常') profitStatus = '分批觀察';
 
       var flags = [];
       if (isHardVeto) flags.push('爆量否決');
@@ -1506,22 +1550,18 @@
       var portfolioWarn = projectedExposure > pcfg.totalCap ? '超過上限' : 'OK';
       if (portfolioWarn !== 'OK' && finalPosSize > 0) gradeObj = {grade:'B', color:'text-yellow-300', rule:'投資組合總曝險可能過高，建議先減少其他持股或降低本次部位。'};
 
-      var entryStatus = '等待';
-      var exitStatus = '續抱';
-      var profitStatus = '正常';
-      if (final分數 < 50 || isHardVeto || isGapDown || isBBVeto) { entryStatus='禁止'; exitStatus='離場/防守'; }
-      else if (isStop) { entryStatus='暫緩'; exitStatus='跌破防線'; }
-      else if (isBBBreakout && final分數 >= 70) { entryStatus='突破'; exitStatus='未觸發'; }
-      else if (final分數 >= 75 && bias20 < 0.08) { entryStatus='可布局'; exitStatus='未觸發'; }
-      else if (final分數 >= 65) { entryStatus='觀察'; exitStatus='未觸發'; }
-      if (bias20 >= 0.15) profitStatus='過熱停利';
-      else if (bias20 >= 0.08) profitStatus='分批觀察';
       sf('tradeGradeBadge', '<span class="' + gradeObj.color + ' font-black">燈號: ' + gradeObj.grade + '</span>');
-      sf('netExpectancy', '<span class="' + (entryStatus==='禁止'?'text-red-400':entryStatus==='暫緩'?'text-orange-400':entryStatus==='可布局'||entryStatus==='突破'?'text-emerald-400':'text-yellow-300') + '">' + entryStatus + '</span>');
-      sf('costModelTxt', '<span class="' + (exitStatus.indexOf('離場')>=0||exitStatus.indexOf('跌破')>=0?'text-red-400':'text-emerald-400') + '">' + exitStatus + '</span>');
-      sf('riskRuleTxt', '<span class="' + (profitStatus.indexOf('過熱')>=0?'text-yellow-300':'text-slate-200') + '">' + profitStatus + '</span>');
+      var entryColor = notHoldingAction.indexOf('禁止')>=0 ? 'text-red-400' : (notHoldingAction.indexOf('暫緩')>=0 || notHoldingAction.indexOf('不追高')>=0 ? 'text-orange-400' : (notHoldingAction.indexOf('可')>=0 ? 'text-emerald-400' : 'text-yellow-300'));
+      var holdColor = holdingAction.indexOf('清倉')>=0 || holdingAction.indexOf('減碼')>=0 ? 'text-orange-400' : 'text-emerald-400';
+      if (holdingAction.indexOf('清倉')>=0) holdColor = 'text-red-400';
+      sf('netExpectancy', '<span class="' + entryColor + '">' + notHoldingAction + '</span>');
+      sf('costModelTxt', '<span class="' + holdColor + '">' + holdingAction + '</span>');
+      sf('riskRuleTxt', '<span class="' + (profitStatus.indexOf('過熱')>=0 || profitStatus.indexOf('停利')>=0 ? 'text-yellow-300' : 'text-slate-200') + '">' + profitStatus + '</span>');
       sf('portfolioTxt', chandelier.toFixed(2));
-      sf('tradingRuleText', '進場：分數≥70、未觸發 VETO、收盤價站回吊燈防線與布林中軌，且 +DI 優於 -DI。｜出場：跌破吊燈防線、布林+DMI轉弱、爆量跌破或跳空下殺即轉防守。｜目前判斷：' + action + '。');
+      var ruleHtml = '<div class="mb-1"><span class="text-indigo-300 font-bold">目前結論：</span><span class="' + actionClass + ' font-bold">' + action + '</span></div>' +
+        '<div class="mb-1"><span class="text-slate-400">未持股：</span><span class="' + entryColor + ' font-bold">' + notHoldingAction + '</span> ｜ <span class="text-slate-400">已持股：</span><span class="' + holdColor + ' font-bold">' + holdingAction + '</span></div>' +
+        '<div class="text-slate-400">原因：' + (signalReason.join('；') || '等待更多確認') + '。關鍵防線：' + chandelier.toFixed(2) + '。</div>';
+      sf('tradingRuleText', ruleHtml);
 
       window.lastSignal = {
         date: new Date().toISOString().slice(0,19).replace('T',' '),
