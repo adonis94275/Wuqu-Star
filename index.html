@@ -1,12 +1,12 @@
 <!DOCTYPE html>
+
 <html lang="zh-TW" translate="no">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="google" content="notranslate" />
-  <title>ASQE v17.1 實盤交易中文版 | GitHub Pages Pro</title>
-
-  <script type="text/javascript" nonce="f0ba7b011bb84778ba15d2ee5da" src="//local.adguard.org?ts=1781500361483&amp;type=content-script&amp;dmn=chatgpt.com&amp;url=https%3A%2F%2Fchatgpt.com%2Fbackend-api%2Festuary%2Fcontent%3Fid%3Dfile_00000000da0471f8af6b4f512e91ebfc%26ts%3D494862%26p%3Dfs%26cid%3D1%26sig%3De0296690d1b0f8ba42d5442e808f073fb3f27bc599cc0c0e6180e64172e4d078%26v%3D0&amp;app=chrome.exe&amp;css=2&amp;js=1&amp;rel=1&amp;rji=1&amp;sbe=1"></script><script type="text/javascript" nonce="f0ba7b011bb84778ba15d2ee5da" src="//local.adguard.org?ts=1781500361483&amp;name=AdGuard%20Extra&amp;name=AdGuard%20Popup%20Blocker&amp;type=user-script"></script><script>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="notranslate" name="google"/>
+<title>ASQE v17.2 進出場訊號版 | GitHub Pages Pro</title>
+<script type="text/javascript" nonce="f0ba7b011bb84778ba15d2ee5da" src="//local.adguard.org?ts=1781500361483&amp;type=content-script&amp;dmn=chatgpt.com&amp;url=https%3A%2F%2Fchatgpt.com%2Fbackend-api%2Festuary%2Fcontent%3Fid%3Dfile_0000000063b8720bb2ef8ca09986f4f4%26fn%3Dasqe_v17_2_entry_exit_signal_github_pages.html%26cd%3Dattachment%26ts%3D494863%26p%3Dfs%26cid%3D1%26sig%3D62dbeb987125da932bcbafbdafd0f79dd5d70bdc9abb3d2c16dbc8cf5e725dc8%26v%3D0&amp;app=chrome.exe&amp;css=2&amp;js=1&amp;rel=1&amp;rji=1&amp;sbe=1"></script><script type="text/javascript" nonce="f0ba7b011bb84778ba15d2ee5da" src="//local.adguard.org?ts=1781500361483&amp;name=AdGuard%20Extra&amp;name=AdGuard%20Popup%20Blocker&amp;type=user-script"></script><script>
     window.IS_CODE_COMPLETE = false;
 
     window.onerror = function(msg, url, lineNo) {
@@ -41,8 +41,8 @@
     };
 
     window.saveAndStart = function() {
-      var ids = ['finmindKeyInput','fugleKeyInput','fmpKeyInput','finnhubKeyInput','capitalInput','riskPctInput','twCostPctInput','twSlipPctInput','usCostPctInput','usSlipPctInput','sectorCapInput','totalCapInput'];
-      var names = ['ASQE_FINMIND_KEY','ASQE_FUGLE_KEY','ASQE_FMP_KEY','ASQE_FINNHUB_KEY','ASQE_CAPITAL','ASQE_RISK_PCT','ASQE_TW_COST_PCT','ASQE_TW_SLIP_PCT','ASQE_US_COST_PCT','ASQE_US_SLIP_PCT','ASQE_SECTOR_CAP_PCT','ASQE_TOTAL_CAP_PCT'];
+      var ids = ['finmindKeyInput','fugleKeyInput','fmpKeyInput','finnhubKeyInput'];
+      var names = ['ASQE_FINMIND_KEY','ASQE_FUGLE_KEY','ASQE_FMP_KEY','ASQE_FINNHUB_KEY'];
       for (var i=0; i<ids.length; i++) {
         var el = document.getElementById(ids[i]);
         var val = el ? el.value.trim() : '';
@@ -79,11 +79,9 @@
       if (typeof window.runAnalysis === 'function') window.runAnalysis(val);
     };
   </script>
-
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://unpkg.com/lightweight-charts@4.1.1/dist/lightweight-charts.standalone.production.js"></script>
-
-  <style>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://unpkg.com/lightweight-charts@4.1.1/dist/lightweight-charts.standalone.production.js"></script>
+<style>
     ::-webkit-scrollbar { width: 4px; height: 4px; }
     ::-webkit-scrollbar-track { background: #020617; }
     ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 4px; }
@@ -107,327 +105,259 @@
     .badge-elite { background: linear-gradient(135deg, #1e3a8a, #4c1d95); border: 1px solid #7c3aed; }
   </style>
 </head>
-
 <body class="flex flex-col min-h-screen relative overflow-hidden">
-  <div id="launchScreen" class="fixed inset-0 z-[100] bg-slate-950 flex items-center justify-center p-4 fade-transition">
-    <div class="bg-slate-900 rounded-3xl p-8 w-full max-w-md flex flex-col items-center shadow-[0_0_80px_rgba(99,102,241,0.18)] border border-slate-800 relative overflow-hidden">
-      <div class="absolute top-0 w-full h-1 bg-gradient-to-r from-indigo-600 via-purple-500 to-orange-500"></div>
-      <div class="w-16 h-16 bg-slate-950 rounded-2xl flex items-center justify-center mb-5 border border-slate-700 shadow-inner">
-        <span class="text-3xl">🏛️</span>
-      </div>
-      <h1 class="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-indigo-300 to-orange-300 tracking-wider mb-1">ASQE v17.1</h1>
-      <p class="text-[9px] text-indigo-100 mb-8 font-mono tracking-widest uppercase px-2 py-1 rounded badge-elite">實盤交易版</p>
-      <input type="password" id="passwordInput" autocomplete="off" inputmode="numeric" placeholder="輸入授權碼" onkeypress="if(event.key==='Enter') window.checkAndUnlock()" class="w-full bg-slate-950 text-white border border-slate-700 rounded-xl px-4 py-3.5 mb-5 focus:outline-none focus:border-indigo-500 text-center tracking-widest font-mono">
-      <button id="unlockBtn" onclick="window.checkAndUnlock()" class="w-full bg-gradient-to-r from-indigo-700 to-purple-700 hover:from-indigo-600 hover:to-purple-600 text-white font-black py-3.5 rounded-xl transition-all shadow-lg tracking-widest cursor-pointer">啟動量化核心</button>
-      <p id="errorMsg" class="text-red-400 text-[11px] mt-4 opacity-0 transition-opacity font-bold bg-red-950/50 px-3 py-1 rounded">授權碼錯誤</p>
-    </div>
-  </div>
-
-  <div id="setupModal" class="fixed inset-0 z-[200] bg-slate-950/90 flex items-center justify-center fade-transition fade-out backdrop-blur-md p-4">
-    <div class="bg-slate-900 rounded-3xl p-6 w-full max-w-lg border border-slate-700 shadow-2xl relative">
-      <h2 class="text-lg font-black text-white mb-2 flex items-center gap-2 tracking-widest"><span>⚙️</span> API 路由配置</h2>
-      <p class="text-[10px] text-slate-400 mb-4 leading-relaxed">
+<div class="fixed inset-0 z-[100] bg-slate-950 flex items-center justify-center p-4 fade-transition" id="launchScreen">
+<div class="bg-slate-900 rounded-3xl p-8 w-full max-w-md flex flex-col items-center shadow-[0_0_80px_rgba(99,102,241,0.18)] border border-slate-800 relative overflow-hidden">
+<div class="absolute top-0 w-full h-1 bg-gradient-to-r from-indigo-600 via-purple-500 to-orange-500"></div>
+<div class="w-16 h-16 bg-slate-950 rounded-2xl flex items-center justify-center mb-5 border border-slate-700 shadow-inner">
+<span class="text-3xl">🏛️</span>
+</div>
+<h1 class="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-indigo-300 to-orange-300 tracking-wider mb-1">ASQE v17.2</h1>
+<p class="text-[9px] text-indigo-100 mb-8 font-mono tracking-widest uppercase px-2 py-1 rounded badge-elite">進出場訊號版</p>
+<input autocomplete="off" class="w-full bg-slate-950 text-white border border-slate-700 rounded-xl px-4 py-3.5 mb-5 focus:outline-none focus:border-indigo-500 text-center tracking-widest font-mono" id="passwordInput" inputmode="numeric" onkeypress="if(event.key==='Enter') window.checkAndUnlock()" placeholder="輸入授權碼" type="password"/>
+<button class="w-full bg-gradient-to-r from-indigo-700 to-purple-700 hover:from-indigo-600 hover:to-purple-600 text-white font-black py-3.5 rounded-xl transition-all shadow-lg tracking-widest cursor-pointer" id="unlockBtn" onclick="window.checkAndUnlock()">啟動量化核心</button>
+<p class="text-red-400 text-[11px] mt-4 opacity-0 transition-opacity font-bold bg-red-950/50 px-3 py-1 rounded" id="errorMsg">授權碼錯誤</p>
+</div>
+</div>
+<div class="fixed inset-0 z-[200] bg-slate-950/90 flex items-center justify-center fade-transition fade-out backdrop-blur-md p-4" id="setupModal">
+<div class="bg-slate-900 rounded-3xl p-6 w-full max-w-lg border border-slate-700 shadow-2xl relative">
+<h2 class="text-lg font-black text-white mb-2 flex items-center gap-2 tracking-widest"><span>⚙️</span> API 路由配置</h2>
+<p class="text-[10px] text-slate-400 mb-4 leading-relaxed">
         台股路由：FinMind → Fugle → Yahoo。美股路由：FMP → Finnhub → Yahoo。API Key 只儲存在您的瀏覽器 localStorage，不會寫入程式碼。
       </p>
-      <div class="grid grid-cols-1 gap-3 mt-2">
-        <div class="bg-slate-950/50 p-3 rounded-xl border border-slate-800">
-          <label class="text-[9px] text-slate-400 font-bold uppercase block">FinMind Token（台股 OHLCV / 三大法人）</label>
-          <input type="password" id="finmindKeyInput" autocomplete="off" spellcheck="false" class="w-full bg-slate-900 text-white border border-slate-700 rounded-lg px-3 py-2 focus:outline-none focus:border-indigo-500 font-mono text-xs mt-1">
-        </div>
-        <div class="bg-slate-950/50 p-3 rounded-xl border border-slate-800">
-          <label class="text-[9px] text-slate-400 font-bold uppercase block">Fugle API Key（台股備援 OHLCV）</label>
-          <input type="password" id="fugleKeyInput" autocomplete="off" spellcheck="false" class="w-full bg-slate-900 text-white border border-slate-700 rounded-lg px-3 py-2 focus:outline-none focus:border-indigo-500 font-mono text-xs mt-1">
-        </div>
-        <div class="bg-slate-950/50 p-3 rounded-xl border border-slate-800">
-          <label class="text-[9px] text-slate-400 font-bold uppercase block">FMP API Key（美股主路由）</label>
-          <input type="password" id="fmpKeyInput" autocomplete="off" spellcheck="false" class="w-full bg-slate-900 text-white border border-slate-700 rounded-lg px-3 py-2 focus:outline-none focus:border-indigo-500 font-mono text-xs mt-1">
-        </div>
-        <div class="bg-slate-950/50 p-3 rounded-xl border border-slate-800">
-          <label class="text-[9px] text-slate-400 font-bold uppercase block">Finnhub Token（美股備援）</label>
-          <input type="password" id="finnhubKeyInput" autocomplete="off" spellcheck="false" class="w-full bg-slate-900 text-white border border-slate-700 rounded-lg px-3 py-2 focus:outline-none focus:border-indigo-500 font-mono text-xs mt-1">
-        </div>
-        <div class="bg-slate-950/50 p-3 rounded-xl border border-slate-800">
-          <div class="text-[9px] text-slate-400 font-bold uppercase mb-2">實盤參數</div>
-          <div class="grid grid-cols-2 gap-2">
-            <label class="text-[9px] text-slate-500">資金額<input type="number" id="capitalInput" value="1000000" autocomplete="off" class="mt-1 w-full bg-slate-900 text-white border border-slate-700 rounded-lg px-2 py-1.5 font-mono text-xs"></label>
-            <label class="text-[9px] text-slate-500">單筆風險 %<input type="number" id="riskPctInput" value="1" step="0.1" autocomplete="off" class="mt-1 w-full bg-slate-900 text-white border border-slate-700 rounded-lg px-2 py-1.5 font-mono text-xs"></label>
-            <label class="text-[9px] text-slate-500">台股交易成本 %<input type="number" id="twCostPctInput" value="0.45" step="0.01" autocomplete="off" class="mt-1 w-full bg-slate-900 text-white border border-slate-700 rounded-lg px-2 py-1.5 font-mono text-xs"></label>
-            <label class="text-[9px] text-slate-500">台股滑價 %<input type="number" id="twSlipPctInput" value="0.15" step="0.01" autocomplete="off" class="mt-1 w-full bg-slate-900 text-white border border-slate-700 rounded-lg px-2 py-1.5 font-mono text-xs"></label>
-            <label class="text-[9px] text-slate-500">美股交易成本 %<input type="number" id="usCostPctInput" value="0.15" step="0.01" autocomplete="off" class="mt-1 w-full bg-slate-900 text-white border border-slate-700 rounded-lg px-2 py-1.5 font-mono text-xs"></label>
-            <label class="text-[9px] text-slate-500">美股滑價 %<input type="number" id="usSlipPctInput" value="0.10" step="0.01" autocomplete="off" class="mt-1 w-full bg-slate-900 text-white border border-slate-700 rounded-lg px-2 py-1.5 font-mono text-xs"></label>
-            <label class="text-[9px] text-slate-500">單產業上限 %<input type="number" id="sectorCapInput" value="35" step="1" autocomplete="off" class="mt-1 w-full bg-slate-900 text-white border border-slate-700 rounded-lg px-2 py-1.5 font-mono text-xs"></label>
-            <label class="text-[9px] text-slate-500">總曝險上限 %<input type="number" id="totalCapInput" value="80" step="5" autocomplete="off" class="mt-1 w-full bg-slate-900 text-white border border-slate-700 rounded-lg px-2 py-1.5 font-mono text-xs"></label>
-          </div>
-        </div>
-        <button onclick="window.saveAndStart()" class="w-full bg-gradient-to-r from-indigo-700 to-purple-700 hover:from-indigo-600 hover:to-purple-600 text-white font-black py-3 rounded-xl transition-all mt-2 text-sm shadow-lg tracking-widest cursor-pointer">寫入本機設定並啟動</button>
-      </div>
-    </div>
-  </div>
+<div class="grid grid-cols-1 gap-3 mt-2">
+<div class="bg-slate-950/50 p-3 rounded-xl border border-slate-800">
+<label class="text-[9px] text-slate-400 font-bold uppercase block">FinMind Token（台股 OHLCV / 三大法人）</label>
+<input autocomplete="off" class="w-full bg-slate-900 text-white border border-slate-700 rounded-lg px-3 py-2 focus:outline-none focus:border-indigo-500 font-mono text-xs mt-1" id="finmindKeyInput" spellcheck="false" type="password"/>
+</div>
+<div class="bg-slate-950/50 p-3 rounded-xl border border-slate-800">
+<label class="text-[9px] text-slate-400 font-bold uppercase block">Fugle API Key（台股備援 OHLCV）</label>
+<input autocomplete="off" class="w-full bg-slate-900 text-white border border-slate-700 rounded-lg px-3 py-2 focus:outline-none focus:border-indigo-500 font-mono text-xs mt-1" id="fugleKeyInput" spellcheck="false" type="password"/>
+</div>
+<div class="bg-slate-950/50 p-3 rounded-xl border border-slate-800">
+<label class="text-[9px] text-slate-400 font-bold uppercase block">FMP API Key（美股主路由）</label>
+<input autocomplete="off" class="w-full bg-slate-900 text-white border border-slate-700 rounded-lg px-3 py-2 focus:outline-none focus:border-indigo-500 font-mono text-xs mt-1" id="fmpKeyInput" spellcheck="false" type="password"/>
+</div>
+<div class="bg-slate-950/50 p-3 rounded-xl border border-slate-800">
+<label class="text-[9px] text-slate-400 font-bold uppercase block">Finnhub Token（美股備援）</label>
+<input autocomplete="off" class="w-full bg-slate-900 text-white border border-slate-700 rounded-lg px-3 py-2 focus:outline-none focus:border-indigo-500 font-mono text-xs mt-1" id="finnhubKeyInput" spellcheck="false" type="password"/>
+</div>
 
-  <div id="mainApp" class="flex flex-col min-h-screen w-full h-full absolute inset-0 fade-transition fade-out">
-    <header class="bg-slate-900 border-b border-slate-800 p-2.5 flex flex-col sm:flex-row items-center justify-between z-40 shrink-0 shadow-md">
-      <div class="flex items-center gap-3">
-        <div class="w-8 h-8 bg-gradient-to-br from-indigo-600 to-purple-900 rounded-lg flex items-center justify-center font-bold text-sm border border-slate-700">🏛️</div>
-        <div class="flex flex-col">
-          <h1 class="text-base font-black tracking-widest text-slate-100 leading-none">ASQE v17.1</h1>
-          <span class="text-[9px] text-indigo-400 font-mono tracking-wider mt-0.5">實盤交易版</span>
-        </div>
-      </div>
-
-      <div class="flex flex-wrap items-center justify-center gap-2 mt-2 sm:mt-0">
-        <div id="apiStatusBadge" class="hidden sm:flex text-[9px] px-2 py-1 rounded font-mono bg-slate-950 border border-slate-700 text-slate-400 items-center gap-1">
-          <span id="apiStatusDot" class="w-1.5 h-1.5 rounded-full bg-green-500"></span>
-          <span id="apiStatusText">就緒</span>
-        </div>
-        <div class="flex bg-slate-950 rounded-lg p-1 border border-slate-800">
-          <button id="tabTW" onclick="window.switchTab('TW', '2330.TW')" class="px-3 py-1.5 rounded-md text-[11px] font-bold transition-all bg-indigo-600 text-white shadow cursor-pointer">台股 TW</button>
-          <button id="tabUS" onclick="window.switchTab('US', 'SPY')" class="px-3 py-1.5 rounded-md text-[11px] font-bold transition-all text-slate-400 hover:text-white cursor-pointer">美股 US</button>
-        </div>
-        <input type="text" id="tickerInput" value="2330.TW" onkeypress="if(event.key==='Enter') window.triggerAnalysis()" class="bg-slate-950 text-white border border-slate-700 rounded-lg px-3 py-1.5 focus:outline-none focus:border-indigo-500 w-28 uppercase font-mono text-xs">
-        <button id="analyzeBtn" onclick="window.triggerAnalysis()" class="bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-1.5 px-4 rounded-lg shadow-lg text-xs transition-colors cursor-pointer">量化分析</button>
-        <button id="batchBtn" onclick="window.runBatchPreset()" class="bg-emerald-700 hover:bg-emerald-600 text-white font-bold py-1.5 px-3 rounded-lg shadow-lg text-xs transition-colors cursor-pointer">8檔批次測試</button>
-        <button onclick="window.logCurrentSignal()" class="bg-amber-700 hover:bg-amber-600 text-white font-bold py-1.5 px-3 rounded-lg shadow-lg text-xs transition-colors cursor-pointer">記錄訊號</button>
-        <button onclick="window.openSignalLog()" class="bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold py-1.5 px-3 rounded-lg shadow-lg text-xs border border-slate-700 cursor-pointer">訊號日誌</button>
-        <button onclick="document.getElementById('setupModal').style.display='flex'; setTimeout(function(){document.getElementById('setupModal').style.opacity='1';document.getElementById('setupModal').classList.remove('fade-out');},10)" class="bg-slate-800 text-slate-300 py-1.5 px-2 rounded-lg text-xs border border-slate-700 cursor-pointer">⚙️</button>
-      </div>
-    </header>
-
-    <div id="loadingOverlay" class="fixed inset-0 bg-slate-950/90 z-50 flex flex-col items-center justify-center hidden backdrop-blur-md">
-      <div class="animate-spin rounded-full h-12 w-12 border-4 border-slate-800 border-t-indigo-500 mb-4"></div>
-      <p class="text-[10px] font-mono text-indigo-400 tracking-widest animate-pulse" id="loadingText">讀取市場資料...</p>
-    </div>
+<button class="w-full bg-gradient-to-r from-indigo-700 to-purple-700 hover:from-indigo-600 hover:to-purple-600 text-white font-black py-3 rounded-xl transition-all mt-2 text-sm shadow-lg tracking-widest cursor-pointer" onclick="window.saveAndStart()">寫入 API 設定並啟動</button>
+</div>
+</div>
+</div>
+<div class="flex flex-col min-h-screen w-full h-full absolute inset-0 fade-transition fade-out" id="mainApp">
+<header class="bg-slate-900 border-b border-slate-800 p-2.5 flex flex-col sm:flex-row items-center justify-between z-40 shrink-0 shadow-md">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 bg-gradient-to-br from-indigo-600 to-purple-900 rounded-lg flex items-center justify-center font-bold text-sm border border-slate-700">🏛️</div>
+<div class="flex flex-col">
+<h1 class="text-base font-black tracking-widest text-slate-100 leading-none">ASQE v17.2</h1>
+<span class="text-[9px] text-indigo-400 font-mono tracking-wider mt-0.5">進出場訊號版</span>
+</div>
+</div>
+<div class="flex flex-wrap items-center justify-center gap-2 mt-2 sm:mt-0">
+<div class="hidden sm:flex text-[9px] px-2 py-1 rounded font-mono bg-slate-950 border border-slate-700 text-slate-400 items-center gap-1" id="apiStatusBadge">
+<span class="w-1.5 h-1.5 rounded-full bg-green-500" id="apiStatusDot"></span>
+<span id="apiStatusText">就緒</span>
+</div>
+<div class="flex bg-slate-950 rounded-lg p-1 border border-slate-800">
+<button class="px-3 py-1.5 rounded-md text-[11px] font-bold transition-all bg-indigo-600 text-white shadow cursor-pointer" id="tabTW" onclick="window.switchTab('TW', '2330.TW')">台股 TW</button>
+<button class="px-3 py-1.5 rounded-md text-[11px] font-bold transition-all text-slate-400 hover:text-white cursor-pointer" id="tabUS" onclick="window.switchTab('US', 'SPY')">美股 US</button>
+</div>
+<input class="bg-slate-950 text-white border border-slate-700 rounded-lg px-3 py-1.5 focus:outline-none focus:border-indigo-500 w-28 uppercase font-mono text-xs" id="tickerInput" onkeypress="if(event.key==='Enter') window.triggerAnalysis()" type="text" value="2330.TW"/>
+<button class="bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-1.5 px-4 rounded-lg shadow-lg text-xs transition-colors cursor-pointer" id="analyzeBtn" onclick="window.triggerAnalysis()">量化分析</button>
+<button class="bg-emerald-700 hover:bg-emerald-600 text-white font-bold py-1.5 px-3 rounded-lg shadow-lg text-xs transition-colors cursor-pointer" id="batchBtn" onclick="window.runBatchPreset()">8檔批次測試</button>
 
 
-    <div id="batchPanel" class="fixed inset-0 z-[60] hidden bg-slate-950/92 backdrop-blur-md p-4 overflow-y-auto">
-      <div class="max-w-7xl mx-auto bg-slate-900 border border-slate-700 rounded-2xl shadow-2xl overflow-hidden">
-        <div class="flex flex-col md:flex-row md:items-center justify-between gap-3 p-4 border-b border-slate-800">
-          <div>
-            <div class="text-lg font-black tracking-widest text-white">ASQE v17.0 批次測試</div>
-            <div class="text-[11px] text-slate-400 mt-1">測試標的：2308、1802、2330、3189、DELL、ARM、RGTI、TSLA。評估期間從 2026-01-01 起；指標使用更早資料暖機。</div>
-          </div>
-          <div class="flex items-center gap-2">
-            <input id="batchStartDate" type="date" value="2026-01-01" class="bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-xs font-mono text-white">
-            <button onclick="window.runBatchPreset()" class="bg-emerald-700 hover:bg-emerald-600 text-white px-3 py-2 rounded-lg text-xs font-bold">重新測試</button>
-            <button onclick="document.getElementById('batchPanel').classList.add('hidden')" class="bg-slate-800 hover:bg-slate-700 text-slate-200 px-3 py-2 rounded-lg text-xs font-bold">關閉</button>
-          </div>
-        </div>
-        <div class="p-4">
-          <div id="batchSummary" class="text-xs text-slate-300 mb-3 bg-slate-950/70 border border-slate-800 rounded-xl p-3">尚未開始。</div>
-          <div class="overflow-x-auto border border-slate-800 rounded-xl">
-            <table class="w-full text-[11px] text-left min-w-[1100px]">
-              <thead class="bg-slate-950 text-slate-400 uppercase tracking-wider">
-                <tr>
-                  <th class="p-2">市場</th><th class="p-2">代碼</th><th class="p-2">資料源</th><th class="p-2 text-right">起始價</th><th class="p-2 text-right">最新價</th><th class="p-2 text-right">區間報酬</th><th class="p-2 text-right">MDD</th><th class="p-2 text-right">ASQE</th><th class="p-2">燈號</th><th class="p-2 text-right">部位</th><th class="p-2 text-right">DaR95</th><th class="p-2 text-right">信心度</th><th class="p-2">風險旗標</th>
-                </tr>
-              </thead>
-              <tbody id="batchTable" class="divide-y divide-slate-800 bg-slate-900"></tbody>
-            </table>
-          </div>
-          <div id="batchNotes" class="mt-3 text-[11px] text-slate-400 leading-relaxed"></div>
-        </div>
-      </div>
-    </div>
+<button class="bg-slate-800 text-slate-300 py-1.5 px-2 rounded-lg text-xs border border-slate-700 cursor-pointer" onclick="document.getElementById('setupModal').style.display='flex'; setTimeout(function(){document.getElementById('setupModal').style.opacity='1';document.getElementById('setupModal').classList.remove('fade-out');},10)">⚙️</button>
+</div>
+</header>
+<div class="fixed inset-0 bg-slate-950/90 z-50 flex flex-col items-center justify-center hidden backdrop-blur-md" id="loadingOverlay">
+<div class="animate-spin rounded-full h-12 w-12 border-4 border-slate-800 border-t-indigo-500 mb-4"></div>
+<p class="text-[10px] font-mono text-indigo-400 tracking-widest animate-pulse" id="loadingText">讀取市場資料...</p>
+</div>
+<div class="fixed inset-0 z-[60] hidden bg-slate-950/92 backdrop-blur-md p-4 overflow-y-auto" id="batchPanel">
+<div class="max-w-7xl mx-auto bg-slate-900 border border-slate-700 rounded-2xl shadow-2xl overflow-hidden">
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-3 p-4 border-b border-slate-800">
+<div>
+<div class="text-lg font-black tracking-widest text-white">ASQE v17.2 批次測試</div>
+<div class="text-[11px] text-slate-400 mt-1">測試標的：2308、1802、2330、3189、DELL、ARM、RGTI、TSLA。評估期間從 2026-01-01 起；指標使用更早資料暖機。</div>
+</div>
+<div class="flex items-center gap-2">
+<input class="bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-xs font-mono text-white" id="batchStartDate" type="date" value="2026-01-01"/>
+<button class="bg-emerald-700 hover:bg-emerald-600 text-white px-3 py-2 rounded-lg text-xs font-bold" onclick="window.runBatchPreset()">重新測試</button>
+<button class="bg-slate-800 hover:bg-slate-700 text-slate-200 px-3 py-2 rounded-lg text-xs font-bold" onclick="document.getElementById('batchPanel').classList.add('hidden')">關閉</button>
+</div>
+</div>
+<div class="p-4">
+<div class="text-xs text-slate-300 mb-3 bg-slate-950/70 border border-slate-800 rounded-xl p-3" id="batchSummary">尚未開始。</div>
+<div class="overflow-x-auto border border-slate-800 rounded-xl">
+<table class="w-full text-[11px] text-left min-w-[1100px]">
+<thead class="bg-slate-950 text-slate-400 uppercase tracking-wider">
+<tr>
+<th class="p-2">市場</th><th class="p-2">代碼</th><th class="p-2">資料源</th><th class="p-2 text-right">起始價</th><th class="p-2 text-right">最新價</th><th class="p-2 text-right">區間報酬</th><th class="p-2 text-right">MDD</th><th class="p-2 text-right">ASQE</th><th class="p-2">燈號</th><th class="p-2 text-right">風險</th><th class="p-2 text-right">DaR95</th><th class="p-2 text-right">信心度</th><th class="p-2">風險旗標</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-800 bg-slate-900" id="batchTable"></tbody>
+</table>
+</div>
+<div class="mt-3 text-[11px] text-slate-400 leading-relaxed" id="batchNotes"></div>
+</div>
+</div>
+</div>
 
-    <div id="signalLogPanel" class="fixed inset-0 z-[70] hidden bg-slate-950/92 backdrop-blur-md p-4 overflow-y-auto">
-      <div class="max-w-7xl mx-auto bg-slate-900 border border-slate-700 rounded-2xl shadow-2xl overflow-hidden">
-        <div class="flex flex-col md:flex-row md:items-center justify-between gap-3 p-4 border-b border-slate-800">
-          <div>
-            <div class="text-lg font-black tracking-widest text-white">ASQE v17.1 前推測試訊號日誌</div>
-            <div class="text-[11px] text-slate-400 mt-1">把每次分析的分數、燈號、價格、部位與風險寫入本機紀錄，可匯出 CSV 追蹤 5/20 日後績效。</div>
-          </div>
-          <div class="flex flex-wrap items-center gap-2">
-            <button onclick="window.logCurrentSignal()" class="bg-amber-700 hover:bg-amber-600 text-white px-3 py-2 rounded-lg text-xs font-bold">記錄目前訊號</button>
-            <button onclick="window.exportSignalCSV()" class="bg-emerald-700 hover:bg-emerald-600 text-white px-3 py-2 rounded-lg text-xs font-bold">匯出 CSV</button>
-            <button onclick="window.clearSignalLog()" class="bg-red-900 hover:bg-red-800 text-red-100 px-3 py-2 rounded-lg text-xs font-bold">清空</button>
-            <button onclick="document.getElementById('signalLogPanel').classList.add('hidden')" class="bg-slate-800 hover:bg-slate-700 text-slate-200 px-3 py-2 rounded-lg text-xs font-bold">關閉</button>
-          </div>
-        </div>
-        <div class="p-4">
-          <div id="signalLogSummary" class="text-xs text-slate-300 mb-3 bg-slate-950/70 border border-slate-800 rounded-xl p-3">尚未載入。</div>
-          <div class="overflow-x-auto border border-slate-800 rounded-xl">
-            <table class="w-full text-[11px] text-left min-w-[1200px]">
-              <thead class="bg-slate-950 text-slate-400 uppercase tracking-wider">
-                <tr>
-                  <th class="p-2">日期</th><th class="p-2">市場</th><th class="p-2">代碼</th><th class="p-2">資料源</th><th class="p-2 text-right">價格</th><th class="p-2 text-right">ASQE分數</th><th class="p-2">分級</th><th class="p-2">動作</th><th class="p-2 text-right">建議部位</th><th class="p-2 text-right">扣成本期望</th><th class="p-2 text-right">DaR95</th><th class="p-2 text-right">信心度</th><th class="p-2">旗標</th>
-                </tr>
-              </thead>
-              <tbody id="signalLogTable" class="divide-y divide-slate-800 bg-slate-900"></tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-    </div>
+<div class="flex-1 flex flex-col lg:flex-row relative overflow-hidden bg-slate-950 p-1.5 gap-1.5">
+<div class="flex-1 flex flex-col gap-1.5 min-w-0">
+<div class="relative w-full rounded-xl border border-slate-800 bg-slate-900 shadow-inner flex flex-col flex-1 min-h-[250px] overflow-hidden">
+<div class="absolute top-2 left-3 z-10 pointer-events-none w-full">
+<div class="flex items-baseline gap-3"><span class="text-xl font-black text-slate-100 drop-shadow" id="chartTitle">---</span></div>
+<div class="flex flex-col gap-0.5 mt-1 text-[10px] font-mono text-slate-400">
+<div class="flex gap-3 flex-wrap">
+<span class="text-fuchsia-400" id="leg-ema20">E20: --</span>
+<span class="text-cyan-400" id="leg-ema60">E60: --</span>
+<span class="text-yellow-500" id="leg-poc">POC: --</span>
+<span class="text-violet-300" id="leg-bbu">BBU: --</span>
+<span class="text-violet-500" id="leg-bbl">BBL: --</span>
+<span class="text-emerald-400" id="leg-source">來源: --</span>
+</div>
+</div>
+</div>
+<div class="w-full flex-1 mt-2" id="priceChartContainer"></div>
+</div>
+<div class="relative w-full rounded-xl border border-slate-800 bg-slate-900 shadow-inner h-[100px] shrink-0 overflow-hidden">
+<div class="absolute top-1 left-3 z-10 text-[9px] font-mono flex gap-3 text-slate-400">
+<span class="text-purple-400" id="leg-macd">MACD: --</span>
+</div>
+<div class="w-full h-full mt-2" id="macdChartContainer"></div>
+</div>
+<div class="relative w-full rounded-xl border border-slate-800 bg-slate-900 shadow-inner h-[100px] shrink-0 overflow-hidden">
+<div class="absolute top-1 left-3 z-10 text-[9px] font-mono flex gap-3 text-slate-400">
+<span class="text-blue-400" id="leg-rsi">RSI: --</span>
+<span class="text-indigo-300" id="leg-adx">ADX: --</span>
+<span class="text-emerald-400" id="leg-pdi">+DI: --</span>
+<span class="text-red-400" id="leg-mdi">-DI: --</span>
+<span class="text-slate-500" id="leg-atr">ATR: --</span>
+</div>
+<div class="w-full h-full mt-2" id="dmiChartContainer"></div>
+</div>
+</div>
+<div class="w-full lg:w-[500px] glass-panel flex flex-col shrink-0 overflow-y-auto h-[calc(100vh-56px)] rounded-xl border border-slate-800">
+<div class="p-3 flex flex-col gap-2.5">
+<div class="bg-slate-900 p-4 rounded-xl border border-slate-700 relative overflow-hidden flex flex-col shadow-lg">
+<div class="absolute -right-10 -top-10 w-32 h-32 rounded-full blur-3xl opacity-20 bg-indigo-500" id="scoreGlow"></div>
+<div class="flex justify-between w-full mb-1 relative z-10">
+<span class="text-[10px] font-bold text-slate-400 tracking-widest uppercase">自適應綜合分數</span>
+<span class="text-[9px] text-slate-400 font-mono" id="confidenceBadge">信心度: --</span>
+</div>
+<div class="flex items-end justify-between relative z-10">
+<div class="flex items-end gap-3">
+<div class="text-5xl font-black font-mono text-white leading-none" id="total分數">0</div>
+<div class="flex flex-col pb-0.5">
+<div class="text-lg font-black text-white leading-tight" id="finalRatingText">等待運算...</div>
+<div class="text-[9px] font-mono text-indigo-300" id="sqnText">SQN: -- (--)</div>
+</div>
+</div>
+<div class="flex flex-col items-end gap-0.5 text-[9px] font-mono">
+<span class="text-emerald-400 bg-emerald-950/50 px-1.5 py-0.5 rounded" id="txtBull">多頭: --</span>
+<span class="text-slate-400 bg-slate-800/50 px-1.5 py-0.5 rounded" id="txtSide">盤整: --</span>
+<span class="text-red-400 bg-red-950/50 px-1.5 py-0.5 rounded" id="txtBear">空頭: --</span>
+</div>
+</div>
+</div>
+<div class="data-card border-emerald-900/30">
+<div class="flex justify-between items-center mb-2">
+<span class="text-emerald-400 text-[10px] font-black uppercase tracking-wider">🚦 進出場訊號判斷</span>
+<span class="text-[9px] px-1.5 py-0.5 rounded font-mono bg-slate-950 text-slate-400 border border-slate-800" id="tradeGradeBadge">燈號: --</span>
+</div>
+<div class="grid grid-cols-4 gap-1.5 text-center mb-2">
+<div class="bg-slate-950 p-1.5 rounded border border-slate-800"><div class="text-[8px] text-slate-500 mb-0.5">進場狀態</div><div class="text-[11px] font-bold text-white metric-value" id="netExpectancy">--</div></div>
+<div class="bg-slate-950 p-1.5 rounded border border-slate-800"><div class="text-[8px] text-slate-500 mb-0.5">出場狀態</div><div class="text-[11px] font-bold text-white metric-value" id="costModelTxt">--</div></div>
+<div class="bg-slate-950 p-1.5 rounded border border-slate-800"><div class="text-[8px] text-slate-500 mb-0.5">停利提醒</div><div class="text-[11px] font-bold text-white metric-value" id="riskRuleTxt">--</div></div>
+<div class="bg-slate-950 p-1.5 rounded border border-slate-800"><div class="text-[8px] text-slate-500 mb-0.5">關鍵防線</div><div class="text-[11px] font-bold text-white metric-value" id="portfolioTxt">--</div></div>
+</div>
+<div class="bg-slate-950 p-2 rounded border border-slate-800 text-[10px] text-slate-300 leading-relaxed" id="tradingRuleText">等待訊號。</div>
+</div>
+<div class="data-card border-indigo-900/30">
+<div class="flex justify-between items-center mb-2">
+<span class="text-indigo-400 text-[10px] font-black uppercase tracking-wider">🧠 市場狀態 / Alpha / 權重</span>
+<span class="text-[8px] px-1 py-0.5 rounded font-mono bg-slate-950 text-slate-400 border border-slate-800" id="infoRatioBadge">IR: --</span>
+</div>
+<div class="grid grid-cols-4 gap-1.5 text-center">
+<div class="bg-slate-950 p-1.5 rounded border border-slate-800"><div class="text-[8px] text-slate-500 mb-0.5">趨勢</div><div class="text-[11px] font-bold text-white metric-value" id="mod趨勢">--</div><div class="text-[8px] text-emerald-500 mt-0.5 font-bold" id="w趨勢">W: --</div></div>
+<div class="bg-slate-950 p-1.5 rounded border border-slate-800"><div class="text-[8px] text-slate-500 mb-0.5">動能</div><div class="text-[11px] font-bold text-white metric-value" id="modMom">--</div><div class="text-[8px] text-emerald-500 mt-0.5 font-bold" id="wMom">W: --</div></div>
+<div class="bg-slate-950 p-1.5 rounded border border-slate-800"><div class="text-[8px] text-slate-500 mb-0.5">風險</div><div class="text-[11px] font-bold text-white metric-value" id="modRisk">--</div><div class="text-[8px] text-emerald-500 mt-0.5 font-bold" id="wRisk">W: --</div></div>
+<div class="bg-slate-950 p-1.5 rounded border border-slate-800"><div class="text-[8px] text-slate-500 mb-0.5">籌碼</div><div class="text-[11px] font-bold text-white metric-value" id="modFlow">--</div><div class="text-[8px] text-blue-400 mt-0.5 overflow-hidden text-ellipsis whitespace-nowrap" id="flowStatusTxt" title="等待">W: --</div></div>
+</div>
+</div>
+<div class="data-card border-cyan-900/30">
+<div class="flex justify-between items-center mb-2">
+<span class="text-cyan-400 text-[10px] font-black uppercase tracking-wider">📊 DMI + 布林壓縮</span>
+<span class="text-[8px] px-1 py-0.5 rounded font-mono bg-slate-950 text-slate-400 border border-slate-800" id="breakoutBadge">突破: --</span>
+</div>
+<div class="grid grid-cols-4 gap-1.5 text-center mb-2">
+<div class="bg-slate-950 p-1.5 rounded border border-slate-800"><div class="text-[8px] text-slate-500 mb-0.5">DMI方向</div><div class="text-[11px] font-bold text-white metric-value" id="dmi趨勢">--</div></div>
+<div class="bg-slate-950 p-1.5 rounded border border-slate-800"><div class="text-[8px] text-slate-500 mb-0.5">DMI差值</div><div class="text-[11px] font-bold text-white metric-value" id="dmiSpread">--</div></div>
+<div class="bg-slate-950 p-1.5 rounded border border-slate-800"><div class="text-[8px] text-slate-500 mb-0.5">布林%B</div><div class="text-[11px] font-bold text-white metric-value" id="bbPercentB">--</div></div>
+<div class="bg-slate-950 p-1.5 rounded border border-slate-800"><div class="text-[8px] text-slate-500 mb-0.5">寬度PR</div><div class="text-[11px] font-bold text-white metric-value" id="bbWidthRank">--</div></div>
+</div>
+<div class="flex justify-between items-center bg-slate-950 p-1.5 rounded border border-slate-800">
+<span class="text-[9px] text-slate-400">波動收縮 / 壓縮</span>
+<span class="text-[10px] font-bold text-slate-300" id="squeezeBadge">--</span>
+</div>
+</div>
+<div class="grid grid-cols-1 gap-2">
 
-    <div class="flex-1 flex flex-col lg:flex-row relative overflow-hidden bg-slate-950 p-1.5 gap-1.5">
-      <div class="flex-1 flex flex-col gap-1.5 min-w-0">
-        <div class="relative w-full rounded-xl border border-slate-800 bg-slate-900 shadow-inner flex flex-col flex-1 min-h-[250px] overflow-hidden">
-          <div class="absolute top-2 left-3 z-10 pointer-events-none w-full">
-            <div class="flex items-baseline gap-3"><span id="chartTitle" class="text-xl font-black text-slate-100 drop-shadow">---</span></div>
-            <div class="flex flex-col gap-0.5 mt-1 text-[10px] font-mono text-slate-400">
-              <div class="flex gap-3 flex-wrap">
-                <span class="text-fuchsia-400" id="leg-ema20">E20: --</span>
-                <span class="text-cyan-400" id="leg-ema60">E60: --</span>
-                <span class="text-yellow-500" id="leg-poc">POC: --</span>
-                <span class="text-violet-300" id="leg-bbu">BBU: --</span>
-                <span class="text-violet-500" id="leg-bbl">BBL: --</span>
-                <span class="text-emerald-400" id="leg-source">來源: --</span>
-              </div>
-            </div>
-          </div>
-          <div id="priceChartContainer" class="w-full flex-1 mt-2"></div>
-        </div>
-
-        <div class="relative w-full rounded-xl border border-slate-800 bg-slate-900 shadow-inner h-[100px] shrink-0 overflow-hidden">
-          <div class="absolute top-1 left-3 z-10 text-[9px] font-mono flex gap-3 text-slate-400">
-            <span class="text-purple-400" id="leg-macd">MACD: --</span>
-          </div>
-          <div id="macdChartContainer" class="w-full h-full mt-2"></div>
-        </div>
-
-        <div class="relative w-full rounded-xl border border-slate-800 bg-slate-900 shadow-inner h-[100px] shrink-0 overflow-hidden">
-          <div class="absolute top-1 left-3 z-10 text-[9px] font-mono flex gap-3 text-slate-400">
-            <span class="text-blue-400" id="leg-rsi">RSI: --</span>
-            <span class="text-indigo-300" id="leg-adx">ADX: --</span>
-            <span class="text-emerald-400" id="leg-pdi">+DI: --</span>
-            <span class="text-red-400" id="leg-mdi">-DI: --</span>
-            <span class="text-slate-500" id="leg-atr">ATR: --</span>
-          </div>
-          <div id="dmiChartContainer" class="w-full h-full mt-2"></div>
-        </div>
-      </div>
-
-      <div class="w-full lg:w-[500px] glass-panel flex flex-col shrink-0 overflow-y-auto h-[calc(100vh-56px)] rounded-xl border border-slate-800">
-        <div class="p-3 flex flex-col gap-2.5">
-          <div class="bg-slate-900 p-4 rounded-xl border border-slate-700 relative overflow-hidden flex flex-col shadow-lg">
-            <div class="absolute -right-10 -top-10 w-32 h-32 rounded-full blur-3xl opacity-20 bg-indigo-500" id="scoreGlow"></div>
-            <div class="flex justify-between w-full mb-1 relative z-10">
-              <span class="text-[10px] font-bold text-slate-400 tracking-widest uppercase">自適應綜合分數</span>
-              <span class="text-[9px] text-slate-400 font-mono" id="confidenceBadge">信心度: --</span>
-            </div>
-            <div class="flex items-end justify-between relative z-10">
-              <div class="flex items-end gap-3">
-                <div id="totalScore" class="text-5xl font-black font-mono text-white leading-none">0</div>
-                <div class="flex flex-col pb-0.5">
-                  <div id="finalRatingText" class="text-lg font-black text-white leading-tight">等待運算...</div>
-                  <div class="text-[9px] font-mono text-indigo-300" id="sqnText">SQN: -- (--)</div>
-                </div>
-              </div>
-              <div class="flex flex-col items-end gap-0.5 text-[9px] font-mono">
-                <span class="text-emerald-400 bg-emerald-950/50 px-1.5 py-0.5 rounded" id="txtBull">多頭: --</span>
-                <span class="text-slate-400 bg-slate-800/50 px-1.5 py-0.5 rounded" id="txtSide">盤整: --</span>
-                <span class="text-red-400 bg-red-950/50 px-1.5 py-0.5 rounded" id="txtBear">空頭: --</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="data-card border-amber-900/30">
-            <div class="flex justify-between items-center mb-2">
-              <span class="text-amber-400 text-[10px] font-black uppercase tracking-wider">🧾 實盤交易決策</span>
-              <span id="tradeGradeBadge" class="text-[9px] px-1.5 py-0.5 rounded font-mono bg-slate-950 text-slate-400 border border-slate-800">分級: --</span>
-            </div>
-            <div class="grid grid-cols-4 gap-1.5 text-center mb-2">
-              <div class="bg-slate-950 p-1.5 rounded border border-slate-800"><div class="text-[8px] text-slate-500 mb-0.5">扣成本期望</div><div id="netExpectancy" class="text-[11px] font-bold text-white metric-value">--</div></div>
-              <div class="bg-slate-950 p-1.5 rounded border border-slate-800"><div class="text-[8px] text-slate-500 mb-0.5">成本+滑價</div><div id="costModelTxt" class="text-[11px] font-bold text-white metric-value">--</div></div>
-              <div class="bg-slate-950 p-1.5 rounded border border-slate-800"><div class="text-[8px] text-slate-500 mb-0.5">風控規則</div><div id="riskRuleTxt" class="text-[11px] font-bold text-white metric-value">--</div></div>
-              <div class="bg-slate-950 p-1.5 rounded border border-slate-800"><div class="text-[8px] text-slate-500 mb-0.5">投資組合</div><div id="portfolioTxt" class="text-[11px] font-bold text-white metric-value">--</div></div>
-            </div>
-            <div id="tradingRuleText" class="bg-slate-950 p-2 rounded border border-slate-800 text-[10px] text-slate-300 leading-relaxed">等待訊號。</div>
-          </div>
-
-          <div class="data-card border-indigo-900/30">
-            <div class="flex justify-between items-center mb-2">
-              <span class="text-indigo-400 text-[10px] font-black uppercase tracking-wider">🧠 市場狀態 / Alpha / 權重</span>
-              <span id="infoRatioBadge" class="text-[8px] px-1 py-0.5 rounded font-mono bg-slate-950 text-slate-400 border border-slate-800">IR: --</span>
-            </div>
-            <div class="grid grid-cols-4 gap-1.5 text-center">
-              <div class="bg-slate-950 p-1.5 rounded border border-slate-800"><div class="text-[8px] text-slate-500 mb-0.5">趨勢</div><div id="modTrend" class="text-[11px] font-bold text-white metric-value">--</div><div id="wTrend" class="text-[8px] text-emerald-500 mt-0.5 font-bold">權重: --</div></div>
-              <div class="bg-slate-950 p-1.5 rounded border border-slate-800"><div class="text-[8px] text-slate-500 mb-0.5">動能</div><div id="modMom" class="text-[11px] font-bold text-white metric-value">--</div><div id="wMom" class="text-[8px] text-emerald-500 mt-0.5 font-bold">權重: --</div></div>
-              <div class="bg-slate-950 p-1.5 rounded border border-slate-800"><div class="text-[8px] text-slate-500 mb-0.5">風險</div><div id="modRisk" class="text-[11px] font-bold text-white metric-value">--</div><div id="wRisk" class="text-[8px] text-emerald-500 mt-0.5 font-bold">權重: --</div></div>
-              <div class="bg-slate-950 p-1.5 rounded border border-slate-800"><div class="text-[8px] text-slate-500 mb-0.5">籌碼</div><div id="modFlow" class="text-[11px] font-bold text-white metric-value">--</div><div id="flowStatusTxt" class="text-[8px] text-blue-400 mt-0.5 overflow-hidden text-ellipsis whitespace-nowrap" title="等待">權重: --</div></div>
-            </div>
-          </div>
-
-          <div class="data-card border-cyan-900/30">
-            <div class="flex justify-between items-center mb-2">
-              <span class="text-cyan-400 text-[10px] font-black uppercase tracking-wider">📊 DMI + 布林壓縮</span>
-              <span id="breakoutBadge" class="text-[8px] px-1 py-0.5 rounded font-mono bg-slate-950 text-slate-400 border border-slate-800">突破: --</span>
-            </div>
-            <div class="grid grid-cols-4 gap-1.5 text-center mb-2">
-              <div class="bg-slate-950 p-1.5 rounded border border-slate-800"><div class="text-[8px] text-slate-500 mb-0.5">DMI方向</div><div id="dmiTrend" class="text-[11px] font-bold text-white metric-value">--</div></div>
-              <div class="bg-slate-950 p-1.5 rounded border border-slate-800"><div class="text-[8px] text-slate-500 mb-0.5">DMI差值</div><div id="dmiSpread" class="text-[11px] font-bold text-white metric-value">--</div></div>
-              <div class="bg-slate-950 p-1.5 rounded border border-slate-800"><div class="text-[8px] text-slate-500 mb-0.5">布林%B</div><div id="bbPercentB" class="text-[11px] font-bold text-white metric-value">--</div></div>
-              <div class="bg-slate-950 p-1.5 rounded border border-slate-800"><div class="text-[8px] text-slate-500 mb-0.5">寬度PR</div><div id="bbWidthRank" class="text-[11px] font-bold text-white metric-value">--</div></div>
-            </div>
-            <div class="flex justify-between items-center bg-slate-950 p-1.5 rounded border border-slate-800">
-              <span class="text-[9px] text-slate-400">波動收縮 / 壓縮</span>
-              <span id="squeezeBadge" class="text-[10px] font-bold text-slate-300">--</span>
-            </div>
-          </div>
-
-          <div class="grid grid-cols-2 gap-2">
-            <div class="data-card border-fuchsia-900/30">
-              <div class="text-[9px] text-fuchsia-400 font-black mb-1.5 uppercase tracking-wider">🛡️ 1% ATR 部位</div>
-              <div class="flex justify-between items-center mb-1"><span class="text-[9px] text-slate-400">2×ATR 停損</span><span id="atrStopVal" class="text-[11px] font-bold text-slate-200 metric-value">--</span></div>
-              <div class="flex justify-between items-center bg-slate-950 p-1 rounded border border-slate-800 mt-1.5">
-                <span class="text-[9px] text-slate-400 pl-1">資金100萬</span>
-                <span id="atrShares" class="text-[11px] font-black text-fuchsia-400 pr-1 metric-value">-- 股</span>
-              </div>
-            </div>
-
-            <div class="data-card border-amber-900/30">
-              <div class="text-[9px] text-amber-400 font-black mb-1.5 uppercase tracking-wider">🎲 區塊蒙地卡羅</div>
-              <div class="flex justify-between items-center mb-1"><span class="text-[9px] text-slate-400">DaR (95%)</span><span id="mcDaR" class="text-[11px] font-bold text-red-400 metric-value">--</span></div>
-              <div class="flex justify-between items-center"><span class="text-[9px] text-slate-400">破產機率</span><span id="mcRuin" class="text-[11px] font-bold text-yellow-400 metric-value">--</span></div>
-            </div>
-          </div>
-
-          <div class="data-card border-emerald-900/30">
-            <div class="flex justify-between items-center mb-2">
-              <span class="text-emerald-500 text-[10px] font-black uppercase tracking-wider">🔬 貝氏凱利 / CVaR / 潰瘍指數</span>
-              <span id="recoveryFactor" class="text-[9px] px-1.5 py-0.5 rounded font-mono bg-slate-950 text-slate-400 border border-slate-800">RF: --</span>
-            </div>
-            <div class="grid grid-cols-4 gap-1.5 text-center mb-1">
-              <div class="bg-slate-950 p-1.5 rounded border border-slate-800"><span class="text-[8px] text-slate-500 block mb-0.5">貝氏勝率</span><span id="bayesWin" class="text-[11px] font-bold text-white metric-value">--</span></div>
-              <div class="bg-slate-950 p-1.5 rounded border border-slate-800"><span class="text-[8px] text-slate-500 block mb-0.5">CVaR</span><span id="cvar95" class="text-[11px] font-bold text-red-400 metric-value">--</span></div>
-              <div class="bg-slate-950 p-1.5 rounded border border-slate-800"><span class="text-[8px] text-slate-500 block mb-0.5">潰瘍風險</span><span id="ulcerIdxTxt" class="text-[11px] font-bold text-slate-300 metric-value">--</span></div>
-              <div class="bg-slate-950 p-1.5 rounded border border-emerald-500/50 shadow-[0_0_10px_rgba(16,185,129,0.1)]"><span class="text-[8px] text-emerald-500 font-bold block mb-0.5">安全部位%</span><span id="finalPosSize" class="text-xs font-black text-emerald-400 metric-value">--</span></div>
-            </div>
-          </div>
-
-          <div class="data-card border-red-900/30">
-            <div class="flex justify-between items-center mb-2">
-              <span class="text-red-400 text-[10px] font-black uppercase tracking-wider">🚨 多層否決 / 戰術</span>
-              <span id="liquidityBadge" class="text-[8px] px-1 py-0.5 rounded font-mono bg-slate-950 text-slate-400 border border-slate-800">流動性: --</span>
-            </div>
-            <div class="grid grid-cols-2 gap-2 mb-2">
-              <div class="flex justify-between items-center bg-slate-950 p-1.5 rounded border border-slate-800"><span class="text-[9px] text-slate-400">跳空下殺</span><span id="gapVeto" class="text-[10px] font-bold">--</span></div>
-              <div class="flex justify-between items-center bg-slate-950 p-1.5 rounded border border-slate-800"><span class="text-[9px] text-slate-400">爆量否決</span><span id="volVeto" class="text-[10px] font-bold">--</span></div>
-            </div>
-            <div class="bg-slate-950 p-2 rounded border border-slate-800 flex justify-between items-center mb-2">
-              <span class="text-[9px] text-slate-400">背離 / 去相關</span>
-              <span id="divVeto" class="text-[10px] font-bold">--</span>
-            </div>
-            <div class="flex gap-2">
-              <div class="bg-slate-950 p-2 rounded border border-slate-800 flex-1 flex flex-col justify-center">
-                <div class="text-[8px] text-slate-500 mb-0.5 uppercase">戰術指令</div>
-                <div id="actionText" class="text-[11px] font-black text-white">等待數據</div>
-              </div>
-              <div class="bg-slate-950 p-2 rounded border border-slate-800 w-24 shrink-0 flex flex-col justify-center text-center">
-                <div class="text-[8px] text-slate-500 mb-0.5 uppercase">吊燈停損</div>
-                <div id="trailingStop" class="text-sm font-black text-slate-200 metric-value">--</div>
-              </div>
-            </div>
-          </div>
-
-          <div class="data-card border-slate-700/60">
-            <div class="text-[9px] text-slate-500 font-bold mb-1 uppercase">API 路由紀錄</div>
-            <div id="routerLog" class="text-[9px] text-slate-400 font-mono leading-relaxed">等待路由...</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
+<div class="data-card border-amber-900/30">
+<div class="text-[9px] text-amber-400 font-black mb-1.5 uppercase tracking-wider">🎲 區塊蒙地卡羅</div>
+<div class="flex justify-between items-center mb-1"><span class="text-[9px] text-slate-400">DaR (95%)</span><span class="text-[11px] font-bold text-red-400 metric-value" id="mcDaR">--</span></div>
+<div class="flex justify-between items-center"><span class="text-[9px] text-slate-400">破產機率</span><span class="text-[11px] font-bold text-yellow-400 metric-value" id="mcRuin">--</span></div>
+</div>
+</div>
+<div class="data-card border-emerald-900/30">
+<div class="flex justify-between items-center mb-2">
+<span class="text-emerald-500 text-[10px] font-black uppercase tracking-wider">🔬 貝氏凱利 / CVaR / 潰瘍指數</span>
+<span class="text-[9px] px-1.5 py-0.5 rounded font-mono bg-slate-950 text-slate-400 border border-slate-800" id="recoveryFactor">RF: --</span>
+</div>
+<div class="grid grid-cols-4 gap-1.5 text-center mb-1">
+<div class="bg-slate-950 p-1.5 rounded border border-slate-800"><span class="text-[8px] text-slate-500 block mb-0.5">貝氏勝率</span><span class="text-[11px] font-bold text-white metric-value" id="bayesWin">--</span></div>
+<div class="bg-slate-950 p-1.5 rounded border border-slate-800"><span class="text-[8px] text-slate-500 block mb-0.5">CVaR</span><span class="text-[11px] font-bold text-red-400 metric-value" id="cvar95">--</span></div>
+<div class="bg-slate-950 p-1.5 rounded border border-slate-800"><span class="text-[8px] text-slate-500 block mb-0.5">潰瘍風險</span><span class="text-[11px] font-bold text-slate-300 metric-value" id="ulcerIdxTxt">--</span></div>
+<div class="bg-slate-950 p-1.5 rounded border border-emerald-500/50 shadow-[0_0_10px_rgba(16,185,129,0.1)]"><span class="text-[8px] text-emerald-500 font-bold block mb-0.5">風險狀態</span><span class="text-xs font-black text-emerald-400 metric-value" id="finalPosSize">--</span></div>
+</div>
+</div>
+<div class="data-card border-red-900/30">
+<div class="flex justify-between items-center mb-2">
+<span class="text-red-400 text-[10px] font-black uppercase tracking-wider">🚨 多層否決 / 戰術</span>
+<span class="text-[8px] px-1 py-0.5 rounded font-mono bg-slate-950 text-slate-400 border border-slate-800" id="liquidityBadge">流動性: --</span>
+</div>
+<div class="grid grid-cols-2 gap-2 mb-2">
+<div class="flex justify-between items-center bg-slate-950 p-1.5 rounded border border-slate-800"><span class="text-[9px] text-slate-400">跳空下殺</span><span class="text-[10px] font-bold" id="gapVeto">--</span></div>
+<div class="flex justify-between items-center bg-slate-950 p-1.5 rounded border border-slate-800"><span class="text-[9px] text-slate-400">爆量否決</span><span class="text-[10px] font-bold" id="volVeto">--</span></div>
+</div>
+<div class="bg-slate-950 p-2 rounded border border-slate-800 flex justify-between items-center mb-2">
+<span class="text-[9px] text-slate-400">背離 / 去相關</span>
+<span class="text-[10px] font-bold" id="divVeto">--</span>
+</div>
+<div class="flex gap-2">
+<div class="bg-slate-950 p-2 rounded border border-slate-800 flex-1 flex flex-col justify-center">
+<div class="text-[8px] text-slate-500 mb-0.5 uppercase">戰術指令</div>
+<div class="text-[11px] font-black text-white" id="actionText">等待數據</div>
+</div>
+<div class="bg-slate-950 p-2 rounded border border-slate-800 w-24 shrink-0 flex flex-col justify-center text-center">
+<div class="text-[8px] text-slate-500 mb-0.5 uppercase">吊燈停損</div>
+<div class="text-sm font-black text-slate-200 metric-value" id="trailingStop">--</div>
+</div>
+</div>
+</div>
+<div class="data-card border-slate-700/60">
+<div class="text-[9px] text-slate-500 font-bold mb-1 uppercase">API Router Log</div>
+<div class="text-[9px] text-slate-400 font-mono leading-relaxed" id="routerLog">等待路由...</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 <script>
 (function() {
   window.currentMarket = 'TW';
@@ -507,12 +437,12 @@
     return { total: cfg.costPct + cfg.slipPct + illiq + pain, base: cfg.costPct, slip: cfg.slipPct, illiq: illiq, pain: pain, cfg: cfg };
   }
   function computeTradeGrade(o) {
-    if (o.veto || o.score < 50 || o.pos <= 0) return {grade:'C', color:'text-red-400', rule:'禁止進場：分數低、否決 或建議部位為 0。'};
-    if (o.confidence < 65) return {grade:'B', color:'text-yellow-300', rule:'資料信心不足：只可觀察或極小部位。'};
+    if (o.veto || o.score < 50 || o.pos <= 0) return {grade:'C', color:'text-red-400', rule:'禁止進場：分數低或 VETO 觸發。'};
+    if (o.confidence < 65) return {grade:'B', color:'text-yellow-300', rule:'資料信心不足：只可觀察，不建議進場。'};
     if (o.netExp <= 0) return {grade:'B', color:'text-yellow-300', rule:'扣除成本後期望值不足：不追價。'};
-    if (o.dar95 > 0.35 || o.ruin > 0.10) return {grade:'B', color:'text-yellow-300', rule:'尾部風險過高：降低部位。'};
-    if (o.score >= 82 && o.pos >= 0.08 && o.confidence >= 78 && !o.stop) return {grade:'S', color:'text-emerald-400', rule:'S級：可正式布局，但仍須依ATR停損與總曝險控管。'};
-    if (o.score >= 70 && o.pos >= 0.05 && !o.stop) return {grade:'A', color:'text-cyan-300', rule:'A級：可小部位試單，續強再加碼。'};
+    if (o.dar95 > 0.35 || o.ruin > 0.10) return {grade:'B', color:'text-yellow-300', rule:'尾部風險過高：暫緩進場。'};
+    if (o.score >= 82 && o.pos >= 0.08 && o.confidence >= 78 && !o.stop) return {grade:'S', color:'text-emerald-400', rule:'S級：可列入進場候選，仍須等待價格確認。'};
+    if (o.score >= 70 && o.pos >= 0.05 && !o.stop) return {grade:'A', color:'text-cyan-300', rule:'A級：可觀察試單，續強再確認。'};
     return {grade:'B', color:'text-yellow-300', rule:'B級：觀察為主，等待突破或回測。'};
   }
   function getSignalLog() {
@@ -555,7 +485,7 @@
     }).join('') : '<tr><td colspan="13" class="p-4 text-center text-slate-400">尚無訊號紀錄。</td></tr>';
     if (summary) {
       var active = latestSignalExposure();
-      summary.innerHTML = '紀錄筆數：' + rows.length + '。目前依最後一次訊號估算的建議總曝險：約 ' + (active*100).toFixed(1) + '%。前推測試需連續記錄 1–3 個月後再評估勝率與期望值。';
+      summary.innerHTML = '紀錄筆數：' + rows.length + '。目前依最後一次訊號估算的建議總曝險：約 ' + (active*100).toFixed(1) + '%。前推測試 需連續記錄 1–3 個月後再評估勝率與期望值。';
     }
   }
   window.openSignalLog = function() {
@@ -563,27 +493,16 @@
     renderSignalLog();
   };
   window.logCurrentSignal = function() {
-    if (!window.lastSignal) { alert('尚無可記錄訊號，請先完成一次分析。'); return; }
+    if (!window.lastSignal) { alert('本版本已移除訊號紀錄功能。'); return; }
     var rows = getSignalLog();
     rows.push(window.lastSignal);
     setSignalLog(rows);
     renderSignalLog();
-    alert('已記錄目前訊號：' + window.lastSignal.ticker + ' / 分級 ' + window.lastSignal.grade);
+    alert('本版本已移除訊號紀錄功能：' + window.lastSignal.ticker + ' / 分級 ' + window.lastSignal.grade);
   };
-  window.exportSignalCSV = function() {
-    var rows = getSignalLog();
-    if (!rows.length) { alert('沒有訊號可以匯出。'); return; }
-    var headers = ['date','market','ticker','source','price','score','grade','action','pos','netExp','dar95','confidence','flags'];
-    var csv = headers.join(',') + '\n' + rows.map(function(r){ return headers.map(function(h){ return csvEscape(r[h]); }).join(','); }).join('\n');
-    var blob = new Blob(['﻿' + csv], {type:'text/csv;charset=utf-8;'});
-    var a = document.createElement('a');
-    a.href = URL.createObjectURL(blob);
-    a.download = 'ASQE_v17_forward_test_log.csv';
-    document.body.appendChild(a); a.click(); document.body.removeChild(a);
-    setTimeout(function(){ URL.revokeObjectURL(a.href); }, 1000);
-  };
+  window.exportSignalCSV = function() { alert('本版本已移除訊號日誌匯出功能。'); };
   window.clearSignalLog = function() {
-    if (!confirm('確定清空所有 Forward Test 訊號紀錄？')) return;
+    if (!confirm('確定清空所有 前推測試 訊號紀錄？')) return;
     setSignalLog([]); renderSignalLog();
   };
   function getDateStr(d) {
@@ -1077,7 +996,7 @@
   }
 
   function calculateRegimeProbability(data, adx) {
-    if (!data || data.length < 200) return { pBull:0.34, pSide:0.33, pBear:0.33 };
+    if (!data || data.length < 200) return { p多頭:0.34, p盤整:0.33, p空頭:0.33 };
     var e200 = calcEMA(data,200,'close');
     var L = data[data.length-1];
     var E = e200[e200.length-1].value || L.close;
@@ -1091,10 +1010,10 @@
     var maxZ = Math.max(zBull,zBear,zSide);
     var eb = Math.exp(zBull-maxZ), es = Math.exp(zSide-maxZ), er = Math.exp(zBear-maxZ);
     var sum = eb+es+er;
-    return { pBull: eb/sum, pSide: es/sum, pBear: er/sum };
+    return { p多頭: eb/sum, p盤整: es/sum, p空頭: er/sum };
   }
 
-  function calcRelativeStrengthScore(stock, bench) {
+  function calcRelativeStrength分數(stock, bench) {
     if (!bench || stock.length < 140 || bench.length < 140) return { score: 50, ir: 0, z: 0 };
     var bMap = {};
     bench.forEach(function(d){ bMap[d.time] = d; });
@@ -1118,7 +1037,7 @@
     return { score: clamp(50 + z*22, 0, 100), ir: z, z: z };
   }
 
-  function calcFlowScore(flowRows, data, e20Val) {
+  function calcFlow分數(flowRows, data, e20Val) {
     var L = data[data.length-1];
     if (flowRows && flowRows.length >= 25) {
       var arr = flowRows.map(function(x){ return { time:x.date, value:x.net }; });
@@ -1373,39 +1292,39 @@
       var vol20 = avg(data.slice(-20).map(function(d){return d.volume;}));
       var isBBSqueeze = bbWidthRank <= 0.20;
       var isBBBreakout = L.close > bbLast.upper && L.volume > vol20*1.2 && lastDmi.pdi > lastDmi.mdi && adxVal > 20;
-      var bbScore = isBBBreakout ? 100 : (isBBSqueeze && L.close > bbLast.mid ? 82 : (bbLast.pctB >= 0.80 ? 72 : (bbLast.pctB <= 0.20 ? 32 : 55)));
-      var dmiDirectionalScore = clamp(50 + lastDmi.spread*1.2 + (adxVal-20)*1.3, 0, 100);
+      var bb分數 = isBBBreakout ? 100 : (isBBSqueeze && L.close > bbLast.mid ? 82 : (bbLast.pctB >= 0.80 ? 72 : (bbLast.pctB <= 0.20 ? 32 : 55)));
+      var dmiDirectional分數 = clamp(50 + lastDmi.spread*1.2 + (adxVal-20)*1.3, 0, 100);
       var poc=calcPOC(data,120,40);
 
       var benchForRegime = benchmark || data;
       var benchAdx = calcDMI(benchForRegime,14);
       var hmm = calculateRegimeProbability(benchForRegime, benchAdx);
 
-      var dScore = L.close > e20Val ? 100 : 35;
-      var wScore = e20Val > e60Val ? 100 : 35;
-      var mScore = e60Val > e120Val ? 100 : 35;
-      var sTrend = Math.round(dScore*0.4 + wScore*0.4 + mScore*0.2);
+      var d分數 = L.close > e20Val ? 100 : 35;
+      var w分數 = e20Val > e60Val ? 100 : 35;
+      var m分數 = e60Val > e120Val ? 100 : 35;
+      var s趨勢 = Math.round(d分數*0.4 + w分數*0.4 + m分數*0.2);
 
       var bias20=(L.close-e20Val)/e20Val;
-      var rs = calcRelativeStrengthScore(data, benchmark);
-      var adxScore = clamp((adxVal-12)*4, 0, 100);
-      var biasScore = clamp(55 + bias20*250, 0, 100);
-      var sMom = clamp(rs.score*0.34 + adxScore*0.16 + biasScore*0.14 + dmiDirectionalScore*0.18 + bbScore*0.18, 0, 100);
+      var rs = calcRelativeStrength分數(data, benchmark);
+      var adx分數 = clamp((adxVal-12)*4, 0, 100);
+      var bias分數 = clamp(55 + bias20*250, 0, 100);
+      var sMom = clamp(rs.score*0.34 + adx分數*0.16 + bias分數*0.14 + dmiDirectional分數*0.18 + bb分數*0.18, 0, 100);
       if (bias20 > 0.18) sMom = Math.min(sMom, 72);
 
       var ui = calcUlcerIndex(data,60);
       var hh22 = Math.max.apply(null, data.slice(-22).map(function(d){return d.high;}));
       var chandelier = hh22 - 3*a14;
       var stopDistancePct = (L.close - chandelier) / L.close;
-      var riskTrend = L.close > e60Val ? 65 : 20;
+      var risk趨勢 = L.close > e60Val ? 65 : 20;
       var riskStop = clamp(stopDistancePct * 500, 0, 35);
       var riskUI = clamp(35 - ui*350, 0, 35);
-      var sRisk = clamp(riskTrend + riskStop + riskUI, 0, 100);
+      var sRisk = clamp(risk趨勢 + riskStop + riskUI, 0, 100);
       if (lastDmi.mdi > lastDmi.pdi && adxVal > 25) sRisk = Math.min(sRisk, 58);
       if (L.close < bbLast.mid) sRisk = Math.min(sRisk, 76);
       if (L.close < bbLast.lower) sRisk = Math.min(sRisk, 45);
 
-      var flow = calcFlowScore(flowRows, data, e20Val);
+      var flow = calcFlow分數(flowRows, data, e20Val);
       var sFlow = flow.score;
 
       // Spearman Orthogonalization: only penalize extreme emotion; do not punish normal price-volume confirmation.
@@ -1420,26 +1339,26 @@
       sMom = sMom * orthoPenalty;
 
       // Adaptive weights from Regime.
-      var wTrend=0.25, wMom=0.25, wRisk=0.25, wFlow=0.25;
-      if (hmm.pBear > 0.55) { wTrend=0.16; wMom=0.12; wRisk=0.52; wFlow=0.20; }
-      else if (hmm.pBull > 0.55) { wTrend=0.30; wMom=0.34; wRisk=0.16; wFlow=0.20; }
-      else { wTrend=0.22; wMom=0.20; wRisk=0.35; wFlow=0.23; }
+      var w趨勢=0.25, wMom=0.25, wRisk=0.25, wFlow=0.25;
+      if (hmm.pBear > 0.55) { w趨勢=0.16; wMom=0.12; wRisk=0.52; wFlow=0.20; }
+      else if (hmm.pBull > 0.55) { w趨勢=0.30; wMom=0.34; wRisk=0.16; wFlow=0.20; }
+      else { w趨勢=0.22; wMom=0.20; wRisk=0.35; wFlow=0.23; }
 
       // Recent style adaptation, limited to prevent overfitting.
       var past = data[data.length-21] || data[0];
       var pastRet = (L.close - past.close) / past.close;
-      if (pastRet > 0.06 && hmm.pBear < 0.45) { wTrend += 0.04; wMom += 0.04; wRisk -= 0.05; wFlow -= 0.03; }
-      if (pastRet < -0.06) { wRisk += 0.08; wMom -= 0.05; wTrend -= 0.03; }
+      if (pastRet > 0.06 && hmm.pBear < 0.45) { w趨勢 += 0.04; wMom += 0.04; wRisk -= 0.05; wFlow -= 0.03; }
+      if (pastRet < -0.06) { wRisk += 0.08; wMom -= 0.05; w趨勢 -= 0.03; }
 
       wMom *= orthoPenalty;
-      var wSum = wTrend + wMom + wRisk + wFlow;
-      wTrend/=wSum; wMom/=wSum; wRisk/=wSum; wFlow/=wSum;
+      var wSum = w趨勢 + wMom + wRisk + wFlow;
+      w趨勢/=wSum; wMom/=wSum; wRisk/=wSum; wFlow/=wSum;
 
-      var finalScore = Math.round(sTrend*wTrend + sMom*wMom + sRisk*wRisk + sFlow*wFlow);
+      var final分數 = Math.round(s趨勢*w趨勢 + sMom*wMom + sRisk*wRisk + sFlow*wFlow);
 
       var div = checkMultiDivergence(data, rsi, macdObj, obv);
-      finalScore += div.score;
-      if (isBBBreakout && finalScore >= 60 && bias20 < 0.12) finalScore += 4;
+      final分數 += div.score;
+      if (isBBBreakout && final分數 >= 60 && bias20 < 0.12) final分數 += 4;
       var isBBVeto = L.close < bbLast.lower && lastDmi.mdi > lastDmi.pdi && adxVal > 25;
 
       var volThreshold = hmm.pBear > 0.5 ? 1.5 : (hmm.pBull > 0.6 ? 2.5 : 2.0);
@@ -1448,10 +1367,10 @@
       var isGapDown = L.open < prevL.low*0.97 && L.volume > vol20*1.5;
       var isStop = L.close < chandelier;
 
-      if (isHardVeto || isGapDown) finalScore = Math.min(finalScore, 40);
-      if (isBBVeto) finalScore = Math.min(finalScore, 45);
-      if (isStop) finalScore = Math.min(finalScore, 59);
-      finalScore = clamp(finalScore, 0, 100);
+      if (isHardVeto || isGapDown) final分數 = Math.min(final分數, 40);
+      if (isBBVeto) final分數 = Math.min(final分數, 45);
+      if (isStop) final分數 = Math.min(final分數, 59);
+      final分數 = clamp(final分數, 0, 100);
 
       var avgTurnover20 = avg(data.slice(-20).map(function(d){return d.volume*d.close;}));
       var liquidityCap = 100, liquidityTxt='充足';
@@ -1462,7 +1381,7 @@
         if (avgTurnover20 < 1000000) { liquidityCap=65; liquidityTxt='過低'; }
         else if (avgTurnover20 < 5000000) { liquidityCap=80; liquidityTxt='偏低'; }
       }
-      finalScore = clamp(Math.min(finalScore, liquidityCap), 0, 100);
+      final分數 = clamp(Math.min(final分數, liquidityCap), 0, 100);
 
       var stats = runBayesianCVaREngine(data, e20, e60, atr);
       var mc = runBlockBootstrapMC(stats.trades);
@@ -1477,7 +1396,7 @@
       var uiMultiplier = clamp(0.08 / Math.max(ui,0.01), 0.25, 2.0);
       var finalPosSize = clamp(stats.halfKelly * (0.05 / cvarRisk) * uiMultiplier, 0, 0.20);
       if (netExpectancy <= 0) finalPosSize = Math.min(finalPosSize, 0.03);
-      if (finalScore < 50 || isHardVeto || isGapDown || isBBVeto) finalPosSize = 0;
+      if (final分數 < 50 || isHardVeto || isGapDown || isBBVeto) finalPosSize = 0;
 
       var confidence = 50;
       confidence += Math.min(20, data.length/50);
@@ -1488,13 +1407,13 @@
       confidence = clamp(confidence, 30, 98);
 
       // UI
-      sf('totalScore', String(finalScore));
-      var scoreColor = finalScore>=80 ? '#4f46e5' : finalScore>=65 ? '#10b981' : finalScore>=50 ? '#eab308' : '#ef4444';
+      sf('total分數', String(final分數));
+      var scoreColor = final分數>=80 ? '#4f46e5' : final分數>=65 ? '#10b981' : final分數>=50 ? '#eab308' : '#ef4444';
       $('scoreGlow').style.backgroundColor = scoreColor;
-      var rating = finalScore < 50 ? '📉 轉弱防守' : finalScore >= 85 ? '🚀 SSS 強勢 Alpha' : finalScore >= 75 ? '📈 SS 趨勢多頭' : finalScore >= 65 ? '🟢 A 級觀察' : '🟡 區間試單';
-      if (isHardVeto || isGapDown) rating = '🚨 否決 強制防守';
+      var rating = final分數 < 50 ? '📉 轉弱防守' : final分數 >= 85 ? '🚀 SSS 強勢 Alpha' : final分數 >= 75 ? '📈 SS 趨勢多頭' : final分數 >= 65 ? '🟢 A 級觀察' : '🟡 區間試單';
+      if (isHardVeto || isGapDown) rating = '🚨 VETO 強制防守';
       if (isBBVeto) rating = '🚨 布林+DMI 轉弱';
-      if (isStop && finalScore >= 50) rating = '⚠️ 跌破吊燈防線';
+      if (isStop && final分數 >= 50) rating = '⚠️ 跌破吊燈防線';
       st('finalRatingText', rating);
       $('finalRatingText').style.color = scoreColor;
 
@@ -1506,66 +1425,77 @@
       sf('txtSide', '盤整: ' + (hmm.pSide*100).toFixed(0) + '%');
       sf('txtBear', '空頭: ' + (hmm.pBear*100).toFixed(0) + '%');
 
-      sf('modTrend', Math.round(sTrend));
+      sf('mod趨勢', Math.round(s趨勢));
       sf('modMom', Math.round(sMom));
       sf('modRisk', Math.round(sRisk));
       sf('modFlow', Math.round(sFlow));
-      sf('wTrend', '權重: ' + (wTrend*100).toFixed(0) + '%');
-      sf('wMom', '權重: ' + (wMom*100).toFixed(0) + '%');
-      sf('wRisk', '權重: ' + (wRisk*100).toFixed(0) + '%');
-      sf('flowStatusTxt', '權重: ' + (wFlow*100).toFixed(0) + '% ' + flow.text);
+      sf('w趨勢', 'W: ' + (w趨勢*100).toFixed(0) + '%');
+      sf('wMom', 'W: ' + (wMom*100).toFixed(0) + '%');
+      sf('wRisk', 'W: ' + (wRisk*100).toFixed(0) + '%');
+      sf('flowStatusTxt', 'W: ' + (wFlow*100).toFixed(0) + '% ' + flow.text);
       var dmiText = lastDmi.pdi > lastDmi.mdi ? '+DI 多方' : '-DI 空方';
-      sf('dmiTrend', '<span class="' + (lastDmi.pdi>lastDmi.mdi?'text-emerald-400':'text-red-400') + '">' + dmiText + '</span>');
+      sf('dmi趨勢', '<span class="' + (lastDmi.pdi>lastDmi.mdi?'text-emerald-400':'text-red-400') + '">' + dmiText + '</span>');
       sf('dmiSpread', (lastDmi.spread>=0?'+':'') + lastDmi.spread.toFixed(1));
       sf('bbPercentB', (bbLast.pctB*100).toFixed(0) + '%');
       sf('bbWidthRank', (bbWidthRank*100).toFixed(0) + '%');
-      sf('squeezeBadge', isBBSqueeze ? '<span class="text-cyan-300">SQUEEZE 壓縮</span>' : '<span class="text-slate-400">Normal</span>');
-      sf('breakoutBadge', isBBBreakout ? '<span class="text-emerald-400">BB+DMI BREAKOUT</span>' : (isBBVeto ? '<span class="text-red-400">BB+DMI 否決</span>' : '突破: --'));
+      sf('squeezeBadge', isBBSqueeze ? '<span class="text-cyan-300">布林壓縮</span>' : '<span class="text-slate-400">正常</span>');
+      sf('breakoutBadge', isBBBreakout ? '<span class="text-emerald-400">布林+DMI突破</span>' : (isBBVeto ? '<span class="text-red-400">布林+DMI否決</span>' : '突破: --'));
 
       sf('infoRatioBadge', 'IR: ' + rs.ir.toFixed(2) + ' / ρ: ' + rho.toFixed(2));
-      sf('liquidityBadge', 'Liquidity: ' + liquidityTxt);
+      sf('liquidityBadge', '流動性: ' + liquidityTxt);
       sf('atrStopVal', stopDist.toFixed(2));
       sf('atrShares', atrShares.toLocaleString() + ' 股');
       sf('bayesWin', (stats.winRate*100).toFixed(1) + '%');
       sf('cvar95', (stats.cvar*100).toFixed(1) + '%');
       sf('ulcerIdxTxt', (ui*100).toFixed(1) + ' UI');
-      sf('finalPosSize', (finalPosSize*100).toFixed(1) + '%');
+      var riskState = (mc.dar95 > 0.35 || Math.abs(stats.cvar) > 0.12) ? '<span class="text-red-400">偏高</span>' : (mc.dar95 > 0.20 ? '<span class="text-yellow-300">中等</span>' : '<span class="text-emerald-400">穩定</span>');
+      sf('finalPosSize', riskState);
       sf('mcDaR', (mc.dar95*100).toFixed(1) + '%');
       sf('mcRuin', (mc.ruinProb*100).toFixed(2) + '%');
 
       sf('gapVeto', isGapDown ? '<span class="text-red-500">觸發</span>' : '<span class="text-emerald-400">通過</span>');
       sf('volVeto', isHardVeto ? '<span class="text-red-500">觸發</span>' : '<span class="text-emerald-400">通過</span>');
-      sf('divVeto', '<span class="' + div.color + '">' + div.text + ' / Ortho ' + (orthoPenalty<1?'啟動':'通過') + ' / ' + (isBBVeto?'布林否決':'布林通過') + '</span>');
+      sf('divVeto', '<span class="' + div.color + '">' + div.text + ' / Ortho ' + (orthoPenalty<1?'ON':'通過') + ' / ' + (isBBVeto?'BB VETO':'BB 通過') + '</span>');
 
       var action = '區間觀察', actionClass='text-slate-300';
-      if (finalScore < 50 || isHardVeto || isGapDown || isBBVeto) { action='嚴禁進場 / 降低曝險'; actionClass='text-red-400'; }
+      if (final分數 < 50 || isHardVeto || isGapDown || isBBVeto) { action='嚴禁進場 / 轉防守'; actionClass='text-red-400'; }
       else if (isStop) { action='暫緩進場 / 等收復防線'; actionClass='text-orange-400'; }
-      else if (isBBBreakout && finalScore >= 70) { action='布林壓縮突破 / DMI確認'; actionClass='text-cyan-300'; }
-      else if (finalScore >= 75 && bias20 < 0.08) { action='趨勢多頭 / 回測布局'; actionClass='text-emerald-400'; }
-      else if (finalScore >= 70 && bias20 >= 0.15) { action='追高風險 / 分批停利'; actionClass='text-yellow-400'; }
-      else if (finalScore >= 65) { action='小部位試單 / 嚴守停損'; actionClass='text-emerald-300'; }
+      else if (isBBBreakout && final分數 >= 70) { action='布林壓縮突破 / DMI確認'; actionClass='text-cyan-300'; }
+      else if (final分數 >= 75 && bias20 < 0.08) { action='趨勢多頭 / 回測布局'; actionClass='text-emerald-400'; }
+      else if (final分數 >= 70 && bias20 >= 0.15) { action='追高風險 / 分批停利'; actionClass='text-yellow-400'; }
+      else if (final分數 >= 65) { action='觀察試單 / 嚴守停損'; actionClass='text-emerald-300'; }
 
       var flags = [];
       if (isHardVeto) flags.push('爆量否決');
-      if (isGapDown) flags.push('Gap 否決');
+      if (isGapDown) flags.push('Gap VETO');
       if (isBBVeto) flags.push('布林+DMI否決');
       if (isStop) flags.push('吊燈停損');
       if (div.score < 0) flags.push(div.text.replace(/[🚨⚠️⚡]/g,''));
       if (orthoPenalty < 1) flags.push('Ortho Penalty');
       if (liquidityTxt !== '充足') flags.push('Liquidity ' + liquidityTxt);
       if (!flow.real && market === 'TW') flags.push('籌碼代理');
-      var gradeObj = computeTradeGrade({score:finalScore, confidence:confidence, pos:finalPosSize, netExp:netExpectancy, dar95:mc.dar95, ruin:mc.ruinProb, veto:(isHardVeto||isGapDown||isBBVeto), stop:isStop});
+      var gradeObj = computeTradeGrade({score:final分數, confidence:confidence, pos:finalPosSize, netExp:netExpectancy, dar95:mc.dar95, ruin:mc.ruinProb, veto:(isHardVeto||isGapDown||isBBVeto), stop:isStop});
       var existingExposure = latestSignalExposure();
       var projectedExposure = clamp(existingExposure + finalPosSize, 0, 2);
       var portfolioWarn = projectedExposure > pcfg.totalCap ? '超過上限' : 'OK';
-      if (portfolioWarn !== 'OK' && finalPosSize > 0) gradeObj = {grade:'B', color:'text-yellow-300', rule:'投資組合總曝險可能過高，建議先減少其他持股或降低本次部位。'};
+      if (portfolioWarn !== 'OK' && finalPosSize > 0) gradeObj = {grade:'B', color:'text-yellow-300', rule:'風險條件偏高，建議僅觀察。'};
 
-      sf('tradeGradeBadge', '<span class="' + gradeObj.color + ' font-black">分級: ' + gradeObj.grade + '</span>');
-      sf('netExpectancy', '<span class="' + (netExpectancy>=0?'text-emerald-400':'text-red-400') + '">' + (netExpectancy*100).toFixed(2) + '%</span>');
-      sf('costModelTxt', (costModel.total*100).toFixed(2) + '%');
-      sf('riskRuleTxt', (pcfg.riskPct*100).toFixed(1) + '% / ' + atrShares.toLocaleString() + '股');
-      sf('portfolioTxt', (projectedExposure*100).toFixed(1) + '% / ' + (pcfg.totalCap*100).toFixed(0) + '%');
-      sf('tradingRuleText', gradeObj.rule + '｜成本模型：交易成本 ' + (costModel.base*100).toFixed(2) + '% + 滑價 ' + (costModel.slip*100).toFixed(2) + '% + 流動性/波動補償 ' + ((costModel.illiq+costModel.pain)*100).toFixed(2) + '%。');
+      var entryStatus = '等待';
+      var exitStatus = '續抱';
+      var profitStatus = '正常';
+      if (final分數 < 50 || isHardVeto || isGapDown || isBBVeto) { entryStatus='禁止'; exitStatus='離場/防守'; }
+      else if (isStop) { entryStatus='暫緩'; exitStatus='跌破防線'; }
+      else if (isBBBreakout && final分數 >= 70) { entryStatus='突破'; exitStatus='未觸發'; }
+      else if (final分數 >= 75 && bias20 < 0.08) { entryStatus='可布局'; exitStatus='未觸發'; }
+      else if (final分數 >= 65) { entryStatus='觀察'; exitStatus='未觸發'; }
+      if (bias20 >= 0.15) profitStatus='過熱停利';
+      else if (bias20 >= 0.08) profitStatus='分批觀察';
+      sf('tradeGradeBadge', '<span class="' + gradeObj.color + ' font-black">燈號: ' + gradeObj.grade + '</span>');
+      sf('netExpectancy', '<span class="' + (entryStatus==='禁止'?'text-red-400':entryStatus==='暫緩'?'text-orange-400':entryStatus==='可布局'||entryStatus==='突破'?'text-emerald-400':'text-yellow-300') + '">' + entryStatus + '</span>');
+      sf('costModelTxt', '<span class="' + (exitStatus.indexOf('離場')>=0||exitStatus.indexOf('跌破')>=0?'text-red-400':'text-emerald-400') + '">' + exitStatus + '</span>');
+      sf('riskRuleTxt', '<span class="' + (profitStatus.indexOf('過熱')>=0?'text-yellow-300':'text-slate-200') + '">' + profitStatus + '</span>');
+      sf('portfolioTxt', chandelier.toFixed(2));
+      sf('tradingRuleText', '進場：分數≥70、未觸發 VETO、收盤價站回吊燈防線與布林中軌，且 +DI 優於 -DI。｜出場：跌破吊燈防線、布林+DMI轉弱、爆量跌破或跳空下殺即轉防守。｜目前判斷：' + action + '。');
 
       window.lastSignal = {
         date: new Date().toISOString().slice(0,19).replace('T',' '),
@@ -1573,7 +1503,7 @@
         ticker: q,
         source: result.source,
         price: L.close,
-        score: finalScore,
+        score: final分數,
         grade: gradeObj.grade,
         action: action,
         pos: finalPosSize,
@@ -1670,16 +1600,16 @@
     var vol20=avg(data.slice(-20).map(function(d){return d.volume;}));
     var isBBSqueeze = bbWidthRank <= 0.20;
     var isBBBreakout = L.close > bbLast.upper && L.volume > vol20*1.2 && lastDmi.pdi > lastDmi.mdi && adxVal > 20;
-    var bbScore = isBBBreakout ? 100 : (isBBSqueeze && L.close > bbLast.mid ? 82 : (bbLast.pctB >= 0.80 ? 72 : (bbLast.pctB <= 0.20 ? 32 : 55)));
-    var dmiDirectionalScore = clamp(50 + lastDmi.spread*1.2 + (adxVal-20)*1.3, 0, 100);
+    var bb分數 = isBBBreakout ? 100 : (isBBSqueeze && L.close > bbLast.mid ? 82 : (bbLast.pctB >= 0.80 ? 72 : (bbLast.pctB <= 0.20 ? 32 : 55)));
+    var dmiDirectional分數 = clamp(50 + lastDmi.spread*1.2 + (adxVal-20)*1.3, 0, 100);
     var benchForRegime = benchmark || data;
     var hmm = calculateRegimeProbability(benchForRegime, calcDMI(benchForRegime,14));
 
-    var dScore=L.close>e20Val?100:35, wScore=e20Val>e60Val?100:35, mScore=e60Val>e120Val?100:35;
-    var sTrend=Math.round(dScore*0.4+wScore*0.4+mScore*0.2);
-    var bias20=(L.close-e20Val)/e20Val, rs=calcRelativeStrengthScore(data, benchmark);
-    var adxScore=clamp((adxVal-12)*4,0,100), biasScore=clamp(55+bias20*250,0,100);
-    var sMom=clamp(rs.score*0.34 + adxScore*0.16 + biasScore*0.14 + dmiDirectionalScore*0.18 + bbScore*0.18,0,100);
+    var d分數=L.close>e20Val?100:35, w分數=e20Val>e60Val?100:35, m分數=e60Val>e120Val?100:35;
+    var s趨勢=Math.round(d分數*0.4+w分數*0.4+m分數*0.2);
+    var bias20=(L.close-e20Val)/e20Val, rs=calcRelativeStrength分數(data, benchmark);
+    var adx分數=clamp((adxVal-12)*4,0,100), bias分數=clamp(55+bias20*250,0,100);
+    var sMom=clamp(rs.score*0.34 + adx分數*0.16 + bias分數*0.14 + dmiDirectional分數*0.18 + bb分數*0.18,0,100);
     if (bias20 > 0.18) sMom = Math.min(sMom,72);
     var ui=calcUlcerIndex(data,60);
     var hh22=Math.max.apply(null,data.slice(-22).map(function(d){return d.high;}));
@@ -1690,38 +1620,38 @@
     if (L.close < bbLast.mid) sRisk = Math.min(sRisk,76);
     if (L.close < bbLast.lower) sRisk = Math.min(sRisk,45);
 
-    var flow = calcFlowScore(flowRows, data, e20Val);
+    var flow = calcFlow分數(flowRows, data, e20Val);
     var sFlow = flow.score;
     var returns=[], volChg=[];
     for (var i=Math.max(1,data.length-61); i<data.length; i++) { returns.push(data[i].close/data[i-1].close-1); volChg.push(data[i-1].volume>0?data[i].volume/data[i-1].volume-1:0); }
     var rho=spearman(returns,volChg), orthoPenalty=1;
     if (Math.abs(rho)>0.70 && Math.abs(bias20)>0.10) orthoPenalty=0.85;
     sMom*=orthoPenalty;
-    var wTrend=0.25,wMom=0.25,wRisk=0.25,wFlow=0.25;
-    if (hmm.pBear>0.55) {wTrend=0.16;wMom=0.12;wRisk=0.52;wFlow=0.20;} else if (hmm.pBull>0.55) {wTrend=0.30;wMom=0.34;wRisk=0.16;wFlow=0.20;} else {wTrend=0.22;wMom=0.20;wRisk=0.35;wFlow=0.23;}
+    var w趨勢=0.25,wMom=0.25,wRisk=0.25,wFlow=0.25;
+    if (hmm.pBear>0.55) {w趨勢=0.16;wMom=0.12;wRisk=0.52;wFlow=0.20;} else if (hmm.pBull>0.55) {w趨勢=0.30;wMom=0.34;wRisk=0.16;wFlow=0.20;} else {w趨勢=0.22;wMom=0.20;wRisk=0.35;wFlow=0.23;}
     var past=data[data.length-21]||data[0], pastRet=(L.close-past.close)/past.close;
-    if (pastRet>0.06 && hmm.pBear<0.45) {wTrend+=0.04;wMom+=0.04;wRisk-=0.05;wFlow-=0.03;}
-    if (pastRet<-0.06) {wRisk+=0.08;wMom-=0.05;wTrend-=0.03;}
-    wMom*=orthoPenalty; var wSum=wTrend+wMom+wRisk+wFlow; wTrend/=wSum;wMom/=wSum;wRisk/=wSum;wFlow/=wSum;
-    var finalScore=Math.round(sTrend*wTrend+sMom*wMom+sRisk*wRisk+sFlow*wFlow);
-    var div=checkMultiDivergence(data,rsi,macdObj,obv); finalScore += div.score;
-    if (isBBBreakout && finalScore>=60 && bias20<0.12) finalScore += 4;
+    if (pastRet>0.06 && hmm.pBear<0.45) {w趨勢+=0.04;wMom+=0.04;wRisk-=0.05;wFlow-=0.03;}
+    if (pastRet<-0.06) {wRisk+=0.08;wMom-=0.05;w趨勢-=0.03;}
+    wMom*=orthoPenalty; var wSum=w趨勢+wMom+wRisk+wFlow; w趨勢/=wSum;wMom/=wSum;wRisk/=wSum;wFlow/=wSum;
+    var final分數=Math.round(s趨勢*w趨勢+sMom*wMom+sRisk*wRisk+sFlow*wFlow);
+    var div=checkMultiDivergence(data,rsi,macdObj,obv); final分數 += div.score;
+    if (isBBBreakout && final分數>=60 && bias20<0.12) final分數 += 4;
     var isBBVeto=L.close<bbLast.lower && lastDmi.mdi>lastDmi.pdi && adxVal>25;
     var volThreshold=hmm.pBear>0.5?1.5:(hmm.pBull>0.6?2.5:2.0);
     var isHardVeto=L.close<e60Val && L.volume>vol20*volThreshold;
     var prevL=data[data.length-2]||L;
     var isGapDown=L.open<prevL.low*0.97 && L.volume>vol20*1.5;
     var isStop=L.close<chandelier;
-    if (isHardVeto||isGapDown) finalScore=Math.min(finalScore,40);
-    if (isBBVeto) finalScore=Math.min(finalScore,45);
-    if (isStop) finalScore=Math.min(finalScore,59);
-    finalScore=clamp(finalScore,0,100);
+    if (isHardVeto||isGapDown) final分數=Math.min(final分數,40);
+    if (isBBVeto) final分數=Math.min(final分數,45);
+    if (isStop) final分數=Math.min(final分數,59);
+    final分數=clamp(final分數,0,100);
 
     var avgTurnover20=avg(data.slice(-20).map(function(d){return d.volume*d.close;}));
     var liquidityCap=100, liquidityTxt='OK';
     if (market==='TW') { if (avgTurnover20<5000000){liquidityCap=65;liquidityTxt='流動性過低';} else if (avgTurnover20<20000000){liquidityCap=80;liquidityTxt='流動性偏低';} }
     else { if (avgTurnover20<1000000){liquidityCap=65;liquidityTxt='流動性過低';} else if (avgTurnover20<5000000){liquidityCap=80;liquidityTxt='流動性偏低';} }
-    finalScore=clamp(Math.min(finalScore,liquidityCap),0,100);
+    final分數=clamp(Math.min(final分數,liquidityCap),0,100);
 
     var stats=runBayesianCVaREngine(data,e20,e60,atr), mc=runBlockBootstrapMC(stats.trades);
     var cvarRisk=Math.abs(stats.cvar || -0.03), uiMultiplier=clamp(0.08/Math.max(ui,0.01),0.25,2.0);
@@ -1729,7 +1659,7 @@
     var batchNetExp=(stats.mu||0)-batchCost.total;
     var finalPosSize=clamp(stats.halfKelly*(0.05/cvarRisk)*uiMultiplier,0,0.20);
     if (batchNetExp<=0) finalPosSize=Math.min(finalPosSize,0.03);
-    if (finalScore<50||isHardVeto||isGapDown||isBBVeto) finalPosSize=0;
+    if (final分數<50||isHardVeto||isGapDown||isBBVeto) finalPosSize=0;
     var confidence=clamp(50+Math.min(20,data.length/50)+Math.min(15,stats.trades.length*1.2)+(result.source.indexOf('Yahoo')>=0?-8:8)+(flow.real?8:-4)+(benchmark?5:-4),30,98);
 
     var startIdx=findStartIndex(data,startDate);
@@ -1737,24 +1667,24 @@
     var ret=startClose>0?(L.close-startClose)/startClose:0;
     var mdd=maxDrawdownFrom(data,startIdx);
     var action='觀察'; var actionClass='text-slate-300';
-    if (finalScore<50||isHardVeto||isGapDown||isBBVeto) { action='防守/不進場'; actionClass='text-red-400'; }
+    if (final分數<50||isHardVeto||isGapDown||isBBVeto) { action='防守/不進場'; actionClass='text-red-400'; }
     else if (isStop) { action='跌破防線'; actionClass='text-orange-400'; }
-    else if (isBBBreakout && finalScore>=70) { action='突破候選'; actionClass='text-cyan-300'; }
-    else if (finalScore>=75 && bias20<0.08) { action='回測布局'; actionClass='text-emerald-400'; }
-    else if (finalScore>=70 && bias20>=0.15) { action='過熱停利'; actionClass='text-yellow-400'; }
-    else if (finalScore>=65) { action='小部位試單'; actionClass='text-emerald-300'; }
+    else if (isBBBreakout && final分數>=70) { action='突破候選'; actionClass='text-cyan-300'; }
+    else if (final分數>=75 && bias20<0.08) { action='回測布局'; actionClass='text-emerald-400'; }
+    else if (final分數>=70 && bias20>=0.15) { action='過熱停利'; actionClass='text-yellow-400'; }
+    else if (final分數>=65) { action='觀察試單'; actionClass='text-emerald-300'; }
     var flags=[];
     if (isHardVeto) flags.push('爆量否決');
-    if (isGapDown) flags.push('Gap 否決');
+    if (isGapDown) flags.push('Gap VETO');
     if (isBBVeto) flags.push('布林+DMI否決');
     if (isStop) flags.push('吊燈停損');
     if (div.score<0) flags.push(div.text.replace(/[🚨⚠️⚡]/g,''));
     if (orthoPenalty<1) flags.push('Ortho Penalty');
     if (liquidityTxt!=='OK') flags.push(liquidityTxt);
-    if (isBBBreakout) flags.push('布林+DMI突破');
+    if (isBBBreakout) flags.push('BB+DMI Breakout');
     if (!flow.real && market==='TW') flags.push('籌碼代理');
     window.currentMarket = oldMarket;
-    return { market:market, ticker:result.symbol.display, source:result.source, startClose:startClose, lastClose:L.close, ret:ret, mdd:mdd, score:finalScore, action:action, actionClass:actionClass, pos:finalPosSize, dar95:mc.dar95, confidence:confidence, flags:flags.join(' / ') || '通過' };
+    return { market:market, ticker:result.symbol.display, source:result.source, startClose:startClose, lastClose:L.close, ret:ret, mdd:mdd, score:final分數, action:action, actionClass:actionClass, pos:finalPosSize, dar95:mc.dar95, confidence:confidence, flags:flags.join(' / ') || '通過' };
   }
 
   window.runBatchPreset = async function() {
@@ -1783,8 +1713,8 @@
       var ok=results.filter(function(x){return !x.error;});
       var high=ok.filter(function(x){return x.score>=70 && x.pos>0;});
       var warn=ok.filter(function(x){return x.score<50 || x.pos===0;});
-      if (summary) summary.innerHTML='完成：成功 '+ok.length+' 檔，失敗 '+(results.length-ok.length)+' 檔。可優先觀察分數 ≥70 且 安全部位 >0 的標的；分數 <50 或 否決 者不建議追價。';
-      if (notes) notes.innerHTML='判讀提醒：本批次測試以 '+startDate+' 後的價格區間計算報酬與 MDD，但 EMA120/EMA200、ADX、布林寬度分位、CVaR 與 MC 皆使用較長歷史資料暖機，避免 2026-01-01 起算造成長均線失真。若資料源為 Yahoo 或 Flow Proxy，Confidence 會自動降低；v17.0 另加入交易成本、滑價與 Forward Test 訊號日誌，實盤前需連續追蹤訊號。';
+      if (summary) summary.innerHTML='完成：成功 '+ok.length+' 檔，失敗 '+(results.length-ok.length)+' 檔。可優先觀察分數 ≥70 且 Safe ERC >0 的標的；分數 <50 或 VETO 者不建議追價。';
+      if (notes) notes.innerHTML='判讀提醒：本批次測試以 '+startDate+' 後的價格區間計算報酬與 MDD，但 EMA120/EMA200、ADX、布林寬度分位、CVaR 與 MC 皆使用較長歷史資料暖機，避免 2026-01-01 起算造成長均線失真。若資料源為 Yahoo 或 籌碼代理，信心度 會自動降低；本版本已移除實盤交易與部位建議，只保留進場、出場、風險旗標與壓力測試。';
     } finally {
       window.isBatchRunning=false;
     }
