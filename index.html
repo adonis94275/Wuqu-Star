@@ -5,8 +5,8 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <meta content="notranslate" name="google"/>
-<title>ASQE v17.4.3 實戰訊號驗證版 | GitHub Pages Pro</title>
-<script type="text/javascript" nonce="d8cbadd62b354cb3bac5816de5b" src="//local.adguard.org?ts=1781525720805&amp;type=content-script&amp;dmn=chatgpt.com&amp;url=https%3A%2F%2Fchatgpt.com%2Fbackend-api%2Festuary%2Fcontent%3Fid%3Dfile_000000002fbc7209887d8ece588b826a%26fn%3Dasqe_v17_4_3_latest_close_error_fixed_github_pages.html%26cd%3Dattachment%26ts%3D494868%26p%3Dfs%26cid%3D1%26sig%3D19e6f3c53e5f27ee2a698a312ba24988a5896030a0cbe15d1bb9c4b639d94368%26v%3D0&amp;app=chrome.exe&amp;css=2&amp;js=1&amp;rel=1&amp;rji=1&amp;sbe=1&amp;stealth=1&amp;st-dnt"></script><script type="text/javascript" nonce="d8cbadd62b354cb3bac5816de5b" src="//local.adguard.org?ts=1781525720805&amp;name=AdGuard%20Extra&amp;name=AdGuard%20Popup%20Blocker&amp;type=user-script"></script><script>
+<title>ASQE v17.4.4 實戰訊號驗證版 | GitHub Pages Pro</title>
+<script type="text/javascript" nonce="d8cbadd62b354cb3bac5816de5b" src="//local.adguard.org?ts=1781525720805&amp;type=content-script&amp;dmn=chatgpt.com&amp;url=https%3A%2F%2Fchatgpt.com%2Fbackend-api%2Festuary%2Fcontent%3Fid%3Dfile_000000002e14720986618066fadd3386%26ts%3D494868%26p%3Dfs%26cid%3D1%26sig%3D87450c61c12181c863714322d70134a3a1a394a00cbe2eaf641b26c46adb38d0%26v%3D0&amp;app=chrome.exe&amp;css=2&amp;js=1&amp;rel=1&amp;rji=1&amp;sbe=1&amp;stealth=1&amp;st-dnt"></script><script type="text/javascript" nonce="d8cbadd62b354cb3bac5816de5b" src="//local.adguard.org?ts=1781525720805&amp;name=AdGuard%20Extra&amp;name=AdGuard%20Popup%20Blocker&amp;type=user-script"></script><script>
     window.IS_CODE_COMPLETE = false;
 
     window.onerror = function(msg, url, lineNo) {
@@ -117,7 +117,7 @@
     .metric-value { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; font-weight: 900; }
     .badge-elite { background: linear-gradient(135deg, #1e3a8a, #4c1d95); border: 1px solid #7c3aed; }
 
-    /* v17.4.3：修正最新收盤日期函式並放大進出場訊號區塊，手機與桌面都更容易閱讀 */
+    /* v17.4.4：放大右側所有分析卡片字體，包含市場狀態、DMI、歷史驗證、MC、CVaR、否決戰術 */
     .signal-decision-card { padding: 1rem !important; }
     .signal-decision-title { font-size: 13px !important; letter-spacing: .08em; }
     .signal-label { font-size: 10.5px !important; color: #94a3b8 !important; margin-bottom: 0.22rem !important; }
@@ -126,6 +126,40 @@
     #tradingRuleText { font-size: 13px !important; line-height: 1.85 !important; padding: .85rem !important; }
     #tradeGradeBadge { font-size: 11px !important; padding: .25rem .45rem !important; }
     #holdModeNone, #holdModeHolding { font-size: 12px !important; padding: .38rem .7rem !important; }
+
+
+    /* v17.4.4：右側所有分析卡片字體放大，讓市場狀態、DMI、歷史驗證、風控與戰術區更清楚 */
+    .glass-panel .data-card { padding: 1rem !important; }
+    .glass-panel .data-card [class*="text-[8px]"] { font-size: 10.5px !important; line-height: 1.45 !important; }
+    .glass-panel .data-card [class*="text-[9px]"] { font-size: 11.5px !important; line-height: 1.55 !important; }
+    .glass-panel .data-card [class*="text-[10px]"] { font-size: 12.5px !important; line-height: 1.5 !important; }
+    .glass-panel .data-card [class*="text-[11px]"] { font-size: 14px !important; line-height: 1.55 !important; }
+    .glass-panel .data-card .metric-value { font-size: 14.5px !important; line-height: 1.55 !important; }
+    .glass-panel .data-card .grid > div { padding: .65rem !important; }
+    .glass-panel .data-card .flex.justify-between.items-center.bg-slate-950,
+    .glass-panel .data-card .bg-slate-950.p-2,
+    .glass-panel .data-card .bg-slate-950.p-1\.5 { padding: .65rem !important; }
+    #infoRatioBadge, #breakoutBadge, #signalSampleTxt, #recoveryFactor, #liquidityBadge { font-size: 10.5px !important; padding: .25rem .45rem !important; }
+    #mod趨勢, #modMom, #modRisk, #modFlow,
+    #dmi趨勢, #dmiSpread, #bbPercentB, #bbWidthRank,
+    #sigWin5, #sigWin10, #sigWin20, #sigAvg20,
+    #mcDaR, #mcRuin, #bayesWin, #cvar95, #ulcerIdxTxt, #finalPosSize,
+    #gapVeto, #volVeto, #divVeto, #actionText, #trailingStop,
+    #signalValidationText, #squeezeBadge, #flowStatusTxt,
+    #w趨勢, #wMom, #wRisk { font-size: 14.5px !important; line-height: 1.55 !important; }
+    #actionText { font-size: 15px !important; }
+    #trailingStop { font-size: 16px !important; }
+    .glass-panel .data-card > .flex:first-child span:first-child,
+    .glass-panel .data-card > div:first-child.text-\[9px\] { font-size: 13px !important; }
+    @media (max-width: 640px) {
+      .glass-panel .data-card { padding: .85rem !important; }
+      .glass-panel .data-card [class*="text-[8px]"] { font-size: 10px !important; }
+      .glass-panel .data-card [class*="text-[9px]"] { font-size: 11px !important; }
+      .glass-panel .data-card [class*="text-[10px]"] { font-size: 12px !important; }
+      .glass-panel .data-card [class*="text-[11px]"] { font-size: 13px !important; }
+      .glass-panel .data-card .metric-value { font-size: 13.5px !important; }
+    }
+
     @media (max-width: 640px) {
       .signal-decision-title { font-size: 12px !important; }
       .signal-main-value { font-size: 14px !important; }
@@ -141,7 +175,7 @@
 <div class="w-16 h-16 bg-slate-950 rounded-2xl flex items-center justify-center mb-5 border border-slate-700 shadow-inner">
 <span class="text-3xl">🏛️</span>
 </div>
-<h1 class="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-indigo-300 to-orange-300 tracking-wider mb-1">ASQE v17.4.3</h1>
+<h1 class="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-indigo-300 to-orange-300 tracking-wider mb-1">ASQE v17.4.4</h1>
 <p class="text-[9px] text-indigo-100 mb-8 font-mono tracking-widest uppercase px-2 py-1 rounded badge-elite">實戰訊號驗證版</p>
 <input autocomplete="off" class="w-full bg-slate-950 text-white border border-slate-700 rounded-xl px-4 py-3.5 mb-5 focus:outline-none focus:border-indigo-500 text-center tracking-widest font-mono" id="passwordInput" inputmode="numeric" onkeypress="if(event.key==='Enter') window.checkAndUnlock()" placeholder="輸入授權碼" type="password"/>
 <button class="w-full bg-gradient-to-r from-indigo-700 to-purple-700 hover:from-indigo-600 hover:to-purple-600 text-white font-black py-3.5 rounded-xl transition-all shadow-lg tracking-widest cursor-pointer" id="unlockBtn" onclick="window.checkAndUnlock()">啟動量化核心</button>
@@ -181,7 +215,7 @@
 <div class="flex items-center gap-3">
 <div class="w-8 h-8 bg-gradient-to-br from-indigo-600 to-purple-900 rounded-lg flex items-center justify-center font-bold text-sm border border-slate-700">🏛️</div>
 <div class="flex flex-col">
-<h1 class="text-base font-black tracking-widest text-slate-100 leading-none">ASQE v17.4.3</h1>
+<h1 class="text-base font-black tracking-widest text-slate-100 leading-none">ASQE v17.4.4</h1>
 <span class="text-[9px] text-indigo-400 font-mono tracking-wider mt-0.5">實戰訊號驗證版</span>
 </div>
 </div>
@@ -211,7 +245,7 @@
 <div class="flex flex-col gap-3 p-4 border-b border-slate-800">
 <div class="flex flex-col md:flex-row md:items-center justify-between gap-3">
 <div>
-<div class="text-lg font-black tracking-widest text-white">ASQE v17.4.3 個股區間測試</div>
+<div class="text-lg font-black tracking-widest text-white">ASQE v17.4.4 個股區間測試</div>
 <div class="text-[11px] text-slate-400 mt-1">輸入任一台股或美股代碼，設定開始日與結束日，回放 ASQE 進出場規則，檢查期間操作是否合適。指標會使用起始日前資料暖機，避免長均線失真。</div>
 </div>
 <div class="flex items-center gap-2">
