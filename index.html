@@ -5,8 +5,8 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <meta content="notranslate" name="google"/>
-<title>ASQE v17.8 永豐主路由資料品質版 | GitHub Pages Pro</title>
-<script type="text/javascript" nonce="d8cbadd62b354cb3bac5816de5b" src="//local.adguard.org?ts=1781527521133&amp;type=content-script&amp;dmn=chatgpt.com&amp;url=https%3A%2F%2Fchatgpt.com%2Fbackend-api%2Festuary%2Fcontent%3Fid%3Dfile_000000004cd07206b67031326b767d06%26fn%3Dasqe_v17_8_data_quality_github_pages.html%26cd%3Dattachment%26ts%3D494869%26p%3Dfs%26cid%3D1%26sig%3D9302ef2f6829cfc2c7abbf6348e26c83ed2d957e42e561ec8eb0ac7d33d62e01%26v%3D0&amp;app=chrome.exe&amp;css=2&amp;js=1&amp;rel=1&amp;rji=1&amp;sbe=1&amp;stealth=1&amp;st-dnt"></script><script type="text/javascript" nonce="d8cbadd62b354cb3bac5816de5b" src="//local.adguard.org?ts=1781527521133&amp;name=AdGuard%20Extra&amp;name=AdGuard%20Popup%20Blocker&amp;type=user-script"></script><script>
+<title>ASQE v17.8.2 永豐狀態清楚版 | GitHub Pages Pro</title>
+<script type="text/javascript" nonce="d8cbadd62b354cb3bac5816de5b" src="//local.adguard.org?ts=1781527521133&amp;type=content-script&amp;dmn=chatgpt.com&amp;url=https%3A%2F%2Fchatgpt.com%2Fbackend-api%2Festuary%2Fcontent%3Fid%3Dfile_000000001e3471f8a0217b854b5bb81a%26ts%3D494869%26p%3Dfs%26cid%3D1%26sig%3D44762badf4e163fea255e783faae2a7530be79a68d9578d42db2a7501087b97c%26v%3D0&amp;app=chrome.exe&amp;css=2&amp;js=1&amp;rel=1&amp;rji=1&amp;sbe=1&amp;stealth=1&amp;st-dnt"></script><script type="text/javascript" nonce="d8cbadd62b354cb3bac5816de5b" src="//local.adguard.org?ts=1781527521133&amp;name=AdGuard%20Extra&amp;name=AdGuard%20Popup%20Blocker&amp;type=user-script"></script><script>
     window.IS_CODE_COMPLETE = false;
 
     window.onerror = function(msg, url, lineNo) {
@@ -186,15 +186,15 @@
 <div class="w-16 h-16 bg-slate-950 rounded-2xl flex items-center justify-center mb-5 border border-slate-700 shadow-inner">
 <span class="text-3xl">🏛️</span>
 </div>
-<h1 class="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-indigo-300 to-orange-300 tracking-wider mb-1">ASQE v17.8</h1>
-<p class="text-[9px] text-indigo-100 mb-8 font-mono tracking-widest uppercase px-2 py-1 rounded badge-elite">永豐主路由資料品質版</p>
+<h1 class="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-indigo-300 to-orange-300 tracking-wider mb-1">ASQE v17.8.2</h1>
+<p class="text-[9px] text-indigo-100 mb-8 font-mono tracking-widest uppercase px-2 py-1 rounded badge-elite">永豐狀態清楚版</p>
 <input autocomplete="off" class="w-full bg-slate-950 text-white border border-slate-700 rounded-xl px-4 py-3.5 mb-5 focus:outline-none focus:border-indigo-500 text-center tracking-widest font-mono" id="passwordInput" inputmode="numeric" onkeypress="if(event.key==='Enter') window.checkAndUnlock()" placeholder="輸入授權碼" type="password"/>
 <button class="w-full bg-gradient-to-r from-indigo-700 to-purple-700 hover:from-indigo-600 hover:to-purple-600 text-white font-black py-3.5 rounded-xl transition-all shadow-lg tracking-widest cursor-pointer" id="unlockBtn" onclick="window.checkAndUnlock()">啟動量化核心</button>
 <p class="text-red-400 text-[11px] mt-4 opacity-0 transition-opacity font-bold bg-red-950/50 px-3 py-1 rounded" id="errorMsg">授權碼錯誤</p>
 </div>
 </div>
-<div class="fixed inset-0 z-[200] bg-slate-950/90 flex items-center justify-center fade-transition fade-out backdrop-blur-md p-4" id="setupModal">
-<div class="bg-slate-900 rounded-3xl p-6 w-full max-w-lg border border-slate-700 shadow-2xl relative">
+<div class="fixed inset-0 z-[200] bg-slate-950/90 flex items-start justify-center fade-transition fade-out backdrop-blur-md p-4 overflow-y-auto" id="setupModal">
+<div class="bg-slate-900 rounded-3xl p-6 w-full max-w-lg border border-slate-700 shadow-2xl relative max-h-[calc(100vh-2rem)] overflow-y-auto my-auto">
 <h2 class="text-lg font-black text-white mb-2 flex items-center gap-2 tracking-widest"><span>⚙️</span> API 路由配置</h2>
 <p class="text-[10px] text-slate-400 mb-4 leading-relaxed">
         主路由：永豐 Shioaji / 自訂 Gateway → 備援路由。台股備援：FinMind → Fugle → Yahoo；美股備援：FMP → Finnhub → Yahoo。建議永豐 Secret Key 放在本機 Shioaji .env，不要長期儲存在瀏覽器。
@@ -246,7 +246,7 @@
   <div class="text-[10px] text-slate-500 mt-2 leading-relaxed">勾選後系統會自動將進場訊號降級：可布局 → 觀察，觀察 → 暫緩。</div>
 </div>
 
-<button class="w-full bg-gradient-to-r from-indigo-700 to-purple-700 hover:from-indigo-600 hover:to-purple-600 text-white font-black py-3 rounded-xl transition-all mt-2 text-sm shadow-lg tracking-widest cursor-pointer" onclick="window.saveAndStart()">寫入 API 設定並啟動</button>
+<button class="w-full sticky bottom-0 z-20 bg-gradient-to-r from-indigo-700 to-purple-700 hover:from-indigo-600 hover:to-purple-600 text-white font-black py-3.5 rounded-xl transition-all mt-2 text-sm shadow-2xl tracking-widest cursor-pointer border border-indigo-400/30" onclick="window.saveAndStart()">寫入 API 設定並啟動</button>
 </div>
 </div>
 </div>
@@ -255,8 +255,8 @@
 <div class="flex items-center gap-3">
 <div class="w-8 h-8 bg-gradient-to-br from-indigo-600 to-purple-900 rounded-lg flex items-center justify-center font-bold text-sm border border-slate-700">🏛️</div>
 <div class="flex flex-col">
-<h1 class="text-base font-black tracking-widest text-slate-100 leading-none">ASQE v17.8</h1>
-<span class="text-[9px] text-indigo-400 font-mono tracking-wider mt-0.5">永豐主路由資料品質版</span>
+<h1 class="text-base font-black tracking-widest text-slate-100 leading-none">ASQE v17.8.2</h1>
+<span class="text-[9px] text-indigo-400 font-mono tracking-wider mt-0.5">永豐狀態清楚版</span>
 </div>
 </div>
 <div class="flex flex-wrap items-center justify-center gap-2 mt-2 sm:mt-0">
@@ -285,7 +285,7 @@
 <div class="flex flex-col gap-3 p-4 border-b border-slate-800">
 <div class="flex flex-col md:flex-row md:items-center justify-between gap-3">
 <div>
-<div class="text-lg font-black tracking-widest text-white">ASQE v17.8 個股區間測試</div>
+<div class="text-lg font-black tracking-widest text-white">ASQE v17.8.2 個股區間測試</div>
 <div class="text-[11px] text-slate-400 mt-1">輸入任一台股或美股代碼，設定開始日與結束日，回放 ASQE 進出場規則，檢查期間操作是否合適。指標會使用起始日前資料暖機，避免長均線失真。</div>
 </div>
 <div class="flex items-center gap-2">
@@ -951,6 +951,31 @@
     }
   }
 
+  function classifyRouteFailure(name, err) {
+    var msg = err && err.message ? String(err.message) : 'failed';
+    var lower = msg.toLowerCase();
+    if (name.indexOf('永豐') >= 0) {
+      var gw = (window.SINOPAC_GATEWAY || localStorage.getItem('ASQE_SINOPAC_GATEWAY') || '').trim();
+      var hint = [];
+      if (!gw) hint.push('Gateway URL 未設定');
+      if (gw && gw.indexOf('127.0.0.1') >= 0 && location.hostname !== 'localhost' && location.hostname !== '127.0.0.1') {
+        hint.push('你目前在 GitHub Pages，127.0.0.1 代表使用者這台裝置；需在同一台電腦啟動 Gateway');
+      }
+      if (location.protocol === 'https:' && gw.indexOf('http://') === 0 && gw.indexOf('127.0.0.1') < 0 && gw.indexOf('localhost') < 0) {
+        hint.push('HTTPS 頁面呼叫 HTTP Gateway 可能被 Mixed Content 擋下，建議改用 HTTPS Proxy');
+      }
+      if (lower.indexOf('failed to fetch') >= 0 || lower.indexOf('network') >= 0 || lower === 'failed') {
+        hint.push('可能 Gateway 未啟動、CORS 未開、私有網路權限被擋或端點不存在');
+      }
+      if (lower.indexOf('timeout') >= 0) hint.push('Gateway 有回應但逾時，請檢查 Shioaji server 或 Proxy 效能');
+      if (hint.length) return msg + '｜永豐診斷：' + hint.join('；');
+    }
+    if (lower.indexOf('403') >= 0) return msg + '｜可能是 API 權限、方案或舊端點限制';
+    if (lower.indexOf('401') >= 0) return msg + '｜可能是 API Key / Token 錯誤';
+    if (lower.indexOf('429') >= 0) return msg + '｜可能是 API 額度或頻率限制';
+    return msg;
+  }
+
   async function tryRoute(name, fn, log) {
     try {
       setStatus(name, 'yellow');
@@ -963,7 +988,7 @@
       log.push('✅ ' + name + '：成功 ' + data.length + ' 筆' + qMsg);
       return { data: data, source: name };
     } catch(e) {
-      log.push('⚠️ ' + name + '：' + (e && e.message ? e.message : 'failed'));
+      log.push('⚠️ ' + name + '：' + classifyRouteFailure(name, e));
       return null;
     }
   }
@@ -1237,11 +1262,18 @@
     for (var i=0; i<routes.length; i++) {
       var result = await tryRoute(routes[i].name, routes[i].fn, log);
       if (result && result.data.length >= 120) {
+        var sinopacTried = routes[0] && routes[0].name.indexOf('永豐') >= 0;
+        var sinopacFailed = sinopacTried && result.source.indexOf('永豐') < 0;
+        if (sinopacFailed) log.push('ℹ️ 目前實際使用：' + result.source + '；永豐主路由未連線、未通過 CORS 或回傳資料不足。');
+        else if (result.source.indexOf('永豐') >= 0) log.push('ℹ️ 目前實際使用：永豐主路由。');
         sf('routerLog', log.join('<br>'));
-        sf('dataQualityLog', renderDataQuality(result.data.quality));
+        var dqHtml = renderDataQuality(result.data.quality);
+        if (sinopacFailed) dqHtml += '<div class="text-[9px] text-yellow-300 mt-1">永豐狀態：未連線或資料不足；已自動切換備援。這不代表 K 線不足，只代表主路由沒有成功。</div>';
+        else if (result.source.indexOf('永豐') >= 0) dqHtml += '<div class="text-[9px] text-emerald-300 mt-1">永豐狀態：主路由已成功。</div>';
+        sf('dataQualityLog', dqHtml);
         sf('dataQualityBadge', '資料品質: ' + ((result.data.quality && result.data.quality.status) || '--'));
         setStatus(result.source, 'green');
-        return { data: result.data, source: result.source, symbol: sym, log: log };
+        return { data: result.data, source: result.source, symbol: sym, log: log, sinopacFailed: sinopacFailed };
       }
     }
 
@@ -1968,13 +2000,15 @@
   }
 
   function calcForwardSignalStats(data, e20, e60, e120, atr, dmi, bb) {
-    var rows = [];
+    var strictRows = [], looseRows = [];
     var packs = {e20:e20, e60:e60, e120:e120, atr:atr, dmi:dmi, bb:bb, rsi:calcRSI(data,14), macd:calcMACD(data), obv:calcOBV(data)};
     for (var i=220; i<data.length-20; i++) {
-      var core = evalCoreAtIndex(data, i, packs, {});
+      // 歷史訊號驗證不套用「目前手動勾選」的財報/法說/新聞風險，避免把歷史樣本全部壓掉。
+      var core = evalCoreAtIndex(data, i, packs, {eventRisk:{on:false, high:false, text:'歷史驗證不套用目前手動事件風險'}});
       if (!core.ready) continue;
-      var typeOk = core.enter || (core.score >= 70 && (core.bbBreak || (Math.abs(core.bias20) <= 0.06 && core.dmi.pdi > core.dmi.mdi)));
-      if (!typeOk) continue;
+      var strictOk = core.enter || (core.score >= 70 && (core.bbBreak || (Math.abs(core.bias20) <= 0.06 && core.dmi.pdi > core.dmi.mdi && core.bb.pctB >= 0.35)));
+      var looseOk = core.score >= 65 && !core.hardVeto && !core.gapVeto && !core.bbVeto && !core.stop && core.dmi.pdi > core.dmi.mdi && core.bb.pctB >= 0.30;
+      if (!strictOk && !looseOk) continue;
       var L = data[i];
       var r5=data[i+5].close/L.close-1;
       var r10=data[i+10].close/L.close-1;
@@ -1984,9 +2018,13 @@
         if (data[k].low<minLow) minLow=data[k].low;
         if (data[k].high>maxHigh) maxHigh=data[k].high;
       }
-      rows.push({r5:r5,r10:r10,r20:r20,mae:minLow/L.close-1,mfe:maxHigh/L.close-1});
+      var row = {r5:r5,r10:r10,r20:r20,mae:minLow/L.close-1,mfe:maxHigh/L.close-1};
+      if (strictOk) strictRows.push(row); else looseRows.push(row);
     }
-    if (!rows.length) return {n:0, win5:0, win10:0, win20:0, avg20:0, mae:0, mfe:0, text:'樣本不足', color:'text-yellow-300'};
+    var mode = '嚴格相似';
+    var rows = strictRows;
+    if (!rows.length && looseRows.length) { rows = looseRows; mode = '寬鬆參考'; }
+    if (!rows.length) return {n:0, win5:0, win10:0, win20:0, avg20:0, mae:0, mfe:0, text:'歷史相似進場樣本不足', color:'text-yellow-300', mode:'無樣本', reason:'K線資料可用，但過去沒有足夠相似進場訊號；這通常代表目前型態罕見或條件太保守。'};
     function win(key){ return rows.filter(function(x){return x[key]>0;}).length/rows.length; }
     var avg20=avg(rows.map(function(x){return x.r20;}));
     var mae=avg(rows.map(function(x){return x.mae;}));
@@ -1996,7 +2034,7 @@
     if (rows.length>=20 && w20>=0.60 && avg20>0) { text='高可信'; color='text-emerald-400'; }
     else if (rows.length<8) { text='樣本偏少'; color='text-orange-300'; }
     else if (w20<0.45 || avg20<0) { text='需謹慎'; color='text-red-300'; }
-    return {n:rows.length, win5:win('r5'), win10:win('r10'), win20:w20, avg20:avg20, mae:mae, mfe:mfe, text:text, color:color};
+    return {n:rows.length, win5:win('r5'), win10:win('r10'), win20:w20, avg20:avg20, mae:mae, mfe:mfe, text:text, color:color, mode:mode, reason: mode==='寬鬆參考' ? '嚴格買點樣本不足，改用較接近的多方樣本做參考。' : '使用嚴格相似買點樣本。'};
   }
 
   function calcProfitPlan(close, chandelier, atr, bias20, bbPctB) {
@@ -2238,14 +2276,14 @@
       sf('finalPosSize', riskState);
       sf('mcDaR', (mc.dar95*100).toFixed(1) + '%');
       sf('mcRuin', (mc.ruinProb*100).toFixed(2) + '%');
-      sf('signalSampleTxt', '樣本: ' + sigStats.n);
+      sf('signalSampleTxt', '樣本: ' + sigStats.n + (sigStats.mode ? '｜' + sigStats.mode : ''));
       sf('sigWin5', sigStats.n ? (sigStats.win5*100).toFixed(0) + '%' : '--');
       sf('sigWin10', sigStats.n ? (sigStats.win10*100).toFixed(0) + '%' : '--');
       sf('sigWin20', sigStats.n ? (sigStats.win20*100).toFixed(0) + '%' : '--');
       sf('sigAvg20', sigStats.n ? (sigStats.avg20*100).toFixed(1) + '%' : '--');
       sf('sigMAE', sigStats.n ? (sigStats.mae*100).toFixed(1) + '%' : '--');
       sf('sigMFE', sigStats.n ? '+' + (sigStats.mfe*100).toFixed(1) + '%' : '--');
-      sf('signalValidationText', '<span class="' + sigStats.color + '">' + sigStats.text + '</span>' + (sigStats.n ? ' ｜ 平均不利 ' + (sigStats.mae*100).toFixed(1) + '% ｜ 平均有利 +' + (sigStats.mfe*100).toFixed(1) + '%' : ''));
+      sf('signalValidationText', '<span class="' + sigStats.color + '">' + sigStats.text + '</span>' + (sigStats.n ? ' ｜ 平均不利 ' + (sigStats.mae*100).toFixed(1) + '% ｜ 平均有利 +' + (sigStats.mfe*100).toFixed(1) + '%' : ' ｜ ' + (sigStats.reason || '歷史相似訊號不足')));
 
       sf('gapVeto', isGapDown ? '<span class="text-red-500">觸發</span>' : '<span class="text-emerald-400">通過</span>');
       sf('volVeto', isHardVeto ? '<span class="text-red-500">觸發</span>' : '<span class="text-emerald-400">通過</span>');
