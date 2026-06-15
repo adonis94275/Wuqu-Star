@@ -5,8 +5,8 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <meta content="notranslate" name="google"/>
-<title>ASQE v17.5 實戰一致性強化版 | GitHub Pages Pro</title>
-<script type="text/javascript" nonce="d8cbadd62b354cb3bac5816de5b" src="//local.adguard.org?ts=1781527521133&amp;type=content-script&amp;dmn=chatgpt.com&amp;url=https%3A%2F%2Fchatgpt.com%2Fbackend-api%2Festuary%2Fcontent%3Fid%3Dfile_0000000045e07209bba531b5d99fbc18%26ts%3D494868%26p%3Dfs%26cid%3D1%26sig%3D3f08cff90684af1a4177207874d16260ecef1ed82a6c2cba77d267e755fa7b8f%26v%3D0&amp;app=chrome.exe&amp;css=2&amp;js=1&amp;rel=1&amp;rji=1&amp;sbe=1&amp;stealth=1&amp;st-dnt"></script><script type="text/javascript" nonce="d8cbadd62b354cb3bac5816de5b" src="//local.adguard.org?ts=1781527521133&amp;name=AdGuard%20Extra&amp;name=AdGuard%20Popup%20Blocker&amp;type=user-script"></script><script>
+<title>ASQE v17.8 永豐主路由資料品質版 | GitHub Pages Pro</title>
+<script type="text/javascript" nonce="d8cbadd62b354cb3bac5816de5b" src="//local.adguard.org?ts=1781527521133&amp;type=content-script&amp;dmn=chatgpt.com&amp;url=https%3A%2F%2Fchatgpt.com%2Fbackend-api%2Festuary%2Fcontent%3Fid%3Dfile_000000004cd07206b67031326b767d06%26fn%3Dasqe_v17_8_data_quality_github_pages.html%26cd%3Dattachment%26ts%3D494869%26p%3Dfs%26cid%3D1%26sig%3D9302ef2f6829cfc2c7abbf6348e26c83ed2d957e42e561ec8eb0ac7d33d62e01%26v%3D0&amp;app=chrome.exe&amp;css=2&amp;js=1&amp;rel=1&amp;rji=1&amp;sbe=1&amp;stealth=1&amp;st-dnt"></script><script type="text/javascript" nonce="d8cbadd62b354cb3bac5816de5b" src="//local.adguard.org?ts=1781527521133&amp;name=AdGuard%20Extra&amp;name=AdGuard%20Popup%20Blocker&amp;type=user-script"></script><script>
     window.IS_CODE_COMPLETE = false;
 
     window.onerror = function(msg, url, lineNo) {
@@ -41,8 +41,8 @@
     };
 
     window.saveAndStart = function() {
-      var ids = ['finmindKeyInput','fugleKeyInput','fmpKeyInput','finnhubKeyInput'];
-      var names = ['ASQE_FINMIND_KEY','ASQE_FUGLE_KEY','ASQE_FMP_KEY','ASQE_FINNHUB_KEY'];
+      var ids = ['finmindKeyInput','fugleKeyInput','fmpKeyInput','finnhubKeyInput','sinopacGatewayInput','sinopacUseInput'];
+      var names = ['ASQE_FINMIND_KEY','ASQE_FUGLE_KEY','ASQE_FMP_KEY','ASQE_FINNHUB_KEY','ASQE_SINOPAC_GATEWAY','ASQE_SINOPAC_USE'];
       for (var i=0; i<ids.length; i++) {
         var el = document.getElementById(ids[i]);
         var val = el ? el.value.trim() : '';
@@ -52,6 +52,17 @@
       window.KEY_FUGLE = (document.getElementById('fugleKeyInput') || {}).value || '';
       window.KEY_FMP = (document.getElementById('fmpKeyInput') || {}).value || '';
       window.KEY_FINNHUB = (document.getElementById('finnhubKeyInput') || {}).value || '';
+      window.SINOPAC_GATEWAY = (document.getElementById('sinopacGatewayInput') || {}).value || 'http://127.0.0.1:8080';
+      window.USE_SINOPAC = ((document.getElementById('sinopacUseInput') || {}).checked !== false);
+      try {
+        sessionStorage.setItem('ASQE_SINOPAC_API_KEY_SESSION', (document.getElementById('sinopacApiKeyInput') || {}).value || '');
+        sessionStorage.setItem('ASQE_SINOPAC_SECRET_KEY_SESSION', (document.getElementById('sinopacSecretKeyInput') || {}).value || '');
+      } catch(e) {}
+      try {
+        localStorage.setItem('ASQE_EVENT_EARNINGS', (document.getElementById('eventEarningsRisk')||{}).checked ? '1' : '0');
+        localStorage.setItem('ASQE_EVENT_CONFERENCE', (document.getElementById('eventConferenceRisk')||{}).checked ? '1' : '0');
+        localStorage.setItem('ASQE_EVENT_NEWS', (document.getElementById('eventNewsRisk')||{}).checked ? '1' : '0');
+      } catch(e) {}
 
       var modal = document.getElementById('setupModal');
       if (modal) modal.style.opacity = '0';
@@ -175,8 +186,8 @@
 <div class="w-16 h-16 bg-slate-950 rounded-2xl flex items-center justify-center mb-5 border border-slate-700 shadow-inner">
 <span class="text-3xl">🏛️</span>
 </div>
-<h1 class="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-indigo-300 to-orange-300 tracking-wider mb-1">ASQE v17.5</h1>
-<p class="text-[9px] text-indigo-100 mb-8 font-mono tracking-widest uppercase px-2 py-1 rounded badge-elite">實戰一致性強化版</p>
+<h1 class="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-indigo-300 to-orange-300 tracking-wider mb-1">ASQE v17.8</h1>
+<p class="text-[9px] text-indigo-100 mb-8 font-mono tracking-widest uppercase px-2 py-1 rounded badge-elite">永豐主路由資料品質版</p>
 <input autocomplete="off" class="w-full bg-slate-950 text-white border border-slate-700 rounded-xl px-4 py-3.5 mb-5 focus:outline-none focus:border-indigo-500 text-center tracking-widest font-mono" id="passwordInput" inputmode="numeric" onkeypress="if(event.key==='Enter') window.checkAndUnlock()" placeholder="輸入授權碼" type="password"/>
 <button class="w-full bg-gradient-to-r from-indigo-700 to-purple-700 hover:from-indigo-600 hover:to-purple-600 text-white font-black py-3.5 rounded-xl transition-all shadow-lg tracking-widest cursor-pointer" id="unlockBtn" onclick="window.checkAndUnlock()">啟動量化核心</button>
 <p class="text-red-400 text-[11px] mt-4 opacity-0 transition-opacity font-bold bg-red-950/50 px-3 py-1 rounded" id="errorMsg">授權碼錯誤</p>
@@ -186,9 +197,29 @@
 <div class="bg-slate-900 rounded-3xl p-6 w-full max-w-lg border border-slate-700 shadow-2xl relative">
 <h2 class="text-lg font-black text-white mb-2 flex items-center gap-2 tracking-widest"><span>⚙️</span> API 路由配置</h2>
 <p class="text-[10px] text-slate-400 mb-4 leading-relaxed">
-        台股路由：FinMind → Fugle → Yahoo。美股路由：FMP → Finnhub → Yahoo。API Key 只儲存在您的瀏覽器 localStorage，不會寫入程式碼。
+        主路由：永豐 Shioaji / 自訂 Gateway → 備援路由。台股備援：FinMind → Fugle → Yahoo；美股備援：FMP → Finnhub → Yahoo。建議永豐 Secret Key 放在本機 Shioaji .env，不要長期儲存在瀏覽器。
       </p>
 <div class="grid grid-cols-1 gap-3 mt-2">
+<div class="bg-slate-950/50 p-3 rounded-xl border border-emerald-900/50">
+<label class="text-[9px] text-emerald-300 font-bold uppercase block">永豐 Shioaji / Gateway 主路由</label>
+<div class="flex items-center gap-2 mt-2 mb-2 text-[11px] text-slate-200">
+  <input id="sinopacUseInput" type="checkbox" class="accent-emerald-500" checked>
+  <span>優先使用永豐資料；資料不足或連線失敗時自動改走其它備援</span>
+</div>
+<label class="text-[9px] text-slate-500 font-bold uppercase block mt-2">Gateway URL（建議本機 Shioaji Server 或您的安全 Proxy）</label>
+<input autocomplete="off" class="w-full bg-slate-900 text-white border border-slate-700 rounded-lg px-3 py-2 focus:outline-none focus:border-emerald-500 font-mono text-xs mt-1" id="sinopacGatewayInput" spellcheck="false" type="text" placeholder="http://127.0.0.1:8080"/>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-2 mt-2">
+  <div>
+    <label class="text-[9px] text-slate-500 font-bold uppercase block">永豐 API Key（選填；不長存）</label>
+    <input autocomplete="off" class="w-full bg-slate-900 text-white border border-slate-700 rounded-lg px-3 py-2 focus:outline-none focus:border-emerald-500 font-mono text-xs mt-1" id="sinopacApiKeyInput" spellcheck="false" type="password"/>
+  </div>
+  <div>
+    <label class="text-[9px] text-slate-500 font-bold uppercase block">永豐 Secret Key（選填；僅本次瀏覽器 Session）</label>
+    <input autocomplete="off" class="w-full bg-slate-900 text-white border border-slate-700 rounded-lg px-3 py-2 focus:outline-none focus:border-emerald-500 font-mono text-xs mt-1" id="sinopacSecretKeyInput" spellcheck="false" type="password"/>
+  </div>
+</div>
+<div class="text-[10px] text-amber-300 mt-2 leading-relaxed">安全建議：若使用官方 Shioaji，請把 API Key / Secret 放在本機 .env 並啟動 <span class="font-mono">shioaji server start</span>；GitHub Pages 只填 Gateway URL。直接把 Secret 放前端風險較高。</div>
+</div>
 <div class="bg-slate-950/50 p-3 rounded-xl border border-slate-800">
 <label class="text-[9px] text-slate-400 font-bold uppercase block">FinMind Token（台股 OHLCV / 三大法人）</label>
 <input autocomplete="off" class="w-full bg-slate-900 text-white border border-slate-700 rounded-lg px-3 py-2 focus:outline-none focus:border-indigo-500 font-mono text-xs mt-1" id="finmindKeyInput" spellcheck="false" type="password"/>
@@ -205,6 +236,15 @@
 <label class="text-[9px] text-slate-400 font-bold uppercase block">Finnhub Token（美股備援）</label>
 <input autocomplete="off" class="w-full bg-slate-900 text-white border border-slate-700 rounded-lg px-3 py-2 focus:outline-none focus:border-indigo-500 font-mono text-xs mt-1" id="finnhubKeyInput" spellcheck="false" type="password"/>
 </div>
+<div class="bg-slate-950/50 p-3 rounded-xl border border-amber-900/40">
+  <label class="text-[9px] text-amber-300 font-bold uppercase block mb-2">事件風險濾網（手動開關，避免財報/法說前硬追）</label>
+  <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 text-[11px] text-slate-200">
+    <label class="flex items-center gap-2 bg-slate-900 border border-slate-800 rounded-lg px-2 py-2 cursor-pointer"><input id="eventEarningsRisk" type="checkbox" class="accent-amber-500">近期財報</label>
+    <label class="flex items-center gap-2 bg-slate-900 border border-slate-800 rounded-lg px-2 py-2 cursor-pointer"><input id="eventConferenceRisk" type="checkbox" class="accent-amber-500">法說/重大會議</label>
+    <label class="flex items-center gap-2 bg-slate-900 border border-slate-800 rounded-lg px-2 py-2 cursor-pointer"><input id="eventNewsRisk" type="checkbox" class="accent-amber-500">重大新聞/利空</label>
+  </div>
+  <div class="text-[10px] text-slate-500 mt-2 leading-relaxed">勾選後系統會自動將進場訊號降級：可布局 → 觀察，觀察 → 暫緩。</div>
+</div>
 
 <button class="w-full bg-gradient-to-r from-indigo-700 to-purple-700 hover:from-indigo-600 hover:to-purple-600 text-white font-black py-3 rounded-xl transition-all mt-2 text-sm shadow-lg tracking-widest cursor-pointer" onclick="window.saveAndStart()">寫入 API 設定並啟動</button>
 </div>
@@ -215,8 +255,8 @@
 <div class="flex items-center gap-3">
 <div class="w-8 h-8 bg-gradient-to-br from-indigo-600 to-purple-900 rounded-lg flex items-center justify-center font-bold text-sm border border-slate-700">🏛️</div>
 <div class="flex flex-col">
-<h1 class="text-base font-black tracking-widest text-slate-100 leading-none">ASQE v17.5</h1>
-<span class="text-[9px] text-indigo-400 font-mono tracking-wider mt-0.5">實戰一致性強化版</span>
+<h1 class="text-base font-black tracking-widest text-slate-100 leading-none">ASQE v17.8</h1>
+<span class="text-[9px] text-indigo-400 font-mono tracking-wider mt-0.5">永豐主路由資料品質版</span>
 </div>
 </div>
 <div class="flex flex-wrap items-center justify-center gap-2 mt-2 sm:mt-0">
@@ -245,7 +285,7 @@
 <div class="flex flex-col gap-3 p-4 border-b border-slate-800">
 <div class="flex flex-col md:flex-row md:items-center justify-between gap-3">
 <div>
-<div class="text-lg font-black tracking-widest text-white">ASQE v17.5 個股區間測試</div>
+<div class="text-lg font-black tracking-widest text-white">ASQE v17.8 個股區間測試</div>
 <div class="text-[11px] text-slate-400 mt-1">輸入任一台股或美股代碼，設定開始日與結束日，回放 ASQE 進出場規則，檢查期間操作是否合適。指標會使用起始日前資料暖機，避免長均線失真。</div>
 </div>
 <div class="flex items-center gap-2">
@@ -291,7 +331,7 @@
 <tbody class="divide-y divide-slate-800 bg-slate-900" id="batchTable"></tbody>
 </table>
 </div>
-<div class="mt-3 text-[11px] text-slate-400 leading-relaxed" id="batchNotes">說明：本測試不是預測未來，而是把 ASQE 進出場規則套用到指定區間；v17.5 改用隔日開盤執行並內扣交易成本/滑價，用來檢查訊號是否更接近實盤。</div>
+<div class="mt-3 text-[11px] text-slate-400 leading-relaxed" id="batchNotes">說明：本測試不是預測未來，而是把 ASQE 進出場規則套用到指定區間；v17.8 改用隔日開盤、動態滑價、族群相對強弱、動態停利、事件風險濾網與資料品質檢查，用來檢查訊號是否更接近實盤。</div>
 </div>
 </div>
 </div>
@@ -338,6 +378,7 @@
 <div class="flex justify-between w-full mb-1 relative z-10">
 <span class="text-[10px] font-bold text-slate-400 tracking-widest uppercase">自適應綜合分數</span>
 <span class="text-[9px] text-slate-400 font-mono" id="confidenceBadge">信心度: --</span>
+<span class="text-[9px] text-slate-400 font-mono ml-2" id="dataQualityBadge">資料品質: --</span>
 </div>
 <div class="flex items-end justify-between relative z-10">
 <div class="flex items-end gap-3">
@@ -403,6 +444,18 @@
 <span class="text-[10px] font-bold text-slate-300" id="squeezeBadge">--</span>
 </div>
 </div>
+<div class="data-card border-amber-900/30">
+<div class="flex justify-between items-center mb-2">
+<span class="text-amber-300 text-[10px] font-black uppercase tracking-wider">🧭 族群 / 滑價 / 事件風險</span>
+<span class="text-[8px] px-1 py-0.5 rounded font-mono bg-slate-950 text-slate-400 border border-slate-800" id="eventRiskTxt">事件: --</span>
+</div>
+<div class="grid grid-cols-3 gap-1.5 text-center mb-2">
+<div class="bg-slate-950 p-1.5 rounded border border-slate-800"><div class="text-[8px] text-slate-500 mb-0.5">族群強弱</div><div id="sectorStatusTxt" class="text-[11px] font-bold text-white metric-value">--</div></div>
+<div class="bg-slate-950 p-1.5 rounded border border-slate-800"><div class="text-[8px] text-slate-500 mb-0.5">族群基準</div><div id="sectorBenchmarkTxt" class="text-[11px] font-bold text-white metric-value truncate">--</div></div>
+<div class="bg-slate-950 p-1.5 rounded border border-slate-800"><div class="text-[8px] text-slate-500 mb-0.5">滑價模型</div><div id="execSlippageTxt" class="text-[11px] font-bold text-white metric-value">--</div></div>
+</div>
+<div class="bg-slate-950 p-1.5 rounded border border-slate-800 flex justify-between text-[9px]"><span class="text-slate-400">動態停利 / 減碼</span><span id="trimStatusTxt" class="font-bold text-slate-300">--</span></div>
+</div>
 <div class="data-card border-sky-900/30">
 <div class="flex justify-between items-center mb-2">
 <span class="text-sky-400 text-[10px] font-black uppercase tracking-wider">📌 歷史訊號驗證</span>
@@ -466,7 +519,8 @@
 </div>
 </div>
 <div class="data-card border-slate-700/60">
-<div class="text-[9px] text-slate-500 font-bold mb-1 uppercase">API Router Log</div>
+<div class="text-[10px] text-slate-400 font-black mb-1 uppercase">資料品質 / API 路由</div>
+<div class="text-[10px] text-slate-300 leading-relaxed bg-slate-950/60 border border-slate-800 rounded-lg p-2 mb-2" id="dataQualityLog">等待資料品質檢查...</div>
 <div class="text-[9px] text-slate-400 font-mono leading-relaxed" id="routerLog">等待路由...</div>
 </div>
 </div>
@@ -483,12 +537,15 @@
     window.KEY_FUGLE = localStorage.getItem('ASQE_FUGLE_KEY') || '';
     window.KEY_FMP = localStorage.getItem('ASQE_FMP_KEY') || '';
     window.KEY_FINNHUB = localStorage.getItem('ASQE_FINNHUB_KEY') || '';
+    window.SINOPAC_GATEWAY = localStorage.getItem('ASQE_SINOPAC_GATEWAY') || 'http://127.0.0.1:8080';
+    window.USE_SINOPAC = localStorage.getItem('ASQE_SINOPAC_USE') !== 'false';
 
     var prefill = [
       ['finmindKeyInput', window.KEY_FINMIND],
       ['fugleKeyInput', window.KEY_FUGLE],
       ['fmpKeyInput', window.KEY_FMP],
       ['finnhubKeyInput', window.KEY_FINNHUB],
+      ['sinopacGatewayInput', localStorage.getItem('ASQE_SINOPAC_GATEWAY') || 'http://127.0.0.1:8080'],
       ['capitalInput', localStorage.getItem('ASQE_CAPITAL') || '1000000'],
       ['riskPctInput', localStorage.getItem('ASQE_RISK_PCT') || '1'],
       ['twCostPctInput', localStorage.getItem('ASQE_TW_COST_PCT') || '0.45'],
@@ -503,6 +560,14 @@
         var el = document.getElementById(x[0]);
         if (el) el.value = x[1] || '';
       });
+      var evMap = [
+        ['eventEarningsRisk','ASQE_EVENT_EARNINGS'],
+        ['eventConferenceRisk','ASQE_EVENT_CONFERENCE'],
+        ['eventNewsRisk','ASQE_EVENT_NEWS']
+      ];
+      evMap.forEach(function(x){ var el=document.getElementById(x[0]); if(el) el.checked = localStorage.getItem(x[1]) === '1'; });
+      var su = document.getElementById('sinopacUseInput');
+      if (su) su.checked = (localStorage.getItem('ASQE_SINOPAC_USE') !== 'false');
     }, 0);
   } catch(e) {}
 
@@ -699,13 +764,16 @@
 
   function parseAndCleanData(raw, source) {
     var out = raw.map(function(x) {
+      var rawClose = x.close != null ? x.close : (x.Close != null ? x.Close : (x.price != null ? x.price : x.adjClose));
+      var adj = x.adjClose != null ? x.adjClose : (x.adj_close != null ? x.adj_close : (x.adjustedClose != null ? x.adjustedClose : (x.adjclose != null ? x.adjclose : null)));
       return {
-        time: String(x.time || x.date).slice(0,10),
-        open: safeNum(x.open, safeNum(x.close)),
-        high: safeNum(x.high, safeNum(x.close)),
-        low: safeNum(x.low, safeNum(x.close)),
-        close: safeNum(x.close),
-        volume: Math.max(0, safeNum(x.volume))
+        time: String(x.time || x.date || x.datetime || '').slice(0,10),
+        open: safeNum(x.open != null ? x.open : x.Open, safeNum(rawClose)),
+        high: safeNum(x.high != null ? x.high : x.High, safeNum(rawClose)),
+        low: safeNum(x.low != null ? x.low : x.Low, safeNum(rawClose)),
+        close: safeNum(rawClose),
+        adjClose: adj != null ? safeNum(adj, 0) : 0,
+        volume: Math.max(0, safeNum(x.volume != null ? x.volume : x.Volume))
       };
     }).filter(function(x) {
       return x.time && isFinite(x.close) && x.close > 0 && isFinite(x.high) && isFinite(x.low);
@@ -716,12 +784,162 @@
     out = Object.keys(byDate).sort().map(function(k){ return byDate[k]; });
 
     // Lightweight Charts requires ascending unique dates.
-    return out.map(function(d) {
+    out.forEach(function(d) {
       if (d.high < Math.max(d.open, d.close)) d.high = Math.max(d.open, d.close);
       if (d.low > Math.min(d.open, d.close)) d.low = Math.min(d.open, d.close);
       d.source = source;
-      return d;
     });
+
+    var quality = runDataQualityCheck(out, source);
+    out.quality = quality;
+    return out;
+  }
+
+  function pctLabel(x) {
+    if (!isFinite(x)) return '--';
+    return (x*100).toFixed(1) + '%';
+  }
+
+  function median(arr) {
+    var a = arr.filter(function(x){return isFinite(x);}).slice().sort(function(x,y){return x-y;});
+    if (!a.length) return 0;
+    var m = Math.floor(a.length/2);
+    return a.length % 2 ? a[m] : (a[m-1]+a[m])/2;
+  }
+
+  function applyBackAdjustment(data, endIndexExclusive, factor) {
+    for (var j=0; j<endIndexExclusive; j++) {
+      data[j].open *= factor;
+      data[j].high *= factor;
+      data[j].low *= factor;
+      data[j].close *= factor;
+      if (data[j].adjClose) data[j].adjClose *= factor;
+    }
+  }
+
+  function runDataQualityCheck(data, source) {
+    var q = {
+      source: source || '',
+      adjustedCloseApplied: false,
+      corporateAdjustments: [],
+      priceShocks: [],
+      warnings: [],
+      confidencePenalty: 0,
+      status: '通過'
+    };
+    if (!data || data.length < 2) {
+      q.status = '資料不足';
+      q.confidencePenalty += 20;
+      q.warnings.push('資料筆數不足，無法檢查單日異常跳動。');
+      return q;
+    }
+
+    // 1) 若資料源提供 adjusted close，優先還原成調整後價格序列。
+    // Yahoo / FMP 常會提供 adjClose；使用它可自動處理拆股、除息、除權造成的歷史價格斷裂。
+    var adjRows = data.filter(function(d){ return d.adjClose && d.adjClose > 0 && d.close > 0; });
+    if (adjRows.length >= Math.max(30, data.length * 0.45)) {
+      var ratios = adjRows.map(function(d){ return d.adjClose / d.close; });
+      var med = median(ratios);
+      var maxDev = Math.max.apply(null, ratios.map(function(r){ return Math.abs(r - med); }));
+      var farFromOne = ratios.some(function(r){ return Math.abs(r - 1) > 0.002; });
+      if (farFromOne || maxDev > 0.005) {
+        data.forEach(function(d){
+          if (d.adjClose && d.adjClose > 0 && d.close > 0) {
+            var f = d.adjClose / d.close;
+            d.rawClose = d.close;
+            d.open *= f;
+            d.high *= f;
+            d.low *= f;
+            d.close = d.adjClose;
+            d.adjustmentFactor = f;
+          }
+        });
+        q.adjustedCloseApplied = true;
+        q.status = '已還原';
+        q.warnings.push('已使用調整後收盤價自動還原除權息 / 拆股影響。');
+      }
+    }
+
+    // 2) 若資料源沒有 adjClose，但出現單日超過 20% 的價格斷裂，判斷是否疑似除權息/拆股。
+    // 條件：跳空佔主要變動、日內波幅不大、成交量未極端爆量。符合時回溯調整前段價格；不符合則保留為真實劇烈波動並降低信心度。
+    for (var i=1; i<data.length; i++) {
+      var prev = data[i-1], d = data[i];
+      if (!prev.close || !d.close || !d.open) continue;
+      var ret = d.close / prev.close - 1;
+      var gap = d.open / prev.close - 1;
+      if (Math.abs(ret) < 0.20 && Math.abs(gap) < 0.20) continue;
+
+      var look = data.slice(Math.max(0, i-20), i);
+      var volBase = avg(look.map(function(x){ return x.volume || 0; })) || 0;
+      var volRatio = volBase > 0 ? (d.volume || 0) / volBase : 1;
+      var intraday = d.open > 0 ? (d.high - d.low) / d.open : 0;
+      var gapDominates = Math.abs(gap) >= Math.abs(ret) * 0.60 || Math.abs(gap) > 0.18;
+      var calmDay = intraday < 0.12;
+      var notPanicVolume = volRatio < 3.0;
+      var likelyCorporateAction = !q.adjustedCloseApplied && gapDominates && calmDay && notPanicVolume;
+
+      if (likelyCorporateAction) {
+        var factor = d.open / prev.close;
+        if (isFinite(factor) && factor > 0.05 && factor < 20) {
+          applyBackAdjustment(data, i, factor);
+          q.corporateAdjustments.push({
+            date: d.time,
+            factor: factor,
+            rawMove: ret,
+            note: '疑似除權息/拆股造成價格斷裂，已依隔日開盤比例回溯還原。'
+          });
+          q.status = '已還原';
+          // 重新計算前一天的 close，避免同一事件又被誤判。
+          prev = data[i-1];
+        }
+      } else {
+        q.priceShocks.push({
+          date: d.time,
+          move: ret,
+          gap: gap,
+          volRatio: volRatio,
+          note: '單日漲跌幅超過20%，未符合除權息/拆股還原條件，保留為真實風險事件。'
+        });
+        q.confidencePenalty += 8;
+      }
+    }
+
+    // 3) 檢查 OHLC 是否不合理。
+    var badOhlc = 0;
+    data.forEach(function(d){
+      if (d.high < Math.max(d.open, d.close) || d.low > Math.min(d.open, d.close) || d.low <= 0) badOhlc++;
+    });
+    if (badOhlc > 0) {
+      q.warnings.push('偵測到 ' + badOhlc + ' 筆 OHLC 異常，已嘗試修正高低價範圍。');
+      q.confidencePenalty += Math.min(12, badOhlc * 2);
+    }
+
+    if (q.priceShocks.length) q.status = '警示';
+    if (!q.warnings.length && !q.priceShocks.length && !q.corporateAdjustments.length) q.status = '通過';
+    if (q.corporateAdjustments.length) q.warnings.push('已自動回溯還原 ' + q.corporateAdjustments.length + ' 筆疑似除權息/拆股斷裂。');
+    if (q.priceShocks.length) q.warnings.push('仍有 ' + q.priceShocks.length + ' 筆超過20%的真實異常波動，信心度已下修。');
+    q.confidencePenalty += Math.min(10, q.corporateAdjustments.length * 2);
+    q.confidencePenalty = clamp(q.confidencePenalty, 0, 35);
+    return q;
+  }
+
+  function renderDataQuality(q) {
+    if (!q) return '<span class="text-slate-400">等待資料品質檢查...</span>';
+    var color = q.status === '通過' ? 'text-emerald-400' : (q.status === '已還原' ? 'text-cyan-300' : (q.status === '警示' ? 'text-yellow-300' : 'text-red-300'));
+    var parts = [];
+    parts.push('<span class="font-black ' + color + '">資料品質：' + q.status + '</span>');
+    if (q.adjustedCloseApplied) parts.push('<span class="text-cyan-300">已套用調整後收盤價</span>');
+    if (q.corporateAdjustments && q.corporateAdjustments.length) parts.push('<span class="text-cyan-300">疑似除權息/拆股還原 ' + q.corporateAdjustments.length + ' 筆</span>');
+    if (q.priceShocks && q.priceShocks.length) parts.push('<span class="text-yellow-300">巨大波動警示 ' + q.priceShocks.length + ' 筆</span>');
+    if (q.confidencePenalty) parts.push('<span class="text-orange-300">信心扣分 -' + q.confidencePenalty + '</span>');
+    var details = [];
+    if (q.corporateAdjustments && q.corporateAdjustments.length) {
+      q.corporateAdjustments.slice(-3).forEach(function(x){ details.push(x.date + ' 還原倍率 ' + x.factor.toFixed(4)); });
+    }
+    if (q.priceShocks && q.priceShocks.length) {
+      q.priceShocks.slice(-3).forEach(function(x){ details.push(x.date + ' 異常漲跌 ' + pctLabel(x.move)); });
+    }
+    return parts.join(' ｜ ') + (details.length ? '<div class="text-[9px] text-slate-400 mt-1">' + details.join('；') + '</div>' : '');
   }
 
   function setStatus(text, color) {
@@ -738,12 +956,107 @@
       setStatus(name, 'yellow');
       var data = await fn();
       if (!data || !data.length) throw new Error("empty data");
-      log.push('✅ ' + name + '：成功 ' + data.length + ' 筆');
+      var q = data.quality || {};
+      var qMsg = q.status ? '｜資料品質 ' + q.status : '';
+      if (q.corporateAdjustments && q.corporateAdjustments.length) qMsg += '｜還原 ' + q.corporateAdjustments.length + ' 筆';
+      if (q.priceShocks && q.priceShocks.length) qMsg += '｜警示 ' + q.priceShocks.length + ' 筆';
+      log.push('✅ ' + name + '：成功 ' + data.length + ' 筆' + qMsg);
       return { data: data, source: name };
     } catch(e) {
       log.push('⚠️ ' + name + '：' + (e && e.message ? e.message : 'failed'));
       return null;
     }
+  }
+
+
+  function getSinopacSessionHeaders() {
+    var h = { 'Content-Type': 'application/json' };
+    try {
+      var k = sessionStorage.getItem('ASQE_SINOPAC_API_KEY_SESSION') || '';
+      var s = sessionStorage.getItem('ASQE_SINOPAC_SECRET_KEY_SESSION') || '';
+      if (k) h['X-Sinopac-Api-Key'] = k;
+      if (s) h['X-Sinopac-Secret-Key'] = s;
+    } catch(e) {}
+    return h;
+  }
+
+  function aggregateSinopacKbarsToDaily(json) {
+    var rows = [];
+    var times = json.datetime || json.ts || json.time || [];
+    var O = json.Open || json.open || [];
+    var H = json.High || json.high || [];
+    var L = json.Low || json.low || [];
+    var C = json.Close || json.close || [];
+    var V = json.Volume || json.volume || [];
+    for (var i=0; i<times.length; i++) {
+      var date = String(times[i]).slice(0,10);
+      if (!date || C[i] == null) continue;
+      rows.push({ date: date, open: O[i], high: H[i], low: L[i], close: C[i], volume: V[i] || 0 });
+    }
+    var by = {};
+    rows.forEach(function(r){
+      if (!by[r.date]) by[r.date] = { date:r.date, open:r.open, high:r.high, low:r.low, close:r.close, volume:0 };
+      var d = by[r.date];
+      d.high = Math.max(safeNum(d.high), safeNum(r.high));
+      d.low = Math.min(safeNum(d.low), safeNum(r.low));
+      d.close = r.close;
+      d.volume += safeNum(r.volume);
+    });
+    return Object.keys(by).sort().map(function(k){ return by[k]; });
+  }
+
+  async function fetchSinopacBridge(sym, market) {
+    if (window.USE_SINOPAC === false) throw new Error('Sinopac disabled');
+    var base = (window.SINOPAC_GATEWAY || localStorage.getItem('ASQE_SINOPAC_GATEWAY') || '').replace(/\/$/, '');
+    if (!base) throw new Error('no Sinopac gateway');
+    var from = getDateStr(yearsAgo(4));
+    var to = getDateStr(new Date());
+
+    // 1) ASQE 自訂安全橋接端點：可由您的本機/雲端 Proxy 統一處理台股與美股。
+    // 回傳格式支援 [{date,open,high,low,close,volume}] 或 {data:[...]}。
+    try {
+      var url = base + '/asqe/ohlcv?market=' + encodeURIComponent(market) + '&symbol=' + encodeURIComponent(sym.apiSymbol) + '&from=' + from + '&to=' + to;
+      var json = await fetchJsonWithTimeout(url, { headers: getSinopacSessionHeaders() }, 12000);
+      var arr = Array.isArray(json) ? json : (json.data || json.ohlcv || json.candles || []);
+      if (arr && arr.length) {
+        return parseAndCleanData(arr.map(function(x){ return {
+          date: x.date || x.time || x.datetime,
+          open: x.open || x.Open,
+          high: x.high || x.High,
+          low: x.low || x.Low,
+          close: x.close || x.Close,
+          adjClose: x.adjClose || x.adj_close || x.adjustedClose || x.adjclose,
+          volume: x.volume || x.Volume || 0
+        }; }), '永豐 Gateway');
+      }
+      throw new Error('custom bridge no data');
+    } catch(e) {
+      if (market !== 'TW') throw new Error('永豐 Gateway 美股未回資料，改走美股備援');
+      // 2) 官方 Shioaji local HTTP server：目前文件中的 Kbars 用 POST /api/v1/data/kbars，適合台股/期貨。
+    }
+
+    var exchanges = ['TSE','OTC'];
+    var lastErr = null;
+    for (var ex=0; ex<exchanges.length; ex++) {
+      try {
+        var body = {
+          contract: { security_type: 'STK', exchange: exchanges[ex], code: sym.apiSymbol },
+          start: from,
+          end: to
+        };
+        var json2 = await fetchJsonWithTimeout(base + '/api/v1/data/kbars', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(body)
+        }, 12000);
+        var daily = aggregateSinopacKbarsToDaily(json2);
+        if (!daily.length) throw new Error('Shioaji kbars no data');
+        return parseAndCleanData(daily, '永豐 Shioaji ' + exchanges[ex]);
+      } catch(e2) {
+        lastErr = e2;
+      }
+    }
+    throw lastErr || new Error('Sinopac failed');
   }
 
   async function fetchFinMindPrice(sym) {
@@ -754,7 +1067,7 @@
     var json = await fetchJsonWithTimeout(url, {}, 12000);
     if (!json.data || !json.data.length) throw new Error(json.msg || "FinMind no data");
     return parseAndCleanData(json.data.map(function(x) {
-      return { date: x.date, open: x.open, high: x.max, low: x.min, close: x.close, volume: x.Trading_Volume };
+      return { date: x.date, open: x.open, high: x.max, low: x.min, close: x.close, adjClose: x.adj_close || x.adjClose || x.AdjClose, volume: x.Trading_Volume };
     }), 'FinMind');
   }
 
@@ -766,7 +1079,7 @@
     var json = await fetchJsonWithTimeout(url, { headers: { 'X-API-KEY': window.KEY_FUGLE } }, 12000);
     if (!json.data || !json.data.length) throw new Error("Fugle no data");
     return parseAndCleanData(json.data.map(function(x) {
-      return { date: x.date, open: x.open, high: x.high, low: x.low, close: x.close, volume: x.volume };
+      return { date: x.date, open: x.open, high: x.high, low: x.low, close: x.close, adjClose: x.adjClose || x.adjustedClose, volume: x.volume };
     }), 'Fugle');
   }
 
@@ -797,6 +1110,7 @@
             high: x.high,
             low: x.low,
             close: x.close || x.adjClose || x.price,
+            adjClose: x.adjClose || x.adj_close || x.adjustedClose,
             volume: x.volume || x.vol
           };
         }), u < 2 ? 'FMP Stable' : 'FMP Legacy');
@@ -876,6 +1190,7 @@
         if (result.indicators && result.indicators.quote && result.indicators.quote[0] && result.timestamp) {
           var ts = result.timestamp || [];
           var quote = result.indicators.quote[0];
+          var adjArr = result.indicators && result.indicators.adjclose && result.indicators.adjclose[0] ? result.indicators.adjclose[0].adjclose : [];
           var rawData = [];
           for (var i=0; i<ts.length; i++) {
             var c = quote.close[i];
@@ -886,6 +1201,7 @@
                 high: quote.high[i] != null ? quote.high[i] : c,
                 low: quote.low[i] != null ? quote.low[i] : c,
                 close: c,
+                adjClose: adjArr && adjArr[i] != null ? adjArr[i] : null,
                 volume: quote.volume[i] != null ? quote.volume[i] : 0
               });
             }
@@ -907,11 +1223,13 @@
     var routes = [];
 
     if (market === 'TW') {
-      routes.push({ name: 'FinMind 台股 OHLCV', fn: function(){ return fetchFinMindPrice(sym); } });
+      routes.push({ name: '永豐主路由 台股 OHLCV', fn: function(){ return fetchSinopacBridge(sym, market); } });
+      routes.push({ name: 'FinMind 台股備援', fn: function(){ return fetchFinMindPrice(sym); } });
       routes.push({ name: 'Fugle 台股備援', fn: function(){ return fetchFugleCandles(sym); } });
       routes.push({ name: 'Yahoo 台股終極備援', fn: function(){ return fetchYahooOHLCV(sym.yahooSymbol, 'Yahoo'); } });
     } else {
-      routes.push({ name: 'FMP 美股 OHLCV', fn: function(){ return fetchFmpHistorical(sym); } });
+      routes.push({ name: '永豐主路由 美股 OHLCV', fn: function(){ return fetchSinopacBridge(sym, market); } });
+      routes.push({ name: 'FMP 美股備援', fn: function(){ return fetchFmpHistorical(sym); } });
       routes.push({ name: 'Finnhub 美股備援', fn: function(){ return fetchFinnhubCandles(sym); } });
       routes.push({ name: 'Yahoo 美股終極備援', fn: function(){ return fetchYahooOHLCV(sym.yahooSymbol, 'Yahoo'); } });
     }
@@ -920,12 +1238,16 @@
       var result = await tryRoute(routes[i].name, routes[i].fn, log);
       if (result && result.data.length >= 120) {
         sf('routerLog', log.join('<br>'));
+        sf('dataQualityLog', renderDataQuality(result.data.quality));
+        sf('dataQualityBadge', '資料品質: ' + ((result.data.quality && result.data.quality.status) || '--'));
         setStatus(result.source, 'green');
         return { data: result.data, source: result.source, symbol: sym, log: log };
       }
     }
 
     sf('routerLog', log.join('<br>'));
+    sf('dataQualityLog', '<span class="text-red-300 font-bold">資料品質：無法檢查，因所有資料源失敗。</span>');
+    sf('dataQualityBadge', '資料品質: 無資料');
     setStatus('全部失敗', 'red');
     throw new Error("所有資料路由都失敗：請檢查 API Key、CORS、免費額度或稍後再試。");
   }
@@ -1407,11 +1729,112 @@
   // v17.5：共用核心評估，用於歷史驗證與區間測試，避免即時訊號與回測規則不一致。
   function estimateBacktestCost(market, ticker, atrPct) {
     var q = (ticker || '').toUpperCase();
-    var base = market === 'TW' ? 0.0060 : 0.0025; // 來回成本 + 基礎滑價，僅用在區間測試內部。
-    if (atrPct > 0.10) base += 0.0030;
-    else if (atrPct > 0.06) base += 0.0015;
-    if (q === 'RGTI' || q.indexOf('3189') >= 0 || q.indexOf('1802') >= 0) base += 0.0015;
+    var base = market === 'TW' ? 0.0045 : 0.0015; // 稅費/手續費等非滑價成本；滑價另由 estimateExecutionModel 反映在成交價。
+    if (q === 'RGTI' || q.indexOf('3189') >= 0 || q.indexOf('1802') >= 0) base += 0.0010;
     return base;
+  }
+
+  function readEventRiskConfig() {
+    var earnings=false, conference=false, news=false;
+    try {
+      earnings = localStorage.getItem('ASQE_EVENT_EARNINGS') === '1';
+      conference = localStorage.getItem('ASQE_EVENT_CONFERENCE') === '1';
+      news = localStorage.getItem('ASQE_EVENT_NEWS') === '1';
+    } catch(e) {}
+    var count = (earnings?1:0) + (conference?1:0) + (news?1:0);
+    var labels = [];
+    if (earnings) labels.push('財報');
+    if (conference) labels.push('法說/會議');
+    if (news) labels.push('重大新聞');
+    return { on: count>0, count: count, earnings: earnings, conference: conference, news: news, high: news || count>=2, text: labels.length ? labels.join('、') : '無' };
+  }
+
+  function getSectorInfo(ticker, market) {
+    var q = normalizeTicker(ticker || '', market || window.currentMarket || 'TW').display.toUpperCase();
+    var tw = {
+      '2330.TW': ['半導體/權值電子', '00881.TW'],
+      '2303.TW': ['半導體/IC製造', '00881.TW'],
+      '2409.TW': ['面板/光電', '006204.TW'],
+      '2308.TW': ['電子零組件/電源', '0050.TW'],
+      '1802.TW': ['建材營造', '0056.TW'],
+      '3189.TW': ['電子中小型/題材', '00881.TW']
+    };
+    var us = {
+      'DELL': ['AI伺服器/科技硬體', 'XLK'],
+      'ARM': ['半導體', 'SMH'],
+      'RGTI': ['量子/高波動科技', 'QTUM'],
+      'TSLA': ['電動車/非必需消費', 'XLY'],
+      'SPY': ['大盤ETF', 'SPY'],
+      'SNDK': ['半導體儲存', 'SMH']
+    };
+    var rec = (market === 'TW' ? tw[q] : us[q]);
+    if (!rec) rec = market === 'TW' ? ['台股大盤代理', '0050.TW'] : ['美股大盤代理', 'SPY'];
+    return { sector: rec[0], benchmark: rec[1] };
+  }
+
+  async function fetchSectorBenchmarkData(ticker, market) {
+    var info = getSectorInfo(ticker, market);
+    if (!info || !info.benchmark) return null;
+    try {
+      var res = await fetchMarketData(info.benchmark, market);
+      return { info: info, data: res && res.data ? res.data : null, source: res ? res.source : '' };
+    } catch(e) {
+      return { info: info, data: null, source: '族群資料失敗: ' + (e.message || e) };
+    }
+  }
+
+  function computeSectorContext(stockData, sectorData, marketBenchData) {
+    if (!sectorData || !sectorData.length) return { available:false, score:50, stockVsSector:50, sectorVsMarket:50, text:'族群資料不足', color:'text-slate-400' };
+    var stockVsSector = calcRelativeStrength分數(stockData, sectorData).score;
+    var sectorVsMarket = marketBenchData && marketBenchData.length ? calcRelativeStrength分數(sectorData, marketBenchData).score : 50;
+    var score = clamp(stockVsSector*0.55 + sectorVsMarket*0.45, 0, 100);
+    var text='中性', color='text-yellow-300';
+    if (score >= 70) { text='族群共振強'; color='text-emerald-400'; }
+    else if (score < 45) { text='族群不支持'; color='text-red-300'; }
+    else if (stockVsSector >= 70 && sectorVsMarket < 45) { text='孤鳥強勢'; color='text-orange-300'; }
+    return { available:true, score:score, stockVsSector:stockVsSector, sectorVsMarket:sectorVsMarket, text:text, color:color };
+  }
+
+  function estimateExecutionModel(market, ticker, signalBar, execBar, atrPct, avgTurnover20, side) {
+    var q = (ticker || '').toUpperCase();
+    var isTW = market === 'TW';
+    var baseSlip = isTW ? 0.005 : 0.002; // v17.6：預設用隔日開盤再加滑價，避免收盤價買進過度理想。
+    if (avgTurnover20 > 0) {
+      if (isTW && avgTurnover20 < 20000000) baseSlip += 0.003;
+      if (isTW && avgTurnover20 < 5000000) baseSlip += 0.005;
+      if (!isTW && avgTurnover20 < 5000000) baseSlip += 0.003;
+    } else baseSlip += 0.004;
+    if (atrPct > 0.10) baseSlip += 0.006;
+    else if (atrPct > 0.06) baseSlip += 0.003;
+    if (q === 'RGTI' || q.indexOf('3189') >= 0 || q.indexOf('1802') >= 0) baseSlip += 0.003;
+    baseSlip = clamp(baseSlip, 0.001, isTW ? 0.018 : 0.015);
+    var open = execBar ? (execBar.open || execBar.close) : (signalBar ? signalBar.close : 0);
+    var buyPrice = open * (1 + baseSlip);
+    var sellPrice = open * (1 - baseSlip);
+    var gapUp = signalBar && execBar ? ((open - signalBar.close) / signalBar.close) : 0;
+    var blocked = isTW && gapUp > 0.075; // 近似漲停/鎖價風險，避免把買不到的突破算成成交。
+    return { slip: baseSlip, buyPrice: buyPrice, sellPrice: sellPrice, costOnly: estimateBacktestCost(market, ticker, atrPct), blocked: blocked, reason: blocked ? '隔日大幅跳空，視為可能買不到' : '隔日開盤含滑價' };
+  }
+
+  function detectDynamicTrim(data, i, e20Val, bbObj, dmiObj, macdObj) {
+    if (!data || i < 2) return {level:0, text:'正常', color:'text-slate-300'};
+    var L=data[i], prev=data[i-1];
+    var bias20=(L.close-e20Val)/e20Val;
+    var upperShadow = (L.high - Math.max(L.open, L.close)) / Math.max(0.01, L.close);
+    var bodyDown = L.close < L.open;
+    var vol20=avg(data.slice(Math.max(0,i-19),i+1).map(function(x){return x.volume;}));
+    var volSpike = L.volume > vol20*1.8;
+    var histNow = macdObj && macdObj.histogram && macdObj.histogram[i] ? macdObj.histogram[i].value : 0;
+    var histPrev = macdObj && macdObj.histogram && macdObj.histogram[i-1] ? macdObj.histogram[i-1].value : histNow;
+    var macdShrink = histNow > 0 && histNow < histPrev*0.75;
+    var dmiWeak = dmiObj && (dmiObj.mdi > dmiObj.pdi || dmiObj.spread < 5);
+    var hot = bias20 > 0.15 || (bbObj && bbObj.pctB > 1.05);
+    var severe = bias20 > 0.25 && volSpike && (upperShadow > 0.06 || bodyDown) && (macdShrink || dmiWeak);
+    var normal = hot && volSpike && (upperShadow > 0.04 || bodyDown || macdShrink);
+    if (severe) return {level:2, text:'極端過熱：停利1/2，剩餘守吊燈', color:'text-orange-400'};
+    if (normal) return {level:1, text:'偏熱轉弱：停利1/3', color:'text-yellow-300'};
+    if (hot) return {level:1, text:'過熱：未持股不追，已持股分批看', color:'text-yellow-300'};
+    return {level:0, text:'正常', color:'text-emerald-300'};
   }
 
   function evalCoreAtIndex(data, i, packs, opts) {
@@ -1447,6 +1870,14 @@
     var benchForRegime = benchSlice && benchSlice.length >= 220 ? benchSlice : data.slice(0,i+1);
     var hmm = calculateRegimeProbability(benchForRegime, calcDMI(benchForRegime,14));
     var rs = benchSlice ? calcRelativeStrength分數(data.slice(0,i+1), benchSlice) : {score:50, ir:0, z:0};
+    var sectorSlice = null;
+    if (opts.sectorData && opts.sectorData.length) {
+      var stime = L.time || L.date;
+      sectorSlice = opts.sectorData.filter(function(x){ return (x.time||x.date) <= stime; });
+      if (sectorSlice.length < 120) sectorSlice = null;
+    }
+    var sectorCtx = computeSectorContext(data.slice(0,i+1), sectorSlice, benchSlice || benchForRegime);
+    var eventRisk = opts.eventRisk || readEventRiskConfig();
 
     var flowRows = opts.flowRows || null;
     var flowCut = null;
@@ -1459,7 +1890,7 @@
     var trend=Math.round((L.close>e20Val?100:35)*0.4 + (e20Val>e60Val?100:35)*0.4 + (e60Val>e120Val?100:35)*0.2);
     var dmiDirectional=clamp(50+d.spread*1.2+(d.adx-20)*1.3,0,100);
     var bbScore=bbBreak?100:(widthRank<=0.2 && L.close>b.mid?82:(b.pctB>=0.8?72:(b.pctB<=0.2?32:55)));
-    var mom=clamp(rs.score*0.34 + clamp((d.adx-12)*4,0,100)*0.16 + clamp(55+bias20*250,0,100)*0.14 + dmiDirectional*0.18 + bbScore*0.18,0,100);
+    var mom=clamp(rs.score*0.28 + sectorCtx.score*0.10 + clamp((d.adx-12)*4,0,100)*0.14 + clamp(55+bias20*250,0,100)*0.12 + dmiDirectional*0.18 + bbScore*0.18,0,100);
     if (bias20>0.18) mom=Math.min(mom,72);
     var ui=calcUlcerIndex(data.slice(0,i+1),60);
     var risk=clamp((L.close>e60Val?65:20)+clamp(((L.close-chandelier)/L.close)*500,0,35)+clamp(35-ui*350,0,35),0,100);
@@ -1489,9 +1920,12 @@
     if (bbBreak && score>=60 && bias20<0.12) score+=4;
     var hardVeto=L.close<e60Val && L.volume>vol20*(hmm.pBear>0.5?1.5:(hmm.pBull>0.6?2.5:2.0));
     var gapVeto=L.open<prev.low*0.97 && L.volume>vol20*1.5;
+    var trim = detectDynamicTrim(data, i, e20Val, b, d, macdObj);
     if (hardVeto||gapVeto) score=Math.min(score,40);
     if (bbVeto) score=Math.min(score,45);
     if (stop) score=Math.min(score,59);
+    if (sectorCtx.available && sectorCtx.score < 45 && score > 68) score = Math.min(score, 68);
+    if (eventRisk.on) score = Math.min(score, eventRisk.high ? 62 : 68);
     score=clamp(score,0,100);
 
     var flags=[];
@@ -1503,17 +1937,24 @@
     if (orthoPenalty<1) flags.push('量價過熱懲罰');
     if (bbBreak) flags.push('布林+DMI突破');
     if (!flow.real && opts.market==='TW') flags.push('籌碼代理');
+    if (sectorCtx.available && sectorCtx.score < 45) flags.push('族群不支持');
+    if (sectorCtx.available && sectorCtx.score >= 70) flags.push('族群共振');
+    if (eventRisk.on) flags.push('事件風險:' + eventRisk.text);
+    if (trim.level > 0) flags.push('動態停利:' + trim.text);
 
-    var enter = score>=70 && !hardVeto && !gapVeto && !bbVeto && !stop && L.close>b.mid && d.pdi>d.mdi && bias20<0.15;
+    var enter = score>=70 && !hardVeto && !gapVeto && !bbVeto && !stop && !eventRisk.on && trim.level===0 && L.close>b.mid && d.pdi>d.mdi && bias20<0.15;
     var exit = score<55 || hardVeto || gapVeto || bbVeto || stop || (bias20>0.18 && d.adx<20);
     var action='等待/觀察', cls='text-slate-300';
     if (score<50||hardVeto||gapVeto||bbVeto) { action='禁止進場 / 防守'; cls='text-red-400'; }
+    else if (eventRisk.on) { action='事件風險 / 暫緩'; cls='text-orange-400'; }
     else if (stop) { action='跌破防線 / 暫緩'; cls='text-orange-400'; }
+    else if (trim.level>=2) { action='動態停利 / 減碼1/2'; cls='text-orange-400'; }
+    else if (trim.level===1) { action='動態停利 / 減碼1/3'; cls='text-yellow-400'; }
     else if (bbBreak && score>=70) { action='布林+DMI突破'; cls='text-cyan-300'; }
     else if (score>=75 && bias20<0.08) { action='回測布局'; cls='text-emerald-400'; }
     else if (score>=70 && bias20>=0.15) { action='追高風險 / 分批停利'; cls='text-yellow-400'; }
     else if (score>=65) { action='觀察試單'; cls='text-emerald-300'; }
-    return {ready:true, score:score, action:action, actionClass:cls, enter:enter, exit:exit, flags:flags, chandelier:chandelier, bias20:bias20, bbBreak:bbBreak, bbVeto:bbVeto, hardVeto:hardVeto, gapVeto:gapVeto, stop:stop, trend:trend, momentum:mom, risk:risk, flow:flow.score, dmi:d, bb:b, hmm:hmm, rho:rho};
+    return {ready:true, score:score, action:action, actionClass:cls, enter:enter, exit:exit, flags:flags, chandelier:chandelier, bias20:bias20, bbBreak:bbBreak, bbVeto:bbVeto, hardVeto:hardVeto, gapVeto:gapVeto, stop:stop, trim:trim, sector:sectorCtx, eventRisk:eventRisk, trend:trend, momentum:mom, risk:risk, flow:flow.score, dmi:d, bb:b, hmm:hmm, rho:rho};
   }
 
   function classifyEntryExitType(ctx) {
@@ -1581,6 +2022,8 @@
       window.KEY_FUGLE = localStorage.getItem('ASQE_FUGLE_KEY') || window.KEY_FUGLE || '';
       window.KEY_FMP = localStorage.getItem('ASQE_FMP_KEY') || window.KEY_FMP || '';
       window.KEY_FINNHUB = localStorage.getItem('ASQE_FINNHUB_KEY') || window.KEY_FINNHUB || '';
+      window.SINOPAC_GATEWAY = localStorage.getItem('ASQE_SINOPAC_GATEWAY') || window.SINOPAC_GATEWAY || 'http://127.0.0.1:8080';
+      window.USE_SINOPAC = localStorage.getItem('ASQE_SINOPAC_USE') !== 'false';
 
       var market = window.currentMarket || 'TW';
       var result = await fetchMarketData(ticker, market);
@@ -1592,6 +2035,8 @@
       st('loadingText', '讀取大盤與籌碼資料...');
       var benchmark = await fetchBenchmarkData(market);
       var flowRows = await fetchFinMindFlow(result.symbol);
+      var sectorPack = await fetchSectorBenchmarkData(result.symbol.display, market);
+      var sectorData = sectorPack && sectorPack.data ? sectorPack.data : null;
 
       st('loadingText', 'Running ASQE Math Engine...');
       var e20=calcEMA(data,20), e60=calcEMA(data,60), e120=calcEMA(data,120), e200=calcEMA(data,200);
@@ -1624,9 +2069,10 @@
 
       var bias20=(L.close-e20Val)/e20Val;
       var rs = calcRelativeStrength分數(data, benchmark);
+      var sectorCtx = computeSectorContext(data, sectorData, benchmark);
       var adx分數 = clamp((adxVal-12)*4, 0, 100);
       var bias分數 = clamp(55 + bias20*250, 0, 100);
-      var sMom = clamp(rs.score*0.34 + adx分數*0.16 + bias分數*0.14 + dmiDirectional分數*0.18 + bb分數*0.18, 0, 100);
+      var sMom = clamp(rs.score*0.28 + sectorCtx.score*0.10 + adx分數*0.14 + bias分數*0.12 + dmiDirectional分數*0.18 + bb分數*0.18, 0, 100);
       if (bias20 > 0.18) sMom = Math.min(sMom, 72);
 
       var ui = calcUlcerIndex(data,60);
@@ -1683,10 +2129,14 @@
       var prevL = data[data.length-2] || L;
       var isGapDown = L.open < prevL.low*0.97 && L.volume > vol20*1.5;
       var isStop = L.close < chandelier;
+      var trimSignal = detectDynamicTrim(data, data.length-1, e20Val, bbLast, lastDmi, macdObj);
+      var eventRisk = readEventRiskConfig();
 
       if (isHardVeto || isGapDown) final分數 = Math.min(final分數, 40);
       if (isBBVeto) final分數 = Math.min(final分數, 45);
       if (isStop) final分數 = Math.min(final分數, 59);
+      if (sectorCtx.available && sectorCtx.score < 45 && final分數 > 68) final分數 = Math.min(final分數, 68);
+      if (eventRisk.on) final分數 = Math.min(final分數, eventRisk.high ? 62 : 68);
       final分數 = clamp(final分數, 0, 100);
 
       var avgTurnover20 = avg(data.slice(-20).map(function(d){return d.volume*d.close;}));
@@ -1722,6 +2172,12 @@
       confidence += result.source.indexOf('Yahoo') >= 0 ? -8 : 8;
       confidence += flow.real ? 8 : -4;
       confidence += benchmark ? 5 : -4;
+      confidence += sectorCtx.available ? 4 : -3;
+      if (sectorCtx.available && sectorCtx.score < 45) confidence -= 6;
+      if (eventRisk.on) confidence -= eventRisk.high ? 15 : 8;
+      var dq = data.quality || {};
+      confidence -= dq.confidencePenalty || 0;
+      if (dq.status === '警示') confidence -= 6;
       confidence = clamp(confidence, 30, 98);
 
       // UI
@@ -1732,6 +2188,8 @@
       if (isHardVeto || isGapDown) rating = '🚨 VETO 強制防守';
       if (isBBVeto) rating = '🚨 布林+DMI 轉弱';
       if (isStop && final分數 >= 50) rating = '⚠️ 跌破吊燈防線';
+      if (trimSignal.level > 0 && final分數 >= 50) rating = '🟡 動態停利警戒';
+      if (eventRisk.on && final分數 >= 50) rating = '🟠 事件風險暫緩';
       st('finalRatingText', rating);
       $('finalRatingText').style.color = scoreColor;
 
@@ -1740,6 +2198,8 @@
       sf('recoveryFactor', 'RF: ' + stats.recoveryFactor.toFixed(1));
       var confidenceGrade = confidence>=85 ? '高可信' : (confidence>=70 ? '可參考' : (confidence>=60 ? '謹慎' : '低可信'));
       sf('confidenceBadge', '信心度: ' + confidence.toFixed(0) + '% / ' + confidenceGrade);
+      sf('dataQualityBadge', '資料品質: ' + (((data.quality || {}).status) || '--'));
+      sf('dataQualityLog', renderDataQuality(data.quality));
       sf('txtBull', '多頭: ' + (hmm.pBull*100).toFixed(0) + '%');
       sf('txtSide', '盤整: ' + (hmm.pSide*100).toFixed(0) + '%');
       sf('txtBear', '空頭: ' + (hmm.pBear*100).toFixed(0) + '%');
@@ -1762,6 +2222,13 @@
 
       sf('infoRatioBadge', 'IR: ' + rs.ir.toFixed(2) + ' / ρ: ' + rho.toFixed(2));
       sf('liquidityBadge', '流動性: ' + liquidityTxt);
+      var sectorInfo = (sectorPack && sectorPack.info) ? sectorPack.info : getSectorInfo(result.symbol.display, market);
+      sf('sectorStatusTxt', '<span class="' + sectorCtx.color + '">' + sectorCtx.text + '</span>');
+      sf('sectorBenchmarkTxt', sectorInfo.benchmark + '<span class="block text-[9px] text-slate-500">' + sectorInfo.sector + '</span>');
+      var execPreview = estimateExecutionModel(market, result.symbol.display, L, L, a14/L.close, avgTurnover20, 'entry');
+      sf('execSlippageTxt', (execPreview.slip*100).toFixed(2) + '%');
+      sf('eventRiskTxt', eventRisk.on ? '<span class="text-orange-300">事件: ' + eventRisk.text + '</span>' : '<span class="text-emerald-300">事件: 無</span>');
+      sf('trimStatusTxt', '<span class="' + trimSignal.color + '">' + trimSignal.text + '</span>');
       sf('atrStopVal', stopDist.toFixed(2));
       sf('atrShares', atrShares.toLocaleString() + ' 股');
       sf('bayesWin', (stats.winRate*100).toFixed(1) + '%');
@@ -1845,6 +2312,12 @@
       if (orthoPenalty < 1) flags.push('Ortho Penalty');
       if (liquidityTxt !== '充足') flags.push('Liquidity ' + liquidityTxt);
       if (!flow.real && market === 'TW') flags.push('籌碼代理');
+      if (sectorCtx.available && sectorCtx.score < 45) flags.push('族群不支持');
+      if (sectorCtx.available && sectorCtx.score >= 70) flags.push('族群共振');
+      if (eventRisk.on) flags.push('事件風險:' + eventRisk.text);
+      if (trimSignal.level > 0) flags.push('動態停利:' + trimSignal.text);
+      if (data.quality && data.quality.status === '警示') flags.push('資料品質警示');
+      if (data.quality && data.quality.corporateAdjustments && data.quality.corporateAdjustments.length) flags.push('除權息/拆股還原');
       var entryTypeObj = classifyEntryExitType({score:final分數, veto:(isHardVeto||isGapDown||isBBVeto), stop:isStop, bias20:bias20, bbPctB:bbLast.pctB, bbBreakout:isBBBreakout, close:L.close, bbMid:bbLast.mid, pdi:lastDmi.pdi, mdi:lastDmi.mdi});
       var profitPlan = calcProfitPlan(L.close, chandelier, a14, bias20, bbLast.pctB);
       var gradeObj = computeTradeGrade({score:final分數, confidence:confidence, pos:finalPosSize, netExp:netExpectancy, dar95:mc.dar95, ruin:mc.ruinProb, veto:(isHardVeto||isGapDown||isBBVeto), stop:isStop});
@@ -1967,9 +2440,11 @@
       // v17.5：訊號在收盤後確認，回測用「下一交易日開盤」進出，避免同日收盤進場的樂觀偏差。
       var execIdx = i + 1;
       if (execIdx > endIdx || execIdx >= data.length) continue;
-      var execPrice = data[execIdx].open || data[execIdx].close;
+      var rawExec = data[execIdx].open || data[execIdx].close;
       var atrPct = (packs.atr[i] && packs.atr[i].atr) ? packs.atr[i].atr / data[i].close : 0.03;
-      cost = estimateBacktestCost(market, ticker, atrPct);
+      var avgTurnover20 = avg(data.slice(Math.max(0,i-19),i+1).map(function(x){return x.volume*x.close;}));
+      var execModel = estimateExecutionModel(market, ticker, data[i], data[execIdx], atrPct, avgTurnover20, 'entry');
+      cost = execModel.costOnly;
 
       if (inPos) {
         // 持倉期間以收盤淨值估算回撤。
@@ -1981,20 +2456,25 @@
       }
 
       if (inPos && core.exit) {
-        var ret = (execPrice - entryPrice) / entryPrice - cost;
+        var sellPrice = execModel.sellPrice;
+        var ret = (sellPrice - entryPrice) / entryPrice - cost;
         trades.push(ret);
         equity *= (1 + ret);
         if (equity > peak) peak = equity;
         var ddd = (peak - equity) / peak;
         if (ddd > mdd) mdd = ddd;
-        events.push((data[execIdx].time||data[execIdx].date) + ' 隔日出場 ' + execPrice.toFixed(2) + ' / ' + (ret*100).toFixed(1) + '%');
+        events.push((data[execIdx].time||data[execIdx].date) + ' 隔日出場(含滑價) ' + sellPrice.toFixed(2) + ' / ' + (ret*100).toFixed(1) + '%');
         inPos=false; entryPrice=0;
       }
 
       if (!inPos && core.enter) {
-        inPos=true;
-        entryPrice=execPrice;
-        events.push((data[execIdx].time||data[execIdx].date) + ' 隔日進場 ' + execPrice.toFixed(2));
+        if (execModel.blocked) {
+          events.push((data[execIdx].time||data[execIdx].date) + ' 訊號成立但可能買不到：' + execModel.reason);
+        } else {
+          inPos=true;
+          entryPrice=execModel.buyPrice;
+          events.push((data[execIdx].time||data[execIdx].date) + ' 隔日進場(含滑價) ' + entryPrice.toFixed(2));
+        }
       }
     }
 
@@ -2060,6 +2540,9 @@
     if (benchmark && endDate) benchmark = benchmark.filter(function(d){ return (d.time||d.date) <= endDate; });
     var flowRows = market === 'TW' ? await fetchFinMindFlow(result.symbol) : null;
     if (flowRows && endDate) flowRows = flowRows.filter(function(x){ return x.date <= endDate; });
+    var sectorPack = await fetchSectorBenchmarkData(result.symbol.display, market);
+    var sectorData = sectorPack && sectorPack.data ? sectorPack.data.filter(function(d){ return (d.time||d.date) <= endDate; }) : null;
+    var eventRisk = readEventRiskConfig();
 
     var e20=calcEMA(data,20), e60=calcEMA(data,60), e120=calcEMA(data,120), atr=calcATR(data,14), rsi=calcRSI(data,14), adx=calcDMI(data,14), obv=calcOBV(data), macdObj=calcMACD(data), bb=calcBollinger(data,20,2);
     var L=data[data.length-1], e20Val=e20[e20.length-1].value, e60Val=e60[e60.length-1].value, e120Val=e120[e120.length-1].value;
@@ -2075,7 +2558,8 @@
 
     var trend=Math.round((L.close>e20Val?100:35)*0.4 + (e20Val>e60Val?100:35)*0.4 + (e60Val>e120Val?100:35)*0.2);
     var bias20=(L.close-e20Val)/e20Val, rs=calcRelativeStrength分數(data, benchmark);
-    var mom=clamp(rs.score*0.34 + clamp((adxVal-12)*4,0,100)*0.16 + clamp(55+bias20*250,0,100)*0.14 + dmiDirectional*0.18 + bbScore*0.18,0,100);
+    var sectorCtx = computeSectorContext(data, sectorData, benchmark);
+    var mom=clamp(rs.score*0.28 + sectorCtx.score*0.10 + clamp((adxVal-12)*4,0,100)*0.14 + clamp(55+bias20*250,0,100)*0.12 + dmiDirectional*0.18 + bbScore*0.18,0,100);
     if (bias20 > 0.18) mom = Math.min(mom,72);
     var ui=calcUlcerIndex(data,60), hh22=Math.max.apply(null,data.slice(-22).map(function(d){return d.high;})), chandelier=hh22-3*a14;
     var risk=clamp((L.close>e60Val?65:20)+clamp(((L.close-chandelier)/L.close)*500,0,35)+clamp(35-ui*350,0,35),0,100);
@@ -2101,9 +2585,12 @@
     var prevL=data[data.length-2]||L;
     var isGapDown=L.open<prevL.low*0.97 && L.volume>vol20*1.5;
     var isStop=L.close<chandelier;
+    var trimSignal = detectDynamicTrim(data, data.length-1, e20Val, bbLast, lastDmi, macdObj);
     if (isHardVeto||isGapDown) score=Math.min(score,40);
     if (isBBVeto) score=Math.min(score,45);
     if (isStop) score=Math.min(score,59);
+    if (sectorCtx.available && sectorCtx.score < 45 && score > 68) score = Math.min(score, 68);
+    if (eventRisk.on) score = Math.min(score, eventRisk.high ? 62 : 68);
     score=clamp(score,0,100);
 
     var startIdx=findStartIndex(data,startDate);
@@ -2112,7 +2599,7 @@
     var startClose=data[startIdx].close, endClose=L.close;
     var buyHoldRet=(endClose-startClose)/startClose;
     var buyHoldMdd=maxDrawdownRange(data,startIdx,endIdx);
-    var sim=simulateAsqeOperations(data,startIdx,endIdx,{market:market,ticker:result.symbol.display,benchmark:benchmark,flowRows:flowRows});
+    var sim=simulateAsqeOperations(data,startIdx,endIdx,{market:market,ticker:result.symbol.display,benchmark:benchmark,flowRows:flowRows,sectorData:sectorData,eventRisk:eventRisk});
     var action=sim.lastSignal.action, actionClass=sim.lastSignal.actionClass;
     var flags=[];
     if (isHardVeto) flags.push('爆量否決');
@@ -2123,6 +2610,10 @@
     if (orthoPenalty<1) flags.push('量價過熱懲罰');
     if (isBBBreakout) flags.push('布林+DMI突破');
     if (!flow.real && market==='TW') flags.push('籌碼代理');
+    if (sectorCtx.available && sectorCtx.score < 45) flags.push('族群不支持');
+    if (sectorCtx.available && sectorCtx.score >= 70) flags.push('族群共振');
+    if (eventRisk.on) flags.push('事件風險:' + eventRisk.text);
+    if (trimSignal.level > 0) flags.push('動態停利:' + trimSignal.text);
     if (sim.lastSignal.flags && sim.lastSignal.flags.length) flags = flags.concat(sim.lastSignal.flags);
     var uniqueFlags = [];
     flags.forEach(function(x){ if (x && uniqueFlags.indexOf(x)<0) uniqueFlags.push(x); });
@@ -2174,7 +2665,7 @@
       if (!r.error) {
         var eventHtml = r.events && r.events.length ? '<br><br>最近訊號：<span class="text-slate-200">'+r.events.join(' ｜ ')+'</span>' : '<br><br>最近訊號：<span class="text-slate-400">期間內無完整進出場紀錄，代表系統偏保守或尚未滿足條件。</span>';
         if (summary) summary.innerHTML='完成：'+r.ticker+'，'+r.period+'。測試結論：<span class="font-bold text-emerald-300">'+r.verdict+'</span>。期末訊號：<span class="font-bold">'+r.action+'</span>。'+eventHtml;
-        if (notes) notes.innerHTML='判讀方式：v17.5 採用收盤產生訊號、隔日開盤執行，並內扣成本/滑價。若策略報酬優於持有且策略MDD較低，代表 ASQE 的進出場規則在該區間較合適；若持有報酬大幅優於策略，通常表示強趨勢中系統偏保守；若策略MDD高於持有MDD，代表防守條件仍需調整。';
+        if (notes) notes.innerHTML='判讀方式：v17.6 採用收盤產生訊號、隔日開盤執行，並加入動態滑價、流動性懲罰、事件風險降級與族群相對強弱。若策略報酬優於持有且策略MDD較低，代表 ASQE 的進出場規則在該區間較合適；若持有報酬大幅優於策略，通常表示強趨勢中系統偏保守；若策略MDD高於持有MDD，代表防守條件仍需調整。';
       } else {
         if (summary) summary.innerHTML='失敗：'+r.error;
       }
