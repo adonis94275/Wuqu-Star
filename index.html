@@ -20,7 +20,419 @@
                 document.getElementById('errorMsg').style.opacity = '1';
             }
         };
+<!DOCTYPE html>
+<html lang="zh-TW" translate="no">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="google" content="notranslate">
+    <title>ASQE v13.4 | Web-Quant Ultimate API Edition</title>
+    
+    <script>
+        window.unlockSystem = function() {
+            var pass = document.getElementById('passwordInput').value.trim();
+            if(pass === '852767' || pass === 'admin') {
+                var ls = document.getElementById('launchScreen');
+                ls.style.opacity = '0';
+                setTimeout(function() {
+                    ls.style.display = 'none';
+                    document.getElementById('setupModal').classList.remove('fade-out');
+                }, 400);
+            } else {
+                document.getElementById('errorMsg').style.opacity = '1';
+            }
+        };
 
+        window.saveAndStart = function() {
+            var fKey = document.getElementById('finmindKeyInput');
+            var fgKey = document.getElementById('fugleKeyInput');
+            var mKey = document.getElementById('fmpKeyInput');
+            var fhKey = document.getElementById('finnhubKeyInput');
+            
+            window.KEY_FINMIND = fKey ? fKey.value.trim() : '';
+            window.KEY_FUGLE = fgKey ? fgKey.value.trim() : '';
+            window.KEY_FMP = mKey ? mKey.value.trim() : '';
+            window.KEY_FINNHUB = fhKey ? fhKey.value.trim() : '';
+            
+            try {
+                if (window.localStorage) {
+                    localStorage.setItem('ASQE_FINMIND_KEY', window.KEY_FINMIND);
+                    localStorage.setItem('ASQE_FUGLE_KEY', window.KEY_FUGLE);
+                    localStorage.setItem('ASQE_FMP_KEY', window.KEY_FMP);
+                    localStorage.setItem('ASQE_FINNHUB_KEY', window.KEY_FINNHUB);
+                }
+            } catch(e) {}
+            
+            var modal = document.getElementById('setupModal');
+            modal.style.opacity = '0';
+            setTimeout(function() {
+                modal.style.display = 'none';
+                var mainApp = document.getElementById('mainApp');
+                mainApp.classList.remove('fade-out');
+                if(typeof window.runAnalysis === 'function') window.runAnalysis('2330.TW');
+            }, 400);
+        };
+
+        window.switchTab = function(m, t) {
+            window.currentMarket = m;
+            document.getElementById('tickerInput').value = t;
+            document.getElementById('tabTW').className = "px-3 py-1.5 rounded-md text-[11px] font-bold transition-all " + (m==='TW'?"bg-orange-600 text-white shadow":"text-slate-400 hover:text-white");
+            document.getElementById('tabUS').className = "px-3 py-1.5 rounded-md text-[11px] font-bold transition-all " + (m==='US'?"bg-orange-600 text-white shadow":"text-slate-400 hover:text-white");
+            if(typeof window.runAnalysis === 'function') window.runAnalysis(t);
+        };
+        
+        window.triggerAnalysis = function() {
+            var val = document.getElementById('tickerInput').value;
+            if(typeof window.runAnalysis === 'function') window.runAnalysis(val);
+        };
+    </script>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lightweight-charts@4.1.1/dist/lightweight-charts.standalone.production.js"></script>
+    <style>
+        ::-webkit-scrollbar { width: 4px; height: 4px; }
+        ::-webkit-scrollbar-track { background: #020617; }
+        ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #334155; }
+        body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background-color: #020617; color: #f8fafc; font-size: 13px; }
+        .glass-panel { background: rgba(15, 23, 42, 0.9); backdrop-filter: blur(20px); border-left: 1px solid rgba(51, 65, 85, 0.5); }
+        .fade-transition { transition: opacity 0.4s ease, visibility 0.4s ease; }
+        .fade-out { opacity: 0 !important; visibility: hidden !important; pointer-events: none; }
+        .data-card { background: #0f172a; border: 1px solid #1e293b; border-radius: 0.75rem; padding: 0.75rem; }
+        .metric-value { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; font-weight: 900; }
+    </style>
+</head>
+<body class="flex flex-col min-h-screen relative overflow-hidden">
+
+    <div id="launchScreen" class="fixed inset-0 z-[100] bg-slate-950 flex items-center justify-center p-4 fade-transition transition-opacity duration-300">
+        <div class="bg-slate-900 rounded-3xl p-8 w-full max-w-md flex flex-col items-center shadow-[0_0_80px_rgba(234,179,8,0.15)] border border-slate-800 relative overflow-hidden">
+            <div class="absolute top-0 w-full h-1 bg-gradient-to-r from-yellow-600 via-orange-500 to-red-600"></div>
+            <div class="w-16 h-16 bg-slate-950 rounded-2xl flex items-center justify-center mb-5 border border-slate-700 shadow-inner">
+                <span class="text-3xl">👑</span>
+            </div>
+            <h1 class="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-orange-300 tracking-wider mb-1">ASQE v13.4</h1>
+            <p class="text-[9px] text-orange-400 mb-8 font-mono tracking-widest uppercase bg-orange-900/30 px-2 py-1 rounded">Smart API Routing Edition</p>
+            <input type="password" id="passwordInput" placeholder="輸入機構授權碼 (admin)" onkeypress="if(event.key==='Enter') window.unlockSystem()" class="w-full bg-slate-950 text-white border border-slate-700 rounded-xl px-4 py-3.5 mb-5 focus:outline-none focus:border-orange-500 text-center tracking-widest font-mono">
+            <button id="unlockBtn" onclick="window.unlockSystem()" class="w-full bg-gradient-to-r from-yellow-600 to-orange-600 hover:from-yellow-500 hover:to-orange-500 text-white font-black py-3.5 rounded-xl transition-all shadow-lg tracking-widest cursor-pointer">啟動量化避險核心</button>
+            <p id="errorMsg" class="text-red-400 text-[11px] mt-4 opacity-0 transition-opacity font-bold bg-red-950/50 px-3 py-1 rounded">授權碼錯誤</p>
+        </div>
+    </div>
+
+    <div id="setupModal" class="fixed inset-0 z-[200] bg-slate-950/90 flex items-center justify-center fade-transition fade-out backdrop-blur-md p-4 transition-opacity duration-300">
+        <div class="bg-slate-900 rounded-3xl p-6 w-full max-w-lg border border-slate-700 shadow-2xl relative">
+            <h2 class="text-lg font-black text-white mb-2 flex items-center gap-2 tracking-widest"><span>⚙️</span> 機構 API 路由配置</h2>
+            <p class="text-[10px] text-slate-400 mb-4">若金鑰留空或失效，系統將自動啟動 Yahoo Finance 備援機制。</p>
+            <div class="space-y-3 max-h-[65vh] overflow-y-auto pr-2 mt-2">
+                <div class="bg-slate-950/50 p-2.5 rounded-xl border border-slate-800"><label class="text-[9px] text-slate-400 font-bold mb-1 uppercase block">FinMind API Key (台股歷史/籌碼)</label><input type="password" id="finmindKeyInput" class="w-full bg-slate-900 text-white border border-slate-700 rounded-lg px-3 py-1.5 focus:outline-none focus:border-orange-500 font-mono text-xs mt-1"></div>
+                <div class="bg-slate-950/50 p-2.5 rounded-xl border border-slate-800"><label class="text-[9px] text-slate-400 font-bold mb-1 uppercase block">Fugle API Key (台股即時備援)</label><input type="password" id="fugleKeyInput" class="w-full bg-slate-900 text-white border border-slate-700 rounded-lg px-3 py-1.5 focus:outline-none focus:border-orange-500 font-mono text-xs mt-1"></div>
+                <div class="bg-slate-950/50 p-2.5 rounded-xl border border-slate-800"><label class="text-[9px] text-slate-400 font-bold mb-1 uppercase block">FMP API Key (美股財報/歷史)</label><input type="password" id="fmpKeyInput" class="w-full bg-slate-900 text-white border border-slate-700 rounded-lg px-3 py-1.5 focus:outline-none focus:border-orange-500 font-mono text-xs mt-1"></div>
+                <div class="bg-slate-950/50 p-2.5 rounded-xl border border-slate-800"><label class="text-[9px] text-slate-400 font-bold mb-1 uppercase block">Finnhub API Key (美股即時備援)</label><input type="password" id="finnhubKeyInput" class="w-full bg-slate-900 text-white border border-slate-700 rounded-lg px-3 py-1.5 focus:outline-none focus:border-orange-500 font-mono text-xs mt-1"></div>
+                <button id="saveAndStartBtn" onclick="window.saveAndStart()" class="w-full bg-gradient-to-r from-yellow-600 to-orange-600 text-white font-black py-3 rounded-xl transition-all mt-2 text-sm shadow-lg tracking-widest cursor-pointer">寫入配置並啟動</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="mainApp" class="flex flex-col min-h-screen w-full h-full absolute inset-0 fade-transition fade-out transition-opacity duration-500">
+        <header class="bg-slate-900 border-b border-slate-800 p-2.5 flex flex-col sm:flex-row items-center justify-between z-40 shrink-0 shadow-md">
+            <div class="flex items-center gap-3">
+                <div class="w-8 h-8 bg-gradient-to-br from-yellow-600 to-red-900 rounded-lg flex items-center justify-center font-bold text-sm border border-slate-700">👑</div>
+                <div class="flex flex-col"><h1 class="text-base font-black tracking-widest text-slate-100 leading-none">ASQE v13.4</h1><span class="text-[9px] text-orange-400 font-mono tracking-wider mt-0.5">SMART ROUTING</span></div>
+            </div>
+            <div class="flex items-center gap-2 mt-2 sm:mt-0">
+                <div id="apiStatusBadge" class="hidden sm:flex text-[9px] px-2 py-1 rounded font-mono bg-slate-950 border border-slate-700 text-slate-400 items-center gap-1"><span id="apiStatusDot" class="w-1.5 h-1.5 rounded-full bg-green-500"></span><span id="apiStatusText">Routing</span></div>
+                <div class="flex bg-slate-950 rounded-lg p-1 border border-slate-800">
+                    <button id="tabTW" onclick="window.switchTab('TW', '2330.TW')" class="px-3 py-1.5 rounded-md text-[11px] font-bold transition-all bg-orange-600 text-white shadow cursor-pointer">台股 TW</button>
+                    <button id="tabUS" onclick="window.switchTab('US', 'SPY')" class="px-3 py-1.5 rounded-md text-[11px] font-bold transition-all text-slate-400 hover:text-white cursor-pointer">美股 US</button>
+                </div>
+                <input type="text" id="tickerInput" value="2330.TW" onkeypress="if(event.key==='Enter') window.triggerAnalysis()" class="bg-slate-950 text-white border border-slate-700 rounded-lg px-3 py-1.5 focus:outline-none focus:border-orange-500 w-28 uppercase font-mono text-xs">
+                <button id="analyzeBtn" onclick="window.triggerAnalysis()" class="bg-orange-600 hover:bg-orange-500 text-white font-bold py-1.5 px-4 rounded-lg shadow-lg text-xs transition-colors cursor-pointer">極限運算</button>
+                <button onclick="document.getElementById('setupModal').style.display='flex'; setTimeout(()=>document.getElementById('setupModal').style.opacity='1',10)" class="bg-slate-800 text-slate-300 py-1.5 px-2 rounded-lg text-xs border border-slate-700 cursor-pointer">⚙️</button>
+            </div>
+        </header>
+
+        <div id="loadingOverlay" class="fixed inset-0 bg-slate-950/90 z-50 flex flex-col items-center justify-center hidden backdrop-blur-md">
+            <div class="animate-spin rounded-full h-12 w-12 border-4 border-slate-800 border-t-orange-500 mb-4"></div>
+            <p class="text-[10px] font-mono text-orange-400 tracking-widest animate-pulse" id="loadingText">Fetching Multi-Source Data...</p>
+        </div>
+
+        <div class="flex-1 flex flex-col lg:flex-row relative overflow-hidden bg-slate-950 p-1.5 gap-1.5">
+            <div class="flex-1 flex flex-col gap-1.5 min-w-0">
+                <div class="relative w-full rounded-xl border border-slate-800 bg-slate-900 shadow-inner flex flex-col flex-1 min-h-[300px] overflow-hidden">
+                    <div class="absolute top-2 left-3 z-10 pointer-events-none w-full">
+                        <div class="flex items-baseline gap-3"><span id="chartTitle" class="text-xl font-black text-slate-100 drop-shadow">---</span></div>
+                        <div class="flex flex-col gap-0.5 mt-1 text-[10px] font-mono text-slate-400">
+                            <div class="flex gap-3"><span class="text-fuchsia-400" id="leg-ema20">E20: --</span><span class="text-cyan-400" id="leg-ema60">E60: --</span><span class="text-yellow-500" id="leg-poc">POC: --</span></div>
+                            <div id="leg-vol">Vol: --</div>
+                        </div>
+                    </div>
+                    <div id="priceChartContainer" class="w-full flex-1 mt-2"></div>
+                </div>
+                <div class="relative w-full rounded-xl border border-slate-800 bg-slate-900 shadow-inner h-[140px] shrink-0 overflow-hidden">
+                    <div class="absolute top-1 left-3 z-10 text-[9px] font-mono flex gap-3 text-slate-400">
+                        <span class="text-purple-400" id="leg-adx">ADX: --</span><span class="text-blue-400" id="leg-rsi">RSI: --</span><span class="text-slate-500" id="leg-atr">ATR: --</span>
+                    </div>
+                    <div id="dmiChartContainer" class="w-full h-full mt-4"></div>
+                </div>
+            </div>
+
+            <div class="w-full lg:w-[480px] glass-panel flex flex-col shrink-0 overflow-y-auto h-[calc(100vh-56px)] custom-scrollbar rounded-xl border border-slate-800">
+                <div class="p-3 flex flex-col gap-3">
+                    <div class="bg-slate-900 p-4 rounded-xl border border-slate-700 relative overflow-hidden flex items-center justify-between shadow-lg">
+                        <div class="absolute -right-10 -top-10 w-32 h-32 rounded-full blur-3xl opacity-20 bg-orange-500" id="scoreGlow"></div>
+                        <div class="flex flex-col relative z-10 w-full">
+                            <div class="flex justify-between w-full mb-1">
+                                <span class="text-[10px] font-bold text-slate-500 tracking-widest uppercase">ENSEMBLE FINAL SCORE</span>
+                                <span class="text-[9px] text-slate-400 font-mono" id="mtfScore">MTF 共振: --</span>
+                            </div>
+                            <div class="flex items-end gap-4">
+                                <div id="totalScore" class="text-5xl font-black font-mono text-white leading-none">0</div>
+                                <div class="flex flex-col pb-1">
+                                    <div id="finalRatingText" class="text-lg font-black text-white leading-tight">等待運算...</div>
+                                    <div class="text-[9px] flex gap-2 mt-0.5 font-mono">
+                                        <span class="text-emerald-400" id="txtBull">Bull: --</span>
+                                        <span class="text-red-400" id="txtBear">Bear: --</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="data-card border-orange-900/30">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-orange-400 text-[10px] font-black uppercase tracking-wider">🧩 Sub-Models & Dynamic Weights</span>
+                            <span id="orthoBadge" class="text-[8px] px-1 py-0.5 rounded font-mono bg-slate-950 text-slate-400 border border-slate-800">檢測中</span>
+                        </div>
+                        <div class="grid grid-cols-4 gap-2 text-center">
+                            <div class="bg-slate-950 p-1.5 rounded border border-slate-800"><div class="text-[8px] text-slate-500 mb-0.5">Trend</div><div id="modTrend" class="text-[11px] font-bold text-white metric-value">--</div><div id="wTrend" class="text-[8px] text-emerald-500 mt-0.5">W: --</div></div>
+                            <div class="bg-slate-950 p-1.5 rounded border border-slate-800"><div class="text-[8px] text-slate-500 mb-0.5">Momentum</div><div id="modMom" class="text-[11px] font-bold text-white metric-value">--</div><div id="wMom" class="text-[8px] text-emerald-500 mt-0.5">W: --</div></div>
+                            <div class="bg-slate-950 p-1.5 rounded border border-slate-800"><div class="text-[8px] text-slate-500 mb-0.5">Risk Parity</div><div id="modRisk" class="text-[11px] font-bold text-white metric-value">--</div><div id="wRisk" class="text-[8px] text-emerald-500 mt-0.5">W: --</div></div>
+                            <div class="bg-slate-950 p-1.5 rounded border border-slate-800"><div class="text-[8px] text-slate-500 mb-0.5">Flow (Inst)</div><div id="modFlow" class="text-[11px] font-bold text-white metric-value">--</div><div id="wFlow" class="text-[8px] text-emerald-500 mt-0.5">W: --</div></div>
+                        </div>
+                    </div>
+
+                    <div class="data-card border-indigo-900/50">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-indigo-400 text-[10px] font-black uppercase tracking-wider flex items-center gap-1">🎯 Tactical Engine</span>
+                            <span id="biasBadge" class="text-[9px] px-1.5 py-0.5 rounded font-mono bg-slate-950 text-slate-400 border border-slate-800">乖離: --</span>
+                        </div>
+                        <div class="bg-slate-950 p-2.5 rounded border border-slate-800 mb-2">
+                            <div class="text-[8px] text-slate-500 mb-0.5 uppercase">進場 (Entry)</div><div id="entryTimingText" class="text-[11px] font-black text-white">等待數據</div>
+                        </div>
+                        <div class="flex gap-2">
+                            <div class="bg-slate-950 p-2.5 rounded border border-slate-800 flex-1">
+                                <div class="text-[8px] text-slate-500 mb-0.5 uppercase">出場 (Exit)</div><div id="exitTimingText" class="text-[11px] font-black text-white">等待數據</div>
+                            </div>
+                            <div class="bg-slate-950 p-2.5 rounded border border-slate-800 w-24 shrink-0 flex flex-col justify-center text-center">
+                                <div class="text-[8px] text-slate-500 mb-0.5 uppercase">吊燈防線</div><div id="trailingStop" class="text-sm font-black text-slate-200 metric-value">--</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="data-card border-emerald-900/30">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-emerald-500 text-[10px] font-black uppercase tracking-wider flex items-center gap-1">🔬 ERC & Bayesian Sizing</span>
+                        </div>
+                        <div class="grid grid-cols-4 gap-2 text-center mb-1">
+                            <div class="flex flex-col bg-slate-950 p-1.5 rounded border border-slate-800"><span class="text-[8px] text-slate-500">貝氏勝率</span><span id="bayesWin" class="text-[11px] font-bold text-white metric-value">--</span></div>
+                            <div class="flex flex-col bg-slate-950 p-1.5 rounded border border-slate-800"><span class="text-[8px] text-slate-500">CVaR(95%)</span><span id="cvar95" class="text-[11px] font-bold text-red-400 metric-value">--</span></div>
+                            <div class="flex flex-col bg-slate-950 p-1.5 rounded border border-slate-800"><span class="text-[8px] text-slate-500">Raw Kelly</span><span id="rawKelly" class="text-[11px] font-bold text-slate-300 metric-value">--</span></div>
+                            <div class="flex flex-col bg-slate-950 p-1.5 rounded border border-slate-800 border-emerald-500/50 shadow-[0_0_10px_rgba(16,185,129,0.1)]"><span class="text-[8px] text-emerald-500 font-bold">ERC Sizing</span><span id="finalPosSize" class="text-xs font-black text-emerald-400 metric-value">--</span></div>
+                        </div>
+                    </div>
+
+                    <div class="flex gap-2">
+                        <div class="data-card flex-1">
+                            <div class="text-[9px] text-slate-500 font-bold mb-2 uppercase">🎲 GARCH-MC (N=1000)</div>
+                            <div class="flex justify-between items-center mb-1"><span class="text-[9px] text-slate-400">DaR (95%)</span><span id="mcDaR" class="text-[11px] font-bold text-red-400 metric-value">--</span></div>
+                            <div class="flex justify-between items-center"><span class="text-[9px] text-slate-400">Ruin Prob</span><span id="mcRuin" class="text-[11px] font-bold text-yellow-400 metric-value">--</span></div>
+                        </div>
+                        <div class="data-card flex-1">
+                            <div class="text-[9px] text-slate-500 font-bold mb-2 uppercase">🚨 Security VETO</div>
+                            <div class="flex justify-between items-center mb-1"><span class="text-[9px] text-slate-400">Regime VETO</span><span id="sysVeto" class="text-[11px] font-bold text-emerald-400">PASS</span></div>
+                            <div class="flex justify-between items-center"><span class="text-[9px] text-slate-400">OBV Diverge</span><span id="obvDiv" class="text-[11px] font-bold text-slate-400">NONE</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        window.currentMarket = 'TW';
+        window.isAnalyzing = false;
+        
+        try {
+            if (window.localStorage) {
+                window.KEY_FINMIND = localStorage.getItem('ASQE_FINMIND_KEY') || '';
+                window.KEY_FUGLE = localStorage.getItem('ASQE_FUGLE_KEY') || '';
+                window.KEY_FMP = localStorage.getItem('ASQE_FMP_KEY') || '';
+                window.KEY_FINNHUB = localStorage.getItem('ASQE_FINNHUB_KEY') || '';
+                
+                if(document.getElementById('finmindKeyInput')) document.getElementById('finmindKeyInput').value = window.KEY_FINMIND;
+                if(document.getElementById('fugleKeyInput')) document.getElementById('fugleKeyInput').value = window.KEY_FUGLE;
+                if(document.getElementById('fmpKeyInput')) document.getElementById('fmpKeyInput').value = window.KEY_FMP;
+                if(document.getElementById('finnhubKeyInput')) document.getElementById('finnhubKeyInput').value = window.KEY_FINNHUB;
+            }
+        } catch(e) {}
+
+        var priceChart = null, dmiChart = null, candleSeries, volSeries, ema20Series, ema60Series, pocSeries, adxSeries, rsiSeries;
+
+        function getLocalStr(d) {
+            var m = (d.getMonth()+1).toString(); if(m.length<2) m='0'+m;
+            var day = d.getDate().toString(); if(day.length<2) day='0'+day;
+            return d.getFullYear() + '-' + m + '-' + day;
+        }
+
+        function fetchWithTimeout(url, timeoutMs) {
+            return new Promise(function(resolve, reject) {
+                var timeout = setTimeout(function() { reject(new Error("Timeout")); }, timeoutMs || 6000);
+                fetch(url).then(function(res) { clearTimeout(timeout); resolve(res); }).catch(function(err) { clearTimeout(timeout); reject(err); });
+            });
+        }
+
+        // ================= SMART API ROUTING =================
+        // 核心路由引擎：FinMind/FMP -> Fugle/Finnhub -> Yahoo Fallback
+        async function fetchMarketData(ticker, market) {
+            var q = ticker.trim().toUpperCase();
+            var updateStatus = function(txt, color) {
+                var el = document.getElementById('apiStatusText');
+                var dot = document.getElementById('apiStatusDot');
+                if(el) el.innerText = txt;
+                if(dot) dot.className = "w-1.5 h-1.5 rounded-full bg-" + color + "-500";
+            };
+
+            // [1. 台股路由]
+            if (market === 'TW') {
+                var fmTicker = q.replace('.TW', '');
+                var fromDate = new Date(Date.now() - 3*365*24*60*60*1000).toISOString().split('T')[0];
+                
+                // 嘗試 FinMind
+                if (window.KEY_FINMIND) {
+                    try {
+                        updateStatus("FinMind", "green");
+                        var urlFM = 'https://api.finmindtrade.com/api/v4/data?dataset=TaiwanStockPrice&data_id=' + fmTicker + '&start_date=' + fromDate + '&token=' + window.KEY_FINMIND;
+                        var resFM = await fetchWithTimeout(urlFM);
+                        var jsonFM = await resFM.json();
+                        if (jsonFM.data && jsonFM.data.length > 0) {
+                            return jsonFM.data.map(function(x) { 
+                                return { time: x.date, open: Number(x.open||x.Open), high: Number(x.max||x.High), low: Number(x.min||x.Low), close: Number(x.close||x.Close), volume: Number(x.Trading_Volume||x.Volume) };
+                            }).filter(function(x){return !isNaN(x.close)});
+                        }
+                    } catch(e) { console.warn("FinMind Failed, trying fallback..."); }
+                }
+                
+                // 嘗試 Fugle (若有實作歷史 K 線 API)
+                if (window.KEY_FUGLE) {
+                    try {
+                        updateStatus("Fugle", "teal");
+                        // Fugle K線 API 預留區塊 (需依據 Fugle 最新 API 規格調整)
+                        // 若失敗會自動往下走到 Yahoo
+                    } catch(e) { console.warn("Fugle Failed, trying fallback..."); }
+                }
+            }
+            
+            // [2. 美股路由]
+            if (market === 'US') {
+                // 嘗試 FMP
+                if (window.KEY_FMP) {
+                    try {
+                        updateStatus("FMP", "blue");
+                        var urlFMP = 'https://financialmodelingprep.com/api/v3/historical-price-full/' + q + '?timeseries=750&apikey=' + window.KEY_FMP;
+                        var resFMP = await fetchWithTimeout(urlFMP);
+                        var jsonFMP = await resFMP.json();
+                        if (jsonFMP.historical && jsonFMP.historical.length > 0) {
+                            return jsonFMP.historical.reverse().map(function(x) { 
+                                return { time: x.date, open: x.open, high: x.high, low: x.low, close: x.close, volume: x.volume };
+                            });
+                        }
+                    } catch(e) { console.warn("FMP Failed, trying fallback..."); }
+                }
+                
+                // 嘗試 Finnhub
+                if (window.KEY_FINNHUB) {
+                    try {
+                        updateStatus("Finnhub", "purple");
+                        // Finnhub Candle API 預留區塊
+                    } catch(e) { console.warn("Finnhub Failed, trying fallback..."); }
+                }
+            }
+
+            // [3. 終極備援：Yahoo Finance Proxy]
+            updateStatus("Yahoo Fallback", "yellow");
+            var proxies = [
+                'https://corsproxy.io/?',
+                'https://api.allorigins.win/raw?url=',
+                'https://api.codetabs.com/v1/proxy/?quest='
+            ];
+            var yahooUrl = 'https://query2.finance.yahoo.com/v8/finance/chart/' + q + '?range=2y&interval=1d';
+            
+            for (var p=0; p<proxies.length; p++) {
+                try {
+                    var resY = await fetchWithTimeout(proxies[p] + encodeURIComponent(yahooUrl));
+                    if (!resY.ok) continue;
+                    var jsonY = await resY.json();
+                    if (jsonY && jsonY.chart && jsonY.chart.result && jsonY.chart.result[0]) {
+                        var timestamps = jsonY.chart.result[0].timestamp;
+                        var quote = jsonY.chart.result[0].indicators.quote[0];
+                        var dataY = [];
+                        for(var i=0; i<timestamps.length; i++) {
+                            var c = quote.close[i];
+                            if (c != null) {
+                                dataY.push({
+                                    time: getLocalStr(new Date(timestamps[i]*1000)), open: quote.open[i] != null ? quote.open[i] : c,
+                                    high: quote.high[i] != null ? quote.high[i] : c, low: quote.low[i] != null ? quote.low[i] : c,
+                                    close: c, volume: quote.volume[i] != null ? quote.volume[i] : 0
+                                });
+                            }
+                        }
+                        return dataY;
+                    }
+                } catch(e) {}
+            }
+            throw new Error("所有資料源與代理伺服器均無法連線");
+        }
+
+        // ================= MATH CORE =================
+        function calcEMA(data, period) {
+            if(!data||data.length===0) return []; 
+            var res=[], k=2/(period+1), ema=data[0].close;
+            for(var i=0; i<data.length; i++) { if(i>0) ema=(data[i].close-ema)*k+ema; res.push({time:data[i].time, value:ema}); }
+            return res;
+        }
+        function calcRMA(data, period) {
+            var res=[], sum=0;
+            for(var i=0; i<data.length; i++){ if(i<period){sum+=data[i]; res.push(sum/(i+1));} else res.push((res[i-1]*(period-1)+data[i])/period); }
+            return res;
+        }
+        function calcVolatility(data, period) {
+            if(data.length < period) return 0.05; var rets=[];
+            for(var i=data.length-period; i<data.length; i++) { rets.push((data[i].close-data[i-1].close)/data[i-1].close); }
+            var mean = rets.reduce(function(a,b){return a+b},0)/period; 
+            var variance = rets.reduce(function(a,b){return a+Math.pow(b-mean,2)},0)/period;
+            return Math.sqrt(variance) * Math.sqrt(252);
+        }
+        function calcATR(data, p) {
+            if(!data.length) return []; var trs=[0];
+            for(var i=1; i<data.length; i++) { var h=data[i].high, l=data[i].low, pc=data[i-1].close; trs.push(Math.max(h-l, Math.abs(h-pc), Math.abs(l-pc))); }
+            var atrs = calcRMA(trs, p); return data.map(function(d,i){return {time:d.time, atr:atrs[i]}});
+        }
+        function calcRSI(data, p) {
+            if(!data.length) return []; var res=[{time:data[0].time, rsi:50}], g=[0], l=[0];
+            for(var i=1; i<data.length; i++){ var d=data[i].close-data[i-1].close; g.push(Math.max(0,d)); l.push(Math.max(0,-d)); }
+            var ag=calcRMA(g,p), al=calcRMA(l,p);
+            for(var i=1; i<data.length; i++){ res.push({time:data[i].time, rsi:al[i]===0?100:(100-(100/(1+(ag[i]/al[i]))))}); }
+            return res;
+        }
+        function calcDMI(data, p) {
+            var trs=[0], pdm=[0], mdm=[0];
+            for(var i=1; i<data.length; i++) {
+                var h=data[i].high, l=data[i].low, ph=data[i-1].high, pl=data[i-1].low, pc=data[i-1].close;
+                trs.push(Math.max(h-l, Math.abs(h-pc), Math.abs(l-pc))); var up=h-ph, dn=pl-l;
+                pdm.push((up>dn&&up>0)?up:0); mdm.push((dn>up&&dn>0)?dn:0);
+            }
+            var aR=calcRMA(trs,p), pR=calcRMA(pdm,p), mR=calcRMA(mdm,p), dx=[0];
+            for(var i=1; i<data.length; i++) { var pi=aR[i]===0?0:100*(pR[i]/aR[i]), mi=aR[i]===0?0:100*(mR[i]/aR[i]); dx.push((pi+mi)===0?0:100*Math.abs(pi-mi)/(pi+mi)); }
+            var adx
         window.saveAndStart = function() {
             var fKey = document.getElementById('finmindKeyInput');
             var fgKey = document.getElementById('fugleKeyInput');
