@@ -5,8 +5,8 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <meta content="notranslate" name="google"/>
-<title>ASQE v17.9.3 永豐 Kbars 診斷修正版 | Forward Test & Watchlist | GitHub Pages Pro</title>
-<script type="text/javascript" nonce="f0ba7b011bb84778ba15d2ee5da" src="//local.adguard.org?ts=1781566960886&amp;type=content-script&amp;dmn=chatgpt.com&amp;url=https%3A%2F%2Fchatgpt.com%2Fbackend-api%2Festuary%2Fcontent%3Fid%3Dfile_0000000048907209aad6c186530ef287%26ts%3D494881%26p%3Dfs%26cid%3D1%26sig%3D7dd60ce2408074cf2e6796b2371e630f6b79f8c09ee4f35d263a0d772fbf31a0%26v%3D0&amp;app=chrome.exe&amp;css=2&amp;js=1&amp;rel=1&amp;rji=1&amp;sbe=0"></script><script type="text/javascript" nonce="f0ba7b011bb84778ba15d2ee5da" src="//local.adguard.org?ts=1781566960886&amp;name=AdGuard%20Extra&amp;name=AdGuard%20Popup%20Blocker&amp;type=user-script"></script><script>
+<title>ASQE v17.9.4 Shioaji 1.5.3 Kbars 相容版 | Forward Test & Watchlist | GitHub Pages Pro</title>
+<script type="text/javascript" nonce="f0ba7b011bb84778ba15d2ee5da" src="//local.adguard.org?ts=1781566960886&amp;type=content-script&amp;dmn=chatgpt.com&amp;url=https%3A%2F%2Fchatgpt.com%2Fbackend-api%2Festuary%2Fcontent%3Fid%3Dfile_00000000d7787209b0ed68bec32a3c5f%26fn%3DASQE_v17_9_4_index.html%26cd%3Dattachment%26ts%3D494881%26p%3Dfs%26cid%3D1%26sig%3D582679a88a2bc36747cff1cb369788150493124dac4e8a5368301dee624ec5c6%26v%3D0&amp;app=chrome.exe&amp;css=2&amp;js=1&amp;rel=1&amp;rji=1&amp;sbe=0"></script><script type="text/javascript" nonce="f0ba7b011bb84778ba15d2ee5da" src="//local.adguard.org?ts=1781566960886&amp;name=AdGuard%20Extra&amp;name=AdGuard%20Popup%20Blocker&amp;type=user-script"></script><script>
     window.IS_CODE_COMPLETE = false;
 
     window.onerror = function(msg, url, lineNo) {
@@ -260,13 +260,14 @@
         window.setSinopacLoginDiagnostic('fail', '❌ 請先輸入 Gateway URL。');
         return;
       }
-      window.setSinopacLoginDiagnostic('warn', '⏳ 正在測試永豐行情資料：<span class="font-mono">' + window.escapeHtml(symbol) + '</span><br><span class="text-[10px] text-yellow-200/90">v17.9.3 會分別檢查 TSE / OTC，不再只顯示最後一個 OTC 錯誤。</span>');
+      window.setSinopacLoginDiagnostic('warn', '⏳ 正在測試永豐行情資料：<span class="font-mono">' + window.escapeHtml(symbol) + '</span><br><span class="text-[10px] text-yellow-200/90">v17.9.4 會依 API Docs 使用 ContractRequest：code / exchange / security_type / target_code，並支援 Bearer Authorization。</span>');
       var headers = { 'Content-Type': 'application/json' };
       try {
         var k = sessionStorage.getItem('ASQE_SINOPAC_API_KEY_SESSION') || '';
         var s = sessionStorage.getItem('ASQE_SINOPAC_SECRET_KEY_SESSION') || '';
         if (k) headers['X-Sinopac-Api-Key'] = k;
         if (s) headers['X-Sinopac-Secret-Key'] = s;
+        if (k && s) headers['Authorization'] = 'Bearer ' + k + ':' + s;
       } catch(e) {}
       var today = new Date();
       var start = new Date(today.getTime() - 60*24*60*60*1000);
@@ -299,10 +300,15 @@
         }
       }
       function bodyVariants(exchange) {
+        // Shioaji Server 1.5.3 API Docs: POST /api/v1/data/kbars
+        // body = { contract: { code, exchange, security_type, target_code }, start, end }
+        // 股票優先使用 STK；target_code 在部分版本必須存在，即使為空字串。
         return [
-          { label:'contract/STK', body:{ contract: { security_type:'STK', exchange: exchange, code: code }, start: ds(start), end: ds(today) } },
-          { label:'contract/Stock', body:{ contract: { security_type:'Stock', exchange: exchange, code: code }, start: ds(start), end: ds(today) } },
-          { label:'flat/STK', body:{ security_type:'STK', exchange: exchange, code: code, start: ds(start), end: ds(today) } }
+          { label:'docs/STK target空白', body:{ contract: { code: code, exchange: exchange, security_type:'STK', target_code:'' }, start: ds(start), end: ds(today) } },
+          { label:'docs/STK target=code', body:{ contract: { code: code, exchange: exchange, security_type:'STK', target_code: code }, start: ds(start), end: ds(today) } },
+          { label:'docs/STOCK target空白', body:{ contract: { code: code, exchange: exchange, security_type:'STOCK', target_code:'' }, start: ds(start), end: ds(today) } },
+          { label:'docs/Stock target空白', body:{ contract: { code: code, exchange: exchange, security_type:'Stock', target_code:'' }, start: ds(start), end: ds(today) } },
+          { label:'legacy/STK 無target', body:{ contract: { code: code, exchange: exchange, security_type:'STK' }, start: ds(start), end: ds(today) } }
         ];
       }
       try {
@@ -323,6 +329,9 @@
         }
         var exchanges = /\.TWO$/.test(symbol) ? ['OTC','TSE'] : ['TSE','OTC'];
         var logs = [];
+        if (!headers['Authorization']) {
+          logs.push('提示：目前未送 Authorization Bearer（API/Secret 欄位空白）；API Docs 標示 Kbars Auth Required。若 ContractRequest 格式正確但仍 0 筆/失敗，請臨時填入 Key/Secret 測試，或使用本機安全 Proxy。');
+        }
         for (var ei=0; ei<exchanges.length; ei++) {
           var vars = bodyVariants(exchanges[ei]);
           for (var vi=0; vi<vars.length; vi++) {
@@ -338,7 +347,7 @@
         throw new Error(logs.join('<br>'));
       } catch(e) {
         var msg = e && e.name === 'AbortError' ? '連線逾時' : (e && e.message ? e.message : String(e));
-        window.setSinopacLoginDiagnostic('fail', '❌ 永豐行情 K 線測試失敗：<br><span class="font-mono text-[10px] leading-relaxed block mt-1">' + msg + '</span><br><span class="text-[10px] text-red-200/90">v17.9.3 已分別測 TSE/OTC 與多種 body 格式。若 accounts 成功但 Kbars 全部 0 筆，請先在 API Docs 測 /api/v1/data/kbars，或檢查永豐 API 權限是否勾「行情/資料」。</span>');
+        window.setSinopacLoginDiagnostic('fail', '❌ 永豐行情 K 線測試失敗：<br><span class="font-mono text-[10px] leading-relaxed block mt-1">' + msg + '</span><br><span class="text-[10px] text-red-200/90">v17.9.4 已依 API Docs 測試 ContractRequest 格式。若 API/Secret 欄位空白，Kbars 端點可能因 Auth Required 無法取資料；可臨時填入 Key/Secret（僅本次 session），或改用本機安全 Proxy。</span>');
       }
     };
 
@@ -438,7 +447,7 @@
 <div class="w-16 h-16 bg-slate-950 rounded-2xl flex items-center justify-center mb-5 border border-slate-700 shadow-inner">
 <span class="text-3xl">🏛️</span>
 </div>
-<h1 class="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-indigo-300 to-orange-300 tracking-wider mb-1">ASQE v17.9.3</h1>
+<h1 class="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-indigo-300 to-orange-300 tracking-wider mb-1">ASQE v17.9.4</h1>
 <p class="text-[9px] text-indigo-100 mb-8 font-mono tracking-widest uppercase px-2 py-1 rounded badge-elite">永豐正式簽署檢測版</p>
 <input autocomplete="off" class="w-full bg-slate-950 text-white border border-slate-700 rounded-xl px-4 py-3.5 mb-5 focus:outline-none focus:border-indigo-500 text-center tracking-widest font-mono" id="passwordInput" inputmode="numeric" onkeypress="if(event.key==='Enter') window.checkAndUnlock()" placeholder="輸入授權碼" type="password"/>
 <button class="w-full bg-gradient-to-r from-indigo-700 to-purple-700 hover:from-indigo-600 hover:to-purple-600 text-white font-black py-3.5 rounded-xl transition-all shadow-lg tracking-widest cursor-pointer" id="unlockBtn" onclick="window.checkAndUnlock()">啟動量化核心</button>
@@ -517,7 +526,7 @@
 <div class="flex items-center gap-3">
 <div class="w-8 h-8 bg-gradient-to-br from-indigo-600 to-purple-900 rounded-lg flex items-center justify-center font-bold text-sm border border-slate-700">🏛️</div>
 <div class="flex flex-col">
-<h1 class="text-base font-black tracking-widest text-slate-100 leading-none">ASQE v17.9.3</h1>
+<h1 class="text-base font-black tracking-widest text-slate-100 leading-none">ASQE v17.9.4</h1>
 <span class="text-[9px] text-indigo-400 font-mono tracking-wider mt-0.5">永豐 Kbars 診斷修正版 + Forward Test</span>
 </div>
 </div>
@@ -550,7 +559,7 @@
 <div class="flex flex-col gap-3 p-4 border-b border-slate-800">
 <div class="flex flex-col md:flex-row md:items-center justify-between gap-3">
 <div>
-<div class="text-lg font-black tracking-widest text-white">ASQE v17.9.3 個股區間測試</div>
+<div class="text-lg font-black tracking-widest text-white">ASQE v17.9.4 個股區間測試</div>
 <div class="text-[11px] text-slate-400 mt-1">輸入任一台股或美股代碼，設定開始日與結束日，回放 ASQE 進出場規則，檢查期間操作是否合適。指標會使用起始日前資料暖機，避免長均線失真。</div>
 </div>
 <div class="flex items-center gap-2">
@@ -607,7 +616,7 @@
     <div class="flex flex-col gap-3 p-4 border-b border-slate-800">
       <div class="flex flex-col md:flex-row md:items-center justify-between gap-3">
         <div>
-          <div class="text-lg font-black tracking-widest text-white">ASQE v17.9.3 觀察清單掃描</div>
+          <div class="text-lg font-black tracking-widest text-white">ASQE v17.9.4 觀察清單掃描</div>
           <div class="text-[12px] text-slate-400 mt-1 leading-relaxed">輸入多檔台股 / 美股代碼後批次掃描，快速找出可進場、觀察、過熱、轉弱或事件風險標的。這是輔助篩選，不會自動下單。</div>
         </div>
         <div class="flex items-center gap-2">
@@ -656,7 +665,7 @@
     <div class="flex flex-col gap-3 p-4 border-b border-slate-800">
       <div class="flex flex-col md:flex-row md:items-center justify-between gap-3">
         <div>
-          <div class="text-lg font-black tracking-widest text-white">ASQE v17.9.3 Forward Test 訊號追蹤</div>
+          <div class="text-lg font-black tracking-widest text-white">ASQE v17.9.4 Forward Test 訊號追蹤</div>
           <div class="text-[12px] text-slate-400 mt-1 leading-relaxed">記錄當下訊號，未來自動回看 5 / 10 / 20 日結果，統計 ASQE 的真實命中率。資料存在本機瀏覽器 localStorage。</div>
         </div>
         <div class="flex items-center gap-2 flex-wrap">
@@ -1351,6 +1360,7 @@
       var s = sessionStorage.getItem('ASQE_SINOPAC_SECRET_KEY_SESSION') || '';
       if (k) h['X-Sinopac-Api-Key'] = k;
       if (s) h['X-Sinopac-Secret-Key'] = s;
+      if (k && s) h['Authorization'] = 'Bearer ' + k + ':' + s;
     } catch(e) {}
     return h;
   }
@@ -1414,9 +1424,11 @@
     var lastErr = null;
     for (var ex=0; ex<exchanges.length; ex++) {
       var variants = [
-        { label:'contract/STK', body:{ contract: { security_type: 'STK', exchange: exchanges[ex], code: sym.apiSymbol }, start: from, end: to } },
-        { label:'contract/Stock', body:{ contract: { security_type: 'Stock', exchange: exchanges[ex], code: sym.apiSymbol }, start: from, end: to } },
-        { label:'flat/STK', body:{ security_type: 'STK', exchange: exchanges[ex], code: sym.apiSymbol, start: from, end: to } }
+        { label:'docs/STK target空白', body:{ contract: { code: sym.apiSymbol, exchange: exchanges[ex], security_type: 'STK', target_code: '' }, start: from, end: to } },
+        { label:'docs/STK target=code', body:{ contract: { code: sym.apiSymbol, exchange: exchanges[ex], security_type: 'STK', target_code: sym.apiSymbol }, start: from, end: to } },
+        { label:'docs/STOCK target空白', body:{ contract: { code: sym.apiSymbol, exchange: exchanges[ex], security_type: 'STOCK', target_code: '' }, start: from, end: to } },
+        { label:'docs/Stock target空白', body:{ contract: { code: sym.apiSymbol, exchange: exchanges[ex], security_type: 'Stock', target_code: '' }, start: from, end: to } },
+        { label:'legacy/STK 無target', body:{ contract: { code: sym.apiSymbol, exchange: exchanges[ex], security_type: 'STK' }, start: from, end: to } }
       ];
       for (var vv=0; vv<variants.length; vv++) {
         try {
