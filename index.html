@@ -5,8 +5,8 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <meta content="notranslate" name="google"/>
-<title>ASQE v17.9.5 Shioaji 1.5.3 Kbars 相容版 | Forward Test & Watchlist | GitHub Pages Pro</title>
-<script type="text/javascript" nonce="f0ba7b011bb84778ba15d2ee5da" src="//local.adguard.org?ts=1781566960886&amp;type=content-script&amp;dmn=chatgpt.com&amp;url=https%3A%2F%2Fchatgpt.com%2Fbackend-api%2Festuary%2Fcontent%3Fid%3Dfile_00000000e1f072099a3d38563eee28f2%26ts%3D494881%26p%3Dfs%26cid%3D1%26sig%3D7653bb71d8ea770344e5b05baaa92f090fb9be8c7b422d44754f9acab3df1e4b%26v%3D0&amp;app=chrome.exe&amp;css=2&amp;js=1&amp;rel=1&amp;rji=1&amp;sbe=0"></script><script type="text/javascript" nonce="f0ba7b011bb84778ba15d2ee5da" src="//local.adguard.org?ts=1781566960886&amp;name=AdGuard%20Extra&amp;name=AdGuard%20Popup%20Blocker&amp;type=user-script"></script><script>
+<title>ASQE v17.9.6 Shioaji 1.5.3 Kbars 相容版 | Forward Test & Watchlist | GitHub Pages Pro</title>
+<script type="text/javascript" nonce="f0ba7b011bb84778ba15d2ee5da" src="//local.adguard.org?ts=1781566960886&amp;type=content-script&amp;dmn=chatgpt.com&amp;url=https%3A%2F%2Fchatgpt.com%2Fbackend-api%2Festuary%2Fcontent%3Fid%3Dfile_00000000ba48720996e42cb99946855e%26ts%3D494882%26p%3Dfs%26cid%3D1%26sig%3D9ee0e8da08a87c2888df173d30bbb84937baafa01a8cef36e17ac663c23bf7aa%26v%3D0&amp;app=chrome.exe&amp;css=2&amp;js=1&amp;rel=1&amp;rji=1&amp;sbe=0"></script><script type="text/javascript" nonce="f0ba7b011bb84778ba15d2ee5da" src="//local.adguard.org?ts=1781566960886&amp;name=AdGuard%20Extra&amp;name=AdGuard%20Popup%20Blocker&amp;type=user-script"></script><script>
     window.IS_CODE_COMPLETE = false;
 
     window.onerror = function(msg, url, lineNo) {
@@ -260,7 +260,7 @@
         window.setSinopacLoginDiagnostic('fail', '❌ 請先輸入 Gateway URL。');
         return;
       }
-      window.setSinopacLoginDiagnostic('warn', '⏳ 正在測試永豐行情資料：<span class="font-mono">' + window.escapeHtml(symbol) + '</span><br><span class="text-[10px] text-yellow-200/90">v17.9.5 會依 API Docs 使用 ContractRequest：code / exchange / security_type / target_code，並支援 Bearer Authorization。</span>');
+      window.setSinopacLoginDiagnostic('warn', '⏳ 正在測試永豐行情資料：<span class="font-mono">' + window.escapeHtml(symbol) + '</span><br><span class="text-[10px] text-yellow-200/90">v17.9.6 會依 API Docs 使用 ContractRequest：code / exchange / security_type / target_code，並支援 Bearer Authorization。</span>');
       var headers = { 'Content-Type': 'application/json' };
       try {
         var k = sessionStorage.getItem('ASQE_SINOPAC_API_KEY_SESSION') || '';
@@ -299,22 +299,39 @@
           clearTimeout(timer);
         }
       }
-      function normalizeContractForKbars(c, exchange) {
+      function normalizeContractForKbars(c, exchange, keepFull) {
         c = c || {};
         var sec = c.security_type || c.securityType || c.SecurityType || 'STK';
         var ex = c.exchange || c.Exchange || exchange || 'TSE';
         var cd = c.code || c.Code || code;
-        var tc = c.target_code || c.targetCode || c.target || c.symbol || c.Symbol || '';
-        // ContractRequest 僅保留 API Docs 需要的四個欄位，避免 extra fields 造成 parse failed。
+        var tc = c.target_code || c.targetCode || c.target || '';
+        var symb = c.symbol || c.Symbol || (ex && cd ? (String(ex) + String(cd)) : '');
+        if (keepFull) {
+          // v17.9.6：Contract lookup 成功後，優先使用 Shioaji Server 原樣回傳的完整 contract。
+          // 某些 Shioaji HTTP 版本的 Kbars 對 ContractRequest 需要完整欄位，僅四欄會回傳 0 筆。
+          var full = Object.assign({}, c);
+          full.code = String(cd || '');
+          full.exchange = String(ex || '');
+          full.security_type = String(sec || 'STK');
+          full.target_code = String(tc || '');
+          if (symb && !full.symbol) full.symbol = String(symb);
+          return full;
+        }
         return { code: String(cd || ''), exchange: String(ex || ''), security_type: String(sec || 'STK'), target_code: String(tc || '') };
       }
       async function lookupContractCandidates(exchange, logs) {
         var out = [];
         var seen = {};
         function addContract(c, label) {
-          var n = normalizeContractForKbars(c, exchange);
-          var key = JSON.stringify(n);
-          if (!seen[key]) { seen[key] = true; out.push({ label: label, contract: n }); }
+          var full = normalizeContractForKbars(c, exchange, true);
+          var min = normalizeContractForKbars(c, exchange, false);
+          [
+            { label: label + ' full', contract: full },
+            { label: label + ' minimal', contract: min }
+          ].forEach(function(item){
+            var key = JSON.stringify(item.contract);
+            if (!seen[key]) { seen[key] = true; out.push(item); }
+          });
         }
         function pullContracts(json, label) {
           var arr = [];
@@ -347,12 +364,18 @@
         return out;
       }
       function kbarDateRanges() {
+        function slash(x){ return String(x).replace(/-/g,'/'); }
         var ranges = [];
-        ranges.push({ label:'最近60日', start: ds(start), end: ds(today) });
         var y = today.getFullYear();
-        ranges.push({ label:'今年迄今', start: y + '-01-01', end: ds(today) });
-        ranges.push({ label:'去年全年', start: (y-1) + '-01-01', end: (y-1) + '-12-31' });
-        ranges.push({ label:'前年全年', start: (y-2) + '-01-01', end: (y-2) + '-12-31' });
+        var base = [
+          { label:'最近60日', start: ds(start), end: ds(today) },
+          { label:'今年迄今', start: y + '-01-01', end: ds(today) },
+          { label:'去年全年', start: (y-1) + '-01-01', end: (y-1) + '-12-31' },
+          { label:'前年全年', start: (y-2) + '-01-01', end: (y-2) + '-12-31' }
+        ];
+        base.forEach(function(r){ ranges.push(r); });
+        // v17.9.6：Shioaji contract 的 update_date 是 YYYY/MM/DD，部分 Server 對日期字串較嚴格；同步測 slash 格式。
+        base.forEach(function(r){ ranges.push({ label:r.label + ' slash日期', start: slash(r.start), end: slash(r.end) }); });
         return ranges;
       }
       function bodyVariants(exchange, extraContracts) {
@@ -415,7 +438,7 @@
         throw new Error(logs.join('<br>'));
       } catch(e) {
         var msg = e && e.name === 'AbortError' ? '連線逾時' : (e && e.message ? e.message : String(e));
-        window.setSinopacLoginDiagnostic('fail', '❌ 永豐行情 K 線測試失敗：<br><span class="font-mono text-[10px] leading-relaxed block mt-1">' + msg + '</span><br><span class="text-[10px] text-red-200/90">v17.9.5 已依 API Docs 測試 ContractRequest 格式。若 API/Secret 欄位空白，Kbars 端點可能因 Auth Required 無法取資料；可臨時填入 Key/Secret（僅本次 session），或改用本機安全 Proxy。</span>');
+        window.setSinopacLoginDiagnostic('fail', '❌ 永豐行情 K 線測試失敗：<br><span class="font-mono text-[10px] leading-relaxed block mt-1">' + msg + '</span><br><span class="text-[10px] text-red-200/90">v17.9.6 已依 API Docs 測試 ContractRequest 格式。若 API/Secret 欄位空白，Kbars 端點可能因 Auth Required 無法取資料；可臨時填入 Key/Secret（僅本次 session），或改用本機安全 Proxy。</span>');
       }
     };
 
@@ -515,7 +538,7 @@
 <div class="w-16 h-16 bg-slate-950 rounded-2xl flex items-center justify-center mb-5 border border-slate-700 shadow-inner">
 <span class="text-3xl">🏛️</span>
 </div>
-<h1 class="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-indigo-300 to-orange-300 tracking-wider mb-1">ASQE v17.9.5</h1>
+<h1 class="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-indigo-300 to-orange-300 tracking-wider mb-1">ASQE v17.9.6</h1>
 <p class="text-[9px] text-indigo-100 mb-8 font-mono tracking-widest uppercase px-2 py-1 rounded badge-elite">永豐正式簽署檢測版</p>
 <input autocomplete="off" class="w-full bg-slate-950 text-white border border-slate-700 rounded-xl px-4 py-3.5 mb-5 focus:outline-none focus:border-indigo-500 text-center tracking-widest font-mono" id="passwordInput" inputmode="numeric" onkeypress="if(event.key==='Enter') window.checkAndUnlock()" placeholder="輸入授權碼" type="password"/>
 <button class="w-full bg-gradient-to-r from-indigo-700 to-purple-700 hover:from-indigo-600 hover:to-purple-600 text-white font-black py-3.5 rounded-xl transition-all shadow-lg tracking-widest cursor-pointer" id="unlockBtn" onclick="window.checkAndUnlock()">啟動量化核心</button>
@@ -594,7 +617,7 @@
 <div class="flex items-center gap-3">
 <div class="w-8 h-8 bg-gradient-to-br from-indigo-600 to-purple-900 rounded-lg flex items-center justify-center font-bold text-sm border border-slate-700">🏛️</div>
 <div class="flex flex-col">
-<h1 class="text-base font-black tracking-widest text-slate-100 leading-none">ASQE v17.9.5</h1>
+<h1 class="text-base font-black tracking-widest text-slate-100 leading-none">ASQE v17.9.6</h1>
 <span class="text-[9px] text-indigo-400 font-mono tracking-wider mt-0.5">永豐 Kbars 診斷修正版 + Forward Test</span>
 </div>
 </div>
@@ -627,7 +650,7 @@
 <div class="flex flex-col gap-3 p-4 border-b border-slate-800">
 <div class="flex flex-col md:flex-row md:items-center justify-between gap-3">
 <div>
-<div class="text-lg font-black tracking-widest text-white">ASQE v17.9.5 個股區間測試</div>
+<div class="text-lg font-black tracking-widest text-white">ASQE v17.9.6 個股區間測試</div>
 <div class="text-[11px] text-slate-400 mt-1">輸入任一台股或美股代碼，設定開始日與結束日，回放 ASQE 進出場規則，檢查期間操作是否合適。指標會使用起始日前資料暖機，避免長均線失真。</div>
 </div>
 <div class="flex items-center gap-2">
@@ -684,7 +707,7 @@
     <div class="flex flex-col gap-3 p-4 border-b border-slate-800">
       <div class="flex flex-col md:flex-row md:items-center justify-between gap-3">
         <div>
-          <div class="text-lg font-black tracking-widest text-white">ASQE v17.9.5 觀察清單掃描</div>
+          <div class="text-lg font-black tracking-widest text-white">ASQE v17.9.6 觀察清單掃描</div>
           <div class="text-[12px] text-slate-400 mt-1 leading-relaxed">輸入多檔台股 / 美股代碼後批次掃描，快速找出可進場、觀察、過熱、轉弱或事件風險標的。這是輔助篩選，不會自動下單。</div>
         </div>
         <div class="flex items-center gap-2">
@@ -733,7 +756,7 @@
     <div class="flex flex-col gap-3 p-4 border-b border-slate-800">
       <div class="flex flex-col md:flex-row md:items-center justify-between gap-3">
         <div>
-          <div class="text-lg font-black tracking-widest text-white">ASQE v17.9.5 Forward Test 訊號追蹤</div>
+          <div class="text-lg font-black tracking-widest text-white">ASQE v17.9.6 Forward Test 訊號追蹤</div>
           <div class="text-[12px] text-slate-400 mt-1 leading-relaxed">記錄當下訊號，未來自動回看 5 / 10 / 20 日結果，統計 ASQE 的真實命中率。資料存在本機瀏覽器 localStorage。</div>
         </div>
         <div class="flex items-center gap-2 flex-wrap">
@@ -1490,27 +1513,66 @@
 
     var exchanges = /\.TWO$/i.test((sym && sym.input) || '') ? ['OTC','TSE'] : ['TSE','OTC'];
     var lastErr = null;
-    for (var ex=0; ex<exchanges.length; ex++) {
-      var variants = [
-        { label:'docs/STK target空白', body:{ contract: { code: sym.apiSymbol, exchange: exchanges[ex], security_type: 'STK', target_code: '' }, start: from, end: to } },
-        { label:'docs/STK target=code', body:{ contract: { code: sym.apiSymbol, exchange: exchanges[ex], security_type: 'STK', target_code: sym.apiSymbol }, start: from, end: to } },
-        { label:'docs/STK target=symbol', body:{ contract: { code: sym.apiSymbol, exchange: exchanges[ex], security_type: 'STK', target_code: exchanges[ex] + sym.apiSymbol }, start: from, end: to } },
-        { label:'symbol/STK code=symbol', body:{ contract: { code: exchanges[ex] + sym.apiSymbol, exchange: exchanges[ex], security_type: 'STK', target_code: '' }, start: from, end: to } },
-        { label:'symbol/STK code=symbol target=code', body:{ contract: { code: exchanges[ex] + sym.apiSymbol, exchange: exchanges[ex], security_type: 'STK', target_code: sym.apiSymbol }, start: from, end: to } },
-        { label:'legacy/STK 無target', body:{ contract: { code: sym.apiSymbol, exchange: exchanges[ex], security_type: 'STK' }, start: from, end: to } }
+    function slashDate(x){ return String(x || '').replace(/-/g,'/'); }
+    function minContractFrom(c, exg) {
+      c = c || {};
+      return {
+        code: String(c.code || sym.apiSymbol || ''),
+        exchange: String(c.exchange || exg || 'TSE'),
+        security_type: String(c.security_type || 'STK'),
+        target_code: String(c.target_code || '')
+      };
+    }
+    async function lookupContractForFetch(exg) {
+      var headers0 = getSinopacSessionHeaders();
+      var qs = '?security_type=STK';
+      var paths = [
+        '/api/v1/data/contracts/' + encodeURIComponent(sym.apiSymbol) + qs,
+        '/api/v1/data/contracts/' + encodeURIComponent(exg + sym.apiSymbol) + qs,
+        '/api/v1/data/contracts/' + encodeURIComponent(sym.apiSymbol)
       ];
-      for (var vv=0; vv<variants.length; vv++) {
+      for (var pi=0; pi<paths.length; pi++) {
         try {
-          var json2 = await fetchJsonWithTimeout(base + '/api/v1/data/kbars', {
-            method: 'POST',
-            headers: Object.assign(getSinopacSessionHeaders(), { 'Content-Type': 'application/json' }),
-            body: JSON.stringify(variants[vv].body)
-          }, 12000);
-          var daily = aggregateSinopacKbarsToDaily(json2);
-          if (!daily.length) throw new Error('Shioaji kbars no data: ' + exchanges[ex] + ' ' + variants[vv].label);
-          return parseAndCleanData(daily, '永豐 Shioaji ' + exchanges[ex]);
-        } catch(e2) {
-          lastErr = e2;
+          var j = await fetchJsonWithTimeout(base + paths[pi], { headers: headers0 }, 12000);
+          if (j && (String(j.code || '') === String(sym.apiSymbol) || String(j.symbol || '').indexOf(String(sym.apiSymbol)) >= 0)) return j;
+        } catch(eLookup) { lastErr = eLookup; }
+      }
+      return null;
+    }
+    for (var ex=0; ex<exchanges.length; ex++) {
+      var found = await lookupContractForFetch(exchanges[ex]);
+      var contracts = [];
+      if (found) {
+        var full = Object.assign({}, found);
+        if (!full.target_code && full.target_code !== '') full.target_code = '';
+        contracts.push({ label:'lookup/full', contract: full });
+        contracts.push({ label:'lookup/minimal', contract: minContractFrom(found, exchanges[ex]) });
+      }
+      contracts = contracts.concat([
+        { label:'docs/STK target空白', contract:{ code: sym.apiSymbol, exchange: exchanges[ex], security_type: 'STK', target_code: '' } },
+        { label:'docs/STK target=code', contract:{ code: sym.apiSymbol, exchange: exchanges[ex], security_type: 'STK', target_code: sym.apiSymbol } },
+        { label:'docs/STK target=symbol', contract:{ code: sym.apiSymbol, exchange: exchanges[ex], security_type: 'STK', target_code: exchanges[ex] + sym.apiSymbol } },
+        { label:'symbol/STK code=symbol', contract:{ code: exchanges[ex] + sym.apiSymbol, exchange: exchanges[ex], security_type: 'STK', target_code: '' } },
+        { label:'legacy/STK 無target', contract:{ code: sym.apiSymbol, exchange: exchanges[ex], security_type: 'STK' } }
+      ]);
+      var datePairs = [
+        { label:'dash', start: from, end: to },
+        { label:'slash', start: slashDate(from), end: slashDate(to) }
+      ];
+      for (var cc=0; cc<contracts.length; cc++) {
+        for (var dd=0; dd<datePairs.length; dd++) {
+          try {
+            var json2 = await fetchJsonWithTimeout(base + '/api/v1/data/kbars', {
+              method: 'POST',
+              headers: Object.assign(getSinopacSessionHeaders(), { 'Content-Type': 'application/json' }),
+              body: JSON.stringify({ contract: contracts[cc].contract, start: datePairs[dd].start, end: datePairs[dd].end })
+            }, 12000);
+            var daily = aggregateSinopacKbarsToDaily(json2);
+            if (!daily.length) throw new Error('Shioaji kbars no data: ' + exchanges[ex] + ' ' + contracts[cc].label + ' ' + datePairs[dd].label);
+            return parseAndCleanData(daily, '永豐 Shioaji ' + exchanges[ex]);
+          } catch(e2) {
+            lastErr = e2;
+          }
         }
       }
     }
