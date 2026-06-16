@@ -5,8 +5,8 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <meta content="notranslate" name="google"/>
-<title>ASQE v17.9.8 持股成本顯示優化版 | Forward Test & Watchlist | GitHub Pages Pro</title>
-<script type="text/javascript" nonce="f0ba7b011bb84778ba15d2ee5da" src="//local.adguard.org?ts=1781575966423&amp;type=content-script&amp;dmn=chatgpt.com&amp;url=https%3A%2F%2Fchatgpt.com%2Fbackend-api%2Festuary%2Fcontent%3Fid%3Dfile_00000000c37872099d9ee4dbddc93e20%26ts%3D494883%26p%3Dfs%26cid%3D1%26sig%3D2cfa4bc66d7478d018db3fb33096bb8d0d469250a35aea37100ced6cac486ba1%26v%3D0&amp;app=chrome.exe&amp;css=2&amp;js=1&amp;rel=1&amp;rji=1&amp;sbe=1"></script><script type="text/javascript" nonce="f0ba7b011bb84778ba15d2ee5da" src="//local.adguard.org?ts=1781575966423&amp;name=AdGuard%20Extra&amp;name=AdGuard%20Popup%20Blocker&amp;type=user-script"></script><script>
+<title>ASQE v17.9.9 持股成本顯示優化版 | Forward Test & Watchlist | GitHub Pages Pro</title>
+<script type="text/javascript" nonce="f0ba7b011bb84778ba15d2ee5da" src="//local.adguard.org?ts=1781575966423&amp;type=content-script&amp;dmn=chatgpt.com&amp;url=https%3A%2F%2Fchatgpt.com%2Fbackend-api%2Festuary%2Fcontent%3Fid%3Dfile_0000000018047209951110515813b370%26ts%3D494885%26p%3Dfs%26cid%3D1%26sig%3D49160d9818bd76a4babdc0910a5ce771da9c43d4c4f822628e819cdcddca6393%26v%3D0&amp;app=chrome.exe&amp;css=2&amp;js=1&amp;rel=1&amp;rji=1&amp;sbe=1"></script><script type="text/javascript" nonce="f0ba7b011bb84778ba15d2ee5da" src="//local.adguard.org?ts=1781575966423&amp;name=AdGuard%20Extra&amp;name=AdGuard%20Popup%20Blocker&amp;type=user-script"></script><script>
     window.IS_CODE_COMPLETE = false;
 
     window.onerror = function(msg, url, lineNo) {
@@ -77,6 +77,7 @@
 
     window.switchTab = function(m, t) {
       window.currentMarket = m;
+      if (typeof window.updatePositionUnitLabels === 'function') window.updatePositionUnitLabels(m);
       var inp = document.getElementById('tickerInput');
       if (inp) inp.value = t;
       var tw = document.getElementById('tabTW');
@@ -459,6 +460,7 @@
       if (btnNone) btnNone.className = 'px-3 py-1.5 rounded-md text-[12px] font-black border ' + (window.holdingMode==='NONE' ? 'bg-indigo-600 text-white border-indigo-500' : 'bg-slate-950 text-slate-400 border-slate-700');
       if (btnHolding) btnHolding.className = 'px-3 py-1.5 rounded-md text-[12px] font-black border ' + (window.holdingMode==='HOLDING' ? 'bg-emerald-700 text-white border-emerald-500' : 'bg-slate-950 text-slate-400 border-slate-700');
       window.updatePositionCardVisibility();
+      if (typeof window.updatePositionUnitLabels === 'function') window.updatePositionUnitLabels();
       if (typeof window.runAnalysis === 'function') {
         var val = (document.getElementById('tickerInput') || {}).value || '2330.TW';
         if (!window.isAnalyzing) window.runAnalysis(val);
@@ -549,7 +551,7 @@
 <div class="w-16 h-16 bg-slate-950 rounded-2xl flex items-center justify-center mb-5 border border-slate-700 shadow-inner">
 <span class="text-3xl">🏛️</span>
 </div>
-<h1 class="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-indigo-300 to-orange-300 tracking-wider mb-1">ASQE v17.9.8</h1>
+<h1 class="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-indigo-300 to-orange-300 tracking-wider mb-1">ASQE v17.9.9</h1>
 <p class="text-[9px] text-indigo-100 mb-8 font-mono tracking-widest uppercase px-2 py-1 rounded badge-elite">永豐正式簽署檢測版</p>
 <input autocomplete="off" class="w-full bg-slate-950 text-white border border-slate-700 rounded-xl px-4 py-3.5 mb-5 focus:outline-none focus:border-indigo-500 text-center tracking-widest font-mono" id="passwordInput" inputmode="numeric" onkeypress="if(event.key==='Enter') window.checkAndUnlock()" placeholder="輸入授權碼" type="password"/>
 <button class="w-full bg-gradient-to-r from-indigo-700 to-purple-700 hover:from-indigo-600 hover:to-purple-600 text-white font-black py-3.5 rounded-xl transition-all shadow-lg tracking-widest cursor-pointer" id="unlockBtn" onclick="window.checkAndUnlock()">啟動量化核心</button>
@@ -628,8 +630,8 @@
 <div class="flex items-center gap-3">
 <div class="w-8 h-8 bg-gradient-to-br from-indigo-600 to-purple-900 rounded-lg flex items-center justify-center font-bold text-sm border border-slate-700">🏛️</div>
 <div class="flex flex-col">
-<h1 class="text-base font-black tracking-widest text-slate-100 leading-none">ASQE v17.9.8</h1>
-<span class="text-[9px] text-indigo-400 font-mono tracking-wider mt-0.5">永豐 Kbars 診斷 + 已持股成本判斷 + Forward Test</span>
+<h1 class="text-base font-black tracking-widest text-slate-100 leading-none">ASQE v17.9.9</h1>
+<span class="text-[9px] text-indigo-400 font-mono tracking-wider mt-0.5">永豐 Kbars 診斷 + 已持股成本單位修正 + Forward Test</span>
 </div>
 </div>
 <div class="flex flex-wrap items-center justify-center gap-2 mt-2 sm:mt-0">
@@ -889,8 +891,8 @@
       <input id="holdCostInput" type="number" step="0.01" min="0" inputmode="decimal" placeholder="例如 2200" oninput="window.renderCurrentPositionAdvice()" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-2 py-2 text-xs font-mono text-white focus:outline-none focus:border-emerald-500"/>
     </div>
     <div>
-      <label class="block text-[9px] text-slate-400 mb-1">張數 / 股數</label>
-      <input id="holdQtyInput" type="number" step="0.01" min="0" inputmode="decimal" placeholder="台股填張數" oninput="window.renderCurrentPositionAdvice()" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-2 py-2 text-xs font-mono text-white focus:outline-none focus:border-emerald-500"/>
+      <label id="holdQtyLabel" class="block text-[9px] text-slate-400 mb-1">張數 / 股數</label>
+      <input id="holdQtyInput" type="number" step="0.01" min="0" inputmode="decimal" placeholder="台股填張數；美股填股數" oninput="window.renderCurrentPositionAdvice()" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-2 py-2 text-xs font-mono text-white focus:outline-none focus:border-emerald-500"/>
     </div>
   </div>
   <div class="grid grid-cols-4 gap-1.5 text-center mb-2">
@@ -899,7 +901,7 @@
     <div class="bg-slate-950 p-1.5 rounded border border-slate-800"><div class="text-[8px] text-slate-500">報酬率</div><div id="posPnlPct" class="text-[11px] font-black text-white">--</div></div>
     <div class="bg-slate-950 p-1.5 rounded border border-slate-800"><div class="text-[8px] text-slate-500">跌破防線後</div><div id="posStopPnl" class="text-[11px] font-black text-white">--</div></div>
   </div>
-  <div id="positionAdviceText" class="rounded-lg border border-slate-800 bg-slate-900/80 p-2 text-[12px] leading-relaxed text-slate-300">輸入成本價與張數後，系統會依照目前收盤、分數、吊燈防線與停利訊號，給出已持股判斷。</div>
+  <div id="positionAdviceText" class="rounded-lg border border-slate-800 bg-slate-900/80 p-2 text-[12px] leading-relaxed text-slate-300">輸入成本價與數量後，系統會依照目前收盤、分數、吊燈防線與停利訊號，給出已持股判斷。</div>
 </div>
 <div class="bg-slate-950 p-3 rounded border border-slate-800 text-slate-200 leading-relaxed" id="tradingRuleText">等待訊號。</div>
 </div>
@@ -1107,6 +1109,20 @@
     if (!isFinite(x)) return '--';
     return x.toFixed(x >= 100 ? 2 : 3);
   }
+  function positionUnitInfo(market) {
+    var m = String(market || (window.lastAnalysisContext || {}).market || window.currentMarket || 'TW').toUpperCase();
+    if (m === 'US') {
+      return { market:'US', unit:1, qtyLabel:'股數', placeholder:'美股填股數，例如 10', unitText:'股', help:'美股以股數計算，1 = 1 股。' };
+    }
+    return { market:'TW', unit:1000, qtyLabel:'張數', placeholder:'台股填張數，例如 1.5', unitText:'張', help:'台股以張數計算，1 張 = 1000 股。' };
+  }
+  window.updatePositionUnitLabels = function(market) {
+    var info = positionUnitInfo(market);
+    var label = $('holdQtyLabel');
+    var input = $('holdQtyInput');
+    if (label) label.innerText = info.qtyLabel + '（' + info.help + '）';
+    if (input) input.placeholder = info.placeholder;
+  };
   function readPositionInputs() {
     var cost = positionNum(($('holdCostInput') || {}).value);
     var qty = positionNum(($('holdQtyInput') || {}).value);
@@ -1143,21 +1159,25 @@
   window.renderCurrentPositionAdvice = function() {
     if (typeof window.updatePositionCardVisibility === 'function') window.updatePositionCardVisibility();
     var ctx = window.lastAnalysisContext;
+    if (typeof window.updatePositionUnitLabels === 'function') window.updatePositionUnitLabels(ctx && ctx.market ? ctx.market : window.currentMarket);
     var box = $('positionAdviceText');
     if (!box) return;
     if (!ctx || !ctx.price) {
       sf('posMarketValue','--'); sf('posPnl','--'); sf('posPnlPct','--'); sf('posStopPnl','--');
-      box.innerHTML = '等待個股分析完成後，再輸入成本價與張數。';
+      var initInfo = positionUnitInfo((window.lastAnalysisContext || {}).market);
+      box.innerHTML = '等待個股分析完成後，再輸入成本價與' + initInfo.qtyLabel + '。';
       return;
     }
     var p = readPositionInputs();
     var cost = p.cost, qty = p.qty;
     if (!(cost > 0) || !(qty > 0)) {
       sf('posMarketValue','--'); sf('posPnl','--'); sf('posPnlPct','--'); sf('posStopPnl','--');
-      box.innerHTML = '<span class="text-slate-300">目前收盤 <b class="text-white">' + positionPrice(ctx.price) + '</b>，關鍵防線 <b class="text-yellow-300">' + positionPrice(ctx.chandelier) + '</b>。輸入平均成本價與張數後，會計算損益、跌破防線後損益與已持股建議。</span>';
+      var emptyInfo = positionUnitInfo(ctx.market);
+      box.innerHTML = '<span class="text-slate-300">目前收盤 <b class="text-white">' + positionPrice(ctx.price) + '</b>，關鍵防線 <b class="text-yellow-300">' + positionPrice(ctx.chandelier) + '</b>。輸入平均成本價與' + emptyInfo.qtyLabel + '後，會計算損益、跌破防線後損益與已持股建議。<br><span class="text-[10px] text-slate-500">' + emptyInfo.help + '</span></span>';
       return;
     }
-    var unit = ctx.market === 'TW' ? 1000 : 1;
+    var unitInfo = positionUnitInfo(ctx.market);
+    var unit = unitInfo.unit;
     var units = qty * unit;
     var marketValue = ctx.price * units;
     var costValue = cost * units;
@@ -1212,7 +1232,8 @@
     if (ctx.chandelier > cost) reasons.push('防線高於成本，守線仍保有帳面獲利');
     else reasons.push('防線低於成本，跌破防線時帳面損益將偏弱');
 
-    var html = '<div class="mb-1"><span class="text-slate-400">持股：</span><b class="text-white">' + qty + (ctx.market === 'TW' ? ' 張（約 ' + Math.round(units).toLocaleString() + ' 股）' : ' 股') + '</b> ｜ <span class="text-slate-400">成本：</span><b class="text-white">' + positionPrice(cost) + '</b> ｜ <span class="text-slate-400">現價：</span><b class="text-white">' + positionPrice(ctx.price) + '</b></div>' +
+    var qtyDisplay = unitInfo.market === 'TW' ? (qty + ' 張（約 ' + Math.round(units).toLocaleString() + ' 股）') : (qty + ' 股');
+    var html = '<div class="mb-1"><span class="text-slate-400">持股：</span><b class="text-white">' + qtyDisplay + '</b> ｜ <span class="text-slate-400">成本：</span><b class="text-white">' + positionPrice(cost) + '</b> ｜ <span class="text-slate-400">現價：</span><b class="text-white">' + positionPrice(ctx.price) + '</b></div>' +
       '<div class="mb-1"><span class="text-indigo-300 font-bold">持股結論：</span><span class="' + decisionColor + ' font-black">' + decision + '</span></div>' +
       '<div class="mb-1"><span class="text-slate-400">操作：</span><span class="text-slate-100">' + actionLine + '</span></div>' +
       '<div class="mb-1"><span class="text-slate-400">若跌破防線：</span><span class="' + stopColor + ' font-bold">' + positionMoney(stopPnl, ctx.market) + '（' + positionPct(stopPnlPct) + '）</span> ｜ <span class="text-slate-400">從現價到防線可能回吐：</span><span class="text-yellow-300 font-bold">' + positionMoney(giveback, ctx.market) + '（' + (distStopPct*100).toFixed(2) + '%）</span></div>' +
