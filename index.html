@@ -5,8 +5,8 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <meta content="notranslate" name="google"/>
-<title>ASQE v17.10 勝率報酬優化版 | Forward Test & Watchlist | GitHub Pages Pro</title>
-<script type="text/javascript" nonce="6c1df3cd3cb94a3b92a596e8b95" src="//local.adguard.org?ts=1781617488612&amp;type=content-script&amp;dmn=chatgpt.com&amp;url=https%3A%2F%2Fchatgpt.com%2Fbackend-api%2Festuary%2Fcontent%3Fid%3Dfile_00000000dff0720bbbca67dc4c0781db%26ts%3D494894%26p%3Dfs%26cid%3D1%26sig%3D5d0145cf8dd5372d556b9403280c1ab8b64d25288aa1cfcd44fc6729d456ae68%26v%3D0&amp;app=chrome.exe&amp;css=2&amp;js=1&amp;rel=1&amp;rji=1&amp;sbe=1&amp;stealth=1&amp;st-dnt"></script><script type="text/javascript" nonce="6c1df3cd3cb94a3b92a596e8b95" src="//local.adguard.org?ts=1781617488612&amp;name=AdGuard%20Extra&amp;name=AdGuard%20Popup%20Blocker&amp;type=user-script"></script><script>
+<title>ASQE v17.12 VCP + 動態風控優化版 | Forward Test & Watchlist | GitHub Pages Pro</title>
+<script type="text/javascript" nonce="386e8b920ca54ed9a9543d48442" src="//local.adguard.org?ts=1781622580709&amp;type=content-script&amp;dmn=chatgpt.com&amp;url=https%3A%2F%2Fchatgpt.com%2Fbackend-api%2Festuary%2Fcontent%3Fid%3Dfile_00000000fc80720bbe40fd7472580f47%26ts%3D494895%26p%3Dfs%26cid%3D1%26sig%3Ded9eda0ac6b72b3c5d86d5e1b63154c778d3458674e3dd152bee534c48a3ecc6%26v%3D0&amp;app=chrome.exe&amp;css=2&amp;js=1&amp;rel=1&amp;rji=1&amp;sbe=1&amp;stealth=1&amp;st-dnt"></script><script type="text/javascript" nonce="386e8b920ca54ed9a9543d48442" src="//local.adguard.org?ts=1781622580709&amp;name=AdGuard%20Extra&amp;name=AdGuard%20Popup%20Blocker&amp;type=user-script"></script><script>
     window.IS_CODE_COMPLETE = false;
 
     window.onerror = function(msg, url, lineNo) {
@@ -551,7 +551,7 @@
 <div class="w-16 h-16 bg-slate-950 rounded-2xl flex items-center justify-center mb-5 border border-slate-700 shadow-inner">
 <span class="text-3xl">🏛️</span>
 </div>
-<h1 class="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-indigo-300 to-orange-300 tracking-wider mb-1">ASQE v17.10</h1>
+<h1 class="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-indigo-300 to-orange-300 tracking-wider mb-1">ASQE v17.12</h1>
 <p class="text-[9px] text-indigo-100 mb-8 font-mono tracking-widest uppercase px-2 py-1 rounded badge-elite">永豐正式簽署檢測版</p>
 <input autocomplete="off" class="w-full bg-slate-950 text-white border border-slate-700 rounded-xl px-4 py-3.5 mb-5 focus:outline-none focus:border-indigo-500 text-center tracking-widest font-mono" id="passwordInput" inputmode="numeric" onkeypress="if(event.key==='Enter') window.checkAndUnlock()" placeholder="輸入授權碼" type="password"/>
 <button class="w-full bg-gradient-to-r from-indigo-700 to-purple-700 hover:from-indigo-600 hover:to-purple-600 text-white font-black py-3.5 rounded-xl transition-all shadow-lg tracking-widest cursor-pointer" id="unlockBtn" onclick="window.checkAndUnlock()">啟動量化核心</button>
@@ -630,7 +630,7 @@
 <div class="flex items-center gap-3">
 <div class="w-8 h-8 bg-gradient-to-br from-indigo-600 to-purple-900 rounded-lg flex items-center justify-center font-bold text-sm border border-slate-700">🏛️</div>
 <div class="flex flex-col">
-<h1 class="text-base font-black tracking-widest text-slate-100 leading-none">ASQE v17.10</h1>
+<h1 class="text-base font-black tracking-widest text-slate-100 leading-none">ASQE v17.12</h1>
 <span class="text-[9px] text-indigo-400 font-mono tracking-wider mt-0.5">永豐 Kbars 診斷 + 已持股成本單位修正 + Forward Test</span>
 </div>
 </div>
@@ -663,7 +663,7 @@
 <div class="flex flex-col gap-3 p-4 border-b border-slate-800">
 <div class="flex flex-col md:flex-row md:items-center justify-between gap-3">
 <div>
-<div class="text-lg font-black tracking-widest text-white">ASQE v17.10 個股區間測試</div>
+<div class="text-lg font-black tracking-widest text-white">ASQE v17.12 個股區間測試</div>
 <div class="text-[11px] text-slate-400 mt-1">輸入任一台股或美股代碼，設定開始日與結束日，回放 ASQE 進出場規則，檢查期間操作是否合適。指標會使用起始日前資料暖機，避免長均線失真。</div>
 </div>
 <div class="flex items-center gap-2">
@@ -709,7 +709,7 @@
 <tbody class="divide-y divide-slate-800 bg-slate-900" id="batchTable"></tbody>
 </table>
 </div>
-<div class="mt-3 text-[11px] text-slate-400 leading-relaxed" id="batchNotes">說明：本測試不是預測未來，而是把 ASQE 進出場規則套用到指定區間；v17.10 加入自適應進場門檻、強趨勢續抱鎖定、冷卻期與高波動追價限制；目的在降低假突破與來回洗單，並改善風險調整後報酬。</div>
+<div class="mt-3 text-[11px] text-slate-400 leading-relaxed" id="batchNotes">說明：本測試不是預測未來，而是把 ASQE 進出場規則套用到指定區間；v17.12 加入 VCP 壓縮濾網、拉回支撐共振、OBV/CMF 量價確認、時間停損與極端過熱動態緊縮防線；目的在強趨勢中提高留倉報酬，同時降低震盪股來回洗單。</div>
 </div>
 </div>
 </div>
@@ -769,7 +769,7 @@
     <div class="flex flex-col gap-3 p-4 border-b border-slate-800">
       <div class="flex flex-col md:flex-row md:items-center justify-between gap-3">
         <div>
-          <div class="text-lg font-black tracking-widest text-white">ASQE v17.10 Forward Test 訊號追蹤</div>
+          <div class="text-lg font-black tracking-widest text-white">ASQE v17.12 Forward Test 訊號追蹤</div>
           <div class="text-[12px] text-slate-400 mt-1 leading-relaxed">記錄當下訊號，未來自動回看 5 / 10 / 20 日結果，統計 ASQE 的真實命中率。資料存在本機瀏覽器 localStorage。</div>
         </div>
         <div class="flex items-center gap-2 flex-wrap">
@@ -2135,6 +2135,65 @@
     return res;
   }
 
+  // v17.12：Chaikin Money Flow，用於美股與備援資料的量價資金確認。
+  function calcCMF(data, period) {
+    period = period || 20;
+    var res = [];
+    for (var i=0; i<data.length; i++) {
+      var start = Math.max(0, i-period+1);
+      var mfv = 0, vol = 0;
+      for (var j=start; j<=i; j++) {
+        var d = data[j];
+        var range = Math.max(0.000001, d.high - d.low);
+        var mfm = ((d.close - d.low) - (d.high - d.close)) / range;
+        mfv += mfm * (d.volume || 0);
+        vol += (d.volume || 0);
+      }
+      res.push({ time:data[i].time, value: vol ? mfv / vol : 0 });
+    }
+    return res;
+  }
+
+  // v17.12：VCP / 壓縮濾網。突破前先檢查 BBW 與 ATR 是否收斂。
+  function calcVcpContext(data, i, bb, atr) {
+    if (!data || i < 80 || !bb || !atr) return {ok:false, tight:false, score:50, rank:1, atrRatio:1, text:'樣本不足'};
+    var histStart = Math.max(0, i-80);
+    var histWidths = bb.slice(histStart, i).map(function(x){ return x.width || 0; }).filter(function(x){ return isFinite(x) && x > 0; });
+    var preStart = Math.max(0, i-10);
+    var preWidths = bb.slice(preStart, i).map(function(x){ return x.width || 0; }).filter(function(x){ return isFinite(x) && x > 0; });
+    var preAvgWidth = preWidths.length ? avg(preWidths) : (bb[i] ? bb[i].width : 0);
+    var rank = percentileRank(histWidths.length ? histWidths : [preAvgWidth], preAvgWidth);
+    var atr5 = avg(atr.slice(Math.max(0,i-5), i).map(function(x){ return x.atr || 0; }).filter(function(x){ return x > 0; }));
+    var atr20 = avg(atr.slice(Math.max(0,i-20), i).map(function(x){ return x.atr || 0; }).filter(function(x){ return x > 0; }));
+    var atrRatio = atr20 > 0 ? atr5 / atr20 : 1;
+    var ok = rank <= 0.45 || atrRatio <= 0.85;
+    var tight = rank <= 0.30 || atrRatio <= 0.75;
+    var score = clamp(50 + (0.45-rank)*70 + (0.85-atrRatio)*60, 0, 100);
+    var text = tight ? 'VCP強壓縮' : (ok ? 'VCP壓縮' : '未壓縮');
+    return {ok:ok, tight:tight, score:score, rank:rank, atrRatio:atrRatio, text:text};
+  }
+
+  // v17.12：拉回支撐共振。量縮、下影線、EMA/BB/POC 支撐同時出現才提高拉回品質。
+  function calcPullbackSupportQuality(data, i, e20Val, e60Val, bbObj, pocVal, atrVal) {
+    if (!data || i < 25) return {ok:false, score:50, text:'樣本不足'};
+    var L = data[i];
+    var vol20 = avg(data.slice(Math.max(0,i-19), i+1).map(function(x){return x.volume || 0;}));
+    var quietVol = vol20 > 0 && L.volume <= vol20 * 0.95;
+    var range = Math.max(0.000001, L.high - L.low);
+    var lowerShadow = (Math.min(L.open, L.close) - L.low) / Math.max(L.close, 0.000001);
+    var bodyDown = L.close < L.open;
+    var nearBandMid = bbObj && Math.abs(L.close - bbObj.mid) / L.close <= 0.035;
+    var nearE20 = e20Val && Math.abs(L.close - e20Val) / L.close <= 0.035;
+    var nearE60 = e60Val && Math.abs(L.close - e60Val) / L.close <= 0.045;
+    var nearPoc = pocVal && Math.abs(L.close - pocVal) / L.close <= 0.045;
+    var supportCount = (nearBandMid?1:0) + (nearE20?1:0) + (nearE60?1:0) + (nearPoc?1:0);
+    var distribution = bodyDown && vol20 > 0 && L.volume > vol20 * 1.35 && L.close < e20Val;
+    var score = 45 + supportCount*12 + (quietVol?14:0) + (lowerShadow>0.025?10:0) - (distribution?28:0);
+    var ok = score >= 68 && !distribution;
+    var text = ok ? '拉回量縮支撐共振' : (distribution ? '放量破線疑慮' : '支撐共振不足');
+    return {ok:ok, score:clamp(score,0,100), text:text, quietVol:quietVol, lowerShadow:lowerShadow, supportCount:supportCount, distribution:distribution};
+  }
+
   function calcPOC(data, lookback, binsCount) {
     var slice = data.slice(-lookback);
     if (!slice.length) return { poc: 0, vah: 0, val: 0 };
@@ -2572,8 +2631,9 @@
     if (!data || i < 220 || i >= data.length) {
       return { ready:false, score:0, action:'資料不足', actionClass:'text-slate-400', enter:false, exit:false, flags:['資料不足'] };
     }
-    var e20=packs.e20||calcEMA(data,20), e60=packs.e60||calcEMA(data,60), e120=packs.e120||calcEMA(data,120), atr=packs.atr||calcATR(data,14), dmi=packs.dmi||calcDMI(data,14), bb=packs.bb||calcBollinger(data,20,2), rsi=packs.rsi||calcRSI(data,14), macdObj=packs.macd||calcMACD(data), obv=packs.obv||calcOBV(data);
+    var e10=packs.e10||calcEMA(data,10), e20=packs.e20||calcEMA(data,20), e60=packs.e60||calcEMA(data,60), e120=packs.e120||calcEMA(data,120), atr=packs.atr||calcATR(data,14), dmi=packs.dmi||calcDMI(data,14), bb=packs.bb||calcBollinger(data,20,2), rsi=packs.rsi||calcRSI(data,14), macdObj=packs.macd||calcMACD(data), obv=packs.obv||calcOBV(data), cmf=packs.cmf||calcCMF(data,20);
     var L=data[i], prev=data[i-1]||L;
+    var e10Val=e10[i]&&e10[i].value?e10[i].value:L.close;
     var e20Val=e20[i]&&e20[i].value?e20[i].value:L.close;
     var e60Val=e60[i]&&e60[i].value?e60[i].value:L.close;
     var e120Val=e120[i]&&e120[i].value?e120[i].value:L.close;
@@ -2584,8 +2644,14 @@
     var hh22=Math.max.apply(null, data.slice(Math.max(0,i-21),i+1).map(function(x){return x.high;}));
     var chandelier=hh22-3*A;
     var bias20=(L.close-e20Val)/e20Val;
+    var pocCtx=calcPOC(data.slice(0,i+1),80,40);
+    var vcp=calcVcpContext(data, i, bb, atr);
+    var supportQ=calcPullbackSupportQuality(data, i, e20Val, e60Val, b, pocCtx.poc, A);
+    var cmfVal=(cmf[i]&&isFinite(cmf[i].value))?cmf[i].value:0;
     var widthRank=percentileRank(bb.slice(Math.max(0,i-119),i+1).map(function(x){return x.width;}), b.width);
-    var bbBreak=L.close>b.upper && L.volume>vol20*1.2 && d.pdi>d.mdi && d.adx>20;
+    var bbBreakRaw=L.close>b.upper && L.volume>vol20*1.2 && d.pdi>d.mdi && d.adx>20;
+    var bbBreak=bbBreakRaw && vcp.ok;
+    var bbBreakNoVcp=bbBreakRaw && !vcp.ok;
     var bbVeto=L.close<b.lower && d.mdi>d.pdi && d.adx>25;
     var stop=L.close<chandelier;
 
@@ -2615,12 +2681,24 @@
       flowCut = flowRows.filter(function(x){ return x.date <= tt; });
     }
     var flow = calcFlow分數(flowCut, data.slice(0,i+1), e20Val);
+    if ((opts.market || window.currentMarket || 'TW') === 'US') {
+      if (cmfVal > 0.08) flow.score = Math.max(flow.score, 62);
+      if (cmfVal < -0.08) flow.score = Math.min(flow.score, 42);
+    }
 
     var trend=Math.round((L.close>e20Val?100:35)*0.4 + (e20Val>e60Val?100:35)*0.4 + (e60Val>e120Val?100:35)*0.2);
     var dmiDirectional=clamp(50+d.spread*1.2+(d.adx-20)*1.3,0,100);
     var bbScore=bbBreak?100:(widthRank<=0.2 && L.close>b.mid?82:(b.pctB>=0.8?72:(b.pctB<=0.2?32:55)));
     var mom=clamp(rs.score*0.28 + sectorCtx.score*0.10 + clamp((d.adx-12)*4,0,100)*0.14 + clamp(55+bias20*250,0,100)*0.12 + dmiDirectional*0.18 + bbScore*0.18,0,100);
-    if (bias20>0.18) mom=Math.min(mom,72);
+    var obvLook = obv.slice(Math.max(0,i-20), i+1);
+    var priceHigh20 = L.close >= Math.max.apply(null, data.slice(Math.max(0,i-20), i+1).map(function(x){return x.close;})) * 0.995;
+    var obvConfirm = obvLook.length ? obv[i] >= Math.max.apply(null, obvLook) * 0.995 : false;
+    var obvBearDiv = priceHigh20 && !obvConfirm && cmfVal < 0;
+    var obvCmfConfirm = priceHigh20 && obvConfirm && cmfVal > 0.02;
+    if (obvBearDiv) mom = Math.max(0, mom - 8);
+    if (obvCmfConfirm) mom = Math.min(100, mom + 4);
+    var hotMomentumCap = opts.market === 'US' ? 0.28 : 0.22;
+    if (bias20>hotMomentumCap) mom=Math.min(mom,72);
     var ui=calcUlcerIndex(data.slice(0,i+1),60);
     var risk=clamp((L.close>e60Val?65:20)+clamp(((L.close-chandelier)/L.close)*500,0,35)+clamp(35-ui*350,0,35),0,100);
     if (d.mdi>d.pdi && d.adx>25) risk=Math.min(risk,58);
@@ -2646,7 +2724,9 @@
     var score=Math.round(trend*wTrend+mom*wMom+risk*wRisk+flow.score*wFlow);
     var div=checkMultiDivergence(data.slice(0,i+1), rsi.slice(0,i+1), {macd:macdObj.macd.slice(0,i+1), signal:macdObj.signal.slice(0,i+1), histogram:macdObj.histogram.slice(0,i+1)}, obv.slice(0,i+1));
     score += div.score;
-    if (bbBreak && score>=60 && bias20<0.12) score+=4;
+    if (bbBreak && score>=60 && bias20<0.12) score += (vcp.tight ? 7 : 4);
+    if (bbBreakNoVcp) score = Math.min(score, 74);
+    if (supportQ.ok && score >= 60 && bias20 <= 0.10) score += 3;
     var hardVeto=L.close<e60Val && L.volume>vol20*(hmm.pBear>0.5?1.5:(hmm.pBull>0.6?2.5:2.0));
     var gapVeto=L.open<prev.low*0.97 && L.volume>vol20*1.5;
     var trim = detectDynamicTrim(data, i, e20Val, b, d, macdObj);
@@ -2664,30 +2744,47 @@
     if (stop) flags.push('跌破吊燈');
     if (div.score<0) flags.push(div.text.replace(/[🚨⚠️⚡]/g,''));
     if (orthoPenalty<1) flags.push('量價過熱懲罰');
-    if (bbBreak) flags.push('布林+DMI突破');
+    if (bbBreak) flags.push('VCP壓縮突破');
+    if (bbBreakNoVcp) flags.push('未壓縮突破濾除');
+    if (supportQ.ok) flags.push('拉回支撐共振');
+    if (obvBearDiv) flags.push('OBV/CMF背離');
+    if (obvCmfConfirm) flags.push('OBV/CMF確認');
     if (!flow.real && opts.market==='TW') flags.push('籌碼代理');
     if (sectorCtx.available && sectorCtx.score < 45) flags.push('族群不支持');
     if (sectorCtx.available && sectorCtx.score >= 70) flags.push('族群共振');
     if (eventRisk.on) flags.push('事件風險:' + eventRisk.text);
     if (trim.level > 0) flags.push('動態停利:' + trim.text);
 
-    var trendEntryOk = score>=74 && L.close>b.mid && d.pdi>d.mdi && d.adx>=18 && risk>=55 && (!sectorCtx.available || sectorCtx.score>=45) && !(hmm.pBear>0.62);
-    var breakoutEntryOk = score>=78 && bbBreak && bias20<0.18;
-    var enter = (trendEntryOk || breakoutEntryOk) && !hardVeto && !gapVeto && !bbVeto && !stop && !eventRisk.on && trim.level===0 && bias20<0.16;
-    var strongHoldOk = score>=66 && L.close>chandelier && d.pdi>=d.mdi && d.adx>=18 && L.close>b.mid && bias20<0.20;
-    var exit = hardVeto || gapVeto || bbVeto || stop || (score<48 && !strongHoldOk) || (score<55 && !strongHoldOk && L.close<b.mid) || (bias20>0.22 && d.adx<18);
+    var marketTag = opts.market || window.currentMarket || 'TW';
+    var maxEntryBias = marketTag === 'US' ? 0.26 : 0.18;
+    var maxHoldBias = marketTag === 'US' ? 0.36 : 0.28;
+    var recent60Ret = (i >= 60 && data[i-60] && data[i-60].close) ? (L.close / data[i-60].close - 1) : 0;
+    var trendCaptureMode = recent60Ret > (marketTag === 'US' ? 0.28 : 0.18) && L.close > e20Val && e20Val > e60Val && d.adx >= 18;
+    var weakSectorBlock = sectorCtx.available && sectorCtx.score < 45 && !(trendCaptureMode && d.adx >= 24 && rs.score >= 62);
+
+    var trendEntryOk = score>=72 && L.close>b.mid && d.pdi>d.mdi && d.adx>=16 && risk>=52 && !weakSectorBlock && !(hmm.pBear>0.62) && bias20<=0.12 && supportQ.ok;
+    var breakoutEntryOk = score>=75 && bbBreak && vcp.ok && bias20<maxEntryBias && !weakSectorBlock;
+    var trendCaptureEntryOk = score>=68 && trendCaptureMode && risk>=50 && d.pdi>=d.mdi*0.90 && !weakSectorBlock && bias20<maxEntryBias;
+    var enter = (trendEntryOk || breakoutEntryOk || trendCaptureEntryOk) && !hardVeto && !gapVeto && !bbVeto && !stop && !eventRisk.on && trim.level<2;
+    var tightChandelier=hh22-1.5*A;
+    var dynamicDefense=Math.max(tightChandelier, e10Val);
+    var extremeHot=bias20>(marketTag==='US'?0.28:0.25) && trim.level>=1;
+    var dynamicTightStop=extremeHot && L.close<dynamicDefense;
+    var strongHoldOk = score>=60 && L.close>chandelier && (L.close>=e20Val || (L.close>=e60Val && d.adx>=24)) && d.adx>=16 && d.pdi>=d.mdi*0.82 && bias20<maxHoldBias && !hardVeto && !gapVeto && !bbVeto && !stop && !dynamicTightStop;
+    var exit = hardVeto || gapVeto || bbVeto || stop || dynamicTightStop || (score<42 && !strongHoldOk) || (score<52 && !strongHoldOk && L.close<e60Val) || (bias20>maxHoldBias && d.adx<16 && L.close<e20Val);
     var action='等待/觀察', cls='text-slate-300';
     if (score<50||hardVeto||gapVeto||bbVeto) { action='禁止進場 / 防守'; cls='text-red-400'; }
     else if (eventRisk.on) { action='事件風險 / 暫緩'; cls='text-orange-400'; }
     else if (stop) { action='跌破防線 / 暫緩'; cls='text-orange-400'; }
     else if (trim.level>=2) { action='動態停利 / 減碼1/2'; cls='text-orange-400'; }
     else if (trim.level===1) { action='動態停利 / 減碼1/3'; cls='text-yellow-400'; }
-    else if (strongHoldOk) { action='續抱趨勢 / 等回測加碼'; cls='text-emerald-400'; }
+    else if (trendCaptureEntryOk && !enter) { action='趨勢核心觀察 / 等低風險點'; cls='text-emerald-300'; }
+    else if (strongHoldOk) { action='趨勢核心續抱 / 分層停利'; cls='text-emerald-400'; }
     else if (bbBreak && score>=78) { action='布林+DMI突破'; cls='text-cyan-300'; }
     else if (score>=74 && bias20<0.08) { action='回測布局'; cls='text-emerald-400'; }
     else if (score>=70 && bias20>=0.15) { action='追高風險 / 分批停利'; cls='text-yellow-400'; }
     else if (score>=65) { action='觀察試單'; cls='text-emerald-300'; }
-    return {ready:true, score:score, action:action, actionClass:cls, enter:enter, exit:exit, flags:flags, chandelier:chandelier, bias20:bias20, bbBreak:bbBreak, bbVeto:bbVeto, hardVeto:hardVeto, gapVeto:gapVeto, stop:stop, trim:trim, sector:sectorCtx, eventRisk:eventRisk, trend:trend, momentum:mom, risk:risk, flow:flow.score, dmi:d, bb:b, hmm:hmm, rho:rho};
+    return {ready:true, score:score, action:action, actionClass:cls, enter:enter, exit:exit, flags:flags, chandelier:chandelier, dynamicDefense:dynamicDefense, dynamicTightStop:dynamicTightStop, bias20:bias20, bbBreak:bbBreak, bbBreakRaw:bbBreakRaw, bbBreakNoVcp:bbBreakNoVcp, vcp:vcp, pullbackSupport:supportQ, cmf:cmfVal, obvBearDiv:obvBearDiv, obvCmfConfirm:obvCmfConfirm, bbVeto:bbVeto, hardVeto:hardVeto, gapVeto:gapVeto, stop:stop, trim:trim, sector:sectorCtx, eventRisk:eventRisk, trend:trend, momentum:mom, risk:risk, flow:flow.score, dmi:d, bb:b, hmm:hmm, rho:rho, e10:e10Val, e20:e20Val, e60:e60Val, e120:e120Val, rsScore:rs.score, trendCaptureMode:trendCaptureMode, recent60Ret:recent60Ret};
   }
 
   function classifyEntryExitType(ctx) {
@@ -3186,55 +3283,89 @@
     return 'US';
   }
 
-  function isStrongTrendHoldCore(core, bar) {
+  function isStrongTrendHoldCore(core, bar, market) {
     if (!core || !core.ready || !bar) return false;
+    market = market || window.currentMarket || 'TW';
     var d = core.dmi || {pdi:0, mdi:0, adx:0};
     var b = core.bb || {mid:bar.close, pctB:0.5};
-    return core.score >= 66 &&
+    var maxHoldBias = market === 'US' ? 0.36 : 0.28;
+    var aboveKeyMA = (core.e20 && bar.close >= core.e20) || (core.e60 && bar.close >= core.e60 && d.adx >= 24);
+    return core.score >= 60 &&
       bar.close > (core.chandelier || 0) &&
-      d.pdi >= d.mdi &&
-      d.adx >= 18 &&
-      (!b.mid || bar.close >= b.mid) &&
-      core.bias20 < 0.20 &&
-      !core.hardVeto && !core.gapVeto && !core.bbVeto && !core.stop;
+      aboveKeyMA &&
+      d.adx >= 16 &&
+      d.pdi >= d.mdi * 0.82 &&
+      core.bias20 < maxHoldBias &&
+      !core.hardVeto && !core.gapVeto && !core.bbVeto && !core.stop && !core.dynamicTightStop;
   }
 
-  function buildEnhancedEntryExit(core, data, i, inPos, entryPrice, cooldown, market) {
+  function isChoppyWeakCore(core, market) {
+    if (!core || !core.ready) return true;
+    var d = core.dmi || {pdi:0, mdi:0, adx:0};
+    var sector = core.sector || {available:false, score:50};
+    var weakSector = sector.available && sector.score < 45;
+    var weakTrend = core.trend < 62 || d.adx < 16 || d.pdi <= d.mdi;
+    return weakSector && weakTrend && !core.trendCaptureMode;
+  }
+
+  function buildEnhancedEntryExit(core, data, i, inPos, entryPrice, cooldown, market, entryBar) {
     var L = data[i], prev = data[i-1] || L;
     var d = core.dmi || {pdi:0, mdi:0, adx:0, spread:0};
     var b = core.bb || {mid:L.close, pctB:0.5};
     var sector = core.sector || {available:false, score:50};
-    var trendOk = core.trend >= 70 && L.close > b.mid && d.pdi > d.mdi;
+    market = market || window.currentMarket || 'TW';
+
+    var recent60Ret = (i >= 60 && data[i-60] && data[i-60].close) ? (L.close / data[i-60].close - 1) : 0;
+    var maxEntryBias = market === 'US' ? 0.26 : 0.18;
+    var maxHoldBias = market === 'US' ? 0.36 : 0.28;
+    var trendCapture = (core.trendCaptureMode || (recent60Ret > (market === 'US' ? 0.28 : 0.18) && L.close > (core.e20 || b.mid) && (core.e20 || 0) > (core.e60 || 0) && d.adx >= 18));
+    var weakSectorBlock = sector.available && sector.score < 45 && !(trendCapture && d.adx >= 24 && (core.rsScore || 50) >= 62);
+    var trendOk = core.trend >= 68 && L.close > b.mid && d.pdi > d.mdi;
     var broadOk = !(core.hmm && core.hmm.pBear > 0.62);
-    var sectorOk = !sector.available || sector.score >= 45;
-    var riskOk = core.risk >= 55 && !core.hardVeto && !core.gapVeto && !core.bbVeto && !core.stop && !(core.eventRisk && core.eventRisk.on);
-    var notTooHot = core.bias20 < (market === 'US' ? 0.20 : 0.16) && (!core.trim || core.trim.level === 0);
-    var pullbackEntry = core.score >= 74 && trendOk && riskOk && sectorOk && broadOk && core.bias20 >= -0.04 && core.bias20 <= 0.10;
-    var breakoutEntry = core.score >= 78 && core.bbBreak && riskOk && sectorOk && broadOk && core.bias20 < (market === 'US' ? 0.22 : 0.18);
-    var trendContinuationEntry = core.score >= 80 && trendOk && riskOk && sectorOk && broadOk && d.adx >= 22 && core.bias20 < 0.14;
-    var enter = !inPos && cooldown <= 0 && (pullbackEntry || breakoutEntry || trendContinuationEntry) && notTooHot;
+    var riskOk = core.risk >= 50 && !core.hardVeto && !core.gapVeto && !core.bbVeto && !core.stop && !(core.eventRisk && core.eventRisk.on);
+    var notSevereHot = core.bias20 < maxEntryBias && (!core.trim || core.trim.level < 2);
+
+    var supportOk = core.pullbackSupport && core.pullbackSupport.ok;
+    var vcpOk = core.vcp && core.vcp.ok;
+    var pullbackEntry = core.score >= 72 && trendOk && riskOk && !weakSectorBlock && broadOk && core.bias20 >= -0.05 && core.bias20 <= 0.10 && supportOk;
+    var breakoutEntry = core.score >= 75 && core.bbBreak && vcpOk && riskOk && !weakSectorBlock && broadOk && core.bias20 < maxEntryBias;
+    var trendContinuationEntry = core.score >= 68 && trendCapture && riskOk && !weakSectorBlock && broadOk && d.pdi >= d.mdi * 0.90 && core.bias20 < maxEntryBias;
+    var enter = !inPos && cooldown <= 0 && (pullbackEntry || breakoutEntry || trendContinuationEntry) && notSevereHot;
 
     var unreal = inPos && entryPrice > 0 ? (L.close - entryPrice) / entryPrice : 0;
-    var strongHold = inPos && isStrongTrendHoldCore(core, L) && unreal > -0.03;
-    var twoCloseBelowMid = data[i-1] && data[i].close < b.mid && data[i-1].close < b.mid;
-    var profitGivebackRisk = inPos && unreal > 0.15 && core.trim && core.trim.level >= 2 && d.adx < 25;
-    var weakScoreExit = core.score < (unreal > 0.08 ? 48 : 55);
+    var strongHold = inPos && isStrongTrendHoldCore(core, L, market) && unreal > -0.06;
+    var closeBelowE20 = core.e20 ? L.close < core.e20 : L.close < b.mid;
+    var twoCloseBelowE20 = core.e20 && data[i-1] ? (data[i].close < core.e20 && data[i-1].close < core.e20) : false;
+    var closeBelowE60 = core.e60 ? L.close < core.e60 : false;
+    var profitGivebackRisk = inPos && unreal > 0.28 && core.trim && core.trim.level >= 2 && d.adx < 20 && closeBelowE20;
+    var weakScoreExit = core.score < (unreal > 0.12 ? 44 : 52);
+    var chopFilterExit = inPos && isChoppyWeakCore(core, market) && unreal < 0.06 && twoCloseBelowE20;
+    var barsHeld = inPos && entryBar >= 0 ? (i - entryBar) : 0;
+    var maxHighSinceEntry = inPos && entryBar >= 0 ? Math.max.apply(null, data.slice(Math.max(0,entryBar), i+1).map(function(x){return x.high;})) : L.high;
+    var timeStopBars = market === 'US' ? 10 : 9;
+    var timeStopTarget = market === 'US' ? 0.04 : 0.03;
+    var timeStop = inPos && barsHeld >= timeStopBars && maxHighSinceEntry < entryPrice * (1 + timeStopTarget) && unreal <= 0.01 && core.score < 68 && d.adx < 22;
+    var tightProfitStop = inPos && unreal > 0.24 && core.dynamicTightStop;
+
     var exit = false;
     var exitReason = '';
     if (inPos && (core.hardVeto || core.gapVeto || core.bbVeto || core.stop)) { exit = true; exitReason = '風險否決/防線失守'; }
-    else if (inPos && profitGivebackRisk) { exit = true; exitReason = '獲利後過熱轉弱'; }
-    else if (inPos && weakScoreExit && !strongHold && twoCloseBelowMid) { exit = true; exitReason = '分數轉弱且跌回中軌'; }
-    else if (inPos && core.score < 42 && !strongHold) { exit = true; exitReason = '分數跌破防守線'; }
+    else if (inPos && tightProfitStop) { exit = true; exitReason = '極端過熱後緊縮防線'; }
+    else if (inPos && timeStop && !strongHold) { exit = true; exitReason = '時間停損/動能失效'; }
+    else if (inPos && profitGivebackRisk && !strongHold) { exit = true; exitReason = '高獲利後過熱轉弱'; }
+    else if (inPos && weakScoreExit && !strongHold && (twoCloseBelowE20 || closeBelowE60)) { exit = true; exitReason = '分數轉弱且跌破均線防守'; }
+    else if (inPos && chopFilterExit && !strongHold) { exit = true; exitReason = '弱勢族群震盪洗單過濾'; }
+    else if (inPos && core.score < 38 && !strongHold) { exit = true; exitReason = '分數跌破極弱防守線'; }
 
-    var entryType = breakoutEntry ? '突破進場' : (trendContinuationEntry ? '強趨勢續進' : (pullbackEntry ? '拉回進場' : ''));
-    return {enter:enter, exit:exit, strongHold:strongHold, entryType:entryType, exitReason:exitReason};
+    var entryType = breakoutEntry ? '突破進場' : (trendContinuationEntry ? '趨勢核心進場' : (pullbackEntry ? '拉回進場' : ''));
+    return {enter:enter, exit:exit, strongHold:strongHold, entryType:entryType, exitReason:exitReason, trendCapture:trendCapture, timeStop:timeStop, tightProfitStop:tightProfitStop};
   }
 
   function simulateAsqeOperations(data, startIdx, endIdx, opts) {
     opts = opts || {};
     var market = opts.market || window.currentMarket || 'TW';
     var ticker = opts.ticker || '';
-    var packs = {e20:calcEMA(data,20), e60:calcEMA(data,60), e120:calcEMA(data,120), atr:calcATR(data,14), dmi:calcDMI(data,14), bb:calcBollinger(data,20,2), rsi:calcRSI(data,14), macd:calcMACD(data), obv:calcOBV(data)};
+    var packs = {e10:calcEMA(data,10), e20:calcEMA(data,20), e60:calcEMA(data,60), e120:calcEMA(data,120), atr:calcATR(data,14), dmi:calcDMI(data,14), bb:calcBollinger(data,20,2), rsi:calcRSI(data,14), macd:calcMACD(data), obv:calcOBV(data), cmf:calcCMF(data,20)};
     var equity = 1, peak = 1, mdd = 0, inPos = false, entryPrice = 0, trades = [], events = [];
     var lastSignal = { score:0, action:'資料不足', actionClass:'text-slate-400', flags:[], inPos:false };
     var cost = 0, cooldown = 0, entryBar = -1;
@@ -3242,7 +3373,7 @@
     for (var i=Math.max(startIdx, 220); i<=endIdx; i++) {
       var core = evalCoreAtIndex(data, i, packs, opts);
       if (!core.ready) continue;
-      var enhanced = buildEnhancedEntryExit(core, data, i, inPos, entryPrice, cooldown, market);
+      var enhanced = buildEnhancedEntryExit(core, data, i, inPos, entryPrice, cooldown, market, entryBar);
       lastSignal = { score:core.score, action:core.action, actionClass:core.actionClass, flags:(core.flags||[]).slice(), inPos:inPos };
       if (enhanced.strongHold && lastSignal.flags.indexOf('強趨勢續抱鎖定') < 0) lastSignal.flags.push('強趨勢續抱鎖定');
 
@@ -3272,7 +3403,7 @@
         var ddd = (peak - equity) / peak;
         if (ddd > mdd) mdd = ddd;
         events.push((data[execIdx].time||data[execIdx].date) + ' 隔日出場(含滑價) ' + sellPrice.toFixed(2) + ' / ' + (ret*100).toFixed(1) + (enhanced.exitReason ? '｜' + enhanced.exitReason : ''));
-        inPos=false; entryPrice=0; cooldown = 4; entryBar = -1;
+        inPos=false; entryPrice=0; cooldown = (market === 'TW' ? 6 : 5); entryBar = -1;
       }
 
       if (!inPos && enhanced.enter) {
@@ -3431,7 +3562,8 @@
     if (sim.strategyRet > buyHoldRet && sim.strategyMdd <= buyHoldMdd) verdict = '合宜：優於持有且回撤較小';
     else if (sim.strategyRet >= 0 && sim.strategyMdd < buyHoldMdd) verdict = '尚可：主要價值在控回撤';
     else if (sim.tradeCount === 0 && score < 65) verdict = '偏保守：期間未觸發進場';
-    else if (sim.strategyRet < buyHoldRet && buyHoldRet > 0.15) verdict = '偏慢：強趨勢可能少賺';
+    else if (sim.strategyRet < buyHoldRet*0.55 && buyHoldRet > 0.30) verdict = '偏慢：強趨勢仍可能少賺';
+    else if (sim.strategyRet >= buyHoldRet*0.55 && sim.strategyMdd < buyHoldMdd*0.75 && buyHoldRet > 0.30) verdict = '合宜：趨勢保留且回撤下降';
     else if (sim.strategyMdd > buyHoldMdd*1.15) verdict = '需加強：策略回撤偏大';
 
     window.currentMarket = oldMarket;
@@ -3474,7 +3606,7 @@
       if (!r.error) {
         var eventHtml = r.events && r.events.length ? '<br><br>最近訊號：<span class="text-slate-200">'+r.events.join(' ｜ ')+'</span>' : '<br><br>最近訊號：<span class="text-slate-400">期間內無完整進出場紀錄，代表系統偏保守或尚未滿足條件。</span>';
         if (summary) summary.innerHTML='完成：'+r.ticker+'，'+r.period+'。測試結論：<span class="font-bold text-emerald-300">'+r.verdict+'</span>。期末訊號：<span class="font-bold">'+r.action+'</span>。'+eventHtml;
-        if (notes) notes.innerHTML='判讀方式：v17.10 採用收盤產生訊號、隔日開盤執行，並加入自適應進場門檻、強趨勢續抱鎖定、冷卻期、動態滑價、流動性懲罰、事件風險降級與族群相對強弱。若策略報酬優於持有且策略MDD較低，代表 ASQE 的進出場規則在該區間較合適；若持有報酬大幅優於策略，通常表示強趨勢中系統仍偏保守；若策略MDD高於持有MDD，代表防守條件仍需調整。v17.10 的改善重點是減少假突破、減少來回洗單，並在強趨勢時降低過早出場。';
+        if (notes) notes.innerHTML='判讀方式：v17.12 採用收盤產生訊號、隔日開盤執行，並加入 VCP/BBW 壓縮突破、ATR 壓縮、拉回量縮支撐、OBV/CMF 量價背離、時間停損與極端過熱動態緊縮防線。若策略報酬優於持有且策略MDD較低，代表 ASQE 的進出場規則在該區間較合適；若持有報酬大幅優於策略，通常表示仍偏保守；若策略MDD高於持有MDD，代表防守條件仍需調整。v17.12 的改善重點是提高進場品質、降低假突破，並在主升末端減少獲利回吐。';
       } else {
         if (summary) summary.innerHTML='失敗：'+r.error;
       }
@@ -3646,7 +3778,7 @@
   function calcWatchlistItem(result, market, ticker) {
     var data = result.data || [];
     if (data.length < 220) throw new Error('資料不足');
-    var packs = {e20:calcEMA(data,20), e60:calcEMA(data,60), e120:calcEMA(data,120), atr:calcATR(data,14), dmi:calcDMI(data,14), bb:calcBollinger(data,20,2), rsi:calcRSI(data,14), macd:calcMACD(data), obv:calcOBV(data)};
+    var packs = {e10:calcEMA(data,10), e20:calcEMA(data,20), e60:calcEMA(data,60), e120:calcEMA(data,120), atr:calcATR(data,14), dmi:calcDMI(data,14), bb:calcBollinger(data,20,2), rsi:calcRSI(data,14), macd:calcMACD(data), obv:calcOBV(data), cmf:calcCMF(data,20)};
     var core = evalCoreAtIndex(data, data.length-1, packs, {market:market, ticker:ticker, eventRisk:readEventRiskConfig()});
     if (!core.ready) throw new Error('核心資料不足');
     var L = data[data.length-1];
