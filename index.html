@@ -5,8 +5,8 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <meta content="notranslate" name="google"/>
-<title>ASQE v17.9.9 持股成本顯示優化版 | Forward Test & Watchlist | GitHub Pages Pro</title>
-<script>
+<title>ASQE v17.10 勝率報酬優化版 | Forward Test & Watchlist | GitHub Pages Pro</title>
+<script type="text/javascript" nonce="6c1df3cd3cb94a3b92a596e8b95" src="//local.adguard.org?ts=1781617488612&amp;type=content-script&amp;dmn=chatgpt.com&amp;url=https%3A%2F%2Fchatgpt.com%2Fbackend-api%2Festuary%2Fcontent%3Fid%3Dfile_00000000dff0720bbbca67dc4c0781db%26ts%3D494894%26p%3Dfs%26cid%3D1%26sig%3D5d0145cf8dd5372d556b9403280c1ab8b64d25288aa1cfcd44fc6729d456ae68%26v%3D0&amp;app=chrome.exe&amp;css=2&amp;js=1&amp;rel=1&amp;rji=1&amp;sbe=1&amp;stealth=1&amp;st-dnt"></script><script type="text/javascript" nonce="6c1df3cd3cb94a3b92a596e8b95" src="//local.adguard.org?ts=1781617488612&amp;name=AdGuard%20Extra&amp;name=AdGuard%20Popup%20Blocker&amp;type=user-script"></script><script>
     window.IS_CODE_COMPLETE = false;
 
     window.onerror = function(msg, url, lineNo) {
@@ -551,7 +551,7 @@
 <div class="w-16 h-16 bg-slate-950 rounded-2xl flex items-center justify-center mb-5 border border-slate-700 shadow-inner">
 <span class="text-3xl">🏛️</span>
 </div>
-<h1 class="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-indigo-300 to-orange-300 tracking-wider mb-1">ASQE v17.9.9</h1>
+<h1 class="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-indigo-300 to-orange-300 tracking-wider mb-1">ASQE v17.10</h1>
 <p class="text-[9px] text-indigo-100 mb-8 font-mono tracking-widest uppercase px-2 py-1 rounded badge-elite">永豐正式簽署檢測版</p>
 <input autocomplete="off" class="w-full bg-slate-950 text-white border border-slate-700 rounded-xl px-4 py-3.5 mb-5 focus:outline-none focus:border-indigo-500 text-center tracking-widest font-mono" id="passwordInput" inputmode="numeric" onkeypress="if(event.key==='Enter') window.checkAndUnlock()" placeholder="輸入授權碼" type="password"/>
 <button class="w-full bg-gradient-to-r from-indigo-700 to-purple-700 hover:from-indigo-600 hover:to-purple-600 text-white font-black py-3.5 rounded-xl transition-all shadow-lg tracking-widest cursor-pointer" id="unlockBtn" onclick="window.checkAndUnlock()">啟動量化核心</button>
@@ -630,7 +630,7 @@
 <div class="flex items-center gap-3">
 <div class="w-8 h-8 bg-gradient-to-br from-indigo-600 to-purple-900 rounded-lg flex items-center justify-center font-bold text-sm border border-slate-700">🏛️</div>
 <div class="flex flex-col">
-<h1 class="text-base font-black tracking-widest text-slate-100 leading-none">ASQE v17.9.9</h1>
+<h1 class="text-base font-black tracking-widest text-slate-100 leading-none">ASQE v17.10</h1>
 <span class="text-[9px] text-indigo-400 font-mono tracking-wider mt-0.5">永豐 Kbars 診斷 + 已持股成本單位修正 + Forward Test</span>
 </div>
 </div>
@@ -663,7 +663,7 @@
 <div class="flex flex-col gap-3 p-4 border-b border-slate-800">
 <div class="flex flex-col md:flex-row md:items-center justify-between gap-3">
 <div>
-<div class="text-lg font-black tracking-widest text-white">ASQE v17.9.7 個股區間測試</div>
+<div class="text-lg font-black tracking-widest text-white">ASQE v17.10 個股區間測試</div>
 <div class="text-[11px] text-slate-400 mt-1">輸入任一台股或美股代碼，設定開始日與結束日，回放 ASQE 進出場規則，檢查期間操作是否合適。指標會使用起始日前資料暖機，避免長均線失真。</div>
 </div>
 <div class="flex items-center gap-2">
@@ -709,7 +709,7 @@
 <tbody class="divide-y divide-slate-800 bg-slate-900" id="batchTable"></tbody>
 </table>
 </div>
-<div class="mt-3 text-[11px] text-slate-400 leading-relaxed" id="batchNotes">說明：本測試不是預測未來，而是把 ASQE 進出場規則套用到指定區間；v17.9 改用隔日開盤、動態滑價、族群相對強弱、動態停利、事件風險濾網、資料品質檢查與 Forward Test 追蹤，用來檢查訊號是否更接近實盤。</div>
+<div class="mt-3 text-[11px] text-slate-400 leading-relaxed" id="batchNotes">說明：本測試不是預測未來，而是把 ASQE 進出場規則套用到指定區間；v17.10 加入自適應進場門檻、強趨勢續抱鎖定、冷卻期與高波動追價限制；目的在降低假突破與來回洗單，並改善風險調整後報酬。</div>
 </div>
 </div>
 </div>
@@ -769,7 +769,7 @@
     <div class="flex flex-col gap-3 p-4 border-b border-slate-800">
       <div class="flex flex-col md:flex-row md:items-center justify-between gap-3">
         <div>
-          <div class="text-lg font-black tracking-widest text-white">ASQE v17.9.7 Forward Test 訊號追蹤</div>
+          <div class="text-lg font-black tracking-widest text-white">ASQE v17.10 Forward Test 訊號追蹤</div>
           <div class="text-[12px] text-slate-400 mt-1 leading-relaxed">記錄當下訊號，未來自動回看 5 / 10 / 20 日結果，統計 ASQE 的真實命中率。資料存在本機瀏覽器 localStorage。</div>
         </div>
         <div class="flex items-center gap-2 flex-wrap">
@@ -2671,16 +2671,20 @@
     if (eventRisk.on) flags.push('事件風險:' + eventRisk.text);
     if (trim.level > 0) flags.push('動態停利:' + trim.text);
 
-    var enter = score>=70 && !hardVeto && !gapVeto && !bbVeto && !stop && !eventRisk.on && trim.level===0 && L.close>b.mid && d.pdi>d.mdi && bias20<0.15;
-    var exit = score<55 || hardVeto || gapVeto || bbVeto || stop || (bias20>0.18 && d.adx<20);
+    var trendEntryOk = score>=74 && L.close>b.mid && d.pdi>d.mdi && d.adx>=18 && risk>=55 && (!sectorCtx.available || sectorCtx.score>=45) && !(hmm.pBear>0.62);
+    var breakoutEntryOk = score>=78 && bbBreak && bias20<0.18;
+    var enter = (trendEntryOk || breakoutEntryOk) && !hardVeto && !gapVeto && !bbVeto && !stop && !eventRisk.on && trim.level===0 && bias20<0.16;
+    var strongHoldOk = score>=66 && L.close>chandelier && d.pdi>=d.mdi && d.adx>=18 && L.close>b.mid && bias20<0.20;
+    var exit = hardVeto || gapVeto || bbVeto || stop || (score<48 && !strongHoldOk) || (score<55 && !strongHoldOk && L.close<b.mid) || (bias20>0.22 && d.adx<18);
     var action='等待/觀察', cls='text-slate-300';
     if (score<50||hardVeto||gapVeto||bbVeto) { action='禁止進場 / 防守'; cls='text-red-400'; }
     else if (eventRisk.on) { action='事件風險 / 暫緩'; cls='text-orange-400'; }
     else if (stop) { action='跌破防線 / 暫緩'; cls='text-orange-400'; }
     else if (trim.level>=2) { action='動態停利 / 減碼1/2'; cls='text-orange-400'; }
     else if (trim.level===1) { action='動態停利 / 減碼1/3'; cls='text-yellow-400'; }
-    else if (bbBreak && score>=70) { action='布林+DMI突破'; cls='text-cyan-300'; }
-    else if (score>=75 && bias20<0.08) { action='回測布局'; cls='text-emerald-400'; }
+    else if (strongHoldOk) { action='續抱趨勢 / 等回測加碼'; cls='text-emerald-400'; }
+    else if (bbBreak && score>=78) { action='布林+DMI突破'; cls='text-cyan-300'; }
+    else if (score>=74 && bias20<0.08) { action='回測布局'; cls='text-emerald-400'; }
     else if (score>=70 && bias20>=0.15) { action='追高風險 / 分批停利'; cls='text-yellow-400'; }
     else if (score>=65) { action='觀察試單'; cls='text-emerald-300'; }
     return {ready:true, score:score, action:action, actionClass:cls, enter:enter, exit:exit, flags:flags, chandelier:chandelier, bias20:bias20, bbBreak:bbBreak, bbVeto:bbVeto, hardVeto:hardVeto, gapVeto:gapVeto, stop:stop, trim:trim, sector:sectorCtx, eventRisk:eventRisk, trend:trend, momentum:mom, risk:risk, flow:flow.score, dmi:d, bb:b, hmm:hmm, rho:rho};
@@ -3182,6 +3186,50 @@
     return 'US';
   }
 
+  function isStrongTrendHoldCore(core, bar) {
+    if (!core || !core.ready || !bar) return false;
+    var d = core.dmi || {pdi:0, mdi:0, adx:0};
+    var b = core.bb || {mid:bar.close, pctB:0.5};
+    return core.score >= 66 &&
+      bar.close > (core.chandelier || 0) &&
+      d.pdi >= d.mdi &&
+      d.adx >= 18 &&
+      (!b.mid || bar.close >= b.mid) &&
+      core.bias20 < 0.20 &&
+      !core.hardVeto && !core.gapVeto && !core.bbVeto && !core.stop;
+  }
+
+  function buildEnhancedEntryExit(core, data, i, inPos, entryPrice, cooldown, market) {
+    var L = data[i], prev = data[i-1] || L;
+    var d = core.dmi || {pdi:0, mdi:0, adx:0, spread:0};
+    var b = core.bb || {mid:L.close, pctB:0.5};
+    var sector = core.sector || {available:false, score:50};
+    var trendOk = core.trend >= 70 && L.close > b.mid && d.pdi > d.mdi;
+    var broadOk = !(core.hmm && core.hmm.pBear > 0.62);
+    var sectorOk = !sector.available || sector.score >= 45;
+    var riskOk = core.risk >= 55 && !core.hardVeto && !core.gapVeto && !core.bbVeto && !core.stop && !(core.eventRisk && core.eventRisk.on);
+    var notTooHot = core.bias20 < (market === 'US' ? 0.20 : 0.16) && (!core.trim || core.trim.level === 0);
+    var pullbackEntry = core.score >= 74 && trendOk && riskOk && sectorOk && broadOk && core.bias20 >= -0.04 && core.bias20 <= 0.10;
+    var breakoutEntry = core.score >= 78 && core.bbBreak && riskOk && sectorOk && broadOk && core.bias20 < (market === 'US' ? 0.22 : 0.18);
+    var trendContinuationEntry = core.score >= 80 && trendOk && riskOk && sectorOk && broadOk && d.adx >= 22 && core.bias20 < 0.14;
+    var enter = !inPos && cooldown <= 0 && (pullbackEntry || breakoutEntry || trendContinuationEntry) && notTooHot;
+
+    var unreal = inPos && entryPrice > 0 ? (L.close - entryPrice) / entryPrice : 0;
+    var strongHold = inPos && isStrongTrendHoldCore(core, L) && unreal > -0.03;
+    var twoCloseBelowMid = data[i-1] && data[i].close < b.mid && data[i-1].close < b.mid;
+    var profitGivebackRisk = inPos && unreal > 0.15 && core.trim && core.trim.level >= 2 && d.adx < 25;
+    var weakScoreExit = core.score < (unreal > 0.08 ? 48 : 55);
+    var exit = false;
+    var exitReason = '';
+    if (inPos && (core.hardVeto || core.gapVeto || core.bbVeto || core.stop)) { exit = true; exitReason = '風險否決/防線失守'; }
+    else if (inPos && profitGivebackRisk) { exit = true; exitReason = '獲利後過熱轉弱'; }
+    else if (inPos && weakScoreExit && !strongHold && twoCloseBelowMid) { exit = true; exitReason = '分數轉弱且跌回中軌'; }
+    else if (inPos && core.score < 42 && !strongHold) { exit = true; exitReason = '分數跌破防守線'; }
+
+    var entryType = breakoutEntry ? '突破進場' : (trendContinuationEntry ? '強趨勢續進' : (pullbackEntry ? '拉回進場' : ''));
+    return {enter:enter, exit:exit, strongHold:strongHold, entryType:entryType, exitReason:exitReason};
+  }
+
   function simulateAsqeOperations(data, startIdx, endIdx, opts) {
     opts = opts || {};
     var market = opts.market || window.currentMarket || 'TW';
@@ -3189,24 +3237,23 @@
     var packs = {e20:calcEMA(data,20), e60:calcEMA(data,60), e120:calcEMA(data,120), atr:calcATR(data,14), dmi:calcDMI(data,14), bb:calcBollinger(data,20,2), rsi:calcRSI(data,14), macd:calcMACD(data), obv:calcOBV(data)};
     var equity = 1, peak = 1, mdd = 0, inPos = false, entryPrice = 0, trades = [], events = [];
     var lastSignal = { score:0, action:'資料不足', actionClass:'text-slate-400', flags:[], inPos:false };
-    var cost = 0;
+    var cost = 0, cooldown = 0, entryBar = -1;
 
     for (var i=Math.max(startIdx, 220); i<=endIdx; i++) {
       var core = evalCoreAtIndex(data, i, packs, opts);
       if (!core.ready) continue;
-      lastSignal = { score:core.score, action:core.action, actionClass:core.actionClass, flags:core.flags, inPos:inPos };
+      var enhanced = buildEnhancedEntryExit(core, data, i, inPos, entryPrice, cooldown, market);
+      lastSignal = { score:core.score, action:core.action, actionClass:core.actionClass, flags:(core.flags||[]).slice(), inPos:inPos };
+      if (enhanced.strongHold && lastSignal.flags.indexOf('強趨勢續抱鎖定') < 0) lastSignal.flags.push('強趨勢續抱鎖定');
 
-      // v17.5：訊號在收盤後確認，回測用「下一交易日開盤」進出，避免同日收盤進場的樂觀偏差。
       var execIdx = i + 1;
       if (execIdx > endIdx || execIdx >= data.length) continue;
-      var rawExec = data[execIdx].open || data[execIdx].close;
       var atrPct = (packs.atr[i] && packs.atr[i].atr) ? packs.atr[i].atr / data[i].close : 0.03;
       var avgTurnover20 = avg(data.slice(Math.max(0,i-19),i+1).map(function(x){return x.volume*x.close;}));
-      var execModel = estimateExecutionModel(market, ticker, data[i], data[execIdx], atrPct, avgTurnover20, 'entry');
+      var execModel = estimateExecutionModel(market, ticker, data[i], data[execIdx], atrPct, avgTurnover20, inPos ? 'exit' : 'entry');
       cost = execModel.costOnly;
 
       if (inPos) {
-        // 持倉期間以收盤淨值估算回撤。
         var markPrice = data[i].close;
         var markEquity = equity * (markPrice / (entryPrice || markPrice));
         if (markEquity > peak) peak = markEquity;
@@ -3214,7 +3261,9 @@
         if (dd > mdd) mdd = dd;
       }
 
-      if (inPos && core.exit) {
+      if (cooldown > 0) cooldown--;
+
+      if (inPos && enhanced.exit) {
         var sellPrice = execModel.sellPrice;
         var ret = (sellPrice - entryPrice) / entryPrice - cost;
         trades.push(ret);
@@ -3222,17 +3271,18 @@
         if (equity > peak) peak = equity;
         var ddd = (peak - equity) / peak;
         if (ddd > mdd) mdd = ddd;
-        events.push((data[execIdx].time||data[execIdx].date) + ' 隔日出場(含滑價) ' + sellPrice.toFixed(2) + ' / ' + (ret*100).toFixed(1) + '%');
-        inPos=false; entryPrice=0;
+        events.push((data[execIdx].time||data[execIdx].date) + ' 隔日出場(含滑價) ' + sellPrice.toFixed(2) + ' / ' + (ret*100).toFixed(1) + (enhanced.exitReason ? '｜' + enhanced.exitReason : ''));
+        inPos=false; entryPrice=0; cooldown = 4; entryBar = -1;
       }
 
-      if (!inPos && core.enter) {
+      if (!inPos && enhanced.enter) {
         if (execModel.blocked) {
           events.push((data[execIdx].time||data[execIdx].date) + ' 訊號成立但可能買不到：' + execModel.reason);
         } else {
           inPos=true;
           entryPrice=execModel.buyPrice;
-          events.push((data[execIdx].time||data[execIdx].date) + ' 隔日進場(含滑價) ' + entryPrice.toFixed(2));
+          entryBar = execIdx;
+          events.push((data[execIdx].time||data[execIdx].date) + ' 隔日進場(含滑價) ' + entryPrice.toFixed(2) + (enhanced.entryType ? '｜' + enhanced.entryType : ''));
         }
       }
     }
@@ -3424,7 +3474,7 @@
       if (!r.error) {
         var eventHtml = r.events && r.events.length ? '<br><br>最近訊號：<span class="text-slate-200">'+r.events.join(' ｜ ')+'</span>' : '<br><br>最近訊號：<span class="text-slate-400">期間內無完整進出場紀錄，代表系統偏保守或尚未滿足條件。</span>';
         if (summary) summary.innerHTML='完成：'+r.ticker+'，'+r.period+'。測試結論：<span class="font-bold text-emerald-300">'+r.verdict+'</span>。期末訊號：<span class="font-bold">'+r.action+'</span>。'+eventHtml;
-        if (notes) notes.innerHTML='判讀方式：v17.6 採用收盤產生訊號、隔日開盤執行，並加入動態滑價、流動性懲罰、事件風險降級與族群相對強弱。若策略報酬優於持有且策略MDD較低，代表 ASQE 的進出場規則在該區間較合適；若持有報酬大幅優於策略，通常表示強趨勢中系統偏保守；若策略MDD高於持有MDD，代表防守條件仍需調整。';
+        if (notes) notes.innerHTML='判讀方式：v17.10 採用收盤產生訊號、隔日開盤執行，並加入自適應進場門檻、強趨勢續抱鎖定、冷卻期、動態滑價、流動性懲罰、事件風險降級與族群相對強弱。若策略報酬優於持有且策略MDD較低，代表 ASQE 的進出場規則在該區間較合適；若持有報酬大幅優於策略，通常表示強趨勢中系統仍偏保守；若策略MDD高於持有MDD，代表防守條件仍需調整。v17.10 的改善重點是減少假突破、減少來回洗單，並在強趨勢時降低過早出場。';
       } else {
         if (summary) summary.innerHTML='失敗：'+r.error;
       }
