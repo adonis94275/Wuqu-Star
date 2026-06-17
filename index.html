@@ -5,8 +5,8 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <meta content="notranslate" name="google"/>
-<title>ASQE v17.22 美股短中長分流校正版 | Three Horizon Validation | GitHub Pages Pro</title>
-<script type="text/javascript" nonce="ad7d60c8724440868a8062c88b7" src="//local.adguard.org?ts=1781695926891&amp;type=content-script&amp;dmn=chatgpt.com&amp;url=https%3A%2F%2Fchatgpt.com%2Fbackend-api%2Festuary%2Fcontent%3Fid%3Dfile_00000000b6a472099950c9ad48428f54%26ts%3D494916%26p%3Dfs%26cid%3D1%26sig%3D6fdaca2b64f1abce7c036db531f2f05a8241cb70b206e9bb808af84a8a1ff921%26v%3D0&amp;app=chrome.exe&amp;css=2&amp;js=1&amp;rel=1&amp;rji=1&amp;sbe=1&amp;stealth=1&amp;st-dnt"></script><script type="text/javascript" nonce="ad7d60c8724440868a8062c88b7" src="//local.adguard.org?ts=1781695926891&amp;name=AdGuard%20Extra&amp;name=AdGuard%20Popup%20Blocker&amp;type=user-script"></script><script>
+<title>ASQE v17.24 個股/大盤狀態分離修正版 | Three Horizon Validation | GitHub Pages Pro</title>
+<script type="text/javascript" nonce="ad7d60c8724440868a8062c88b7" src="//local.adguard.org?ts=1781699945754&amp;type=content-script&amp;dmn=chatgpt.com&amp;url=https%3A%2F%2Fchatgpt.com%2Fbackend-api%2Festuary%2Fcontent%3Fid%3Dfile_0000000067bc720babf7ea0c52127e96%26fn%3DASQE_v17_24_regime_display_fixed_index.html%26cd%3Dattachment%26ts%3D494916%26p%3Dfs%26cid%3D1%26sig%3D0691d7f0564c792ca6c5bbf9cce69db2eff8dba0ed1d3b8511b653ddd5682ab8%26v%3D0&amp;app=chrome.exe&amp;css=2&amp;js=1&amp;rel=1&amp;rji=1&amp;sbe=1&amp;stealth=1&amp;st-dnt"></script><script type="text/javascript" nonce="ad7d60c8724440868a8062c88b7" src="//local.adguard.org?ts=1781699945754&amp;name=AdGuard%20Extra&amp;name=AdGuard%20Popup%20Blocker&amp;type=user-script"></script><script>
     window.IS_CODE_COMPLETE = false;
 
     window.onerror = function(msg, url, lineNo) {
@@ -551,7 +551,7 @@
 <div class="w-16 h-16 bg-slate-950 rounded-2xl flex items-center justify-center mb-5 border border-slate-700 shadow-inner">
 <span class="text-3xl">🏛️</span>
 </div>
-<h1 class="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-indigo-300 to-orange-300 tracking-wider mb-1">ASQE v17.22</h1>
+<h1 class="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-indigo-300 to-orange-300 tracking-wider mb-1">ASQE v17.24</h1>
 <p class="text-[9px] text-indigo-100 mb-8 font-mono tracking-widest uppercase px-2 py-1 rounded badge-elite">台美短線理論引擎版</p>
 <input autocomplete="off" class="w-full bg-slate-950 text-white border border-slate-700 rounded-xl px-4 py-3.5 mb-5 focus:outline-none focus:border-indigo-500 text-center tracking-widest font-mono" id="passwordInput" inputmode="numeric" onkeypress="if(event.key==='Enter') window.checkAndUnlock()" placeholder="輸入授權碼" type="password"/>
 <button class="w-full bg-gradient-to-r from-indigo-700 to-purple-700 hover:from-indigo-600 hover:to-purple-600 text-white font-black py-3.5 rounded-xl transition-all shadow-lg tracking-widest cursor-pointer" id="unlockBtn" onclick="window.checkAndUnlock()">啟動量化核心</button>
@@ -630,7 +630,7 @@
 <div class="flex items-center gap-3">
 <div class="w-8 h-8 bg-gradient-to-br from-indigo-600 to-purple-900 rounded-lg flex items-center justify-center font-bold text-sm border border-slate-700">🏛️</div>
 <div class="flex flex-col">
-<h1 class="text-base font-black tracking-widest text-slate-100 leading-none">ASQE v17.22</h1>
+<h1 class="text-base font-black tracking-widest text-slate-100 leading-none">ASQE v17.24</h1>
 <span class="text-[9px] text-indigo-400 font-mono tracking-wider mt-0.5">台美短線理論引擎 + Forward Test</span>
 </div>
 </div>
@@ -664,7 +664,7 @@
 <div class="flex flex-col gap-3 p-4 border-b border-slate-800">
 <div class="flex flex-col md:flex-row md:items-center justify-between gap-3">
 <div>
-<div class="text-lg font-black tracking-widest text-white">ASQE v17.22 個股區間測試</div>
+<div class="text-lg font-black tracking-widest text-white">ASQE v17.24 個股區間測試</div>
 <div class="text-[11px] text-slate-400 mt-1">輸入任一台股或美股代碼，設定開始日與結束日，回放 ASQE 進出場規則，檢查期間操作是否合適。指標會使用起始日前資料暖機，避免長均線失真。</div>
 </div>
 <div class="flex items-center gap-2">
@@ -710,7 +710,7 @@
 <tbody class="divide-y divide-slate-800 bg-slate-900" id="batchTable"></tbody>
 </table>
 </div>
-<div class="mt-3 text-[11px] text-slate-400 leading-relaxed" id="batchNotes">說明：本測試不是預測未來，而是把 ASQE 進出場規則套用到指定區間；v17.22 以 v17.17.1 三週期核心為主，新增觀察清單三週期掃描與短中期勝率測試：台股偏 KD/布林/VWAP 容錯與籌碼確認，美股偏 EMA/VWAP/MACD 動能與布林突破，並保留標的屬性分群與 Walk-forward 穩健度：台股強化VCP與支撐共振、降低震盪洗單；美股強化趨勢核心續抱、延後過早出場，並保留極端過熱動態防線。</div>
+<div class="mt-3 text-[11px] text-slate-400 leading-relaxed" id="batchNotes">說明：本測試不是預測未來，而是把 ASQE 進出場規則套用到指定區間；v17.24 以 v17.17.1 三週期核心為主，新增觀察清單三週期掃描與短中期勝率測試：台股偏 KD/布林/VWAP 容錯與籌碼確認，美股偏 EMA/VWAP/MACD 動能與布林突破，並保留標的屬性分群與 Walk-forward 穩健度：台股強化VCP與支撐共振、降低震盪洗單；美股強化趨勢核心續抱、延後過早出場，並保留極端過熱動態防線。</div>
 </div>
 </div>
 </div>
@@ -771,7 +771,7 @@
     <div class="flex flex-col gap-3 p-4 border-b border-slate-800">
       <div class="flex flex-col md:flex-row md:items-center justify-between gap-3">
         <div>
-          <div class="text-lg font-black tracking-widest text-white">ASQE v17.22 實戰進出場測試｜美股短中長分流・做多可交易</div>
+          <div class="text-lg font-black tracking-widest text-white">ASQE v17.24 實戰進出場測試｜四層決策・做多可交易</div>
           <div class="text-[12px] text-slate-400 mt-1 leading-relaxed">輸入單股與日期區間，分開檢查「方向命中率」與「做多可交易勝率」。美股以波段為主、短期做進場確認、長期只當大方向濾網，並自動分成趨勢股／防禦股／高波動投機股。</div>
         </div>
         <div class="flex items-center gap-2 flex-wrap">
@@ -826,7 +826,7 @@
     <div class="flex flex-col gap-3 p-4 border-b border-slate-800">
       <div class="flex flex-col md:flex-row md:items-center justify-between gap-3">
         <div>
-          <div class="text-lg font-black tracking-widest text-white">ASQE v17.22 Forward Test 訊號追蹤</div>
+          <div class="text-lg font-black tracking-widest text-white">ASQE v17.24 Forward Test 訊號追蹤</div>
           <div class="text-[12px] text-slate-400 mt-1 leading-relaxed">記錄當下訊號，未來自動回看 5 / 10 / 20 日結果，統計 ASQE 的真實命中率。資料存在本機瀏覽器 localStorage。</div>
         </div>
         <div class="flex items-center gap-2 flex-wrap">
@@ -1094,6 +1094,36 @@
 </div>
 <div class="bg-slate-950/80 p-2 rounded border border-slate-800 text-[10px] text-slate-300 leading-relaxed mt-2" id="horizonDetailTxt">等待三週期共振分析。</div>
 <div class="mt-1.5 text-[8px] text-slate-500 leading-relaxed">說明：此區塊分成短期、波段、長期三層：短期看明日/隔日傾向，波段看 3～20 日方向，長期看 1～6 個月趨勢結構。若做當沖，仍須用 5/15/60 分鐘線與盤中 VWAP 重新確認。</div>
+</div>
+<div class="data-card border-violet-900/40" id="fourLayerDecisionCard">
+<div class="flex justify-between items-center mb-2">
+<span class="text-violet-300 text-[10px] font-black uppercase tracking-wider">🧱 四層決策流程 / 長期 → 波段 → 短期 → 風險</span>
+<span class="text-[8px] px-1 py-0.5 rounded font-mono bg-slate-950 text-slate-400 border border-slate-800" id="layerDecisionBadge">流程: --</span>
+</div>
+<div class="grid grid-cols-2 gap-1.5 mb-2">
+  <div class="bg-slate-950 p-2 rounded border border-slate-800">
+    <div class="text-[8px] text-slate-500 font-bold mb-0.5">第一層｜長期方向</div>
+    <div id="layerLongStatus" class="text-[12px] font-black metric-value">--</div>
+    <div id="layerLongRule" class="text-[9px] text-slate-400 leading-snug mt-0.5">決定可不可以做多</div>
+  </div>
+  <div class="bg-slate-950 p-2 rounded border border-slate-800">
+    <div class="text-[8px] text-slate-500 font-bold mb-0.5">第二層｜波段型態</div>
+    <div id="layerSwingStatus" class="text-[12px] font-black metric-value">--</div>
+    <div id="layerSwingRule" class="text-[9px] text-slate-400 leading-snug mt-0.5">決定拉回 / 突破 / 續抱 / 避開</div>
+  </div>
+  <div class="bg-slate-950 p-2 rounded border border-slate-800">
+    <div class="text-[8px] text-slate-500 font-bold mb-0.5">第三層｜短期時機</div>
+    <div id="layerShortStatus" class="text-[12px] font-black metric-value">--</div>
+    <div id="layerShortRule" class="text-[9px] text-slate-400 leading-snug mt-0.5">決定明天能不能進，或等拉回</div>
+  </div>
+  <div class="bg-slate-950 p-2 rounded border border-slate-800">
+    <div class="text-[8px] text-slate-500 font-bold mb-0.5">第四層｜交易風險</div>
+    <div id="layerRiskStatus" class="text-[12px] font-black metric-value">--</div>
+    <div id="layerRiskRule" class="text-[9px] text-slate-400 leading-snug mt-0.5">檢查停損距離 / 追高 / VETO</div>
+  </div>
+</div>
+<div class="bg-slate-950/80 p-2 rounded border border-violet-900/40 text-[10px] text-slate-300 leading-relaxed" id="fourLayerConclusion">等待四層決策流程。</div>
+<div class="mt-1.5 text-[8px] text-slate-500 leading-relaxed">原則：長期允許做多＋波段為拉回/有效突破＋短期轉強＋停損距離合理，才屬於高品質進場；短期勝率高不能單獨當買進理由。</div>
 </div>
 <div class="data-card border-slate-700/60">
 <div class="text-[10px] text-slate-400 font-black mb-1 uppercase">資料品質 / API 路由</div>
@@ -2582,6 +2612,7 @@
       sf('shortModeBadge','模式: --'); sf('shortBiasTxt','--'); sf('shortProbTxt','--'); sf('shortStrategyTxt','--'); sf('shortRiskTxt','--');
       sf('shortKDTxt','--'); sf('shortMACDTxt','--'); sf('shortBBTxt','--'); sf('shortVolTxt','--'); sf('shortEMATxt','--'); sf('shortVWAPTxt','--'); sf('shortTheoryTxt','--'); sf('shortDetailTxt', (outlook && outlook.detail) || '等待短線理論訊號。');
       sf('hShortBias','--'); sf('hShortRule','--'); sf('hSwingBias','--'); sf('hSwingRule','--'); sf('hLongBias','--'); sf('hLongRule','--'); sf('horizonDetailTxt','等待三週期共振分析。');
+      if (typeof renderFourLayerDecision === 'function') renderFourLayerDecision(null);
       return;
     }
     sf('shortModeBadge','模式: ' + outlook.mode);
@@ -2609,6 +2640,73 @@
     } else {
       sf('horizonDetailTxt', '三週期引擎等待更多資料。');
     }
+  }
+
+
+  function layerBadge(passState) {
+    if (passState === 'pass') return {cls:'text-emerald-400', tag:'通過'};
+    if (passState === 'fail') return {cls:'text-red-400', tag:'不通過'};
+    return {cls:'text-yellow-300', tag:'保守'};
+  }
+
+  function renderFourLayerDecision(ctx) {
+    if (!ctx || !ctx.horizons || !ctx.horizons.ready) {
+      sf('layerDecisionBadge','流程: --');
+      sf('layerLongStatus','--'); sf('layerLongRule','決定可不可以做多');
+      sf('layerSwingStatus','--'); sf('layerSwingRule','決定拉回 / 突破 / 續抱 / 避開');
+      sf('layerShortStatus','--'); sf('layerShortRule','決定明天能不能進，或等拉回');
+      sf('layerRiskStatus','--'); sf('layerRiskRule','檢查停損距離 / 追高 / VETO');
+      sf('fourLayerConclusion','等待四層決策流程。');
+      return;
+    }
+    var h = ctx.horizons;
+    var longProb = h.long && isFinite(h.long.prob) ? h.long.prob : 50;
+    var swingProb = h.swing && isFinite(h.swing.prob) ? h.swing.prob : 50;
+    var shortProb = h.short && isFinite(h.short.prob) ? h.short.prob : (ctx.shortProb || 50);
+    var close = ctx.close || 0;
+    var chandelier = ctx.chandelier || 0;
+    var stopPct = (close && chandelier) ? Math.max(0, (close - chandelier) / close) : 0;
+    var stopPctText = stopPct ? (stopPct * 100).toFixed(1) + '%' : '--';
+    var overheat = (ctx.bias20 || 0) >= (ctx.market === 'US' ? 0.28 : 0.16);
+    var farStop = stopPct > (ctx.market === 'US' ? 0.16 : 0.11);
+    var shortWeak = shortProb <= 45;
+    var shortStrong = shortProb >= 56;
+    var longState = longProb >= 56 ? 'pass' : (longProb <= 44 ? 'fail' : 'warn');
+    var swingText = String(ctx.entryType || ctx.signalType || ctx.notHoldingAction || '--');
+    var swingPassWords = /拉回|突破|可進場|分批布局|波段突破|有效突破/.test(swingText) || (swingProb >= 60 && !/過熱|禁止|出場|減碼|清倉/.test(swingText));
+    var swingWarnWords = /續抱|觀察|等待|不追高|過熱/.test(swingText) || (swingProb >= 52 && swingProb < 60);
+    var swingState = swingPassWords ? 'pass' : (swingWarnWords ? 'warn' : 'fail');
+    if (ctx.veto || /禁止|防守|出場|減碼|清倉/.test(String(ctx.notHoldingAction || ''))) swingState = 'fail';
+    var shortState = shortStrong && !overheat ? 'pass' : (shortWeak || /VETO|長上影|偏空|跌破/.test(String(ctx.shortRisk || '')) ? 'fail' : 'warn');
+    var riskState = (ctx.veto || ctx.isStop) ? 'fail' : ((overheat || farStop) ? 'warn' : 'pass');
+    var longB = layerBadge(longState), swingB = layerBadge(swingState), shortB = layerBadge(shortState), riskB = layerBadge(riskState);
+    sf('layerLongStatus','<span class="' + longB.cls + '">' + longB.tag + '｜' + (h.long.bias || horizonBias(longProb)) + ' ' + longProb + '%</span>');
+    sf('layerLongRule', longState === 'pass' ? '長期允許做多；可往多方找進場點' : (longState === 'fail' ? '長期不支持追多；只觀察或避開' : '長期未明確；不可因短線強就追高'));
+    sf('layerSwingStatus','<span class="' + swingB.cls + '">' + swingB.tag + '｜' + (ctx.entryType || h.swing.bias || '--') + '</span>');
+    sf('layerSwingRule', swingState === 'pass' ? '波段型態可交易：優先拉回或有效突破' : (swingState === 'fail' ? '波段不適合新進；防守或避開' : '波段方向可但型態未完整，等拉回/突破確認'));
+    sf('layerShortStatus','<span class="' + shortB.cls + '">' + shortB.tag + '｜' + (h.short.bias || horizonBias(shortProb)) + ' ' + shortProb + '%</span>');
+    sf('layerShortRule', shortState === 'pass' ? '短期轉強，可等待隔日量價確認' : (shortState === 'fail' ? '短期偏弱，明日不追；已持股守防線' : '短期尚未完全轉強，等回測或量價確認'));
+    sf('layerRiskStatus','<span class="' + riskB.cls + '">' + riskB.tag + '｜停損距離 ' + stopPctText + '</span>');
+    sf('layerRiskRule', riskState === 'pass' ? '停損距離合理，未觸發 VETO / 吊燈失守' : (riskState === 'fail' ? '風險否決或防線失守，先不進場' : '可能追高或防線偏遠，降低部位/等拉回'));
+    var conclusion, badge, cls;
+    if (longState === 'pass' && swingState === 'pass' && shortState === 'pass' && riskState === 'pass') {
+      conclusion = '✅ 四層通過：長期允許做多，波段型態可交易，短期已轉強，停損距離合理。可採分批進場，並以吊燈 / EMA20 作防線。';
+      badge = '四層通過'; cls = 'text-emerald-300';
+    } else if (riskState === 'fail' || longState === 'fail') {
+      conclusion = '❌ 不進場：長期方向或風險層不通過。未持股先避開；已持股依防線減碼或轉防守。';
+      badge = '不進場'; cls = 'text-red-300';
+    } else if (swingState === 'pass' && shortState !== 'pass') {
+      conclusion = '⏳ 方向可但時機未到：波段型態尚可，但短期尚未轉強或有追高風險。等回測 EMA13/20、VWAP 或隔日量價確認。';
+      badge = '等確認'; cls = 'text-yellow-300';
+    } else if (longState === 'pass' && swingState === 'warn') {
+      conclusion = '🟡 可續抱但不追：長期方向支持，但波段不是低風險買點。未持股等拉回，已持股守吊燈並分批停利。';
+      badge = '續抱不追'; cls = 'text-yellow-300';
+    } else {
+      conclusion = '⚠️ 四層未共振：短期、波段、長期或風險條件不一致。此時不要只看短期勝率，應以觀察或小部位試單為主。';
+      badge = '未共振'; cls = 'text-slate-300';
+    }
+    sf('layerDecisionBadge','<span class="' + cls + ' font-black">流程: ' + badge + '</span>');
+    sf('fourLayerConclusion','<span class="' + cls + ' font-bold">' + conclusion + '</span>');
   }
 
   function calcPOC(data, lookback, binsCount) {
@@ -2668,23 +2766,75 @@
   }
 
   function calculateRegimeProbability(data, adx) {
-    if (!data || data.length < 200) {
+    // v17.24 修正：原本用 EMA200 距離與斜率做 softmax，遇到長期強勢大盤會過度飽和，常顯示多頭 100%。
+    // 新版改成多因子分數 + 溫度校準 + 機率下限，讓個股轉弱時不會被大盤多頭完全覆蓋。
+    if (!data || data.length < 120) {
       return { p多頭:0.34, p盤整:0.33, p空頭:0.33, pBull:0.34, pSide:0.33, pBear:0.33 };
     }
+    var e20 = calcEMA(data,20,'close');
+    var e60 = calcEMA(data,60,'close');
+    var e120 = calcEMA(data,120,'close');
     var e200 = calcEMA(data,200,'close');
     var L = data[data.length-1];
-    var E = e200[e200.length-1].value || L.close;
-    var A = adx && adx.length ? adx[adx.length-1].adx : 20;
-    var dist = (L.close - E) / E;
-    var slope = (E - e200[Math.max(0,e200.length-21)].value) / E;
+    var i20=e20.length-1, i60=e60.length-1, i120=e120.length-1, i200=e200.length-1;
+    var E20 = (e20[i20]&&e20[i20].value) || L.close;
+    var E60 = (e60[i60]&&e60[i60].value) || L.close;
+    var E120 = (e120[i120]&&e120[i120].value) || E60;
+    var E200 = (e200[i200]&&e200[i200].value) || E120;
+    var E60Prev = (e60[Math.max(0,i60-20)]&&e60[Math.max(0,i60-20)].value) || E60;
+    var E120Prev = (e120[Math.max(0,i120-20)]&&e120[Math.max(0,i120-20)].value) || E120;
+    var dLast = adx && adx.length ? adx[adx.length-1] : {adx:20,pdi:0,mdi:0,spread:0};
+    var A = dLast.adx || 20;
+    var pdi = dLast.pdi || 0, mdi = dLast.mdi || 0;
+    var dist20 = (L.close - E20) / Math.max(E20, 0.01);
+    var dist60 = (L.close - E60) / Math.max(E60, 0.01);
+    var dist120 = (L.close - E120) / Math.max(E120, 0.01);
+    var slope60 = (E60 - E60Prev) / Math.max(E60Prev, 0.01);
+    var slope120 = (E120 - E120Prev) / Math.max(E120Prev, 0.01);
 
-    var zBull = dist*9 + slope*80 + (A-18)/18;
-    var zBear = -dist*9 - slope*80 + (A-18)/18;
-    var zSide = 1.1 - Math.abs(dist)*8 - Math.abs(slope)*90 - A/35;
-    var maxZ = Math.max(zBull,zBear,zSide);
-    var eb = Math.exp(zBull-maxZ), es = Math.exp(zSide-maxZ), er = Math.exp(zBear-maxZ);
-    var sum = eb+es+er;
+    var bullScore = 50;
+    bullScore += L.close > E20 ? 8 : -7;
+    bullScore += L.close > E60 ? 12 : -12;
+    bullScore += E20 > E60 ? 10 : -8;
+    bullScore += E60 > E120 ? 10 : -8;
+    bullScore += E120 > E200 ? 8 : -6;
+    bullScore += slope60 > 0 ? 8 : -8;
+    bullScore += slope120 > 0 ? 5 : -5;
+    bullScore += pdi > mdi ? 6 : -5;
+    bullScore += clamp(dist60 / 0.12, -1, 1) * 10;
+
+    var bearScore = 50;
+    bearScore += L.close < E20 ? 8 : -7;
+    bearScore += L.close < E60 ? 12 : -12;
+    bearScore += E20 < E60 ? 10 : -8;
+    bearScore += E60 < E120 ? 10 : -8;
+    bearScore += E120 < E200 ? 8 : -6;
+    bearScore += slope60 < 0 ? 8 : -8;
+    bearScore += slope120 < 0 ? 5 : -5;
+    bearScore += mdi > pdi ? 6 : -5;
+    bearScore += clamp(-dist60 / 0.12, -1, 1) * 10;
+
+    var sideScore = 50;
+    sideScore += Math.abs(dist20) < 0.035 ? 8 : -3;
+    sideScore += Math.abs(dist60) < 0.055 ? 10 : -4;
+    sideScore += Math.abs(slope60) < 0.012 ? 8 : -5;
+    sideScore += A < 18 ? 10 : (A < 25 ? 2 : -8);
+    sideScore += Math.abs(pdi-mdi) < 8 ? 6 : -4;
+    if (Math.abs(dist120) > 0.25) sideScore -= 8;
+
+    var maxS = Math.max(bullScore, sideScore, bearScore);
+    var temp = 16; // 溫度越大，機率越不會過度跳到 100%。
+    var eb = Math.exp((bullScore-maxS)/temp);
+    var es = Math.exp((sideScore-maxS)/temp);
+    var er = Math.exp((bearScore-maxS)/temp);
+    var sum = eb + es + er;
     var pBull = eb/sum, pSide = es/sum, pBear = er/sum;
+    // 機率下限，避免畫面出現 100/0/0 造成誤讀。
+    pBull = 0.04 + pBull * 0.88;
+    pSide = 0.04 + pSide * 0.88;
+    pBear = 0.04 + pBear * 0.88;
+    var norm = pBull + pSide + pBear;
+    pBull /= norm; pSide /= norm; pBear /= norm;
     return { p多頭:pBull, p盤整:pSide, p空頭:pBear, pBull:pBull, pSide:pSide, pBear:pBear };
   }
 
@@ -3318,7 +3468,8 @@
 
       var benchForRegime = benchmark || data;
       var benchAdx = calcDMI(benchForRegime,14);
-      var hmm = calculateRegimeProbability(benchForRegime, benchAdx);
+      var hmm = calculateRegimeProbability(benchForRegime, benchAdx); // 大盤/基準，用於權重自適應
+      var stockHmm = calculateRegimeProbability(data, adx); // 個股本身，用於右上角顯示，避免每檔都跟著大盤顯示 100% 多頭
 
       var d分數 = L.close > e20Val ? 100 : 35;
       var w分數 = e20Val > e60Val ? 100 : 35;
@@ -3457,10 +3608,10 @@
       var confidenceGrade = confidence>=85 ? '高可信' : (confidence>=70 ? '可參考' : (confidence>=60 ? '謹慎' : '低可信'));
       sf('confidenceBadge', '信心度: ' + confidence.toFixed(0) + '% / ' + confidenceGrade);
       sf('dataQualityBadge', '資料品質: ' + (((data.quality || {}).status) || '--'));
-      sf('dataQualityLog', renderDataQuality(data.quality));
-      sf('txtBull', '多頭: ' + (hmm.pBull*100).toFixed(0) + '%');
-      sf('txtSide', '盤整: ' + (hmm.pSide*100).toFixed(0) + '%');
-      sf('txtBear', '空頭: ' + (hmm.pBear*100).toFixed(0) + '%');
+      sf('dataQualityLog', renderDataQuality(data.quality) + '<div class="mt-2 text-slate-400">📌 v17.24：右上角已改為個股趨勢狀態；大盤狀態仍只用於權重調整，不再讓每檔股票都顯示同一個多頭機率。</div>');
+      sf('txtBull', '個股多頭: ' + (stockHmm.pBull*100).toFixed(0) + '%');
+      sf('txtSide', '個股盤整: ' + (stockHmm.pSide*100).toFixed(0) + '%');
+      sf('txtBear', '個股空頭: ' + (stockHmm.pBear*100).toFixed(0) + '%');
 
       sf('mod趨勢', Math.round(s趨勢));
       sf('modMom', Math.round(sMom));
@@ -3586,6 +3737,23 @@
       var projectedExposure = clamp(existingExposure + finalPosSize, 0, 2);
       var portfolioWarn = projectedExposure > pcfg.totalCap ? '超過上限' : 'OK';
       if (portfolioWarn !== 'OK' && finalPosSize > 0) gradeObj = {grade:'B', color:'text-yellow-300', rule:'投資組合總曝險可能過高，建議先減少其他持股或降低本次部位。'};
+
+      renderFourLayerDecision({
+        market: market,
+        close: L.close,
+        chandelier: chandelier,
+        bias20: bias20,
+        veto: (isHardVeto || isGapDown || isBBVeto),
+        isStop: isStop,
+        shortProb: shortOutlook && shortOutlook.prob,
+        shortRisk: shortOutlook && shortOutlook.risk,
+        horizons: shortOutlook && shortOutlook.horizons,
+        entryType: entryTypeObj && entryTypeObj.type,
+        signalType: entryTypeObj && entryTypeObj.type,
+        notHoldingAction: notHoldingAction,
+        holdingAction: holdingAction,
+        grade: gradeObj && gradeObj.grade
+      });
 
       sf('tradeGradeBadge', '<span class="' + gradeObj.color + ' font-black">燈號: ' + gradeObj.grade + '</span>');
       var entryColor = notHoldingAction.indexOf('禁止')>=0 ? 'text-red-400' : (notHoldingAction.indexOf('暫緩')>=0 || notHoldingAction.indexOf('不追高')>=0 ? 'text-orange-400' : (notHoldingAction.indexOf('可')>=0 ? 'text-emerald-400' : 'text-yellow-300'));
@@ -4276,7 +4444,7 @@
       if (!r.error) {
         var eventHtml = r.events && r.events.length ? '<br><br>最近訊號：<span class="text-slate-200">'+r.events.join(' ｜ ')+'</span>' : '<br><br>最近訊號：<span class="text-slate-400">期間內無完整進出場紀錄，代表系統偏保守或尚未滿足條件。</span>';
         if (summary) summary.innerHTML='完成：'+r.ticker+'，'+r.period+'。測試結論：<span class="font-bold text-emerald-300">'+r.verdict+'</span>。期末訊號：<span class="font-bold">'+r.action+'</span>。'+eventHtml;
-        if (notes) notes.innerHTML='判讀方式：v17.22 採用收盤產生訊號、隔日開盤執行，並加入三週期交易決策引擎、台股/美股分市場參數校正、標的屬性分群與 Walk-forward 穩健度。三週期雷達同時顯示短期、波段、長期：短期使用 KD、MACD、布林、量能、EMA5/13 與 rolling VWAP；波段看 EMA20/60、MACD/DMI、VCP與支撐；長期看 EMA60/120/200、60日趨勢與防線。若策略報酬優於持有且策略MDD較低，代表 ASQE 的進出場規則在該區間較合適；若持有報酬大幅優於策略，通常表示仍偏保守；若策略MDD高於持有MDD，代表防守條件仍需調整。';
+        if (notes) notes.innerHTML='判讀方式：v17.24 採用收盤產生訊號、隔日開盤執行，並加入三週期交易決策引擎、台股/美股分市場參數校正、標的屬性分群與 Walk-forward 穩健度。三週期雷達同時顯示短期、波段、長期：短期使用 KD、MACD、布林、量能、EMA5/13 與 rolling VWAP；波段看 EMA20/60、MACD/DMI、VCP與支撐；長期看 EMA60/120/200、60日趨勢與防線。若策略報酬優於持有且策略MDD較低，代表 ASQE 的進出場規則在該區間較合適；若持有報酬大幅優於策略，通常表示仍偏保守；若策略MDD高於持有MDD，代表防守條件仍需調整。';
       } else {
         if (summary) summary.innerHTML='失敗：'+r.error;
       }
