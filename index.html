@@ -5,8 +5,8 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <meta content="notranslate" name="google"/>
-<title>ASQE v17.21 台股實戰進出場校正版 | Three Horizon Validation | GitHub Pages Pro</title>
-<script type="text/javascript" nonce="ad7d60c8724440868a8062c88b7" src="//local.adguard.org?ts=1781695926891&amp;type=content-script&amp;dmn=chatgpt.com&amp;url=https%3A%2F%2Fchatgpt.com%2Fbackend-api%2Festuary%2Fcontent%3Fid%3Dfile_00000000c8b872098b35cce92248c550%26fn%3DASQE_v17_21_tw_practical_entry_validation_index.html%26cd%3Dattachment%26ts%3D494915%26p%3Dfs%26cid%3D1%26sig%3Dbf0e1ce20c4c5d3bcdcd8471c7d78f9be55e47ae8bf0aebc259f4ae33b254ac9%26v%3D0&amp;app=chrome.exe&amp;css=2&amp;js=1&amp;rel=1&amp;rji=1&amp;sbe=1&amp;stealth=1&amp;st-dnt"></script><script type="text/javascript" nonce="ad7d60c8724440868a8062c88b7" src="//local.adguard.org?ts=1781695926891&amp;name=AdGuard%20Extra&amp;name=AdGuard%20Popup%20Blocker&amp;type=user-script"></script><script>
+<title>ASQE v17.22 美股短中長分流校正版 | Three Horizon Validation | GitHub Pages Pro</title>
+<script type="text/javascript" nonce="ad7d60c8724440868a8062c88b7" src="//local.adguard.org?ts=1781695926891&amp;type=content-script&amp;dmn=chatgpt.com&amp;url=https%3A%2F%2Fchatgpt.com%2Fbackend-api%2Festuary%2Fcontent%3Fid%3Dfile_00000000b6a472099950c9ad48428f54%26ts%3D494916%26p%3Dfs%26cid%3D1%26sig%3D6fdaca2b64f1abce7c036db531f2f05a8241cb70b206e9bb808af84a8a1ff921%26v%3D0&amp;app=chrome.exe&amp;css=2&amp;js=1&amp;rel=1&amp;rji=1&amp;sbe=1&amp;stealth=1&amp;st-dnt"></script><script type="text/javascript" nonce="ad7d60c8724440868a8062c88b7" src="//local.adguard.org?ts=1781695926891&amp;name=AdGuard%20Extra&amp;name=AdGuard%20Popup%20Blocker&amp;type=user-script"></script><script>
     window.IS_CODE_COMPLETE = false;
 
     window.onerror = function(msg, url, lineNo) {
@@ -551,7 +551,7 @@
 <div class="w-16 h-16 bg-slate-950 rounded-2xl flex items-center justify-center mb-5 border border-slate-700 shadow-inner">
 <span class="text-3xl">🏛️</span>
 </div>
-<h1 class="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-indigo-300 to-orange-300 tracking-wider mb-1">ASQE v17.21</h1>
+<h1 class="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-indigo-300 to-orange-300 tracking-wider mb-1">ASQE v17.22</h1>
 <p class="text-[9px] text-indigo-100 mb-8 font-mono tracking-widest uppercase px-2 py-1 rounded badge-elite">台美短線理論引擎版</p>
 <input autocomplete="off" class="w-full bg-slate-950 text-white border border-slate-700 rounded-xl px-4 py-3.5 mb-5 focus:outline-none focus:border-indigo-500 text-center tracking-widest font-mono" id="passwordInput" inputmode="numeric" onkeypress="if(event.key==='Enter') window.checkAndUnlock()" placeholder="輸入授權碼" type="password"/>
 <button class="w-full bg-gradient-to-r from-indigo-700 to-purple-700 hover:from-indigo-600 hover:to-purple-600 text-white font-black py-3.5 rounded-xl transition-all shadow-lg tracking-widest cursor-pointer" id="unlockBtn" onclick="window.checkAndUnlock()">啟動量化核心</button>
@@ -630,7 +630,7 @@
 <div class="flex items-center gap-3">
 <div class="w-8 h-8 bg-gradient-to-br from-indigo-600 to-purple-900 rounded-lg flex items-center justify-center font-bold text-sm border border-slate-700">🏛️</div>
 <div class="flex flex-col">
-<h1 class="text-base font-black tracking-widest text-slate-100 leading-none">ASQE v17.21</h1>
+<h1 class="text-base font-black tracking-widest text-slate-100 leading-none">ASQE v17.22</h1>
 <span class="text-[9px] text-indigo-400 font-mono tracking-wider mt-0.5">台美短線理論引擎 + Forward Test</span>
 </div>
 </div>
@@ -664,7 +664,7 @@
 <div class="flex flex-col gap-3 p-4 border-b border-slate-800">
 <div class="flex flex-col md:flex-row md:items-center justify-between gap-3">
 <div>
-<div class="text-lg font-black tracking-widest text-white">ASQE v17.21 個股區間測試</div>
+<div class="text-lg font-black tracking-widest text-white">ASQE v17.22 個股區間測試</div>
 <div class="text-[11px] text-slate-400 mt-1">輸入任一台股或美股代碼，設定開始日與結束日，回放 ASQE 進出場規則，檢查期間操作是否合適。指標會使用起始日前資料暖機，避免長均線失真。</div>
 </div>
 <div class="flex items-center gap-2">
@@ -710,7 +710,7 @@
 <tbody class="divide-y divide-slate-800 bg-slate-900" id="batchTable"></tbody>
 </table>
 </div>
-<div class="mt-3 text-[11px] text-slate-400 leading-relaxed" id="batchNotes">說明：本測試不是預測未來，而是把 ASQE 進出場規則套用到指定區間；v17.21 以 v17.17.1 三週期核心為主，新增觀察清單三週期掃描與短中期勝率測試：台股偏 KD/布林/VWAP 容錯與籌碼確認，美股偏 EMA/VWAP/MACD 動能與布林突破，並保留標的屬性分群與 Walk-forward 穩健度：台股強化VCP與支撐共振、降低震盪洗單；美股強化趨勢核心續抱、延後過早出場，並保留極端過熱動態防線。</div>
+<div class="mt-3 text-[11px] text-slate-400 leading-relaxed" id="batchNotes">說明：本測試不是預測未來，而是把 ASQE 進出場規則套用到指定區間；v17.22 以 v17.17.1 三週期核心為主，新增觀察清單三週期掃描與短中期勝率測試：台股偏 KD/布林/VWAP 容錯與籌碼確認，美股偏 EMA/VWAP/MACD 動能與布林突破，並保留標的屬性分群與 Walk-forward 穩健度：台股強化VCP與支撐共振、降低震盪洗單；美股強化趨勢核心續抱、延後過早出場，並保留極端過熱動態防線。</div>
 </div>
 </div>
 </div>
@@ -771,8 +771,8 @@
     <div class="flex flex-col gap-3 p-4 border-b border-slate-800">
       <div class="flex flex-col md:flex-row md:items-center justify-between gap-3">
         <div>
-          <div class="text-lg font-black tracking-widest text-white">ASQE v17.21 實戰進出場測試｜方向命中・做多可交易</div>
-          <div class="text-[12px] text-slate-400 mt-1 leading-relaxed">輸入單股與日期區間，分開檢查「方向命中率」與「做多可交易勝率」。短期只當進場時機濾網，波段判斷拉回/突破/續抱，長期只當做多大方向濾網。</div>
+          <div class="text-lg font-black tracking-widest text-white">ASQE v17.22 實戰進出場測試｜美股短中長分流・做多可交易</div>
+          <div class="text-[12px] text-slate-400 mt-1 leading-relaxed">輸入單股與日期區間，分開檢查「方向命中率」與「做多可交易勝率」。美股以波段為主、短期做進場確認、長期只當大方向濾網，並自動分成趨勢股／防禦股／高波動投機股。</div>
         </div>
         <div class="flex items-center gap-2 flex-wrap">
           <button class="bg-slate-800 hover:bg-slate-700 text-slate-200 px-3 py-2 rounded-lg text-xs font-bold" onclick="document.getElementById('horizonTestPanel').classList.add('hidden')">關閉</button>
@@ -826,7 +826,7 @@
     <div class="flex flex-col gap-3 p-4 border-b border-slate-800">
       <div class="flex flex-col md:flex-row md:items-center justify-between gap-3">
         <div>
-          <div class="text-lg font-black tracking-widest text-white">ASQE v17.21 Forward Test 訊號追蹤</div>
+          <div class="text-lg font-black tracking-widest text-white">ASQE v17.22 Forward Test 訊號追蹤</div>
           <div class="text-[12px] text-slate-400 mt-1 leading-relaxed">記錄當下訊號，未來自動回看 5 / 10 / 20 日結果，統計 ASQE 的真實命中率。資料存在本機瀏覽器 localStorage。</div>
         </div>
         <div class="flex items-center gap-2 flex-wrap">
@@ -4276,7 +4276,7 @@
       if (!r.error) {
         var eventHtml = r.events && r.events.length ? '<br><br>最近訊號：<span class="text-slate-200">'+r.events.join(' ｜ ')+'</span>' : '<br><br>最近訊號：<span class="text-slate-400">期間內無完整進出場紀錄，代表系統偏保守或尚未滿足條件。</span>';
         if (summary) summary.innerHTML='完成：'+r.ticker+'，'+r.period+'。測試結論：<span class="font-bold text-emerald-300">'+r.verdict+'</span>。期末訊號：<span class="font-bold">'+r.action+'</span>。'+eventHtml;
-        if (notes) notes.innerHTML='判讀方式：v17.21 採用收盤產生訊號、隔日開盤執行，並加入三週期交易決策引擎、台股/美股分市場參數校正、標的屬性分群與 Walk-forward 穩健度。三週期雷達同時顯示短期、波段、長期：短期使用 KD、MACD、布林、量能、EMA5/13 與 rolling VWAP；波段看 EMA20/60、MACD/DMI、VCP與支撐；長期看 EMA60/120/200、60日趨勢與防線。若策略報酬優於持有且策略MDD較低，代表 ASQE 的進出場規則在該區間較合適；若持有報酬大幅優於策略，通常表示仍偏保守；若策略MDD高於持有MDD，代表防守條件仍需調整。';
+        if (notes) notes.innerHTML='判讀方式：v17.22 採用收盤產生訊號、隔日開盤執行，並加入三週期交易決策引擎、台股/美股分市場參數校正、標的屬性分群與 Walk-forward 穩健度。三週期雷達同時顯示短期、波段、長期：短期使用 KD、MACD、布林、量能、EMA5/13 與 rolling VWAP；波段看 EMA20/60、MACD/DMI、VCP與支撐；長期看 EMA60/120/200、60日趨勢與防線。若策略報酬優於持有且策略MDD較低，代表 ASQE 的進出場規則在該區間較合適；若持有報酬大幅優於策略，通常表示仍偏保守；若策略MDD高於持有MDD，代表防守條件仍需調整。';
       } else {
         if (summary) summary.innerHTML='失敗：'+r.error;
       }
@@ -4529,9 +4529,9 @@
 
 
 
-  // ================= v17.21 Practical Entry Validation Engine =================
-  // 這一版把「方向命中率」與「實際做多可交易勝率」分開。
-  // 短期只當進場時機濾網；波段判斷拉回/突破/續抱；長期只當大方向濾網。
+  // ================= v17.22 Practical Entry Validation Engine =================
+  // 這一版針對美股短中長重新分工：波段是主引擎，短期只做進場確認，長期只做大方向濾網。
+  // 同時加入美股標的屬性分群：科技趨勢股／防禦均值回歸股／高波動投機股，避免 PG、QUBT、RGTI 這類標的被同一套動能規則誤判。
   function horizonDirectionFromProb(prob) {
     if (prob >= 55) return 1;
     if (prob <= 45) return -1;
@@ -4560,10 +4560,38 @@
       cmf: calcCMF(slice,20),
       obv: calcOBV(slice),
       kd: calcStochasticKD(slice,9,3,3),
+      rsi: calcRSI(slice,14),
       rvwap: calcRollingVWAP(slice,20)
     };
   }
-  function calcPracticalEntryDecision(slice, market, core, shortOut, packs) {
+  function v1722AssetProfile(slice, market, ticker) {
+    var sym = String(ticker || '').replace(/\.TW$/i,'').toUpperCase().trim();
+    if (market !== 'US') return {kind:'tw', label:'台股｜籌碼/波段', risk:'normal', note:'台股沿用法人/支撐/防假突破邏輯'};
+    var defensive = ['PG','KO','PEP','JNJ','WMT','COST','CL','KMB','MCD','GIS','MDLZ','SO','DUK','NEE','PFE','MRK','ABBV','T','VZ','XLP','XLU'];
+    var speculative = ['QUBT','RGTI','IONQ','QBTS','SOUN','BBAI','MARA','RIOT','SMR','ACHR','JOBY','RKLB','LUNR','OPEN','WULF'];
+    var n = slice ? slice.length : 0;
+    var recent = (slice||[]).slice(Math.max(1,n-60));
+    var rets = [];
+    var gaps = [];
+    for (var i=1; i<recent.length; i++) {
+      var p=recent[i-1], x=recent[i];
+      if (p.close>0) {
+        rets.push(Math.abs(x.close/p.close-1));
+        gaps.push(Math.abs((x.open||x.close)/p.close-1));
+      }
+    }
+    var absVol = rets.length ? avg(rets) : 0.02;
+    var maxGap = gaps.length ? Math.max.apply(null,gaps) : 0;
+    var avgDollar = recent.length ? avg(recent.map(function(x){return (x.close||0)*(x.volume||0);})) : 0;
+    if (defensive.indexOf(sym) >= 0) return {kind:'defensive', label:'防禦/低波動｜均值回歸', risk:'low', note:'不適合動能突破，優先看 KD/布林下軌/均值回歸', absVol:absVol, maxGap:maxGap, dollar:avgDollar};
+    if (speculative.indexOf(sym) >= 0 || (absVol > 0.065 && maxGap > 0.10) || (avgDollar < 150000000 && absVol > 0.055)) return {kind:'speculative', label:'高波動投機｜嚴格控管', risk:'high', note:'需更高樣本、較高波段勝率與 MAE 控管，不追跳空', absVol:absVol, maxGap:maxGap, dollar:avgDollar};
+    if (absVol > 0.04 || maxGap > 0.075) return {kind:'growth', label:'高成長/高動能｜波段主導', risk:'midHigh', note:'波段為主，短期確認；過熱時只續抱不追', absVol:absVol, maxGap:maxGap, dollar:avgDollar};
+    return {kind:'trend', label:'科技趨勢/大型股｜波段主導', risk:'normal', note:'波段為主，短期確認，長期僅做濾網', absVol:absVol, maxGap:maxGap, dollar:avgDollar};
+  }
+  function v1722RiskLabel(profile) {
+    return profile && profile.label ? profile.label : '--';
+  }
+  function calcPracticalEntryDecision(slice, market, core, shortOut, packs, ticker) {
     if (!slice || slice.length < 120 || !shortOut || !shortOut.ready || !shortOut.horizons || !shortOut.horizons.ready) {
       return {ready:false, action:'資料不足', type:'--', tradeLong:false, holdLong:false, longAllow:false, reason:'三週期資料不足'};
     }
@@ -4574,9 +4602,11 @@
     var E13=(packs.e13[i]&&packs.e13[i].value)||L.close;
     var E20=(packs.e20[i]&&packs.e20[i].value)||L.close;
     var E60=(packs.e60[i]&&packs.e60[i].value)||L.close;
+    var E120=(packs.e120[i]&&packs.e120[i].value)||E60;
     var B=(packs.bb[i])||{mid:L.close,upper:L.close,lower:L.close,pctB:0.5,width:0};
     var D=(packs.dmi[i])||{pdi:0,mdi:0,adx:0};
     var K=(packs.kd[i])||{k:50,d:50};
+    var R=(packs.rsi[i]&&isFinite(packs.rsi[i].value))?packs.rsi[i].value:50;
     var hist=(packs.macd.histogram[i]||{}).value||0;
     var histP=(packs.macd.histogram[i-1]||{}).value||0;
     var cmfVal=(packs.cmf[i]&&isFinite(packs.cmf[i].value))?packs.cmf[i].value:0;
@@ -4597,42 +4627,85 @@
     var veto=!!(core && core.flags && core.flags.join('').indexOf('否決')>=0);
     var longProb=h.long.prob||50, swingProb=h.swing.prob||50, shortProb=shortOut.prob||50;
     var marketUS=market==='US';
+    var profile=v1722AssetProfile(slice, market, ticker);
 
-    var longAllow = longProb>=56 && L.close>=E60*0.985 && !veto;
-    var longReject = longProb<=44 || L.close<E60*0.965 || veto;
-    var supportNear = Math.min(Math.abs(L.close-E20)/L.close, Math.abs(L.close-B.mid)/L.close) <= (marketUS?0.045:0.035);
-    var pullback = longAllow && supportNear && L.close>E60 && volRatio<=1.15 && lowerShadow>=0.008 && K.k>=K.d && !volSell;
-    var validBreakout = longAllow && (L.close>high20*0.998 || B.pctB>0.86) && volRatio>=(marketUS?1.10:1.18) && closeLoc>0.62 && upperShadow<(marketUS?0.035:0.028) && hist>=histP && D.pdi>=D.mdi*0.92;
-    var continuation = longAllow && swingProb>=56 && L.close>chandelier && L.close>E20 && E20>=E60*0.995 && D.adx>=16;
-    var overheat = bias20>(marketUS?0.28:0.17) && (upperShadow>0.018 || K.k>85);
-    var shortGood = shortProb>=55 && L.close>=E5*0.995 && E5>=E13*0.995 && !volSell && !overheat;
-    var riskOk = stopPct>0.012 && stopPct < (marketUS?0.12:0.095) && L.close>chandelier;
     var reason=[], type='觀察', action='觀察/等確認', tradeLong=false, holdLong=false;
+    var longAllow=false, longReject=false, supportNear=false, pullback=false, validBreakout=false, continuation=false, shortGood=false, riskOk=false, overheat=false;
 
-    if (longReject) {
-      action='避開/禁止追多'; type='長期不支持'; reason.push(veto?'VETO否決':'長期方向不支持');
-    } else if (validBreakout && shortGood && riskOk) {
-      action='可進場'; type='有效突破'; tradeLong=true; reason.push('突破有量價確認','短期轉強','停損距離合理');
-    } else if (pullback && shortGood && riskOk) {
-      action='可進場'; type='拉回進場'; tradeLong=true; reason.push('長期允許做多','拉回支撐共振','短期轉強');
-    } else if (continuation && !volSell && !veto) {
-      action=overheat?'可續抱/不追高':'可續抱'; type='趨勢續抱'; holdLong=true; reason.push('中長期趨勢仍在','未破吊燈防線');
-    } else if (longAllow && overheat) {
-      action='等拉回/不追高'; type='過熱等待'; reason.push('長期偏多但短線乖離偏高');
-    } else if (longAllow && !shortGood) {
-      action='等待短線確認'; type='方向可但時機未到'; reason.push('長期允許做多','短期尚未轉強');
+    if (marketUS) {
+      var isDef = profile.kind === 'defensive';
+      var isSpec = profile.kind === 'speculative';
+      var isGrowth = profile.kind === 'growth';
+      // 美股：波段是主引擎。長期不得單獨放行，只當順風/逆風濾網。
+      longAllow = swingProb >= (isSpec ? 64 : 56) && L.close >= E60 * (isSpec ? 0.985 : 0.94) && !veto;
+      longReject = veto || swingProb < (isSpec ? 54 : 48) || L.close < E60 * 0.88;
+      supportNear = Math.min(Math.abs(L.close-E20)/L.close, Math.abs(L.close-B.mid)/L.close) <= (isSpec?0.035:(isGrowth?0.06:0.052));
+      overheat = bias20 > (isSpec?0.18:(isGrowth?0.26:0.22)) && (upperShadow>0.025 || K.k>87 || R>76);
+      riskOk = stopPct>0.012 && stopPct < (isSpec?0.115:(isGrowth?0.155:0.135)) && L.close>chandelier;
+      shortGood = shortProb >= (isSpec?62:52) && L.close>=E5*0.992 && E5>=E13*0.992 && hist>=histP*0.85 && !volSell;
+
+      if (isDef) {
+        // PG 這種防禦股不該用突破追價。只允許布林/KD/RSI 的均值回歸小部位。
+        var meanRev = (B.pctB < 0.34 || L.close <= B.mid*1.005) && K.k >= K.d && K.k < 58 && R < 58 && cmfVal > -0.10 && L.close > E120*0.94;
+        longAllow = meanRev && !veto;
+        if (meanRev && riskOk && !volSell) { action='可小部位'; type='防禦股均值回歸'; tradeLong=true; reason.push('防禦股不追突破','KD/布林均值回歸','風險距離可控'); }
+        else { action='僅觀察'; type='防禦股不追動能'; reason.push('防禦股以均值回歸為主','動能突破不適用'); }
+      } else if (isSpec) {
+        var gapToday = Math.abs((L.open||L.close)/(P.close||L.close)-1);
+        var specBreak = longAllow && swingProb>=66 && shortProb>=62 && L.close>E13 && E5>=E13*0.995 && volRatio>=1.18 && closeLoc>0.64 && upperShadow<0.045 && hist>=histP && D.pdi>D.mdi;
+        if (gapToday>0.08 && closeLoc<0.72) { longReject=true; reason.push('高波動股跳空未收強，不追價'); }
+        if (!longReject && specBreak && riskOk) { action='可小部位'; type='高波動突破確認'; tradeLong=true; reason.push('高波動股已通過較高門檻','量價與短期確認'); }
+        else if (!longReject && swingProb>=60 && L.close>chandelier && L.close>E20) { action='僅可續抱/不新追'; type='高波動續抱'; holdLong=true; reason.push('波段尚未破壞','新進場需更嚴格確認'); }
+        else { action='僅觀察'; type='高波動樣本風險'; reason.push('高波動投機股需更高勝率與樣本','避免跳空追價'); }
+      } else {
+        // 一般美股/科技趨勢股：波段 > 短期 > 長期；長期僅做順風濾網。
+        var trendBreak = longAllow && swingProb>=58 && (L.close>high20*0.998 || B.pctB>0.82 || (L.close>E20 && D.pdi>D.mdi && hist>=histP)) && volRatio>=1.02 && closeLoc>0.56 && upperShadow<0.055;
+        var trendPullback = swingProb>=58 && longProb>=44 && supportNear && L.close>E60*0.92 && K.k>=K.d && hist>=histP*0.75 && !volSell;
+        continuation = swingProb>=60 && L.close>chandelier && L.close>E20 && E20>=E60*0.965 && D.adx>=14 && !volSell;
+        if (trendBreak && shortGood && riskOk && !overheat) { action='可進場'; type='美股波段突破'; tradeLong=true; reason.push('波段為主引擎','短期已確認','長期只作濾網'); }
+        else if (trendPullback && shortGood && riskOk) { action='可進場'; type='美股拉回進場'; tradeLong=true; reason.push('波段偏多','回測均線/中軌','短線轉強'); }
+        else if (continuation) { action=overheat?'可續抱/不追高':'可續抱'; type='美股趨勢續抱'; holdLong=true; reason.push('波段趨勢仍在','未破吊燈防線'); }
+        else if (overheat && swingProb>=56) { action='等拉回/不追高'; type='過熱等待'; reason.push('美股過熱時不因長期偏多追價'); }
+        else if (swingProb>=56 && !shortGood) { action='等待短線確認'; type='方向可但時機未到'; reason.push('波段可，但短期尚未轉強'); }
+        else { action='僅觀察'; type='波段型態未完成'; reason.push('波段主引擎未通過'); }
+      }
     } else {
-      action='僅觀察'; type='方向不足'; reason.push('波段型態未完成');
+      // 台股沿用 v17.21 實戰進出場邏輯：長期做濾網，波段看拉回/突破/續抱，短期只做時機。
+      longAllow = longProb>=56 && L.close>=E60*0.985 && !veto;
+      longReject = longProb<=44 || L.close<E60*0.965 || veto;
+      supportNear = Math.min(Math.abs(L.close-E20)/L.close, Math.abs(L.close-B.mid)/L.close) <= 0.035;
+      pullback = longAllow && supportNear && L.close>E60 && volRatio<=1.15 && lowerShadow>=0.008 && K.k>=K.d && !volSell;
+      validBreakout = longAllow && (L.close>high20*0.998 || B.pctB>0.86) && volRatio>=1.18 && closeLoc>0.62 && upperShadow<0.028 && hist>=histP && D.pdi>=D.mdi*0.92;
+      continuation = longAllow && swingProb>=56 && L.close>chandelier && L.close>E20 && E20>=E60*0.995 && D.adx>=16;
+      overheat = bias20>0.17 && (upperShadow>0.018 || K.k>85);
+      shortGood = shortProb>=55 && L.close>=E5*0.995 && E5>=E13*0.995 && !volSell && !overheat;
+      riskOk = stopPct>0.012 && stopPct < 0.095 && L.close>chandelier;
+      if (longReject) {
+        action='避開/禁止追多'; type='長期不支持'; reason.push(veto?'VETO否決':'長期方向不支持');
+      } else if (validBreakout && shortGood && riskOk) {
+        action='可進場'; type='有效突破'; tradeLong=true; reason.push('突破有量價確認','短期轉強','停損距離合理');
+      } else if (pullback && shortGood && riskOk) {
+        action='可進場'; type='拉回進場'; tradeLong=true; reason.push('長期允許做多','拉回支撐共振','短期轉強');
+      } else if (continuation && !volSell && !veto) {
+        action=overheat?'可續抱/不追高':'可續抱'; type='趨勢續抱'; holdLong=true; reason.push('中長期趨勢仍在','未破吊燈防線');
+      } else if (longAllow && overheat) {
+        action='等拉回/不追高'; type='過熱等待'; reason.push('長期偏多但短線乖離偏高');
+      } else if (longAllow && !shortGood) {
+        action='等待短線確認'; type='方向可但時機未到'; reason.push('長期允許做多','短期尚未轉強');
+      } else {
+        action='僅觀察'; type='方向不足'; reason.push('波段型態未完成');
+      }
     }
     if (volSell) reason.push('放量黑K');
-    if (upperShadow>(marketUS?0.04:0.03)) reason.push('長上影');
-    if (cmfVal<-(marketUS?0.06:0.04)) reason.push('資金流偏弱');
+    if (upperShadow>(marketUS?0.055:0.03)) reason.push('長上影');
+    if (cmfVal<-(marketUS?0.08:0.04)) reason.push('資金流偏弱');
+    if (marketUS && profile.kind==='speculative' && profile.maxGap>0.10) reason.push('近期跳空風險高');
     if (L.close<rvwapVal && !marketUS) reason.push('台股跌破成本線需防洗盤');
     if (L.close<low10) reason.push('跌破10日低點');
     return {
       ready:true, action:action, type:type, tradeLong:tradeLong, holdLong:holdLong, longAllow:longAllow,
-      shortGood:shortGood, riskOk:riskOk, stopPct:stopPct, chandelier:chandelier, reason:reason.slice(0,5).join('、'),
-      probs:{short:shortProb,swing:swingProb,long:longProb}
+      shortGood:shortGood, riskOk:riskOk, stopPct:stopPct, chandelier:chandelier, reason:reason.slice(0,6).join('、'),
+      probs:{short:shortProb,swing:swingProb,long:longProb}, profile:profile, profileKind:profile.kind, profileLabel:v1722RiskLabel(profile)
     };
   }
   function addDirectionStat(st, dir, ret) {
@@ -4648,7 +4721,7 @@
     if (ret > 0) { st.tradeWins++; st.winSum += ret; st.winCount++; }
     else { st.lossSum += ret; st.lossCount++; }
   }
-  function horizonWinStats(data, market, startIdx, endIdx) {
+  function horizonWinStats(data, market, startIdx, endIdx, ticker) {
     var stats = {
       short:{name:'短期/明日', horizon:1, dirSample:0, dirWins:0, dirSumRet:0, dirLongSample:0, dirLongWins:0, dirShortSample:0, dirShortWins:0, tradeSample:0, tradeWins:0, tradeSumRet:0, winSum:0, lossSum:0, winCount:0, lossCount:0, maeSum:0, latest:'--', decision:'--', note:'隔日方向 / 短線時機'},
       swing:{name:'波段', horizon:10, dirSample:0, dirWins:0, dirSumRet:0, dirLongSample:0, dirLongWins:0, dirShortSample:0, dirShortWins:0, tradeSample:0, tradeWins:0, tradeSumRet:0, winSum:0, lossSum:0, winCount:0, lossCount:0, maeSum:0, latest:'--', decision:'--', note:'10日方向 / 拉回突破'},
@@ -4662,12 +4735,36 @@
       var core = evalCoreAtIndex(slice, slice.length-1, {e20:packs.e20,e60:packs.e60,e120:packs.e120,atr:packs.atr,dmi:packs.dmi,bb:packs.bb,macd:packs.macd,cmf:packs.cmf,obv:packs.obv}, {market:market,eventRisk:{on:false,high:false,text:'實戰校驗不套用目前手動事件風險'}});
       var shortOut = calcShortTermOutlook(slice, market, {e20:packs.e20, e60:packs.e60, atr:packs.atr, dmi:packs.dmi, bb:packs.bb, macd:packs.macd, cmf:packs.cmf, obv:packs.obv, veto:(core.flags||[]).join('').indexOf('否決')>=0});
       if (!shortOut || !shortOut.ready || !shortOut.horizons || !shortOut.horizons.ready) continue;
-      var decision = calcPracticalEntryDecision(slice, market, core, shortOut, packs);
-      var signals = {
-        short:{prob:shortOut.prob, bias:shortOut.bias, trade: decision.tradeLong && shortOut.prob>=55},
-        swing:{prob:shortOut.horizons.swing.prob, bias:shortOut.horizons.swing.bias, trade: decision.tradeLong && shortOut.horizons.swing.prob>=56},
-        long:{prob:shortOut.horizons.long.prob, bias:shortOut.horizons.long.bias, trade: (decision.tradeLong || decision.holdLong) && shortOut.horizons.long.prob>=56}
-      };
+      var decision = calcPracticalEntryDecision(slice, market, core, shortOut, packs, ticker);
+      var signals;
+      if (market === 'US') {
+        var pk = decision.profileKind || 'trend';
+        if (pk === 'defensive') {
+          signals = {
+            short:{prob:shortOut.prob, bias:shortOut.bias, trade: decision.tradeLong && decision.type.indexOf('均值回歸')>=0 && shortOut.prob>=50},
+            swing:{prob:shortOut.horizons.swing.prob, bias:shortOut.horizons.swing.bias, trade: decision.tradeLong && decision.type.indexOf('均值回歸')>=0 && shortOut.horizons.swing.prob>=50},
+            long:{prob:shortOut.horizons.long.prob, bias:shortOut.horizons.long.bias, trade: false}
+          };
+        } else if (pk === 'speculative') {
+          signals = {
+            short:{prob:shortOut.prob, bias:shortOut.bias, trade: decision.tradeLong && shortOut.prob>=64},
+            swing:{prob:shortOut.horizons.swing.prob, bias:shortOut.horizons.swing.bias, trade: decision.tradeLong && shortOut.horizons.swing.prob>=66},
+            long:{prob:shortOut.horizons.long.prob, bias:shortOut.horizons.long.bias, trade: false}
+          };
+        } else {
+          signals = {
+            short:{prob:shortOut.prob, bias:shortOut.bias, trade: decision.tradeLong && shortOut.prob>=52},
+            swing:{prob:shortOut.horizons.swing.prob, bias:shortOut.horizons.swing.bias, trade: decision.tradeLong && shortOut.horizons.swing.prob>=58},
+            long:{prob:shortOut.horizons.long.prob, bias:shortOut.horizons.long.bias, trade: decision.holdLong && shortOut.horizons.long.prob>=55 && shortOut.horizons.swing.prob>=58}
+          };
+        }
+      } else {
+        signals = {
+          short:{prob:shortOut.prob, bias:shortOut.bias, trade: decision.tradeLong && shortOut.prob>=55},
+          swing:{prob:shortOut.horizons.swing.prob, bias:shortOut.horizons.swing.bias, trade: decision.tradeLong && shortOut.horizons.swing.prob>=56},
+          long:{prob:shortOut.horizons.long.prob, bias:shortOut.horizons.long.bias, trade: (decision.tradeLong || decision.holdLong) && shortOut.horizons.long.prob>=56}
+        };
+      }
       Object.keys(stats).forEach(function(k){
         var st = stats[k], sig = signals[k] || {}, dir = horizonDirectionFromProb(sig.prob || 50), j = i + st.horizon;
         if (j > endIdx || j >= data.length) return;
@@ -4688,6 +4785,7 @@
         stats.swing.decision = decision.action + '｜' + decision.type;
         stats.long.decision = (decision.longAllow?'長期允許做多':'長期不支持追多') + '｜' + decision.action;
         stats.currentDecision = decision;
+        stats.profile = decision.profile;
       }
     }
     Object.keys(stats).forEach(function(k){
@@ -4702,12 +4800,25 @@
       s.avgLoss = s.lossCount ? s.lossSum/s.lossCount : null;
       s.avgMae = s.tradeSample ? s.maeSum/s.tradeSample : null;
       if (!s.dirSample) s.verdict='樣本不足';
-      else if (!s.tradeSample && k!=='long') s.verdict='做多樣本少，先當方向參考';
-      else if (s.tradeSample && s.tradeWinRate>=0.58 && s.tradeAvgRet>0) s.verdict='做多可交易，仍需守停損';
-      else if (s.tradeSample && s.tradeWinRate>=0.50 && s.tradeAvgRet>=0) s.verdict='小部位可試，需搭配主訊號';
-      else if (k==='long' && s.dirWinRate>=0.58) s.verdict='長期方向有效，只作濾網';
-      else if (s.dirWinRate>=0.52 && (s.tradeAvgRet==null || s.tradeAvgRet>=0)) s.verdict='方向尚可，但不是獨立買點';
-      else s.verdict='偏弱，該週期不適合當進場依據';
+      else if (market === 'US') {
+        var prof = stats.profile || v1722AssetProfile(data.slice(0, Math.min(endIdx+1, data.length)), market, ticker);
+        if (prof.kind === 'speculative' && s.tradeSample < 20) s.verdict='高波動樣本不足，僅觀察/小部位';
+        else if (s.avgMae != null && s.avgMae < -0.12) s.verdict='MAE過大，需降部位或等回測';
+        else if (s.tradeSample && s.tradeWinRate>=0.60 && s.tradeAvgRet>0 && (s.avgMae==null || s.avgMae>-0.10)) s.verdict='美股可交易，波段為主並守停損';
+        else if (prof.kind === 'defensive' && s.tradeSample && s.tradeWinRate>=0.55 && s.tradeAvgRet>0) s.verdict='防禦股均值回歸可小試';
+        else if (s.tradeSample && s.tradeWinRate>=0.52 && s.tradeAvgRet>=0) s.verdict='可小部位，需搭配短線確認';
+        else if (k==='long' && s.dirWinRate>=0.55) s.verdict='長期只作大方向濾網，不單獨進場';
+        else if (!s.tradeSample && k!=='long') s.verdict='做多樣本不足，不能當買點';
+        else if (prof.kind === 'defensive') s.verdict='防禦股不適合動能突破';
+        else s.verdict='偏弱，該週期不適合當進場依據';
+      } else {
+        if (!s.tradeSample && k!=='long') s.verdict='做多樣本少，先當方向參考';
+        else if (s.tradeSample && s.tradeWinRate>=0.58 && s.tradeAvgRet>0) s.verdict='做多可交易，仍需守停損';
+        else if (s.tradeSample && s.tradeWinRate>=0.50 && s.tradeAvgRet>=0) s.verdict='小部位可試，需搭配主訊號';
+        else if (k==='long' && s.dirWinRate>=0.58) s.verdict='長期方向有效，只作濾網';
+        else if (s.dirWinRate>=0.52 && (s.tradeAvgRet==null || s.tradeAvgRet>=0)) s.verdict='方向尚可，但不是獨立買點';
+        else s.verdict='偏弱，該週期不適合當進場依據';
+      }
     });
     return stats;
   }
@@ -4759,7 +4870,7 @@
       var startIdx=findStartIndex(raw.slice(0,endIdx+1),startDate);
       if (startIdx<220) startIdx=220;
       if (endIdx-startIdx<60) throw new Error('測試區間太短，建議至少 3～6 個月以上。');
-      var stats=horizonWinStats(raw, market, startIdx, endIdx);
+      var stats=horizonWinStats(raw, market, startIdx, endIdx, ticker);
       var arr=[stats.short, stats.swing, stats.long];
       if (table) table.innerHTML=arr.map(horizonTestRowHtml).join('');
       if (cards) cards.innerHTML=arr.map(horizonTestCardHtml).join('');
@@ -4768,7 +4879,8 @@
       var avgTrade=tradeRows.length?avg(tradeRows.map(function(x){return x.tradeWinRate||0;})):null;
       var avgDir=avg(arr.filter(function(x){return x.dirWinRate!=null;}).map(function(x){return x.dirWinRate;}));
       var align = avgTrade!=null ? (avgTrade>=0.58?'做多校驗佳':(avgTrade>=0.50?'做多尚可，需搭配主訊號':'做多校驗偏弱，先保守')) : (avgDir>=0.58?'方向校驗佳，但做多樣本少':'方向尚需觀察');
-      if (summary) summary.innerHTML='完成：<span class="font-mono font-bold text-white">'+safeHtml(res.symbol && res.symbol.display || ticker)+'</span>｜資料源：'+safeHtml(res.source)+'｜測試期間：'+safeHtml(raw[startIdx].time)+' ~ '+safeHtml(raw[endIdx].time)+'。<span class="font-bold text-emerald-300">'+safeHtml(align)+'</span>。目前實戰結論：<span class="font-bold text-yellow-300">'+safeHtml(current ? current.action+'｜'+current.type : '--')+'</span>'+(current&&current.reason?'｜原因：'+safeHtml(current.reason):'');
+      var prof = (stats.profile || (current && current.profile) || v1722AssetProfile(raw.slice(0,endIdx+1), market, ticker));
+      if (summary) summary.innerHTML='完成：<span class="font-mono font-bold text-white">'+safeHtml(res.symbol && res.symbol.display || ticker)+'</span>｜資料源：'+safeHtml(res.source)+'｜測試期間：'+safeHtml(raw[startIdx].time)+' ~ '+safeHtml(raw[endIdx].time)+'｜屬性：<span class="font-bold text-cyan-300">'+safeHtml(v1722RiskLabel(prof))+'</span>。<span class="font-bold text-emerald-300">'+safeHtml(align)+'</span>。目前實戰結論：<span class="font-bold text-yellow-300">'+safeHtml(current ? current.action+'｜'+current.type : '--')+'</span>'+(current&&current.reason?'｜原因：'+safeHtml(current.reason):'');
     } catch(e) {
       if (summary) summary.innerHTML='<span class="text-red-300 font-bold">失敗：</span>'+safeHtml(e.message||String(e));
       if (table) table.innerHTML='<tr><td colspan="11" class="p-3 text-red-300">'+safeHtml(e.message||String(e))+'</td></tr>';
