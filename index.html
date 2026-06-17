@@ -5,8 +5,8 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <meta content="notranslate" name="google"/>
-<title>ASQE v17.18.1 觀察清單三週期校驗修正版 | Forward Test & Watchlist | GitHub Pages Pro</title>
-<script type="text/javascript" nonce="091d0b598b214caab7ce8fe3f83" src="//local.adguard.org?ts=1781680833892&amp;type=content-script&amp;dmn=chatgpt.com&amp;url=https%3A%2F%2Fchatgpt.com%2Fbackend-api%2Festuary%2Fcontent%3Fid%3Dfile_00000000633c71f8962b3a4cc29791d5%26ts%3D494912%26p%3Dfs%26cid%3D1%26sig%3D5ce6a72d7208c4537f86382984719d80ecc03f1996cff0abee243f7d40d3cef4%26v%3D0&amp;app=chrome.exe&amp;css=2&amp;js=1&amp;rel=1&amp;rji=1&amp;sbe=1&amp;stealth=1&amp;st-dnt"></script><script type="text/javascript" nonce="091d0b598b214caab7ce8fe3f83" src="//local.adguard.org?ts=1781680833892&amp;name=AdGuard%20Extra&amp;name=AdGuard%20Popup%20Blocker&amp;type=user-script"></script><script>
+<title>ASQE v17.19 短中期勝率測試整合版 | Three Horizon Validation | GitHub Pages Pro</title>
+<script type="text/javascript" nonce="ad7d60c8724440868a8062c88b7" src="//local.adguard.org?ts=1781692747982&amp;type=content-script&amp;dmn=chatgpt.com&amp;url=https%3A%2F%2Fchatgpt.com%2Fbackend-api%2Festuary%2Fcontent%3Fid%3Dfile_00000000284c7206b460bc6e94c28edf%26fn%3DASQE_v17_19_short_mid_test_watchlist_three_horizon_index.html%26cd%3Dattachment%26ts%3D494914%26p%3Dfs%26cid%3D1%26sig%3D90e9da646ccb5f028dd2261563145523a5844b07d90ab451bdcf62b564f5f04c%26v%3D0&amp;app=chrome.exe&amp;css=2&amp;js=1&amp;rel=1&amp;rji=1&amp;sbe=1&amp;stealth=1&amp;st-dnt"></script><script type="text/javascript" nonce="ad7d60c8724440868a8062c88b7" src="//local.adguard.org?ts=1781692747982&amp;name=AdGuard%20Extra&amp;name=AdGuard%20Popup%20Blocker&amp;type=user-script"></script><script>
     window.IS_CODE_COMPLETE = false;
 
     window.onerror = function(msg, url, lineNo) {
@@ -551,7 +551,7 @@
 <div class="w-16 h-16 bg-slate-950 rounded-2xl flex items-center justify-center mb-5 border border-slate-700 shadow-inner">
 <span class="text-3xl">🏛️</span>
 </div>
-<h1 class="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-indigo-300 to-orange-300 tracking-wider mb-1">ASQE v17.18.1</h1>
+<h1 class="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-indigo-300 to-orange-300 tracking-wider mb-1">ASQE v17.19</h1>
 <p class="text-[9px] text-indigo-100 mb-8 font-mono tracking-widest uppercase px-2 py-1 rounded badge-elite">台美短線理論引擎版</p>
 <input autocomplete="off" class="w-full bg-slate-950 text-white border border-slate-700 rounded-xl px-4 py-3.5 mb-5 focus:outline-none focus:border-indigo-500 text-center tracking-widest font-mono" id="passwordInput" inputmode="numeric" onkeypress="if(event.key==='Enter') window.checkAndUnlock()" placeholder="輸入授權碼" type="password"/>
 <button class="w-full bg-gradient-to-r from-indigo-700 to-purple-700 hover:from-indigo-600 hover:to-purple-600 text-white font-black py-3.5 rounded-xl transition-all shadow-lg tracking-widest cursor-pointer" id="unlockBtn" onclick="window.checkAndUnlock()">啟動量化核心</button>
@@ -630,8 +630,8 @@
 <div class="flex items-center gap-3">
 <div class="w-8 h-8 bg-gradient-to-br from-indigo-600 to-purple-900 rounded-lg flex items-center justify-center font-bold text-sm border border-slate-700">🏛️</div>
 <div class="flex flex-col">
-<h1 class="text-base font-black tracking-widest text-slate-100 leading-none">ASQE v17.18.1</h1>
-<span class="text-[9px] text-indigo-400 font-mono tracking-wider mt-0.5">三週期校驗整合 + Forward Test</span>
+<h1 class="text-base font-black tracking-widest text-slate-100 leading-none">ASQE v17.19</h1>
+<span class="text-[9px] text-indigo-400 font-mono tracking-wider mt-0.5">台美短線理論引擎 + Forward Test</span>
 </div>
 </div>
 <div class="flex flex-wrap items-center justify-center gap-2 mt-2 sm:mt-0">
@@ -648,6 +648,7 @@
 <button class="bg-emerald-700 hover:bg-emerald-600 text-white font-bold py-1.5 px-3 rounded-lg shadow-lg text-xs transition-colors cursor-pointer" id="batchBtn" onclick="window.openSingleTest()">個股區間測試</button>
 <button class="bg-cyan-700 hover:bg-cyan-600 text-white font-bold py-1.5 px-3 rounded-lg shadow-lg text-xs transition-colors cursor-pointer" id="watchlistBtn" onclick="window.openWatchlistPanel()">觀察清單</button>
 <button class="bg-orange-700 hover:bg-orange-600 text-white font-bold py-1.5 px-3 rounded-lg shadow-lg text-xs transition-colors cursor-pointer" id="forwardBtn" onclick="window.openForwardPanel()">訊號追蹤</button>
+<button class="bg-fuchsia-700 hover:bg-fuchsia-600 text-white font-bold py-1.5 px-3 rounded-lg shadow-lg text-xs transition-colors cursor-pointer" id="horizonTestBtn" onclick="window.openHorizonTestPanel()">短中期測試</button>
 <button class="bg-emerald-800 hover:bg-emerald-700 text-emerald-100 font-bold py-1.5 px-3 rounded-lg shadow-lg text-xs transition-colors cursor-pointer" onclick="document.getElementById('setupModal').style.display='flex'; setTimeout(function(){document.getElementById('setupModal').style.opacity='1';document.getElementById('setupModal').classList.remove('fade-out'); if(window.testSinopacLogin) window.testSinopacLogin();},10)">永豐檢測/signed</button>
 
 
@@ -663,7 +664,7 @@
 <div class="flex flex-col gap-3 p-4 border-b border-slate-800">
 <div class="flex flex-col md:flex-row md:items-center justify-between gap-3">
 <div>
-<div class="text-lg font-black tracking-widest text-white">ASQE v17.18.1 個股區間測試</div>
+<div class="text-lg font-black tracking-widest text-white">ASQE v17.19 個股區間測試</div>
 <div class="text-[11px] text-slate-400 mt-1">輸入任一台股或美股代碼，設定開始日與結束日，回放 ASQE 進出場規則，檢查期間操作是否合適。指標會使用起始日前資料暖機，避免長均線失真。</div>
 </div>
 <div class="flex items-center gap-2">
@@ -700,16 +701,16 @@
 <div class="p-4">
 <div class="text-xs text-slate-300 mb-3 bg-slate-950/70 border border-slate-800 rounded-xl p-3 leading-relaxed" id="batchSummary">尚未開始。建議至少測試 3～6 個月以上，過短期間容易被單一事件扭曲。</div>
 <div class="overflow-x-auto border border-slate-800 rounded-xl">
-<table class="w-full text-[11px] text-left min-w-[1650px]">
+<table class="w-full text-[11px] text-left min-w-[1250px]">
 <thead class="bg-slate-950 text-slate-400 uppercase tracking-wider">
 <tr>
-<th class="p-2">市場</th><th class="p-2">代碼</th><th class="p-2">屬性</th><th class="p-2">穩健度</th><th class="p-2">資料源</th><th class="p-2">測試期間</th><th class="p-2 text-right">起始價</th><th class="p-2 text-right">結束價</th><th class="p-2 text-right">持有報酬</th><th class="p-2 text-right">持有MDD</th><th class="p-2 text-right">策略報酬</th><th class="p-2 text-right">策略MDD</th><th class="p-2 text-right">交易次數</th><th class="p-2 text-right">勝率</th><th class="p-2 text-right">期末分數</th><th class="p-2">短期/明日</th><th class="p-2">波段</th><th class="p-2">長期</th><th class="p-2">一致/資料校驗</th><th class="p-2">期末訊號</th><th class="p-2">測試結論</th><th class="p-2">風險旗標</th>
+<th class="p-2">市場</th><th class="p-2">代碼</th><th class="p-2">屬性</th><th class="p-2">穩健度</th><th class="p-2">資料源</th><th class="p-2">測試期間</th><th class="p-2 text-right">起始價</th><th class="p-2 text-right">結束價</th><th class="p-2 text-right">持有報酬</th><th class="p-2 text-right">持有MDD</th><th class="p-2 text-right">策略報酬</th><th class="p-2 text-right">策略MDD</th><th class="p-2 text-right">交易次數</th><th class="p-2 text-right">勝率</th><th class="p-2 text-right">期末分數</th><th class="p-2">期末訊號</th><th class="p-2">測試結論</th><th class="p-2">風險旗標</th>
 </tr>
 </thead>
 <tbody class="divide-y divide-slate-800 bg-slate-900" id="batchTable"></tbody>
 </table>
 </div>
-<div class="mt-3 text-[11px] text-slate-400 leading-relaxed" id="batchNotes">說明：本測試不是預測未來，而是把 ASQE 進出場規則套用到指定區間；v17.18.1 把短期/明日、波段、長期三週期加入區間測試、觀察清單與訊號追蹤，並修正觀察清單表頭與匯出欄位，並新增「一致/資料校驗」欄位，用來交叉檢查主訊號、資料品質與三週期方向是否一致。</div>
+<div class="mt-3 text-[11px] text-slate-400 leading-relaxed" id="batchNotes">說明：本測試不是預測未來，而是把 ASQE 進出場規則套用到指定區間；v17.19 以 v17.17.1 三週期核心為主，新增觀察清單三週期掃描與短中期勝率測試：台股偏 KD/布林/VWAP 容錯與籌碼確認，美股偏 EMA/VWAP/MACD 動能與布林突破，並保留標的屬性分群與 Walk-forward 穩健度：台股強化VCP與支撐共振、降低震盪洗單；美股強化趨勢核心續抱、延後過早出場，並保留極端過熱動態防線。</div>
 </div>
 </div>
 </div>
@@ -720,7 +721,7 @@
     <div class="flex flex-col gap-3 p-4 border-b border-slate-800">
       <div class="flex flex-col md:flex-row md:items-center justify-between gap-3">
         <div>
-          <div class="text-lg font-black tracking-widest text-white">ASQE v17.18.1 觀察清單掃描</div>
+          <div class="text-lg font-black tracking-widest text-white">ASQE v17.9.7 觀察清單掃描</div>
           <div class="text-[12px] text-slate-400 mt-1 leading-relaxed">輸入多檔台股 / 美股代碼後批次掃描，快速找出可進場、觀察、過熱、轉弱或事件風險標的。這是輔助篩選，不會自動下單。</div>
         </div>
         <div class="flex items-center gap-2">
@@ -749,12 +750,12 @@
       </div>
     </div>
     <div class="p-4">
-      <div id="watchlistSummary" class="text-xs text-slate-300 mb-3 bg-slate-950/70 border border-slate-800 rounded-xl p-3 leading-relaxed">尚未掃描。掃描結果會顯示短期/明日、波段、長期與一致/資料校驗；請同時觀察 Score、訊號、資料信心與風險旗標，不要只看分數。</div>
+      <div id="watchlistSummary" class="text-xs text-slate-300 mb-3 bg-slate-950/70 border border-slate-800 rounded-xl p-3 leading-relaxed">尚未掃描。建議觀察 Score、訊號、資料信心、風險旗標，不要只看分數。</div>
       <div class="overflow-x-auto border border-slate-800 rounded-xl">
-        <table class="w-full text-[11px] text-left min-w-[1500px]">
+        <table class="w-full text-[11px] text-left min-w-[1450px]">
           <thead class="bg-slate-950 text-slate-400 uppercase tracking-wider">
             <tr>
-              <th class="p-2">市場</th><th class="p-2">代碼</th><th class="p-2">資料源</th><th class="p-2 text-right">收盤</th><th class="p-2 text-right">分數</th><th class="p-2">短期/明日</th><th class="p-2">波段</th><th class="p-2">長期</th><th class="p-2">一致/資料校驗</th><th class="p-2">訊號</th><th class="p-2">未持股</th><th class="p-2">已持股</th><th class="p-2 text-right">信心</th><th class="p-2 text-right">吊燈</th><th class="p-2">旗標</th>
+              <th class="p-2">市場</th><th class="p-2">代碼</th><th class="p-2">資料源</th><th class="p-2 text-right">收盤</th><th class="p-2 text-right">分數</th><th class="p-2">短期/明日</th><th class="p-2">波段</th><th class="p-2">長期</th><th class="p-2">訊號</th><th class="p-2">未持股</th><th class="p-2">已持股</th><th class="p-2 text-right">信心</th><th class="p-2 text-right">吊燈</th><th class="p-2">旗標</th>
             </tr>
           </thead>
           <tbody class="divide-y divide-slate-800 bg-slate-900" id="watchlistTable"></tbody>
@@ -764,12 +765,68 @@
   </div>
 </div>
 
+
+<div class="fixed inset-0 z-[63] hidden bg-slate-950/92 backdrop-blur-md p-4 overflow-y-auto" id="horizonTestPanel">
+  <div class="max-w-7xl mx-auto bg-slate-900 border border-slate-700 rounded-2xl shadow-2xl overflow-hidden">
+    <div class="flex flex-col gap-3 p-4 border-b border-slate-800">
+      <div class="flex flex-col md:flex-row md:items-center justify-between gap-3">
+        <div>
+          <div class="text-lg font-black tracking-widest text-white">ASQE v17.19 短中期測試｜短期・波段・長期勝率</div>
+          <div class="text-[12px] text-slate-400 mt-1 leading-relaxed">輸入單股與日期區間，回測三週期引擎每日判斷方向是否命中。短期用隔日收盤，波段用 10 日，長期用 40 日；只統計偏多/偏空訊號，震盪日不列入勝率。</div>
+        </div>
+        <div class="flex items-center gap-2 flex-wrap">
+          <button class="bg-slate-800 hover:bg-slate-700 text-slate-200 px-3 py-2 rounded-lg text-xs font-bold" onclick="document.getElementById('horizonTestPanel').classList.add('hidden')">關閉</button>
+        </div>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-2 bg-slate-950/60 border border-slate-800 rounded-xl p-3">
+        <div>
+          <label class="text-[9px] text-slate-500 font-bold uppercase block mb-1">市場</label>
+          <select id="hTestMarket" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-xs font-bold text-white">
+            <option value="AUTO">自動判斷</option>
+            <option value="TW">台股 TW</option>
+            <option value="US">美股 US</option>
+          </select>
+        </div>
+        <div>
+          <label class="text-[9px] text-slate-500 font-bold uppercase block mb-1">股票代碼</label>
+          <input id="hTestTicker" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-xs font-mono text-white uppercase" value="2330.TW" placeholder="2330.TW / ARM" onkeypress="if(event.key==='Enter') window.runHorizonWinrateTest()"/>
+        </div>
+        <div>
+          <label class="text-[9px] text-slate-500 font-bold uppercase block mb-1">開始日期</label>
+          <input id="hTestStartDate" type="date" value="2025-01-01" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-xs font-mono text-white"/>
+        </div>
+        <div>
+          <label class="text-[9px] text-slate-500 font-bold uppercase block mb-1">結束日期</label>
+          <input id="hTestEndDate" type="date" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-xs font-mono text-white"/>
+        </div>
+        <div class="lg:col-span-2 flex items-end gap-2">
+          <button class="flex-1 bg-fuchsia-700 hover:bg-fuchsia-600 text-white px-3 py-2 rounded-lg text-xs font-black tracking-widest" onclick="window.runHorizonWinrateTest()">開始短中期測試</button>
+          <button class="bg-indigo-700 hover:bg-indigo-600 text-white px-3 py-2 rounded-lg text-xs font-bold" onclick="window.copyHorizonTestToMain()">帶入主畫面</button>
+        </div>
+      </div>
+    </div>
+    <div class="p-4">
+      <div id="hTestSummary" class="text-xs text-slate-300 mb-3 bg-slate-950/70 border border-slate-800 rounded-xl p-3 leading-relaxed">尚未開始。此測試用來檢查三週期方向在指定區間的歷史命中率，避免只看單日分數。</div>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mb-3" id="hTestCards"></div>
+      <div class="overflow-x-auto border border-slate-800 rounded-xl">
+        <table class="w-full text-[11px] text-left min-w-[1250px]">
+          <thead class="bg-slate-950 text-slate-400 uppercase tracking-wider">
+            <tr><th class="p-2">週期</th><th class="p-2 text-right">樣本</th><th class="p-2 text-right">命中率</th><th class="p-2 text-right">平均報酬</th><th class="p-2 text-right">多方勝率</th><th class="p-2 text-right">空方勝率</th><th class="p-2">目前方向</th><th class="p-2">判讀</th></tr>
+          </thead>
+          <tbody class="divide-y divide-slate-800 bg-slate-900" id="hTestTable"></tbody>
+        </table>
+      </div>
+      <div class="mt-3 text-[11px] text-slate-400 leading-relaxed">說明：短期=隔日收盤方向；波段=10 個交易日後方向；長期=40 個交易日後方向。偏多訊號以後續報酬 &gt; 0 判定命中；偏空訊號以後續報酬 &lt; 0 判定命中；震盪訊號不列入勝率。這是歷史校驗，不是未來保證。</div>
+    </div>
+  </div>
+</div>
+
 <div class="fixed inset-0 z-[63] hidden bg-slate-950/92 backdrop-blur-md p-4 overflow-y-auto" id="forwardPanel">
   <div class="max-w-7xl mx-auto bg-slate-900 border border-slate-700 rounded-2xl shadow-2xl overflow-hidden">
     <div class="flex flex-col gap-3 p-4 border-b border-slate-800">
       <div class="flex flex-col md:flex-row md:items-center justify-between gap-3">
         <div>
-          <div class="text-lg font-black tracking-widest text-white">ASQE v17.18.1 Forward Test 訊號追蹤</div>
+          <div class="text-lg font-black tracking-widest text-white">ASQE v17.19 Forward Test 訊號追蹤</div>
           <div class="text-[12px] text-slate-400 mt-1 leading-relaxed">記錄當下訊號，未來自動回看 5 / 10 / 20 日結果，統計 ASQE 的真實命中率。資料存在本機瀏覽器 localStorage。</div>
         </div>
         <div class="flex items-center gap-2 flex-wrap">
@@ -786,10 +843,10 @@
       <div id="forwardSummary" class="text-xs text-slate-300 mb-3 bg-slate-950/70 border border-slate-800 rounded-xl p-3 leading-relaxed">尚無紀錄。先分析一檔股票，再按「記錄目前訊號」。</div>
       <div class="grid grid-cols-2 md:grid-cols-5 gap-2 mb-3" id="forwardStatsCards"></div>
       <div class="overflow-x-auto border border-slate-800 rounded-xl">
-        <table class="w-full text-[11px] text-left min-w-[1800px]">
+        <table class="w-full text-[11px] text-left min-w-[1400px]">
           <thead class="bg-slate-950 text-slate-400 uppercase tracking-wider">
             <tr>
-              <th class="p-2">記錄時間</th><th class="p-2">市場</th><th class="p-2">代碼</th><th class="p-2">資料源</th><th class="p-2 text-right">記錄價</th><th class="p-2 text-right">分數</th><th class="p-2">訊號</th><th class="p-2 text-right">信心</th><th class="p-2">短期/明日</th><th class="p-2">波段</th><th class="p-2">長期</th><th class="p-2">一致/資料校驗</th><th class="p-2 text-right">5日</th><th class="p-2 text-right">10日</th><th class="p-2 text-right">20日</th><th class="p-2 text-right">MAE</th><th class="p-2 text-right">MFE</th><th class="p-2">結果</th><th class="p-2">旗標</th><th class="p-2">操作</th>
+              <th class="p-2">記錄時間</th><th class="p-2">市場</th><th class="p-2">代碼</th><th class="p-2">資料源</th><th class="p-2 text-right">記錄價</th><th class="p-2 text-right">分數</th><th class="p-2">訊號</th><th class="p-2 text-right">信心</th><th class="p-2 text-right">5日</th><th class="p-2 text-right">10日</th><th class="p-2 text-right">20日</th><th class="p-2 text-right">MAE</th><th class="p-2 text-right">MFE</th><th class="p-2">結果</th><th class="p-2">旗標</th><th class="p-2">操作</th>
             </tr>
           </thead>
           <tbody class="divide-y divide-slate-800 bg-slate-900" id="forwardTable"></tbody>
@@ -2155,7 +2212,7 @@
   }
 
 
-  // v17.18.1：可調參數 MACD。三週期/短線引擎使用，避免短線美股與台股共用標準 MACD。
+  // v17.17.1：可調參數 MACD。三週期/短線引擎使用，避免短線美股與台股共用標準 MACD。
   function calcMACDParam(data, fast, slow, signal) {
     fast = fast || 12; slow = slow || 26; signal = signal || 9;
     if (!data || !data.length) return { macd: [], signal: [], histogram: [] };
@@ -2175,7 +2232,7 @@
     return { macd: macd, signal: sig, histogram: hist };
   }
 
-  // v17.18.1：KD 隨機指標。使用 RSV 搭配 K/D 平滑，提供短期與三週期雷達判斷。
+  // v17.17.1：KD 隨機指標。使用 RSV 搭配 K/D 平滑，提供短期與三週期雷達判斷。
   function calcStochasticKD(data, period, kSmooth, dSmooth) {
     period = period || 9; kSmooth = kSmooth || 3; dSmooth = dSmooth || 3;
     var out = [];
@@ -2271,7 +2328,7 @@
   }
 
 
-  // v17.18.1：三週期交易決策引擎。日線級別用於隔日傾向；當沖仍需在盤中以 5/15/60 分鐘與 VWAP 重新確認。
+  // v17.17.1：三週期交易決策引擎。日線級別用於隔日傾向；當沖仍需在盤中以 5/15/60 分鐘與 VWAP 重新確認。
   function calcRollingVWAP(data, period) {
     period = period || 20;
     var out=[];
@@ -2444,7 +2501,7 @@
     return '震盪';
   }
 
-  // v17.18.1：三週期交易決策引擎。
+  // v17.17.1：三週期交易決策引擎。
   // 短期：明日/隔日傾向；波段：3～20 日；長期：1～6 個月趨勢結構。
   function calcHorizonLayers(data, market, ctx, shortOut) {
     ctx = ctx || {};
@@ -2518,90 +2575,6 @@
       long:{prob:long,bias:horizonBias(long),rule:longRule},
       align:align, detail:detail
     };
-  }
-
-
-  // v17.18.1：三週期校驗工具。把短期/波段/長期加到區間測試、觀察清單與訊號追蹤，用來判斷訊號是否一致與資料是否值得信任。
-  function horizonSign(prob) {
-    prob = Number(prob || 50);
-    if (prob >= 56) return 1;
-    if (prob <= 44) return -1;
-    return 0;
-  }
-  function mainSignalSign(score, action) {
-    var a = String(action || '');
-    if (a.indexOf('出場') >= 0 || a.indexOf('防守') >= 0 || a.indexOf('跌破') >= 0 || a.indexOf('禁止') >= 0 || a.indexOf('暫緩') >= 0 || a.indexOf('空') >= 0) return -1;
-    if (a.indexOf('進場') >= 0 || a.indexOf('續抱') >= 0 || a.indexOf('多頭') >= 0 || a.indexOf('布局') >= 0 || a.indexOf('偏多') >= 0) return 1;
-    score = Number(score || 50);
-    if (score >= 70) return 1;
-    if (score <= 55) return -1;
-    return 0;
-  }
-  function normalizeHorizonSnapshot(outlook) {
-    var h = outlook && outlook.horizons && outlook.horizons.ready ? outlook.horizons : null;
-    if (!h) return {ready:false, short:{prob:50,bias:'--',rule:'--'}, swing:{prob:50,bias:'--',rule:'--'}, long:{prob:50,bias:'--',rule:'--'}, align:0, detail:'三週期資料不足'};
-    return {
-      ready:true,
-      short:{prob:h.short.prob, bias:h.short.bias, rule:h.short.rule},
-      swing:{prob:h.swing.prob, bias:h.swing.bias, rule:h.swing.rule},
-      long:{prob:h.long.prob, bias:h.long.bias, rule:h.long.rule},
-      align:h.align,
-      detail:h.detail
-    };
-  }
-  function calcHorizonReliability(h, score, action, quality, source, confidence) {
-    h = h || {ready:false};
-    var signs = h.ready ? [horizonSign(h.short.prob), horizonSign(h.swing.prob), horizonSign(h.long.prob)] : [0,0,0];
-    var pos = signs.filter(function(x){return x>0;}).length;
-    var neg = signs.filter(function(x){return x<0;}).length;
-    var neutral = signs.filter(function(x){return x===0;}).length;
-    var main = mainSignalSign(score, action);
-    var aligned = main === 0 ? Math.max(pos, neg) : signs.filter(function(x){return x===main;}).length;
-    var q = quality || {};
-    var penalty = 0;
-    var reasons = [];
-    if (!h.ready) { penalty += 20; reasons.push('三週期資料不足'); }
-    if (q.status === '警示') { penalty += 18; reasons.push('資料品質警示'); }
-    if (q.priceShocks && q.priceShocks.length) { penalty += Math.min(12, q.priceShocks.length * 4); reasons.push('巨大波動需核對'); }
-    if (q.confidencePenalty) penalty += Math.min(12, q.confidencePenalty);
-    if (String(source || '').indexOf('Yahoo') >= 0) { penalty += 6; reasons.push('終極備援資料'); }
-    if (confidence != null && Number(confidence) < 65) { penalty += 10; reasons.push('資料信心偏低'); }
-    if (pos > 0 && neg > 0) { penalty += 14; reasons.push('週期方向分歧'); }
-    if (main !== 0 && aligned <= 1) { penalty += 12; reasons.push('主訊號與三週期不一致'); }
-    var base = 55 + aligned * 12 + (Math.max(pos, neg) === 3 ? 8 : 0) - neutral * 3 - penalty;
-    var scoreCheck = clamp(Math.round(base), 0, 100);
-    var text='中可信', color='text-yellow-300';
-    if (scoreCheck >= 75) { text='高可信'; color='text-emerald-300'; }
-    else if (scoreCheck < 52) { text='需核對'; color='text-red-300'; }
-    var dirText = pos >= 2 ? '偏多共振' : (neg >= 2 ? '偏空共振' : '週期混合');
-    if (pos === 0 && neg === 0) dirText = '三週期中性';
-    return {score:scoreCheck, text:text, color:color, direction:dirText, aligned:aligned, detail:(reasons.length?reasons.join(' / '):'三週期與資料品質一致')};
-  }
-  function horizonCellHtml(h, key) {
-    if (!h || !h.ready || !h[key]) return '<span class="text-slate-500">--</span>';
-    var x = h[key];
-    return '<div class="font-black '+horizonClass(x.prob)+'">'+safeHtml(x.bias)+' '+Number(x.prob||0).toFixed(0)+'%</div><div class="text-[9px] text-slate-400 max-w-[180px] truncate" title="'+safeHtml(x.rule||'')+'">'+safeHtml(x.rule||'')+'</div>';
-  }
-  function horizonCellText(h, key) {
-    if (!h || !h.ready || !h[key]) return '--';
-    var x=h[key]; return (x.bias || '--') + ' ' + Math.round(x.prob || 0) + '%｜' + (x.rule || '');
-  }
-  function reliabilityCellHtml(c) {
-    if (!c) return '<span class="text-slate-500">--</span>';
-    return '<div class="font-black '+c.color+'">'+safeHtml(c.text)+' '+c.score+'</div><div class="text-[9px] text-slate-400 max-w-[190px] truncate" title="'+safeHtml(c.detail||'')+'">'+safeHtml(c.direction||'')+'｜'+safeHtml(c.detail||'')+'</div>';
-  }
-  function buildHorizonValidationFromOutlook(outlook, score, action, quality, source, confidence) {
-    var h = normalizeHorizonSnapshot(outlook);
-    return {horizons:h, horizonCheck:calcHorizonReliability(h, score, action, quality, source, confidence)};
-  }
-  function buildHorizonValidationForData(data, market, score, action, source, confidence) {
-    if (!data || data.length < 120) {
-      var empty = {ready:false, short:{prob:50,bias:'--',rule:'資料不足'}, swing:{prob:50,bias:'--',rule:'資料不足'}, long:{prob:50,bias:'--',rule:'資料不足'}, align:0, detail:'資料不足'};
-      return {horizons:empty, horizonCheck:calcHorizonReliability(empty, score, action, data && data.quality, source, confidence)};
-    }
-    var e20=calcEMA(data,20), e60=calcEMA(data,60), bb=calcBollinger(data,20,2), dmi=calcDMI(data,14), macd=calcMACD(data), atr=calcATR(data,14), obv=calcOBV(data), cmf=calcCMF(data,20);
-    var out = calcShortTermOutlook(data, market, {e20:e20, e60:e60, bb:bb, dmi:dmi, macd:macd, atr:atr, obv:obv, cmf:cmf, vcpOk:false, veto:false});
-    return buildHorizonValidationFromOutlook(out, score, action, data.quality, source, confidence);
   }
 
   function renderShortTermOutlook(outlook) {
@@ -3632,9 +3605,6 @@
         '<div class="text-slate-400">原因：' + (signalReason.join('；') || entryTypeObj.note || '等待更多確認') + '。關鍵防線：' + chandelier.toFixed(2) + '。訊號驗證：' + sigStats.text + '。</div>';
       sf('tradingRuleText', ruleHtml);
 
-      var horizonValidation = buildHorizonValidationFromOutlook(shortOutlook, final分數, action, data.quality, result.source, confidence);
-      if (horizonValidation.horizonCheck && horizonValidation.horizonCheck.text === '需核對' && flags.indexOf('三週期/資料需核對') < 0) flags.push('三週期/資料需核對');
-
       window.lastAnalysisContext = {
         ticker: result.symbol.display,
         market: market,
@@ -3657,9 +3627,7 @@
         signalType: entryTypeObj.type,
         shortBias: shortOutlook && shortOutlook.bias,
         shortProb: shortOutlook && shortOutlook.prob,
-        shortStrategy: shortOutlook && shortOutlook.strategy,
-        horizons: horizonValidation.horizons,
-        horizonCheck: horizonValidation.horizonCheck
+        shortStrategy: shortOutlook && shortOutlook.strategy
       };
       if (window.renderCurrentPositionAdvice) window.renderCurrentPositionAdvice();
 
@@ -3676,8 +3644,6 @@
         netExp: netExpectancy,
         dar95: mc.dar95,
         confidence: confidence,
-        horizons: horizonValidation.horizons,
-        horizonCheck: horizonValidation.horizonCheck,
         flags: flags.join(' / ') || '通過'
       };
 
@@ -4134,7 +4100,7 @@
 
   function singleBacktestRowHtml(r) {
     if (r.error) {
-      return '<tr class="text-red-300"><td class="p-2">'+r.market+'</td><td class="p-2 font-mono font-bold">'+r.ticker+'</td><td colspan="20" class="p-2">失敗：'+r.error+'</td></tr>';
+      return '<tr class="text-red-300"><td class="p-2">'+r.market+'</td><td class="p-2 font-mono font-bold">'+r.ticker+'</td><td colspan="16" class="p-2">失敗：'+r.error+'</td></tr>';
     }
     var scoreClass = r.score >= 75 ? 'text-emerald-400' : r.score >= 60 ? 'text-yellow-300' : 'text-red-400';
     var bhClass = r.buyHoldRet >= 0 ? 'text-emerald-400' : 'text-red-400';
@@ -4156,10 +4122,6 @@
       '<td class="p-2 text-right font-mono">'+r.tradeCount+'</td>' +
       '<td class="p-2 text-right font-mono">'+(r.winRate*100).toFixed(0)+'%</td>' +
       '<td class="p-2 text-right font-mono font-black '+scoreClass+'">'+r.score+'</td>' +
-      '<td class="p-2">'+horizonCellHtml(r.horizons,'short')+'</td>' +
-      '<td class="p-2">'+horizonCellHtml(r.horizons,'swing')+'</td>' +
-      '<td class="p-2">'+horizonCellHtml(r.horizons,'long')+'</td>' +
-      '<td class="p-2">'+reliabilityCellHtml(r.horizonCheck)+'</td>' +
       '<td class="p-2 '+r.actionClass+' font-bold">'+r.action+'</td>' +
       '<td class="p-2 '+verdictClass+' font-bold">'+r.verdict+'</td>' +
       '<td class="p-2 text-slate-300">'+r.flags+'</td>' +
@@ -4274,10 +4236,8 @@
     if (wf.score < 45 && verdict.indexOf('合宜') >= 0) verdict = '尚可：回測佳但穩健度待確認';
     if (wf.score >= 72 && sim.strategyRet > 0 && verdict.indexOf('需加強') < 0) verdict = verdict.indexOf('合宜') >= 0 ? verdict + ' / 穩健' : '合宜：分段穩健且報酬為正';
 
-    var hval = buildHorizonValidationForData(data, market, score, action, result.source, 70);
-    if (hval.horizonCheck && hval.horizonCheck.text === '需核對') uniqueFlags.push('三週期/資料需核對:' + hval.horizonCheck.detail);
     window.currentMarket = oldMarket;
-    return { market:market, ticker:result.symbol.display, source:result.source, profileLabel:assetProfile.label, profileColor:assetProfile.color, profileNote:assetProfile.note, robustScore:wf.score, robustText:wf.text, robustColor:wf.color, robustDetail:wf.detail, period:data[startIdx].time+' ~ '+data[endIdx].time, startClose:startClose, endClose:endClose, buyHoldRet:buyHoldRet, buyHoldMdd:buyHoldMdd, strategyRet:sim.strategyRet, strategyMdd:sim.strategyMdd, tradeCount:sim.tradeCount, winRate:sim.winRate, score:score, horizons:hval.horizons, horizonCheck:hval.horizonCheck, action:action, actionClass:actionClass, verdict:verdict, flags:uniqueFlags.join(' / ') || '通過', events:sim.events };
+    return { market:market, ticker:result.symbol.display, source:result.source, profileLabel:assetProfile.label, profileColor:assetProfile.color, profileNote:assetProfile.note, robustScore:wf.score, robustText:wf.text, robustColor:wf.color, robustDetail:wf.detail, period:data[startIdx].time+' ~ '+data[endIdx].time, startClose:startClose, endClose:endClose, buyHoldRet:buyHoldRet, buyHoldMdd:buyHoldMdd, strategyRet:sim.strategyRet, strategyMdd:sim.strategyMdd, tradeCount:sim.tradeCount, winRate:sim.winRate, score:score, action:action, actionClass:actionClass, verdict:verdict, flags:uniqueFlags.join(' / ') || '通過', events:sim.events };
   }
 
   window.openSingleTest = function() {
@@ -4308,7 +4268,7 @@
     var benchCache={};
     try {
       if (summary) summary.innerHTML='執行中：'+ticker+'，期間 '+startDate+' ~ '+endDate+'。正在讀取資料與回放 ASQE 進出場規則...';
-      if (table) table.innerHTML='<tr><td class="p-2 text-slate-400">'+market+'</td><td class="p-2 font-mono text-white">'+ticker+'</td><td colspan="18" class="p-2 text-indigo-300">讀取資料與計算中...</td></tr>';
+      if (table) table.innerHTML='<tr><td class="p-2 text-slate-400">'+market+'</td><td class="p-2 font-mono text-white">'+ticker+'</td><td colspan="14" class="p-2 text-indigo-300">讀取資料與計算中...</td></tr>';
       var r;
       try { r = await analyzeForSingleTest(ticker, market, startDate, endDate, benchCache); }
       catch(e) { r = {market:market, ticker:ticker, error:e.message||String(e)}; }
@@ -4316,7 +4276,7 @@
       if (!r.error) {
         var eventHtml = r.events && r.events.length ? '<br><br>最近訊號：<span class="text-slate-200">'+r.events.join(' ｜ ')+'</span>' : '<br><br>最近訊號：<span class="text-slate-400">期間內無完整進出場紀錄，代表系統偏保守或尚未滿足條件。</span>';
         if (summary) summary.innerHTML='完成：'+r.ticker+'，'+r.period+'。測試結論：<span class="font-bold text-emerald-300">'+r.verdict+'</span>。期末訊號：<span class="font-bold">'+r.action+'</span>。'+eventHtml;
-        if (notes) notes.innerHTML='判讀方式：v17.18.1 採用收盤產生訊號、隔日開盤執行，並把短期/明日、波段、長期三週期同時加入個股區間測試、觀察清單與訊號追蹤。三週期校驗不是保證資料正確，而是用多週期方向、資料品質、資料源與主訊號一致性檢查訊號是否值得信任；若顯示「需核對」，代表資料或訊號分歧，應改查原始K線、成交量與API路由。';
+        if (notes) notes.innerHTML='判讀方式：v17.19 採用收盤產生訊號、隔日開盤執行，並加入三週期交易決策引擎、台股/美股分市場參數校正、標的屬性分群與 Walk-forward 穩健度。三週期雷達同時顯示短期、波段、長期：短期使用 KD、MACD、布林、量能、EMA5/13 與 rolling VWAP；波段看 EMA20/60、MACD/DMI、VCP與支撐；長期看 EMA60/120/200、60日趨勢與防線。若策略報酬優於持有且策略MDD較低，代表 ASQE 的進出場規則在該區間較合適；若持有報酬大幅優於策略，通常表示仍偏保守；若策略MDD高於持有MDD，代表防守條件仍需調整。';
       } else {
         if (summary) summary.innerHTML='失敗：'+r.error;
       }
@@ -4450,20 +4410,15 @@
         var r = await fetchMarketData(rows[i].ticker, m);
         var o = forwardOutcomeFromData(r.data, rows[i]);
         if (o) rows[i].outcome = o;
-        var hv = buildHorizonValidationForData(r.data, m, Number(rows[i].score||50), rows[i].action || '', r.source, rows[i].confidence);
-        rows[i].currentHorizons = hv.horizons;
-        rows[i].currentHorizonCheck = hv.horizonCheck;
       } catch(e) { rows[i].outcomeError = e.message || String(e); }
     }
     saveForwardLog(rows); renderForwardLog();
   };
   window.exportForwardCSV = function() {
     var rows = loadForwardLog();
-    var header = ['date','market','ticker','source','price','score','action','confidence','short','swing','long','horizonCheck','r5','r10','r20','mae','mfe','result','flags'];
+    var header = ['date','market','ticker','source','price','score','action','confidence','r5','r10','r20','mae','mfe','result','flags'];
     var csv = [header.join(',')].concat(rows.map(function(r){ var o=r.outcome||{}; return header.map(function(k){
-      var hvH = r.currentHorizons || r.horizons;
-      var hvC = r.currentHorizonCheck || r.horizonCheck;
-      var v = k==='short'?horizonCellText(hvH,'short'):k==='swing'?horizonCellText(hvH,'swing'):k==='long'?horizonCellText(hvH,'long'):k==='horizonCheck'?(hvC?((hvC.text||'')+' '+(hvC.score||'')+'｜'+(hvC.detail||'')):''):k==='r5'?o.r5:k==='r10'?o.r10:k==='r20'?o.r20:k==='mae'?o.mae:k==='mfe'?o.mfe:k==='result'?o.result:r[k];
+      var v = k==='r5'?o.r5:k==='r10'?o.r10:k==='r20'?o.r20:k==='mae'?o.mae:k==='mfe'?o.mfe:k==='result'?o.result:r[k];
       return '"'+String(v==null?'':v).replace(/"/g,'""')+'"';
     }).join(','); })).join('\n');
     downloadText('ASQE_forward_log.csv', csv, 'text/csv;charset=utf-8');
@@ -4490,6 +4445,15 @@
     };
     reader.readAsText(file);
   };
+  function horizonCellText(x) {
+    if (!x) return '--';
+    var p = x.prob == null ? '' : (' ' + Math.round(x.prob) + '%');
+    return (x.bias || '--') + p;
+  }
+  function horizonCellClass(x) {
+    if (!x || x.prob == null) return 'text-slate-300';
+    return x.prob >= 60 ? 'text-emerald-300' : (x.prob <= 40 ? 'text-red-300' : 'text-yellow-300');
+  }
   function calcWatchlistItem(result, market, ticker) {
     var data = result.data || [];
     if (data.length < 220) throw new Error('資料不足');
@@ -4504,15 +4468,22 @@
     confidence = clamp(confidence, 30, 98);
     var notHold = core.enter ? '可分批進場' : (core.action.indexOf('停利')>=0 || core.action.indexOf('追高')>=0 ? '不追高' : (core.score>=65?'觀察等拉回':'暫不進場'));
     var hold = core.exit ? '減碼/出場' : (core.trim && core.trim.level ? core.trim.text : '續抱觀察');
-    var hv = buildHorizonValidationForData(data, market, core.score, core.action, result.source, confidence);
-    var flags = (core.flags||[]).join(' / ') || '通過';
-    if (hv.horizonCheck && hv.horizonCheck.text === '需核對') flags += ' / 三週期或資料需核對';
-    return {market:market, ticker:result.symbol && result.symbol.display || ticker, source:result.source, close:L.close, score:core.score, horizons:hv.horizons, horizonCheck:hv.horizonCheck, action:core.action, actionClass:core.actionClass, notHold:notHold, hold:hold, confidence:confidence, chandelier:core.chandelier, flags:flags};
+    var shortOut = calcShortTermOutlook(data, market, {e20:packs.e20, e60:packs.e60, atr:packs.atr, dmi:packs.dmi, bb:packs.bb, macd:packs.macd, cmf:packs.cmf, obv:packs.obv, veto:(core.flags||[]).join('').indexOf('否決')>=0});
+    var hz = shortOut && shortOut.horizons && shortOut.horizons.ready ? shortOut.horizons : null;
+    var shortText = shortOut && shortOut.ready ? horizonCellText({bias:shortOut.bias, prob:shortOut.prob}) : '--';
+    var swingText = hz ? horizonCellText(hz.swing) : '--';
+    var longText = hz ? horizonCellText(hz.long) : '--';
+    var alignText = hz ? (hz.align>=2?'三週期偏多':(hz.align<=-2?'三週期偏空':'三週期不一致')) : '三週期不足';
+    var flags=(core.flags||[]).join(' / ')||'通過';
+    flags = flags + ' / ' + alignText;
+    return {market:market, ticker:result.symbol && result.symbol.display || ticker, source:result.source, close:L.close, score:core.score, shortText:shortText, shortProb:shortOut&&shortOut.prob, swingText:swingText, swingProb:hz&&hz.swing&&hz.swing.prob, longText:longText, longProb:hz&&hz.long&&hz.long.prob, action:core.action, actionClass:core.actionClass, notHold:notHold, hold:hold, confidence:confidence, chandelier:core.chandelier, flags:flags};
   }
   function watchlistRowHtml(r) {
-    if (r.error) return '<tr class="text-red-300"><td class="p-2">'+safeHtml(r.market||'')+'</td><td class="p-2 font-mono font-bold">'+safeHtml(r.ticker||'')+'</td><td colspan="13" class="p-2">失敗：'+safeHtml(r.error)+'</td></tr>';
+    if (r.error) return '<tr class="text-red-300"><td class="p-2">'+safeHtml(r.market||'')+'</td><td class="p-2 font-mono font-bold">'+safeHtml(r.ticker||'')+'</td><td colspan="12" class="p-2">失敗：'+safeHtml(r.error)+'</td></tr>';
     return '<tr class="hover:bg-slate-800/60">'+
-      '<td class="p-2 text-slate-400">'+safeHtml(r.market)+'</td><td class="p-2 font-mono font-black text-white">'+safeHtml(r.ticker)+'</td><td class="p-2 text-slate-400 truncate max-w-[160px]" title="'+safeHtml(r.source)+'">'+safeHtml(r.source)+'</td><td class="p-2 text-right font-mono">'+Number(r.close).toFixed(2)+'</td><td class="p-2 text-right font-mono font-black '+(r.score>=75?'text-emerald-300':r.score>=60?'text-yellow-300':'text-red-300')+'">'+r.score+'</td><td class="p-2">'+horizonCellHtml(r.horizons,'short')+'</td><td class="p-2">'+horizonCellHtml(r.horizons,'swing')+'</td><td class="p-2">'+horizonCellHtml(r.horizons,'long')+'</td><td class="p-2">'+reliabilityCellHtml(r.horizonCheck)+'</td><td class="p-2 font-bold '+r.actionClass+'">'+safeHtml(r.action)+'</td><td class="p-2 text-slate-200">'+safeHtml(r.notHold)+'</td><td class="p-2 text-slate-200">'+safeHtml(r.hold)+'</td><td class="p-2 text-right font-mono">'+Math.round(r.confidence)+'%</td><td class="p-2 text-right font-mono">'+(r.chandelier?Number(r.chandelier).toFixed(2):'--')+'</td><td class="p-2 text-slate-300 max-w-[260px] truncate" title="'+safeHtml(r.flags)+'">'+safeHtml(r.flags)+'</td></tr>';
+      '<td class="p-2 text-slate-400">'+safeHtml(r.market)+'</td><td class="p-2 font-mono font-black text-white">'+safeHtml(r.ticker)+'</td><td class="p-2 text-slate-400 truncate max-w-[160px]" title="'+safeHtml(r.source)+'">'+safeHtml(r.source)+'</td><td class="p-2 text-right font-mono">'+Number(r.close).toFixed(2)+'</td><td class="p-2 text-right font-mono font-black '+(r.score>=75?'text-emerald-300':r.score>=60?'text-yellow-300':'text-red-300')+'">'+r.score+'</td>'+
+      '<td class="p-2 font-bold '+horizonCellClass({prob:r.shortProb})+'">'+safeHtml(r.shortText||'--')+'</td><td class="p-2 font-bold '+horizonCellClass({prob:r.swingProb})+'">'+safeHtml(r.swingText||'--')+'</td><td class="p-2 font-bold '+horizonCellClass({prob:r.longProb})+'">'+safeHtml(r.longText||'--')+'</td>'+
+      '<td class="p-2 font-bold '+r.actionClass+'">'+safeHtml(r.action)+'</td><td class="p-2 text-slate-200">'+safeHtml(r.notHold)+'</td><td class="p-2 text-slate-200">'+safeHtml(r.hold)+'</td><td class="p-2 text-right font-mono">'+Math.round(r.confidence)+'%</td><td class="p-2 text-right font-mono">'+(r.chandelier?Number(r.chandelier).toFixed(2):'--')+'</td><td class="p-2 text-slate-300 max-w-[260px] truncate" title="'+safeHtml(r.flags)+'">'+safeHtml(r.flags)+'</td></tr>';
   }
   window.openWatchlistPanel = function() {
     var p=$('watchlistPanel'); if(p) p.classList.remove('hidden');
@@ -4529,7 +4500,7 @@
     var body = $('watchlistTable'), summary=$('watchlistSummary');
     WATCHLIST_LAST_ROWS = [];
     if (!list.length) { if(summary) summary.innerHTML='請先輸入股票代碼。'; return; }
-    if (body) body.innerHTML='<tr><td class="p-3 text-indigo-300" colspan="15">掃描中...</td></tr>';
+    if (body) body.innerHTML='<tr><td class="p-3 text-indigo-300" colspan="14">掃描中...</td></tr>';
     if (summary) summary.innerHTML='掃描中：共 '+list.length+' 檔。';
     var rows=[];
     for (var i=0; i<list.length; i++) {
@@ -4541,21 +4512,12 @@
     WATCHLIST_LAST_ROWS = rows;
     var ok = rows.filter(function(r){return !r.error;});
     var enterable = ok.filter(function(r){return r.score>=70 && String(r.action).indexOf('禁止')<0 && String(r.action).indexOf('暫緩')<0;}).length;
-    if (summary) summary.innerHTML='完成：成功 '+ok.length+' 檔，失敗 '+(rows.length-ok.length)+' 檔；其中分數≥70且未被防守訊號否決者 '+enterable+' 檔。請再檢查「短期/波段/長期」「一致/資料校驗」「未持股/已持股」與風險旗標。';
+    if (summary) summary.innerHTML='完成：成功 '+ok.length+' 檔，失敗 '+(rows.length-ok.length)+' 檔；其中分數≥70且未被防守訊號否決者 '+enterable+' 檔。請再檢查「未持股/已持股」與風險旗標。';
   };
   window.exportWatchlistCSV = function() {
     var rows = WATCHLIST_LAST_ROWS || [];
-    var header=['market','ticker','source','close','score','shortBias','swingBias','longBias','horizonCheck','action','notHold','hold','confidence','chandelier','flags','error'];
-    function hvText(r, key){ try { return r.horizons && r.horizons[key] ? (r.horizons[key].bias + '｜' + r.horizons[key].rule) : ''; } catch(e){ return ''; } }
-    function checkText(r){ try { return r.horizonCheck ? (r.horizonCheck.text + '｜' + r.horizonCheck.detail) : ''; } catch(e){ return ''; } }
-    function cell(r,k){
-      if(k==='shortBias') return hvText(r,'short');
-      if(k==='swingBias') return hvText(r,'swing');
-      if(k==='longBias') return hvText(r,'long');
-      if(k==='horizonCheck') return checkText(r);
-      return r[k]==null?'':r[k];
-    }
-    var csv=[header.join(',')].concat(rows.map(function(r){return header.map(function(k){return '"'+String(cell(r,k)).replace(/"/g,'""')+'"';}).join(',');})).join('\n');
+    var header=['market','ticker','source','close','score','shortText','swingText','longText','action','notHold','hold','confidence','chandelier','flags','error'];
+    var csv=[header.join(',')].concat(rows.map(function(r){return header.map(function(k){return '"'+String(r[k]==null?'':r[k]).replace(/"/g,'""')+'"';}).join(',');})).join('\n');
     downloadText('ASQE_watchlist_scan.csv', csv, 'text/csv;charset=utf-8');
   };
   function downloadText(filename, text, type) {
@@ -4564,6 +4526,120 @@
     var a = document.createElement('a'); a.href=url; a.download=filename; document.body.appendChild(a); a.click();
     setTimeout(function(){URL.revokeObjectURL(url); a.remove();}, 500);
   }
+
+
+
+  // ================= v17.19 Short / Swing / Long Win-rate Test =================
+  function horizonDirectionFromProb(prob) {
+    if (prob >= 55) return 1;
+    if (prob <= 45) return -1;
+    return 0;
+  }
+  function horizonWinStats(data, market, startIdx, endIdx) {
+    var stats = {
+      short:{name:'短期/明日', horizon:1, sample:0, wins:0, longSample:0, longWins:0, shortSample:0, shortWins:0, sumRet:0, latest:'--', note:'隔日收盤方向'},
+      swing:{name:'波段', horizon:10, sample:0, wins:0, longSample:0, longWins:0, shortSample:0, shortWins:0, sumRet:0, latest:'--', note:'10日方向'},
+      long:{name:'長期', horizon:40, sample:0, wins:0, longSample:0, longWins:0, shortSample:0, shortWins:0, sumRet:0, latest:'--', note:'40日方向'}
+    };
+    var first = Math.max(startIdx, 220);
+    var lastUsable = Math.min(endIdx, data.length-2);
+    for (var i=first; i<=lastUsable; i++) {
+      var slice = data.slice(0, i+1);
+      var packs = {e20:calcEMA(slice,20), e60:calcEMA(slice,60), atr:calcATR(slice,14), dmi:calcDMI(slice,14), bb:calcBollinger(slice,20,2), macd:calcMACD(slice), cmf:calcCMF(slice,20), obv:calcOBV(slice)};
+      var core = evalCoreAtIndex(slice, slice.length-1, {e20:packs.e20,e60:packs.e60,e120:calcEMA(slice,120),atr:packs.atr,dmi:packs.dmi,bb:packs.bb,macd:packs.macd,cmf:packs.cmf,obv:packs.obv}, {market:market,eventRisk:{on:false,high:false,text:'短中期測試不套用目前手動事件風險'}});
+      var shortOut = calcShortTermOutlook(slice, market, {e20:packs.e20, e60:packs.e60, atr:packs.atr, dmi:packs.dmi, bb:packs.bb, macd:packs.macd, cmf:packs.cmf, obv:packs.obv, veto:(core.flags||[]).join('').indexOf('否決')>=0});
+      if (!shortOut || !shortOut.ready || !shortOut.horizons || !shortOut.horizons.ready) continue;
+      var signals = {
+        short:{prob:shortOut.prob, bias:shortOut.bias},
+        swing:shortOut.horizons.swing,
+        long:shortOut.horizons.long
+      };
+      Object.keys(stats).forEach(function(k){
+        var st = stats[k], sig = signals[k] || {}, dir = horizonDirectionFromProb(sig.prob || 50), j = i + st.horizon;
+        if (dir === 0 || j > endIdx || j >= data.length) return;
+        var ret = data[j].close / data[i].close - 1;
+        var win = dir > 0 ? ret > 0 : ret < 0;
+        st.sample++; if (win) st.wins++; st.sumRet += ret;
+        if (dir > 0) { st.longSample++; if (win) st.longWins++; }
+        else { st.shortSample++; if (win) st.shortWins++; }
+      });
+      if (i === endIdx || i === lastUsable) {
+        stats.short.latest = shortOut.bias + ' ' + Math.round(shortOut.prob) + '%';
+        stats.swing.latest = shortOut.horizons.swing.bias + ' ' + Math.round(shortOut.horizons.swing.prob) + '%';
+        stats.long.latest = shortOut.horizons.long.bias + ' ' + Math.round(shortOut.horizons.long.prob) + '%';
+      }
+    }
+    Object.keys(stats).forEach(function(k){
+      var s=stats[k];
+      s.winRate = s.sample ? s.wins/s.sample : null;
+      s.avgRet = s.sample ? s.sumRet/s.sample : null;
+      s.longWinRate = s.longSample ? s.longWins/s.longSample : null;
+      s.shortWinRate = s.shortSample ? s.shortWins/s.shortSample : null;
+      if (!s.sample) s.verdict='樣本不足';
+      else if (s.winRate>=0.58) s.verdict='方向有效，可作為輔助依據';
+      else if (s.winRate>=0.50) s.verdict='尚可，需搭配主訊號與風控';
+      else s.verdict='偏弱，該週期訊號需保守';
+    });
+    return stats;
+  }
+  function horizonTestRowHtml(s) {
+    var wr = s.winRate==null?'--':(s.winRate*100).toFixed(0)+'%';
+    var avgR = s.avgRet==null?'--':(s.avgRet*100).toFixed(2)+'%';
+    var lw = s.longWinRate==null?'--':(s.longWinRate*100).toFixed(0)+'%';
+    var sw = s.shortWinRate==null?'--':(s.shortWinRate*100).toFixed(0)+'%';
+    var cls = s.winRate==null?'text-slate-300':(s.winRate>=0.58?'text-emerald-300':(s.winRate>=0.5?'text-yellow-300':'text-red-300'));
+    return '<tr class="hover:bg-slate-800/60"><td class="p-2 font-black text-white">'+safeHtml(s.name)+' <span class="text-slate-500 text-[10px]">'+safeHtml(s.note)+'</span></td><td class="p-2 text-right font-mono">'+s.sample+'</td><td class="p-2 text-right font-mono font-black '+cls+'">'+wr+'</td><td class="p-2 text-right font-mono '+(s.avgRet>=0?'text-emerald-300':'text-red-300')+'">'+avgR+'</td><td class="p-2 text-right font-mono">'+lw+'</td><td class="p-2 text-right font-mono">'+sw+'</td><td class="p-2 font-bold">'+safeHtml(s.latest)+'</td><td class="p-2 text-slate-300">'+safeHtml(s.verdict)+'</td></tr>';
+  }
+  function horizonTestCardHtml(s) {
+    var wr = s.winRate==null?'--':(s.winRate*100).toFixed(0)+'%';
+    var cls = s.winRate==null?'text-slate-300':(s.winRate>=0.58?'text-emerald-300':(s.winRate>=0.5?'text-yellow-300':'text-red-300'));
+    return '<div class="bg-slate-950 border border-slate-800 rounded-xl p-3"><div class="text-[10px] text-slate-400 font-bold">'+safeHtml(s.name)+'</div><div class="text-2xl font-black metric-value '+cls+'">'+wr+'</div><div class="text-[11px] text-slate-400 mt-1">樣本 '+s.sample+'｜目前 '+safeHtml(s.latest)+'</div><div class="text-[10px] text-slate-500 mt-1">'+safeHtml(s.verdict)+'</div></div>';
+  }
+  window.openHorizonTestPanel = function() {
+    var p=$('horizonTestPanel'); if (p) p.classList.remove('hidden');
+    var t=$('tickerInput'), h=$('hTestTicker'); if (t && h && !h.value) h.value=t.value;
+    var e=$('hTestEndDate'); if (e && !e.value) e.value=getDateStr(new Date());
+  };
+  window.copyHorizonTestToMain = function() {
+    var t=$('hTestTicker'), mSel=$('hTestMarket');
+    if (t && $('tickerInput')) $('tickerInput').value = t.value;
+    var market = mSel && mSel.value !== 'AUTO' ? mSel.value : inferMarketFromTicker(t ? t.value : '');
+    window.switchTab(market, t ? t.value : (market==='TW'?'2330.TW':'SPY'));
+  };
+  window.runHorizonWinrateTest = async function() {
+    if (window.isBatchRunning) return;
+    window.isBatchRunning = true;
+    var table=$('hTestTable'), summary=$('hTestSummary'), cards=$('hTestCards');
+    var ticker=($('hTestTicker') && $('hTestTicker').value) || ($('tickerInput') && $('tickerInput').value) || '2330.TW';
+    var marketSel=($('hTestMarket') && $('hTestMarket').value) || 'AUTO';
+    var market=marketSel==='AUTO'?inferMarketFromTicker(ticker):marketSel;
+    var startDate=($('hTestStartDate') && $('hTestStartDate').value) || '2025-01-01';
+    var endDate=($('hTestEndDate') && $('hTestEndDate').value) || getDateStr(new Date());
+    try {
+      if (summary) summary.innerHTML='執行中：'+safeHtml(ticker)+'，'+safeHtml(startDate)+' ~ '+safeHtml(endDate)+'。正在回放短期/波段/長期方向判斷...';
+      if (table) table.innerHTML='<tr><td colspan="8" class="p-3 text-indigo-300">讀取資料與計算中...</td></tr>';
+      if (cards) cards.innerHTML='';
+      var res=await fetchMarketData(ticker, market);
+      var raw=res.data||[];
+      if (!raw.length || raw.length<260) throw new Error('資料不足，三週期勝率測試至少建議 260 根日K。');
+      var endIdx=findEndIndex(raw,endDate);
+      var startIdx=findStartIndex(raw.slice(0,endIdx+1),startDate);
+      if (startIdx<220) startIdx=220;
+      if (endIdx-startIdx<60) throw new Error('測試區間太短，建議至少 3～6 個月以上。');
+      var stats=horizonWinStats(raw, market, startIdx, endIdx);
+      var arr=[stats.short, stats.swing, stats.long];
+      if (table) table.innerHTML=arr.map(horizonTestRowHtml).join('');
+      if (cards) cards.innerHTML=arr.map(horizonTestCardHtml).join('');
+      var align='';
+      var valid=arr.filter(function(x){return x.winRate!=null;});
+      var avgWr=valid.length?avg(valid.map(function(x){return x.winRate;})):null;
+      if (avgWr!=null) align = avgWr>=0.58 ? '整體方向校驗佳' : (avgWr>=0.5 ? '整體尚可，仍需搭配主訊號' : '整體偏弱，方向訊號需保守');
+      if (summary) summary.innerHTML='完成：<span class="font-mono font-bold text-white">'+safeHtml(res.symbol && res.symbol.display || ticker)+'</span>｜資料源：'+safeHtml(res.source)+'｜測試期間：'+safeHtml(raw[startIdx].time)+' ~ '+safeHtml(raw[endIdx].time)+'。<span class="font-bold text-emerald-300">'+safeHtml(align)+'</span>。';
+    } catch(e) {
+      if (summary) summary.innerHTML='<span class="text-red-300 font-bold">失敗：</span>'+safeHtml(e.message||String(e));
+      if (table) table.innerHTML='<tr><td colspan="8" class="p-3 text-red-300">'+safeHtml(e.message||String(e))+'</td></tr>';
+    } finally { window.isBatchRunning=false; }
+  };
 
   window.runBatchPreset = window.runSingleBacktest;
 
