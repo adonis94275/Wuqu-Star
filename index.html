@@ -5,8 +5,8 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <meta content="notranslate" name="google"/>
-<title>ASQE v17.24 個股/大盤狀態分離修正版 | Three Horizon Validation | GitHub Pages Pro</title>
-<script type="text/javascript" nonce="ad7d60c8724440868a8062c88b7" src="//local.adguard.org?ts=1781699945754&amp;type=content-script&amp;dmn=chatgpt.com&amp;url=https%3A%2F%2Fchatgpt.com%2Fbackend-api%2Festuary%2Fcontent%3Fid%3Dfile_0000000067bc720babf7ea0c52127e96%26fn%3DASQE_v17_24_regime_display_fixed_index.html%26cd%3Dattachment%26ts%3D494916%26p%3Dfs%26cid%3D1%26sig%3D0691d7f0564c792ca6c5bbf9cce69db2eff8dba0ed1d3b8511b653ddd5682ab8%26v%3D0&amp;app=chrome.exe&amp;css=2&amp;js=1&amp;rel=1&amp;rji=1&amp;sbe=1&amp;stealth=1&amp;st-dnt"></script><script type="text/javascript" nonce="ad7d60c8724440868a8062c88b7" src="//local.adguard.org?ts=1781699945754&amp;name=AdGuard%20Extra&amp;name=AdGuard%20Popup%20Blocker&amp;type=user-script"></script><script>
+<title>ASQE v17.26 台美盤中/收盤資料日判斷版 | Three Horizon Validation | GitHub Pages Pro</title>
+<script type="text/javascript" nonce="f0ba7b011bb84778ba15d2ee5da" src="//local.adguard.org?ts=1781750571229&amp;type=content-script&amp;dmn=chatgpt.com&amp;url=https%3A%2F%2Fchatgpt.com%2Fbackend-api%2Festuary%2Fcontent%3Fid%3Dfile_000000009f5872068edc798081bbdea6%26fn%3DASQE_v17_26_tw_us_trading_day_freshness_index.html%26cd%3Dattachment%26ts%3D494930%26p%3Dfs%26cid%3D1%26sig%3D037fe603ecc3dca14a31ebbe6f64538095387acc786ce075cf0f27a3085bfdbc%26v%3D0&amp;app=chrome.exe&amp;css=2&amp;js=1&amp;rel=1&amp;rji=1&amp;sbe=1"></script><script type="text/javascript" nonce="f0ba7b011bb84778ba15d2ee5da" src="//local.adguard.org?ts=1781750571229&amp;name=AdGuard%20Extra&amp;name=AdGuard%20Popup%20Blocker&amp;type=user-script"></script><script>
     window.IS_CODE_COMPLETE = false;
 
     window.onerror = function(msg, url, lineNo) {
@@ -551,7 +551,7 @@
 <div class="w-16 h-16 bg-slate-950 rounded-2xl flex items-center justify-center mb-5 border border-slate-700 shadow-inner">
 <span class="text-3xl">🏛️</span>
 </div>
-<h1 class="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-indigo-300 to-orange-300 tracking-wider mb-1">ASQE v17.24</h1>
+<h1 class="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-indigo-300 to-orange-300 tracking-wider mb-1">ASQE v17.25</h1>
 <p class="text-[9px] text-indigo-100 mb-8 font-mono tracking-widest uppercase px-2 py-1 rounded badge-elite">台美短線理論引擎版</p>
 <input autocomplete="off" class="w-full bg-slate-950 text-white border border-slate-700 rounded-xl px-4 py-3.5 mb-5 focus:outline-none focus:border-indigo-500 text-center tracking-widest font-mono" id="passwordInput" inputmode="numeric" onkeypress="if(event.key==='Enter') window.checkAndUnlock()" placeholder="輸入授權碼" type="password"/>
 <button class="w-full bg-gradient-to-r from-indigo-700 to-purple-700 hover:from-indigo-600 hover:to-purple-600 text-white font-black py-3.5 rounded-xl transition-all shadow-lg tracking-widest cursor-pointer" id="unlockBtn" onclick="window.checkAndUnlock()">啟動量化核心</button>
@@ -630,7 +630,7 @@
 <div class="flex items-center gap-3">
 <div class="w-8 h-8 bg-gradient-to-br from-indigo-600 to-purple-900 rounded-lg flex items-center justify-center font-bold text-sm border border-slate-700">🏛️</div>
 <div class="flex flex-col">
-<h1 class="text-base font-black tracking-widest text-slate-100 leading-none">ASQE v17.24</h1>
+<h1 class="text-base font-black tracking-widest text-slate-100 leading-none">ASQE v17.25</h1>
 <span class="text-[9px] text-indigo-400 font-mono tracking-wider mt-0.5">台美短線理論引擎 + Forward Test</span>
 </div>
 </div>
@@ -664,7 +664,7 @@
 <div class="flex flex-col gap-3 p-4 border-b border-slate-800">
 <div class="flex flex-col md:flex-row md:items-center justify-between gap-3">
 <div>
-<div class="text-lg font-black tracking-widest text-white">ASQE v17.24 個股區間測試</div>
+<div class="text-lg font-black tracking-widest text-white">ASQE v17.25 個股區間測試</div>
 <div class="text-[11px] text-slate-400 mt-1">輸入任一台股或美股代碼，設定開始日與結束日，回放 ASQE 進出場規則，檢查期間操作是否合適。指標會使用起始日前資料暖機，避免長均線失真。</div>
 </div>
 <div class="flex items-center gap-2">
@@ -710,7 +710,7 @@
 <tbody class="divide-y divide-slate-800 bg-slate-900" id="batchTable"></tbody>
 </table>
 </div>
-<div class="mt-3 text-[11px] text-slate-400 leading-relaxed" id="batchNotes">說明：本測試不是預測未來，而是把 ASQE 進出場規則套用到指定區間；v17.24 以 v17.17.1 三週期核心為主，新增觀察清單三週期掃描與短中期勝率測試：台股偏 KD/布林/VWAP 容錯與籌碼確認，美股偏 EMA/VWAP/MACD 動能與布林突破，並保留標的屬性分群與 Walk-forward 穩健度：台股強化VCP與支撐共振、降低震盪洗單；美股強化趨勢核心續抱、延後過早出場，並保留極端過熱動態防線。</div>
+<div class="mt-3 text-[11px] text-slate-400 leading-relaxed" id="batchNotes">說明：本測試不是預測未來，而是把 ASQE 進出場規則套用到指定區間；v17.25 以 v17.17.1 三週期核心為主，新增觀察清單三週期掃描與短中期勝率測試：台股偏 KD/布林/VWAP 容錯與籌碼確認，美股偏 EMA/VWAP/MACD 動能與布林突破，並保留標的屬性分群與 Walk-forward 穩健度：台股強化VCP與支撐共振、降低震盪洗單；美股強化趨勢核心續抱、延後過早出場，並保留極端過熱動態防線。</div>
 </div>
 </div>
 </div>
@@ -771,7 +771,7 @@
     <div class="flex flex-col gap-3 p-4 border-b border-slate-800">
       <div class="flex flex-col md:flex-row md:items-center justify-between gap-3">
         <div>
-          <div class="text-lg font-black tracking-widest text-white">ASQE v17.24 實戰進出場測試｜四層決策・做多可交易</div>
+          <div class="text-lg font-black tracking-widest text-white">ASQE v17.25 實戰進出場測試｜四層決策・做多可交易</div>
           <div class="text-[12px] text-slate-400 mt-1 leading-relaxed">輸入單股與日期區間，分開檢查「方向命中率」與「做多可交易勝率」。美股以波段為主、短期做進場確認、長期只當大方向濾網，並自動分成趨勢股／防禦股／高波動投機股。</div>
         </div>
         <div class="flex items-center gap-2 flex-wrap">
@@ -826,7 +826,7 @@
     <div class="flex flex-col gap-3 p-4 border-b border-slate-800">
       <div class="flex flex-col md:flex-row md:items-center justify-between gap-3">
         <div>
-          <div class="text-lg font-black tracking-widest text-white">ASQE v17.24 Forward Test 訊號追蹤</div>
+          <div class="text-lg font-black tracking-widest text-white">ASQE v17.25 Forward Test 訊號追蹤</div>
           <div class="text-[12px] text-slate-400 mt-1 leading-relaxed">記錄當下訊號，未來自動回看 5 / 10 / 20 日結果，統計 ASQE 的真實命中率。資料存在本機瀏覽器 localStorage。</div>
         </div>
         <div class="flex items-center gap-2 flex-wrap">
@@ -1458,6 +1458,137 @@
     return d.getFullYear() + '-' + m + '-' + day;
   }
 
+
+  function timeZoneNowParts(tz) {
+    var parts = new Intl.DateTimeFormat('en-CA', {
+      timeZone: tz, year: 'numeric', month: '2-digit', day: '2-digit',
+      weekday: 'short', hour: '2-digit', minute: '2-digit', hour12: false
+    }).formatToParts(new Date()).reduce(function(o,p){ o[p.type]=p.value; return o; }, {});
+    var h = Number(parts.hour);
+    if (h === 24) h = 0;
+    return {
+      y: Number(parts.year), m: Number(parts.month), d: Number(parts.day),
+      weekday: parts.weekday, hour: h, minute: Number(parts.minute),
+      ymd: parts.year + '-' + parts.month + '-' + parts.day
+    };
+  }
+
+  function taipeiNowParts() { return timeZoneNowParts('Asia/Taipei'); }
+  function newYorkNowParts() { return timeZoneNowParts('America/New_York'); }
+
+  function previousBusinessDayYMD(ymd) {
+    var p = String(ymd || '').split('-').map(Number);
+    var d = new Date(p[0], (p[1] || 1)-1, p[2] || 1);
+    do { d.setDate(d.getDate()-1); } while (d.getDay() === 0 || d.getDay() === 6);
+    return getDateStr(d);
+  }
+
+  function isWeekendYMD(ymd) {
+    var p = String(ymd || '').split('-').map(Number);
+    var d = new Date(p[0], (p[1] || 1)-1, p[2] || 1);
+    return d.getDay() === 0 || d.getDay() === 6;
+  }
+
+  function ymdFromDataTime(timeValue) {
+    if (!timeValue) return '';
+    if (typeof timeValue === 'string') return timeValue.slice(0,10).replace(/\//g,'-');
+    if (typeof timeValue === 'number') return getDateStr(new Date(timeValue*1000));
+    if (timeValue instanceof Date) return getDateStr(timeValue);
+    return String(timeValue).slice(0,10).replace(/\//g,'-');
+  }
+
+  function analyzeMarketDataFreshness(data, market) {
+    var m = String(market || window.currentMarket || '').toUpperCase();
+    var last = data && data.length ? data[data.length-1] : null;
+    var lastDate = last ? ymdFromDataTime(last.time || last.date) : '';
+    var expected, status, badge, message, nowParts, minutes, isWeekday;
+
+    if (m === 'TW') {
+      nowParts = taipeiNowParts();
+      minutes = nowParts.hour*60 + nowParts.minute;
+      isWeekday = !isWeekendYMD(nowParts.ymd);
+      // 台股日線以「收盤後才確認」為準。盤中 09:00~13:34 不把今天未完成K棒當正式訊號。
+      if (!isWeekday) {
+        expected = previousBusinessDayYMD(nowParts.ymd);
+        status = lastDate === expected ? '台股休市已更新' : '台股休市資料落後';
+        badge = '台股休市｜最新 ' + (lastDate || '--');
+        message = '台股休市日，日線應停在上一個交易日。';
+      } else if (minutes < 9*60) {
+        expected = previousBusinessDayYMD(nowParts.ymd);
+        status = lastDate === expected ? '台股開盤前已更新' : '台股開盤前資料落後';
+        badge = '台股開盤前｜用 ' + (lastDate || '--');
+        message = '台股尚未開盤，日線只使用上一交易日收盤資料。';
+      } else if (minutes < 13*60 + 35) {
+        expected = previousBusinessDayYMD(nowParts.ymd);
+        status = '台股盤中未收盤';
+        badge = '台股盤中｜用 ' + (lastDate || '--');
+        message = '台股目前盤中未收盤；ASQE 日線訊號只使用上一交易日完整K棒，不把今日未完成價格當收盤訊號。';
+      } else {
+        expected = nowParts.ymd;
+        if (lastDate === nowParts.ymd) {
+          status = '台股今日收盤已更新';
+          badge = '台股今日收盤已更新';
+          message = '台股已收盤，資料源已回傳今日完整日K，ASQE 使用今日收盤資料。';
+        } else {
+          status = '台股收盤後待更新';
+          badge = '台股收盤後待更新｜用 ' + (lastDate || '--');
+          message = '台股已收盤，但目前資料源尚未回傳今日完整日K；ASQE 暫時沿用上一交易日資料，等 FinMind / 永豐 / Yahoo 更新後會自動改用今日資料。';
+        }
+      }
+      return { market:m, now:nowParts.ymd + ' ' + String(nowParts.hour).padStart(2,'0') + ':' + String(nowParts.minute).padStart(2,'0') + ' TPE', lastDate:lastDate, expectedDate:expected, status:status, badge:badge, message:message };
+    }
+
+    if (m === 'US') {
+      nowParts = newYorkNowParts();
+      minutes = nowParts.hour*60 + nowParts.minute;
+      isWeekday = !isWeekendYMD(nowParts.ymd);
+      // 美股日線以美東時間 16:00 收盤後才確認；盤中 09:30~15:59 不把今日未完成K棒當正式訊號。
+      if (!isWeekday) {
+        expected = previousBusinessDayYMD(nowParts.ymd);
+        status = lastDate === expected ? '美股休市已更新' : '美股休市資料落後';
+        badge = '美股休市｜最新 ' + (lastDate || '--');
+        message = '美股休市日，日線應停在上一個交易日。';
+      } else if (minutes < 9*60 + 30) {
+        expected = previousBusinessDayYMD(nowParts.ymd);
+        status = lastDate === expected ? '美股開盤前已更新' : '美股開盤前資料落後';
+        badge = '美股開盤前｜用 ' + (lastDate || '--');
+        message = '美股尚未進入正式盤；ASQE 日線只使用上一交易日完整K棒。盤前價格不納入日線正式訊號。';
+      } else if (minutes < 16*60) {
+        expected = previousBusinessDayYMD(nowParts.ymd);
+        status = '美股盤中未收盤';
+        badge = '美股盤中｜用 ' + (lastDate || '--');
+        message = '美股目前正式盤中未收盤；ASQE 日線訊號只使用上一交易日完整K棒，不把今日盤中未完成價格當收盤訊號。若要盤中判斷，需用 intraday quote / 1分K / 5分K / 15分K 模組。';
+      } else {
+        expected = nowParts.ymd;
+        if (lastDate === nowParts.ymd) {
+          status = '美股今日收盤已更新';
+          badge = '美股今日收盤已更新';
+          message = '美股已收盤，資料源已回傳今日完整日K，ASQE 使用今日收盤資料。';
+        } else {
+          status = '美股收盤後待更新';
+          badge = '美股收盤後待更新｜用 ' + (lastDate || '--');
+          message = '美股已收盤，但 FMP / Finnhub / Yahoo 可能尚未回傳今日完整日K；ASQE 暫時沿用上一交易日資料，等資料源更新後會自動改用今日資料。';
+        }
+      }
+      return { market:m, now:nowParts.ymd + ' ' + String(nowParts.hour).padStart(2,'0') + ':' + String(nowParts.minute).padStart(2,'0') + ' ET', lastDate:lastDate, expectedDate:expected, status:status, badge:badge, message:message };
+    }
+
+    return { market:m, lastDate:lastDate, status:'標準', badge:'最新日K ' + (lastDate || '--'), message:'依資料源回傳的最新日線為準。' };
+  }
+
+  function renderFreshnessInfo(fresh) {
+    if (!fresh || !fresh.status) return '';
+    var cls = 'text-slate-300 border-slate-700';
+    if (/今日收盤已更新|休市已更新|開盤前已更新/.test(fresh.status)) cls = 'text-emerald-300 border-emerald-900/60';
+    else if (/盤中未收盤|待更新/.test(fresh.status)) cls = 'text-yellow-300 border-yellow-900/60';
+    else if (/落後/.test(fresh.status)) cls = 'text-red-300 border-red-900/60';
+    return '<div class="mt-2 rounded-lg border '+cls+' bg-slate-950/70 p-2 text-[10px] leading-relaxed">' +
+      '<b>📅 日線資料日判斷：</b>' + safeHtml(fresh.status) +
+      '｜最新K線：' + safeHtml(fresh.lastDate || '--') +
+      (fresh.expectedDate ? '｜理論應用資料日：' + safeHtml(fresh.expectedDate) : '') +
+      '<br>' + safeHtml(fresh.message || '') + '</div>';
+  }
+
   function formatCloseDate(timeValue) {
     if (!timeValue) return '--/--';
     var d;
@@ -2079,7 +2210,9 @@
         if (sinopacFailed) log.push('ℹ️ 目前實際使用：' + result.source + '；永豐主路由未連線、未通過 CORS 或回傳資料不足。');
         else if (result.source.indexOf('永豐') >= 0) log.push('ℹ️ 目前實際使用：永豐主路由。');
         sf('routerLog', log.join('<br>'));
-        var dqHtml = renderDataQuality(result.data.quality);
+        var freshInfo = analyzeMarketDataFreshness(result.data, market);
+        result.data.freshness = freshInfo;
+        var dqHtml = renderDataQuality(result.data.quality) + renderFreshnessInfo(freshInfo);
         if (sinopacFailed) dqHtml += '<div class="text-[9px] text-yellow-300 mt-1">永豐狀態：未連線或資料不足；已自動切換備援。這不代表 K 線不足，只代表主路由沒有成功。</div>';
         else if (result.source.indexOf('永豐') >= 0) {
           var signedInfo = window.SINOPAC_AUTH_LAST ? ('｜帳戶 ' + (window.SINOPAC_AUTH_LAST.count || 0) + ' 筆｜signed=true ' + (window.SINOPAC_AUTH_LAST.signedTrue || 0) + '｜signed=false ' + (window.SINOPAC_AUTH_LAST.signedFalse || 0)) : '';
@@ -3452,7 +3585,8 @@
       var L = data[data.length-1];
       var closeDateLabel = formatCloseDate(L.time);
       var closePriceLabel = formatPriceByMarket(L.close, result.symbol.market || market);
-      st('latestCloseBadge', closeDateLabel + ' 收盤 ' + closePriceLabel);
+      var freshBadge = data.freshness && data.freshness.badge ? ('｜' + data.freshness.badge) : '';
+      st('latestCloseBadge', closeDateLabel + ' 收盤 ' + closePriceLabel + freshBadge);
       var e20Val=e20[e20.length-1].value, e60Val=e60[e60.length-1].value, e120Val=e120[e120.length-1].value;
       var a14=atr[atr.length-1].atr || 1;
       var adxVal=adx[adx.length-1].adx || 20;
@@ -3608,7 +3742,7 @@
       var confidenceGrade = confidence>=85 ? '高可信' : (confidence>=70 ? '可參考' : (confidence>=60 ? '謹慎' : '低可信'));
       sf('confidenceBadge', '信心度: ' + confidence.toFixed(0) + '% / ' + confidenceGrade);
       sf('dataQualityBadge', '資料品質: ' + (((data.quality || {}).status) || '--'));
-      sf('dataQualityLog', renderDataQuality(data.quality) + '<div class="mt-2 text-slate-400">📌 v17.24：右上角已改為個股趨勢狀態；大盤狀態仍只用於權重調整，不再讓每檔股票都顯示同一個多頭機率。</div>');
+      sf('dataQualityLog', renderDataQuality(data.quality) + '<div class="mt-2 text-slate-400">📌 v17.26：台股與美股日線都加入盤中/收盤資料日判斷；盤中未收盤時只使用上一交易日完整日K，收盤後若資料源更新才使用今日資料。</div>');
       sf('txtBull', '個股多頭: ' + (stockHmm.pBull*100).toFixed(0) + '%');
       sf('txtSide', '個股盤整: ' + (stockHmm.pSide*100).toFixed(0) + '%');
       sf('txtBear', '個股空頭: ' + (stockHmm.pBear*100).toFixed(0) + '%');
@@ -4444,7 +4578,7 @@
       if (!r.error) {
         var eventHtml = r.events && r.events.length ? '<br><br>最近訊號：<span class="text-slate-200">'+r.events.join(' ｜ ')+'</span>' : '<br><br>最近訊號：<span class="text-slate-400">期間內無完整進出場紀錄，代表系統偏保守或尚未滿足條件。</span>';
         if (summary) summary.innerHTML='完成：'+r.ticker+'，'+r.period+'。測試結論：<span class="font-bold text-emerald-300">'+r.verdict+'</span>。期末訊號：<span class="font-bold">'+r.action+'</span>。'+eventHtml;
-        if (notes) notes.innerHTML='判讀方式：v17.24 採用收盤產生訊號、隔日開盤執行，並加入三週期交易決策引擎、台股/美股分市場參數校正、標的屬性分群與 Walk-forward 穩健度。三週期雷達同時顯示短期、波段、長期：短期使用 KD、MACD、布林、量能、EMA5/13 與 rolling VWAP；波段看 EMA20/60、MACD/DMI、VCP與支撐；長期看 EMA60/120/200、60日趨勢與防線。若策略報酬優於持有且策略MDD較低，代表 ASQE 的進出場規則在該區間較合適；若持有報酬大幅優於策略，通常表示仍偏保守；若策略MDD高於持有MDD，代表防守條件仍需調整。';
+        if (notes) notes.innerHTML='判讀方式：v17.26 採用收盤產生訊號、隔日開盤執行，並加入三週期交易決策引擎、台股/美股分市場參數校正、標的屬性分群與 Walk-forward 穩健度。三週期雷達同時顯示短期、波段、長期：短期使用 KD、MACD、布林、量能、EMA5/13 與 rolling VWAP；波段看 EMA20/60、MACD/DMI、VCP與支撐；長期看 EMA60/120/200、60日趨勢與防線。若策略報酬優於持有且策略MDD較低，代表 ASQE 的進出場規則在該區間較合適；若持有報酬大幅優於策略，通常表示仍偏保守；若策略MDD高於持有MDD，代表防守條件仍需調整。';
       } else {
         if (summary) summary.innerHTML='失敗：'+r.error;
       }
