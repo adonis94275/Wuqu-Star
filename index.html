@@ -2784,7 +2784,7 @@
   // 量能門檻改成「近2日成交量合計」（防止單日異常爆量／單筆大單誤判成有效突破)，
   // 比較基準改成「20日、60日高點取較高者」（上方還有更大套牢賣壓區時，不能只看20日新高就放行)。
   function detectBreakoutSignal(data, idx, bb, atr, dmi) {
-    if (!data || idx < 60 || idx >= data.length) return {candidate:false, resistance:0};
+    if (!data || idx < 60 || idx >= data.length) return {candidate:false, raw:false, resistance:0, vcp:{ok:false, tight:false}};
     var Lx = data[idx];
     var bx = bb[idx] || {mid:Lx.close, upper:Lx.close};
     var dx = dmi[idx] || {pdi:0, mdi:0, adx:0};
@@ -2797,7 +2797,7 @@
     var magOkX = resistanceX>0 ? Lx.close > resistanceX*1.03 : true;
     var vcpX = calcVcpContext(data, idx, bb, atr);
     var rawX = Lx.close > bx.upper && volOkX && dx.pdi > dx.mdi && dx.adx > 20 && magOkX;
-    return {candidate: rawX && vcpX.ok, resistance: resistanceX};
+    return {candidate: rawX && vcpX.ok, raw: rawX, resistance: resistanceX, vcp: vcpX};
   }
 
   // v17.14：拉回支撐共振。量縮、下影線、EMA/BB/POC 支撐同時出現才提高拉回品質。
@@ -3786,28 +3786,23 @@
     var chandelier=hh22-3*A;
     var bias20=(L.close-e20Val)/e20Val;
     var pocCtx=calcPOC(data.slice(0,i+1),80,40);
-    var vcp=calcVcpContext(data, i, bb, atr);
+    // v17.37：「今天」的突破判斷改成直接呼叫 detectBreakoutSignal()，跟「昨天」共用同一份規則，
+    // 避免同一套突破公式維護兩份(內嵌版+函式版)，以後只改了其中一份卻忘了同步另一份。
+    var breakoutToday = detectBreakoutSignal(data, i, bb, atr, dmi);
+    var vcp=breakoutToday.vcp;
     var supportQ=calcPullbackSupportQuality(data, i, e20Val, e60Val, b, pocCtx.poc, A);
     var cmfVal=(cmf[i]&&isFinite(cmf[i].value))?cmf[i].value:0;
     var widthRank=percentileRank(bb.slice(Math.max(0,i-119),i+1).map(function(x){return x.width;}), b.width);
-    // v17.31：有效突破濾網。原本只看「收盤>布林上軌 + 量>1.2倍均量」，沒有檢查突破當天
-    // 收盤價究竟超過盤整箱頂多少，容易把「貼著前高小幅上漲」也算成突破，誘多風險較高。
-    // 改成：量能門檻提高到1.5倍 + 收盤必須站上「突破日之前20根K的最高點」3%以上。
     // v17.36：①量能改成「近2日成交量合計 > 均量×2.5倍」，避免單一天的異常爆量(例如單筆大單)
     // 就被誤判成有效突破；②比較基準改成「20日、60日高點取較高者」，如果60日高點明顯比20日
     // 高點高(代表上方還有更大套牢賣壓區)，要求股價站上60日高點才算過關，不能只看20日新高；
     // ③新增「隔日確認」(breakoutConfirmed)：昨天已經符合突破候選條件、且今天收盤仍守在
     // 昨天的突破基準之上，才算確認生效，避免突破當天收盤就直接進場，被隔天一日反轉的假突破騙到。
     var breakoutYesterday = detectBreakoutSignal(data, i-1, bb, atr, dmi);
-    var priorBoxHigh20=Math.max.apply(null, data.slice(Math.max(0,i-20), i).map(function(x){return x.high;}));
-    var priorBoxHigh60=Math.max.apply(null, data.slice(Math.max(0,i-60), i).map(function(x){return x.high;}));
-    var priorBoxHigh = (priorBoxHigh60 > priorBoxHigh20*1.02) ? priorBoxHigh60 : priorBoxHigh20;
-    var breakoutMagnitudeOk = priorBoxHigh>0 ? L.close > priorBoxHigh*1.03 : true;
-    var vol2dayAgg = (L.volume||0) + (prev.volume||0);
-    var breakoutVolOk = vol20>0 ? vol2dayAgg > vol20*2.5 : false;
-    var bbBreakRaw=L.close>b.upper && breakoutVolOk && d.pdi>d.mdi && d.adx>20 && breakoutMagnitudeOk;
-    var bbBreak=bbBreakRaw && vcp.ok;
-    var bbBreakNoVcp=bbBreakRaw && !vcp.ok;
+    var priorBoxHigh = breakoutToday.resistance;
+    var bbBreakRaw = breakoutToday.raw;
+    var bbBreak = breakoutToday.candidate;
+    var bbBreakNoVcp = bbBreakRaw && !vcp.ok;
     var breakoutConfirmed = breakoutYesterday.candidate && L.close > breakoutYesterday.resistance && L.close >= prev.close*0.985;
     var bbVeto=L.close<b.lower && d.mdi>d.pdi && d.adx>25;
     var stop=L.close<chandelier;
