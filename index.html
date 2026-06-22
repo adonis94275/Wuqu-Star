@@ -4487,6 +4487,19 @@
       var ceBb = (canonicalCore && canonicalCore.bb) || bbLast;
       var ceDmi = (canonicalCore && canonicalCore.dmi) || lastDmi;
       var ceBreakout = canonicalCore && canonicalCore.ready ? canonicalCore.breakoutConfirmed : isBBBreakout;
+      // 布林通道穿越提醒，要求量能(1.5倍)+DMI方向+ADX強度同時確認，跟 canonicalCore 的
+      // bbBreakRaw（上穿）/ isBBVeto（下穿）共用同一套條件，避免畫面提醒跟核心引擎判斷脫鉤。
+      var ceBreakUpConfirmed = canonicalCore && canonicalCore.ready ? !!canonicalCore.bbBreakRaw : false;
+      if (ceBreakUpConfirmed) flags.push('📈布林上軌突破已確認(量能/DMI/ADX)(' + ceBb.upper.toFixed(2) + ')');
+      if (isBBVeto) flags.push('📉布林下軌跌破已確認(DMI/ADX)(' + ceBb.lower.toFixed(2) + ')');
+      // 布林通道寬度擴張/收縮提醒：用過去120根K的寬度百分位排名，排名落到後20%視為「收窄」、
+      // 前20%視為「擴張」，只在「今天剛跨進這個區間、昨天還沒有」時提醒一次，避免每天重複跳通知。
+      if (bb.length >= 3) {
+        var widthRankToday = percentileRank(bb.slice(Math.max(0, bb.length-121), bb.length-1).map(function(x){return x.width;}), bb[bb.length-1].width);
+        var widthRankYday = percentileRank(bb.slice(Math.max(0, bb.length-122), bb.length-2).map(function(x){return x.width;}), bb[bb.length-2].width);
+        if (widthRankToday <= 0.20 && widthRankYday > 0.20) flags.push('🔽布林通道收窄(寬度百分位 ' + Math.round(widthRankToday*100) + '%，可能醞釀變盤)');
+        if (widthRankToday >= 0.80 && widthRankYday < 0.80) flags.push('🔼布林通道擴張(寬度百分位 ' + Math.round(widthRankToday*100) + '%，波動度放大)');
+      }
       var entryTypeObj = classifyEntryExitType({score:final分數, veto:(isHardVeto||isGapDown||isBBVeto), stop:stopNeedsExit, softStop:softStopAllowed, segmentBuy:segmentSignal.buy, segmentSell:segmentSignal.sell, bias20:bias20, bbPctB:ceBb.pctB, bbBreakout:ceBreakout, close:L.close, bbMid:ceBb.mid, pdi:ceDmi.pdi, mdi:ceDmi.mdi});
       var profitPlan = calcProfitPlan(L.close, effectiveDefense, a14, bias20, bbLast.pctB);
       var gradeObj = computeTradeGrade({score:final分數, confidence:confidence, pos:finalPosSize, netExp:netExpectancy, dar95:mc.dar95, ruin:mc.ruinProb, veto:(isHardVeto||isGapDown||isBBVeto), stop:stopNeedsExit});
@@ -4528,7 +4541,11 @@
         '<div class="mb-1"><span class="text-slate-400">未持股：</span><span class="' + entryColor + ' font-bold">' + notHoldingAction + '</span> ｜ <span class="text-slate-400">已持股：</span><span class="' + holdColor + ' font-bold">' + holdingAction + '</span></div>' +
         '<div class="mb-1"><span class="text-slate-400">型態：</span><span class="' + entryTypeObj.color + ' font-bold">' + entryTypeObj.type + '</span> ｜ <span class="text-slate-400">停利：</span>' + profitPlan + '</div>' +
         '<div class="text-slate-400">原因：' + (signalReason.join('；') || entryTypeObj.note || '等待更多確認') + '。關鍵防線：' + effectiveDefense.toFixed(2) + (softStopAllowed ? '（原吊燈警戒 ' + chandelier.toFixed(2) + '）' : '') + '。訊號驗證：' + sigStats.text + '。</div>' +
-        (disasterRate !== null && disasterRate >= 0.15 ? '<div class="mt-1 text-orange-300 font-bold">⚠️ 歷史回測中 ' + Math.round(disasterRate*100) + '% 的交易是直接撞上尾端災難防線(-9%/-10%硬停損)才出場，這檔可能較易跳空、軟性停損不夠靈敏，務必自行加嚴觀察。</div>' : '');
+        (disasterRate !== null && disasterRate >= 0.15 ? '<div class="mt-1 text-orange-300 font-bold">⚠️ 歷史回測中 ' + Math.round(disasterRate*100) + '% 的交易是直接撞上尾端災難防線(-9%/-10%硬停損)才出場，這檔可能較易跳空、軟性停損不夠靈敏，務必自行加嚴觀察。</div>' : '') +
+        (ceBreakUpConfirmed ? '<div class="mt-1 text-emerald-300 font-bold">📈 收盤價 ' + L.close.toFixed(2) + ' 突破布林上軌(' + ceBb.upper.toFixed(2) + ')，且量能/DMI/ADX已確認，非單純價格穿越。</div>' : '') +
+        (isBBVeto ? '<div class="mt-1 text-red-300 font-bold">📉 收盤價 ' + L.close.toFixed(2) + ' 跌破布林下軌(' + ceBb.lower.toFixed(2) + ')，且DMI/ADX已確認轉空，非單純價格穿越。</div>' : '') +
+        (typeof widthRankToday !== 'undefined' && widthRankToday <= 0.20 && widthRankYday > 0.20 ? '<div class="mt-1 text-cyan-300 font-bold">🔽 布林通道收窄（寬度百分位 ' + Math.round(widthRankToday*100) + '%），波動度壓縮，可能醞釀變盤。</div>' : '') +
+        (typeof widthRankToday !== 'undefined' && widthRankToday >= 0.80 && widthRankYday < 0.80 ? '<div class="mt-1 text-purple-300 font-bold">🔼 布林通道擴張（寬度百分位 ' + Math.round(widthRankToday*100) + '%），波動度放大。</div>' : '');
       sf('tradingRuleText', ruleHtml);
 
       window.lastAnalysisContext = {
